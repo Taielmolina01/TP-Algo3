@@ -2,7 +2,7 @@
 
 Integrantes
   
-Kriger, Lucas. Padrón:
+Kriger, Lucas. Padrón: 109344
 
 
 Molina, Taiel. Padrón: 109458
