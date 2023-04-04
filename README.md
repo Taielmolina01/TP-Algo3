@@ -1,6 +1,6 @@
 # TP-Algo3
 
-Integrantes                 Padrón
+Integrantes
   
-Kriger, Lucas
-Molina, Taiel               109458
+Kriger, Lucas. Padrón:
+Molina, Taiel. Padrón: 109458
