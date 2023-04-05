@@ -31,10 +31,13 @@ Molina, Taiel. Padrón: 109458
       5. Al modificar o eliminar un evento con repetición, el cambio o eliminación se aplica a todas sus repticiones.
 7. En un **evento** o **tarea** se pueden configurar una o más **alarmas**:
       1. La alarma se dispara en un instante de tiempo, que se puede determinar de dos maneras:
-              1. Una fecha y hora absoluta
-              2. Un intervalo de tiempo relativo a la fecha y hora del evento/tarea (ej: “30 minutos antes”).
+
+                1. Una fecha y hora absoluta.
+                2. Un intervalo de tiempo relativo a la fecha y hora del evento/tarea (ej: “30 minutos antes”).
       2. El efecto producido al dispararse la alarma es configurable:
-              1. Mostrar una notificación.
-              2. Reproducir un sonido.
-              3. Enviar un email.
-              Nota: dado que en la primera etapa no se implementa la interacción con el usuario, no se deben implementar los efectos de las alarmas; pero sí deben tener pruebas asociadas.
+
+                1. Mostrar una notificación.
+                2. Reproducir un sonido.
+                3. Enviar un email.
+                Nota: dado que en la primera etapa no se implementa la interacción con el usuario, no se deben implementar los 
+                efectos de las alarmas; pero sí deben tener pruebas asociadas.
