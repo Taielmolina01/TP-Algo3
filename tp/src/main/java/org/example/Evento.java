@@ -33,13 +33,18 @@ import java.util.ArrayList;
               efectos de las alarmas; pero sí deben tener pruebas asociadas.
 
 */
+
 public class Evento {
     private String nombre;
     private String descripcion;
     private LocalDateTime fechaInicio;
-    private LocalDateTime fechaFin; // En principio es el fin del evento sin contar sus repeticiones, NO es la fecha en donde terminan las repeticiones.
 
-    private LocalDateTime fechaFinalDefinitivo; // Es la fecha en la que terminan las repeticiones del evento
+    // Fin del evento sin contar sus repeticiones, NO es la fecha en donde terminan las repeticiones.
+    private LocalDateTime fechaFin;
+
+
+    // Fecha en la que terminan las repeticiones del evento.
+    private LocalDateTime fechaFinalDefinitivo;
 
     private LocalTime duracion;
 
@@ -53,7 +58,54 @@ public class Evento {
         this.fechaFin = this.fechaInicio.plusHours(hsDuracion).plusMinutes(minsDuracion).plusSeconds(segsDuracion);
     }
 
-    private void transformarFrecuencia(String frecuencia) {
+    // Manejarme con un constructor con un Integer para decir cada cuantos dias y otro con strings que simplmente diga
+    // los dias de la semana en los que se repite.
+
+    // Constructor si no se repite el evento nunca.
+    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion) {
+        this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
+    }
+
+    /*
+        Los eventos se pueden repetir:
+            - Con frecuencia diaria, semanal, mensual o anual.
+            - En caso de frecuencia diaria, es posible definir un intervalo (ej: “cada 3 días”).
+            - En caso de frecuenia semanal, es posible definir los días de la semana (ej: “todos los martes y jueves”).
+            - La repetición puede ser:
+                + Infinita.
+                + Terminar en una fecha determinada (ej: hasta el 13 de enero).
+                + Terminar luego de una cantidad de repeticiones dada (ej: luego de 20 ocurrencias).
+            - Al modificar o eliminar un evento con repetición, el cambio o eliminación se aplica a todas sus repeticiones.
+    */
+
+    // Si se repite infinitamente poner en fechaFinalDefinitivo como MAX de LocalDateTime (creo que es LocalDateTime.MAX)
+
+    // Para ver si hay eventos antes o despues utilizar isAfter/isBefore
+
+    // Constructor si se repite el evento dada la fecha de fin.
+    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion, LocalDateTime fechaFinalDefinitivo,
+                  String frecuencia) {
+        this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
+        this.fechaFinalDefinitivo = fechaFinalDefinitivo;
+    }
+
+    // Constructor si se repite el evento dada las veces que se va a repetir el evento.
+    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion, String frecuencia,
+                  Integer repeticiones) {
+        this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
+        // con el dato de repeticiones y la frecuencia debo poder calcular la fechaFinalDefinitiva
+    }
+
+
+    public void modificarNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void modificarDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    /*private void transformarFrecuencia(String frecuencia) { // Hace falta que la transforme?
         String[] dias = {"lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"};
         ArrayList<String> diasFrecuencia = new ArrayList<String>();
         if (frecuencia.split(" ")[0].equals("cada")) {
@@ -75,34 +127,7 @@ public class Evento {
             }
             // return diasFrecuencia;
         }
-    }
+    }*/
 
-    // Constructor si no se repite el evento nunca.
-    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion) {
-        this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
-    }
-
-    // Constructor si se repite el evento dada la fecha de fin.
-    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFinalDefinitivo, String duracion, String frecuencia) {
-        this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
-        this.fechaFinalDefinitivo = fechaFinalDefinitivo;
-        this.transformarFrecuencia(frecuencia);
-    }
-
-    // Constructor si se repite el evento dada las veces que se va a repetir el evento.
-    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion, String frecuencia,
-                  Integer repeticiones) {
-        this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
-        this.transformarFrecuencia(frecuencia);
-        // con el dato de repeticiones y la frecuencia debo poder calcular la fechaFinalDefinitiva
-    }
-
-    public void modificarNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void modificarDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
 
 }
