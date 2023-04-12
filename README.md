@@ -1,7 +1,5 @@
 # TP-Algo3
 
-Prueba funciona git
-
 Integrantes
   
 Kriger, Lucas. Padrón: 109344
