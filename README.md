@@ -41,3 +41,11 @@ Molina, Taiel. Padrón: 109458
                 3. Enviar un email.
                 Nota: dado que en la primera etapa no se implementa la interacción con el usuario, no se deben implementar los 
                 efectos de las alarmas; pero sí deben tener pruebas asociadas.
+                
+                
+### Notas Evento
+
+- Si se repite infinitamente poner en fechaFinalDefinitivo como MAX de LocalDateTime (creo que es LocalDateTime.MAX)
+- Para ver si hay eventos antes o despues utilizar isAfter/isBefore
+- Manejarme con un constructor con un Integer para decir cada cuantos dias y otro con strings que simplmente diga
+  los dias de la semana en los que se repite.
