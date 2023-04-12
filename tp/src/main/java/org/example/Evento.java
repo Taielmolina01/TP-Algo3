@@ -1,4 +1,7 @@
 package org.example;
+
+import java.time.*;
+
 /*
     Los eventos pueden ser:
         - De día completo.
@@ -30,10 +33,38 @@ package org.example;
 public class Evento {
     private String nombre;
     private String descripcion;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
+    private String repeticion;
+    private Duration duracion;
+    private Integer repeticiones;
+    private ----- frecuencia;
 
-    public Evento(String nombre, String descripcion) {
+    private void constructorDefault(String nombre, String descripcion, LocalDate fechaInicio, Duration duracion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.fechaInicio = fechaInicio;
+        this.duracion = duracion;
+    }
+
+
+    // Constructor si no se repite el evento nunca
+    public Evento(String nombre, String descripcion, LocalDate fechaInicio, Duration duracion) {
+        this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
+    }
+
+    // Constructor si se repite el evento dada la fecha de fin
+    public Evento(String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, Duration duracion, frecuencia) {
+        this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
+        this.fechaFin = fechaFin;
+    }
+
+    // Constructor si se repite el evento dada las veces que se va a repetir el evento.
+    public Evento(String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, Duration duracion, frecuencia, Integer repeticiones) {
+        this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
+        this.fechaFin = fechaFin;
+        this.frecuencia = frecuencia;
+        this.repeticiones = repeticiones;
     }
 
     public String getNombre() {
@@ -41,6 +72,14 @@ public class Evento {
     }
     public String getDescripcion() {
         return this.descripcion;
+    }
+
+    public LocalDate getFechaInicio() {
+        return this.fechaInicio;
+    }
+
+    public Duration getDuracion() {
+        return this.duracion;
     }
 
 }
