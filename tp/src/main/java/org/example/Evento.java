@@ -1,6 +1,7 @@
 package org.example;
 
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 /*
     Los eventos pueden ser:
@@ -28,39 +29,39 @@ import java.time.*;
               Nota: dado que en la primera etapa no se implementa la interacción con el usuario, no se deben implementar los
               efectos de las alarmas; pero sí deben tener pruebas asociadas.
 
-
 */
 public class Evento {
     private String nombre;
     private String descripcion;
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
+    private LocalDateTime fechaInicio;
+    private LocalDateTime fechaFin;
     private String repeticion;
     private Duration duracion;
     private Integer repeticiones;
-    private ----- frecuencia;
+    private Integer frecuencia;
 
-    private void constructorDefault(String nombre, String descripcion, LocalDate fechaInicio, Duration duracion) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.fechaInicio = fechaInicio;
-        this.duracion = duracion;
+    private void constructorDefault(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion) {
+        this.nombre = nombre; this.descripcion = descripcion; this.fechaInicio = fechaInicio;
+        LocalTime duracionFormateada = LocalTime.parse(duracion, DateTimeFormatter.ofPattern("HH:mm:ss"));
+        int horasDuracion = duracionFormateada.getHour();
+        int minutosDuracion = duracionFormateada.getMinute();
+        int segundosDuracion = duracionFormateada.getSecond();
+        this.fechaFin = this.fechaInicio.plusHours(horasDuracion).plusMinutes(minutosDuracion).plusSeconds(segundosDuracion);
     }
 
-
-    // Constructor si no se repite el evento nunca
-    public Evento(String nombre, String descripcion, LocalDate fechaInicio, Duration duracion) {
+    // Constructor si no se repite el evento nunca.
+    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion) {
         this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
     }
 
-    // Constructor si se repite el evento dada la fecha de fin
-    public Evento(String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, Duration duracion, frecuencia) {
+    // Constructor si se repite el evento dada la fecha de fin.
+    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, String duracion, Integer frecuencia) {
         this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
         this.fechaFin = fechaFin;
     }
 
     // Constructor si se repite el evento dada las veces que se va a repetir el evento.
-    public Evento(String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, Duration duracion, frecuencia, Integer repeticiones) {
+    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, String duracion, Integer frecuencia, Integer repeticiones) {
         this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
         this.fechaFin = fechaFin;
         this.frecuencia = frecuencia;
@@ -74,7 +75,7 @@ public class Evento {
         return this.descripcion;
     }
 
-    public LocalDate getFechaInicio() {
+    public LocalDateTime getFechaInicio() {
         return this.fechaInicio;
     }
 
