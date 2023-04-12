@@ -36,16 +36,18 @@ public class Evento {
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaFin;
     private String repeticion;
-    private Duration duracion;
+
+    private LocalTime duracion;
+
     private Integer repeticiones;
     private Integer frecuencia;
 
     private void constructorDefault(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion) {
         this.nombre = nombre; this.descripcion = descripcion; this.fechaInicio = fechaInicio;
-        LocalTime duracionFormateada = LocalTime.parse(duracion, DateTimeFormatter.ofPattern("HH:mm:ss"));
-        int horasDuracion = duracionFormateada.getHour();
-        int minutosDuracion = duracionFormateada.getMinute();
-        int segundosDuracion = duracionFormateada.getSecond();
+        this.duracion = LocalTime.parse(duracion, DateTimeFormatter.ofPattern("HH:mm:ss"));
+        int horasDuracion = this.duracion.getHour();
+        int minutosDuracion = this.duracion.getMinute();
+        int segundosDuracion = this.duracion.getSecond();
         this.fechaFin = this.fechaInicio.plusHours(horasDuracion).plusMinutes(minutosDuracion).plusSeconds(segundosDuracion);
     }
 
@@ -77,10 +79,6 @@ public class Evento {
 
     public LocalDateTime getFechaInicio() {
         return this.fechaInicio;
-    }
-
-    public Duration getDuracion() {
-        return this.duracion;
     }
 
 }
