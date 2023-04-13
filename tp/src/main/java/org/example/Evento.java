@@ -15,19 +15,19 @@ public class Evento {
     private Integer repeticiones;
     private String[] frecuencia;
 
-    private void constructorDefault(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion) {
+    private void constructorDefault(String nombre, String descripcion, LocalDateTime fechaInicio, LocalTime duracion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
-        this.calcularFechaFin(duracion);
+        this.calcularFechaFin(duracion, fechaInicio);
     }
 
-    private void calcularFechaFin(String duracion) {
-        this.duracion = LocalTime.parse(duracion, DateTimeFormatter.ofPattern("HH:mm:ss"));
+    private LocalDateTime calcularFechaFin(LocalTime duracion, LocalDateTime fechaInicio) {
         int hsDuracion = this.duracion.getHour();
         int minsDuracion = this.duracion.getMinute();
         int segsDuracion = this.duracion.getSecond();
-        this.fechaFin = this.fechaInicio.plusHours(hsDuracion).plusMinutes(minsDuracion).plusSeconds(segsDuracion);
+        fechaFin = fechaInicio.plusHours(hsDuracion).plusMinutes(minsDuracion).plusSeconds(segsDuracion);
+        return fechaFin;
     }
 
     /* Se le debe pasar un array de tamaño 2, la primera posicion debe tener un indicador de si la frecuencia es diaria
@@ -85,7 +85,7 @@ public class Evento {
             }
             if (funcionAUtilizar.equals("PD")) { // Repito codigo a lo loco
                 for (LocalDateTime dia = this.fechaInicio; dia.isBefore(this.fechaFinalDefinitivo); dia = dia.plusDays(multiplicador)) {
-                    if (dia.isEqual(diaAAnalizar)) { // deberia hacer que si diaAAnalizar isBetween dia y dia + duracion
+                    if (diaAAnalizar.isEqual(dia) || (diaAAnalizar.isAfter(dia) && diaAAnalizar.isBefore(this.calcularFechaFin(this.duracion, dia)))) { // deberia hacer que si diaAAnalizar isBetween dia y dia + duracion
                         return true;
                     }
                 }
@@ -93,7 +93,7 @@ public class Evento {
             }
             if (funcionAUtilizar.equals("PM")) {
                 for (LocalDateTime dia = this.fechaInicio; dia.isBefore(this.fechaFinalDefinitivo); dia = dia.plusMonths(multiplicador)) {
-                    if (dia.isEqual(diaAAnalizar)) {
+                    if (diaAAnalizar.isEqual(dia) || (diaAAnalizar.isAfter(dia) && diaAAnalizar.isBefore(this.calcularFechaFin(this.duracion, dia)))) {
                         return true;
                     }
                 }
@@ -101,7 +101,7 @@ public class Evento {
             }
             if (funcionAUtilizar.equals("PY")) {
                 for (LocalDateTime dia = this.fechaInicio; dia.isBefore(this.fechaFinalDefinitivo); dia = dia.plusYears(multiplicador)) {
-                    if (dia.isEqual(diaAAnalizar)) {
+                    if (diaAAnalizar.isEqual(dia) || (diaAAnalizar.isAfter(dia) && diaAAnalizar.isBefore(this.calcularFechaFin(this.duracion, dia)))) {
                         return true;
                     }
                 }
@@ -121,13 +121,13 @@ public class Evento {
     }
 
     // Constructor si no se repite el evento nunca.
-    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion) {
+    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, LocalTime duracion) {
         this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
         this.fechaFinalDefinitivo = this.fechaFin;
     }
 
     // Constructor si se repite el evento dada la fecha de fin.
-    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion, LocalDateTime fechaFinalDefinitivo,
+    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, LocalTime duracion, LocalDateTime fechaFinalDefinitivo,
                   String[] frecuencia) {
         this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
         this.fechaFinalDefinitivo = fechaFinalDefinitivo;
@@ -136,7 +136,7 @@ public class Evento {
 
 
     // Constructor si se repite el evento dada las veces que se va a repetir el evento.
-    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion, Integer ocurrencias, String[] frecuencia) {
+    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, LocalTime duracion, Integer ocurrencias, String[] frecuencia) {
         this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
         this.frecuencia = frecuencia;
         // con el dato de repeticiones y la frecuencia debo poder calcular la fechaFinalDefinitiva
@@ -163,8 +163,8 @@ public class Evento {
         this.fechaInicio = fechaInicio;
     }
 
-    public void modificarDuracion(String duracion) {
-        this.calcularFechaFin(duracion);
+    public void modificarDuracion(LocalTime duracion) {
+        this.fechaFin = this.calcularFechaFin(duracion, this.fechaInicio);
     }
 
     public void modificarFechaFinal(LocalDateTime fechaFinalDefinitivo) {

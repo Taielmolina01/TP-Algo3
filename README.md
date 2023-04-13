@@ -43,7 +43,7 @@ Molina, Taiel. Padrón: 109458
                 efectos de las alarmas; pero sí deben tener pruebas asociadas.
                 
                 
-### Notas Evento
+## Notas Evento
 
 Hay varios escenarios posibles a la hora de crear un evento:
 
@@ -67,25 +67,40 @@ Según su fechaFinDefinitivo:
     
 A su vez se pueden combinar las primeras cuatro condiciones de repeticion con cualquiera de las ultimas dos condiciones de fechaFinDefinitivo.
 
-#### Ideas
+### Ideas
 
-Repeticion:
-
-
-Si es de unica vez, la fechaFinDefinitivo == fechaFin.
-
-Repeticion diaria le paso un Integer al constructor, y ya se que es cada esa cantidad de dias.
-
-Repeticion semanal paso un []String con los días en los que se repite el Evento (ej: ["lunes", "miercoles"]) entonces el evento se repetiria todos los lunes y miercoles de cada semana.
-
-Repeticion semanal paso un Integer que sea 30 y asumo que es todos los meses ?
-
-Repeticion anual paso Integer 365 y asumo que es una vez al año ? 
+##### Repeticion:
 
 
-Frecuencia:
+- Si es de unica vez, la fechaFinDefinitivo == fechaFin.
 
-.......
+- Repeticion diaria le paso un Integer al constructor, y ya se que es cada esa cantidad de dias.
+
+- Repeticion semanal paso un []String con los días en los que se repite el Evento (ej: ["lunes", "miercoles"]) entonces el evento se repetiria todos los lunes y miercoles de cada semana.
+
+- Repeticion semanal paso un Integer que sea 30 y asumo que es todos los meses ?
+
+- Repeticion anual paso Integer 365 y asumo que es una vez al año ? 
+
+
+#### Frecuencia:
+
+Los eventos se pueden repetir:
+
+    - Con frecuencia diaria, semanal, mensual o anual.
+    
+    - En caso de frecuencia diaria, es posible definir un intervalo (ej: “cada 3 días”).
+    
+    - En caso de frecuencia semanal, es posible definir los días de la semana (ej: “todos los martes y jueves”).
+    
+    - La repetición puede ser:
+    
+        + Infinita.
+        + Terminar en una fecha determinada (ej: hasta el 13 de enero).
+        + Terminar luego de una cantidad de repeticiones dada (ej: luego de 20 ocurrencias).
+        
+    - Al modificar o eliminar un evento con repetición, el cambio o eliminación se aplica a todas sus repeticiones.
+    
 
 
 Cosas a implementar:
