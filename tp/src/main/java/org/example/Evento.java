@@ -56,11 +56,23 @@ public class Evento {
         return false;
     }
 
+    private boolean hayEvento(LocalDateTime diaAAnalizar) {
+        if (diaAAnalizar.isBefore(this.fechaInicio) || diaAAnalizar.isAfter(this.fechaFinalDefinitivo)) {
+            return false;
+        } else {
+            /* Puede haber evento porque está entre el rango en el que inicio el evento y cuando termina
+            deberia analizar como hago para ir avanzando desde la fecha inicial hasta al fechaAAnalizar SIN PASARME,
+            y devolver true si en la fechaAAnalizar hubo evento
+            */
+            System.out.println("Puede haber evento");
+        }
+    }
+
     private void calcularFrecuencia(String[] frecuencia) {
         frecuencia[1] = frecuencia[1].toUpperCase();
         if (frecuencia.length != 2 || !esLetraValida(frecuencia[0]) || !esNumero(frecuencia[1])) {
-            System.out.println("Error con los datos ingresadoe n la frecuencia");
-        } else {
+            System.out.println("Error con los datos ingresados en la frecuencia");
+        } else { // Hace falta?
             if (frecuencia[0].equals("D")) {
                 System.out.println("D");
             }
