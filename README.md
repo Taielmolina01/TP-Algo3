@@ -6,6 +6,12 @@ Kriger, Lucas. Padrón: 109344
 
 Molina, Taiel. Padrón: 109458
 
+## Tareas a implementar
+
+- [ ] Evento dado las ocurrencias.
+- [ ] Evento dados los dias de la semana en los que se repite (hacer con frecuencia y poner mas componentes en el array. Ej:
+    ["D", "2", "5"] si se arranca un lunes la tarea, despues se repetiria el miercoles y luego el lunes de nuevo)
+
 ## Requerimientos etapa 1
 
 1. En un **calendario** se pueden crear, modificar y eliminar **eventos** y **tareas**.
@@ -108,11 +114,3 @@ Frecuencia debe ser un array de tamaño 2, la primera posicion debe tener un ind
         "M": mensual
         "A": anual
         En la segunda posicion se debe indicar cada cuantos dias/semanas/meses/años se produce el evento
-
-
-Cosas a implementar:
-
-- Si se repite infinitamente poner en fechaFinalDefinitivo como MAX de LocalDateTime (creo que es LocalDateTime.MAX)
-- Para ver si hay eventos antes o despues utilizar isAfter/isBefore
-- Manejarme con un constructor con un Integer para decir cada cuantos dias y otro con strings que simplmente diga
-  los dias de la semana en los que se repite.
