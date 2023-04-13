@@ -52,7 +52,7 @@ public class Evento {
         this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
         this.fechaFinalDefinitivo = fechaFinalDefinitivo;
         this.frecuencia = frecuencia;
-    }
+    } 
 
 
 

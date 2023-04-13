@@ -28,7 +28,7 @@ Molina, Taiel. Padrón: 109458
          2. Terminar en una fecha determinada (ej: hasta el 13 de enero).
          3. Terminar luego de una cantidad de repeticiones dada (ej: luego de 20 ocurrencias).
             
-      5. Al modificar o eliminar un evento con repetición, el cambio o eliminación se aplica a todas sus repticiones.
+      5. Al modificar o eliminar un evento con repetición, el cambio o eliminación se aplica a todas sus repeticiones.
 7. En un **evento** o **tarea** se pueden configurar una o más **alarmas**:
       1. La alarma se dispara en un instante de tiempo, que se puede determinar de dos maneras:
 
@@ -44,6 +44,38 @@ Molina, Taiel. Padrón: 109458
                 
                 
 ### Notas Evento
+
+Hay varios escenarios posibles a la hora de crear un evento:
+
+Según su repetición:
+    + De única vez.
+    + Repetición diaria (todos los días o cada tantos dias).
+    + Repeticion semanal (todos los martes y jueves por ej).
+    + Repeticion mensual (todos los 10 de cada mes).
+    + Repeticion anual.
+
+Según su fechaFinDefinitivo:
+    + Dada su fecha de fin.
+    + Dada la cantidad de veces que se repite el evento (20 repeticiones).
+    
+A su vez se pueden combinar las primeras cuatro condiciones de repeticion con cualquiera de las ultimas dos condiciones de fechaFinDefinitivo.
+
+#### Ideas
+
+Repeticion:
+
+Si es de unica vez, la fechaFinDefinitivo == fechaFin.
+Repeticion diaria le paso un Integer al constructor, y ya se que es cada esa cantidad de dias.
+Repeticion semanal paso un []String con los días en los que se repite el Evento (ej: ["lunes", "miercoles"]) entonces el evento se repetiria todos los lunes y miercoles de cada semana.
+Repeticion semanal paso un Integer que sea 30 y asumo que es todos los meses ?
+Repeticion anual paso Integer 365 y asumo que es una vez al año ? 
+
+Frecuencia:
+
+.......
+
+
+Cosas a implementar:
 
 - Si se repite infinitamente poner en fechaFinalDefinitivo como MAX de LocalDateTime (creo que es LocalDateTime.MAX)
 - Para ver si hay eventos antes o despues utilizar isAfter/isBefore
