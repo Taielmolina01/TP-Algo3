@@ -7,6 +7,6 @@ public class Main {
         System.out.println("Hola");
         String hola = "hola";
         String numero = "123";
-        System.out.println(isNumeric(hola));
+        System.out.println(hola + numero);
     }
 }

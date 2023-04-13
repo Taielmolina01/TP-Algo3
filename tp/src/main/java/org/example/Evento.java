@@ -10,21 +10,23 @@ public class Evento {
     private String descripcion;
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaFin; // Fin del evento sin contar sus repeticiones, NO es la fecha en donde terminan las repeticiones.
-
     private LocalDateTime fechaFinalDefinitivo; // Fecha en la que terminan las repeticiones del evento.
     private LocalTime duracion;
     private Integer repeticiones;
-
     private String[] frecuencia;
 
     private void constructorDefault(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion) {
-        this.nombre = nombre; this.descripcion = descripcion; this.fechaInicio = fechaInicio;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.fechaInicio = fechaInicio;
         this.calcularFechaFin(duracion);
     }
 
     private void calcularFechaFin(String duracion) {
         this.duracion = LocalTime.parse(duracion, DateTimeFormatter.ofPattern("HH:mm:ss"));
-        int hsDuracion = this.duracion.getHour(); int minsDuracion = this.duracion.getMinute(); int segsDuracion = this.duracion.getSecond();
+        int hsDuracion = this.duracion.getHour();
+        int minsDuracion = this.duracion.getMinute();
+        int segsDuracion = this.duracion.getSecond();
         this.fechaFin = this.fechaInicio.plusHours(hsDuracion).plusMinutes(minsDuracion).plusSeconds(segsDuracion);
     }
 
@@ -37,11 +39,11 @@ public class Evento {
         En la segunda posicion se debe indicar cada cuantos dias/semanas/meses/años se produce el evento
     */
 
-    private static boolean esNumero(String cadena){
+    private static boolean esNumero(String cadena) {
         try {
             Integer.parseInt(cadena);
             return true;
-        } catch (NumberFormatException nfe){
+        } catch (NumberFormatException nfe) {
             return false;
         }
     }
@@ -56,6 +58,7 @@ public class Evento {
         return false;
     }
 
+
     private boolean hayEvento(LocalDateTime diaAAnalizar) {
         if (diaAAnalizar.isBefore(this.fechaInicio) || diaAAnalizar.isAfter(this.fechaFinalDefinitivo)) {
             return false;
@@ -64,27 +67,57 @@ public class Evento {
             deberia analizar como hago para ir avanzando desde la fecha inicial hasta al fechaAAnalizar SIN PASARME,
             y devolver true si en la fechaAAnalizar hubo evento
             */
-            System.out.println("Puede haber evento");
+            String funcionAUtilizar = ""; // Ver q onda esto
+            Long multiplicador = Long.parseLong("1");
+            switch (this.frecuencia[0]) {
+                case "D":
+                    funcionAUtilizar = "PD"; multiplicador = Long.parseLong(this.frecuencia[1]);
+                    break;
+                case "S":
+                    funcionAUtilizar = "PD"; multiplicador = Long.parseLong(this.frecuencia[1]) * 7;
+                    break;
+                case "M":
+                    funcionAUtilizar = "PM"; multiplicador = Long.parseLong(this.frecuencia[1]);
+                    break;
+                case "A":
+                    funcionAUtilizar = "PY"; multiplicador = Long.parseLong(this.frecuencia[1]);
+                    break;
+            }
+            if (funcionAUtilizar.equals("PD")) { // Repito codigo a lo loco
+                for (LocalDateTime dia = this.fechaInicio; dia.isBefore(this.fechaFinalDefinitivo); dia = dia.plusDays(multiplicador)) {
+                    if (dia.isEqual(diaAAnalizar)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            if (funcionAUtilizar.equals("PM")) {
+                for (LocalDateTime dia = this.fechaInicio; dia.isBefore(this.fechaFinalDefinitivo); dia = dia.plusMonths(multiplicador)) {
+                    if (dia.isEqual(diaAAnalizar)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            if (funcionAUtilizar.equals("PY")) {
+                for (LocalDateTime dia = this.fechaInicio; dia.isBefore(this.fechaFinalDefinitivo); dia = dia.plusYears(multiplicador)) {
+                    if (dia.isEqual(diaAAnalizar)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return false;
         }
     }
 
-    private void calcularFrecuencia(String[] frecuencia) {
+    private boolean validarFrecuencia(String[] frecuencia) {
         frecuencia[1] = frecuencia[1].toUpperCase();
         if (frecuencia.length != 2 || !esLetraValida(frecuencia[0]) || !esNumero(frecuencia[1])) {
             System.out.println("Error con los datos ingresados en la frecuencia");
-        } else { // Hace falta?
-            if (frecuencia[0].equals("D")) {
-                System.out.println("D");
-            }
-            if (frecuencia[0].equals("S")) {
-                System.out.println("S");
-            }
-            if (frecuencia[0].equals("M")) {
-                System.out.println("M");
-            } else {
-                System.out.println("A");
-            }
+            return false;
         }
+        return true;
     }
 
     // Constructor si no se repite el evento nunca.
@@ -105,7 +138,7 @@ public class Evento {
     // Constructor si se repite el evento dada las veces que se va a repetir el evento.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion, Integer ocurrencias, String[] frecuencia) {
         this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
-
+        this.frecuencia = frecuencia;
         // con el dato de repeticiones y la frecuencia debo poder calcular la fechaFinalDefinitiva
     }
 
