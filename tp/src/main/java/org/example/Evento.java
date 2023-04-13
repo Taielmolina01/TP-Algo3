@@ -111,7 +111,7 @@ public class Evento {
         }
     }
 
-    private boolean validarFrecuencia(String[] frecuencia) {
+    private boolean validarFrecuencia(String[] frecuencia) { // Va o no? pienso que no porque sino tendria que validar cada cosa que ingreso.
         frecuencia[1] = frecuencia[1].toUpperCase();
         if (frecuencia.length != 2 || !esLetraValida(frecuencia[0]) || !esNumero(frecuencia[1])) {
             System.out.println("Error con los datos ingresados en la frecuencia");
@@ -131,15 +131,18 @@ public class Evento {
                   String[] frecuencia) {
         this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
         this.fechaFinalDefinitivo = fechaFinalDefinitivo;
-        this.frecuencia = frecuencia;
+        if (this.validarFrecuencia(frecuencia)) {
+            this.frecuencia = frecuencia;
+        }
     }
 
 
     // Constructor si se repite el evento dada las veces que se va a repetir el evento.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, LocalTime duracion, Integer ocurrencias, String[] frecuencia) {
         this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
-        this.frecuencia = frecuencia;
-        // con el dato de repeticiones y la frecuencia debo poder calcular la fechaFinalDefinitiva
+        if (this.validarFrecuencia(frecuencia)) {
+            this.frecuencia = frecuencia;
+        }
     }
 
 
