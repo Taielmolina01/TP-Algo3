@@ -14,7 +14,8 @@ public class Evento {
     private LocalDateTime fechaFinalDefinitivo; // Fecha en la que terminan las repeticiones del evento.
     private LocalTime duracion;
     private Integer repeticiones;
-    private String frecuencia;
+
+    private String[] frecuencia;
 
     private void constructorDefault(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion) {
         this.nombre = nombre; this.descripcion = descripcion; this.fechaInicio = fechaInicio;
@@ -27,42 +28,82 @@ public class Evento {
         this.fechaFin = this.fechaInicio.plusHours(hsDuracion).plusMinutes(minsDuracion).plusSeconds(segsDuracion);
     }
 
+    /* Se le debe pasar un array de tamaño 2, la primera posicion debe tener un indicador de si la frecuencia es diaria
+        semanal, mensual o anual representado por una letra
+        "D": diaria
+        "S": semanal
+        "M": mensual
+        "A": anual
+        En la segunda posicion se debe indicar cada cuantos dias/semanas/meses/años se produce el evento
+    */
+
+    private static boolean esNumero(String cadena){
+        try {
+            Integer.parseInt(cadena);
+            return true;
+        } catch (NumberFormatException nfe){
+            return false;
+        }
+    }
+
+    private static boolean esLetraValida(String letra) {
+        String[] letrasValidas = new String[]{"D", "S", "M", "A"};
+        for (String letraValida : letrasValidas) {
+            if (letra.equals(letraValida)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void calcularFrecuencia(String[] frecuencia) {
+        frecuencia[1] = frecuencia[1].toUpperCase();
+        if (frecuencia.length != 2 || !esLetraValida(frecuencia[0]) || !esNumero(frecuencia[1])) {
+            System.out.println("Error con los datos ingresadoe n la frecuencia");
+        } else {
+            if (frecuencia[0].equals("D")) {
+                System.out.println("D");
+            }
+            if (frecuencia[0].equals("S")) {
+                System.out.println("S");
+            }
+            if (frecuencia[0].equals("M")) {
+                System.out.println("M");
+            } else {
+                System.out.println("A");
+            }
+        }
+    }
+
     // Constructor si no se repite el evento nunca.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion) {
         this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
         this.fechaFinalDefinitivo = this.fechaFin;
     }
 
-    /*
-        Los eventos se pueden repetir:
-            - Con frecuencia diaria, semanal, mensual o anual.
-            - En caso de frecuencia diaria, es posible definir un intervalo (ej: “cada 3 días”).
-            - En caso de frecuenia semanal, es posible definir los días de la semana (ej: “todos los martes y jueves”).
-            - La repetición puede ser:
-                + Infinita.
-                + Terminar en una fecha determinada (ej: hasta el 13 de enero).
-                + Terminar luego de una cantidad de repeticiones dada (ej: luego de 20 ocurrencias).
-            - Al modificar o eliminar un evento con repetición, el cambio o eliminación se aplica a todas sus repeticiones.
-    */
-
-
-    // Constructor si se repite el evento dada la fecha de fin y la frecuencia con "cada x dias".
+    // Constructor si se repite el evento dada la fecha de fin.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion, LocalDateTime fechaFinalDefinitivo,
-                  Integer frecuencia) {
+                  String[] frecuencia) {
         this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
         this.fechaFinalDefinitivo = fechaFinalDefinitivo;
         this.frecuencia = frecuencia;
-    } 
-
+    }
 
 
     // Constructor si se repite el evento dada las veces que se va a repetir el evento.
-    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion, String frecuencia,
-                  Integer repeticiones) {
+    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, String duracion, Integer ocurrencias, String[] frecuencia) {
         this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
 
         // con el dato de repeticiones y la frecuencia debo poder calcular la fechaFinalDefinitiva
     }
+
+
+
+
+
+
+
+
 
 
     public void modificarNombre(String nombre) {
@@ -85,30 +126,6 @@ public class Evento {
         this.fechaFinalDefinitivo = fechaFinalDefinitivo;
     }
 
-
-    /*private void transformarFrecuencia(String frecuencia) { // Hace falta que la transforme?
-        String[] dias = {"lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"};
-        ArrayList<String> diasFrecuencia = new ArrayList<String>();
-        if (frecuencia.split(" ")[0].equals("cada")) {
-            // Frecuencia diaria
-            String cantDias = frecuencia.split(" ")[1];
-            DayOfWeek diaDeLaSemana = this.fechaInicio.getDayOfWeek();
-            String valor = dias[diaDeLaSemana.ordinal()];
-            // Para qué guardarme todos los dias? si siempre van a caer en dias distintos
-        }
-        if (frecuencia.split(" ")[0].equals("todos")) {
-            // Frecuencia semanal
-            String frecuenciaSinComas = frecuencia.replace(",", " ").replace("  ", " ");
-            for (String palabra : frecuenciaSinComas.split(" ")) {
-                for (String dia : dias) {
-                    if (palabra.equals(dia)) {
-                        diasFrecuencia.add(palabra);
-                    }
-                }
-            }
-            // return diasFrecuencia;
-        }
-    }*/
 
 
 }

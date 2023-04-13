@@ -1,13 +1,12 @@
 package org.example;
 
-import java.time.Duration;
+
 
 public class Main {
     public static void main(String[] args) {
-        String cadena = "todos los martes, miercoles y jueves";
-        String cadenaSinComas = cadena.replace(",", " ").replace("  ", " ");
-        for (String palabra : cadenaSinComas.split(" ")) {
-            System.out.println(palabra);
-        }
+        System.out.println("Hola");
+        String hola = "hola";
+        String numero = "123";
+        System.out.println(isNumeric(hola));
     }
 }
