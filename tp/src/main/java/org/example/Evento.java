@@ -2,7 +2,6 @@ package org.example;
 
 
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.lang.String;
 
 public class Evento {
@@ -23,14 +22,14 @@ public class Evento {
     }
 
     private LocalDateTime calcularFechaFin(LocalTime duracion, LocalDateTime fechaInicio) {
-        int hsDuracion = this.duracion.getHour();
-        int minsDuracion = this.duracion.getMinute();
-        int segsDuracion = this.duracion.getSecond();
+        int hsDuracion = duracion.getHour();
+        int minsDuracion = duracion.getMinute();
+        int segsDuracion = duracion.getSecond();
         fechaFin = fechaInicio.plusHours(hsDuracion).plusMinutes(minsDuracion).plusSeconds(segsDuracion);
         return fechaFin;
     }
 
-    /* Se le debe pasar un array de tamaño 2, la primera posicion debe tener un indicador de si la frecuencia es diaria
+    /* Frecuencia debe ser un array de tamaño 2, la primera posicion debe tener un indicador de si la frecuencia es diaria
         semanal, mensual o anual representado por una letra
         "D": diaria
         "S": semanal
@@ -39,7 +38,7 @@ public class Evento {
         En la segunda posicion se debe indicar cada cuantos dias/semanas/meses/años se produce el evento
     */
 
-    private static boolean esNumero(String cadena) {
+    /*private static boolean esNumero(String cadena) { // No hace falta verificar en principio
         try {
             Integer.parseInt(cadena);
             return true;
@@ -56,7 +55,7 @@ public class Evento {
             }
         }
         return false;
-    }
+    }*/
 
 
     private boolean hayEvento(LocalDateTime diaAAnalizar) {
@@ -111,14 +110,14 @@ public class Evento {
         }
     }
 
-    private boolean validarFrecuencia(String[] frecuencia) { // Va o no? pienso que no porque sino tendria que validar cada cosa que ingreso.
+    /*private boolean validarFrecuencia(String[] frecuencia) { // Va o no? pienso que no porque sino tendria que validar cada cosa que ingreso.
         frecuencia[1] = frecuencia[1].toUpperCase();
         if (frecuencia.length != 2 || !esLetraValida(frecuencia[0]) || !esNumero(frecuencia[1])) {
             System.out.println("Error con los datos ingresados en la frecuencia");
             return false;
         }
         return true;
-    }
+    }*/
 
     // Constructor si no se repite el evento nunca.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, LocalTime duracion) {
@@ -152,7 +151,13 @@ public class Evento {
 
 
 
+    public String getNombre() {
+        return this.nombre;
+    }
 
+    public String getDescripcion() {
+        return this.descripcion;
+    }
 
     public void modificarNombre(String nombre) {
         this.nombre = nombre;
@@ -173,7 +178,5 @@ public class Evento {
     public void modificarFechaFinal(LocalDateTime fechaFinalDefinitivo) {
         this.fechaFinalDefinitivo = fechaFinalDefinitivo;
     }
-
-
 
 }

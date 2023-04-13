@@ -100,7 +100,14 @@ Los eventos se pueden repetir:
         + Terminar luego de una cantidad de repeticiones dada (ej: luego de 20 ocurrencias).
         
     - Al modificar o eliminar un evento con repetición, el cambio o eliminación se aplica a todas sus repeticiones.
-    
+
+
+Frecuencia debe ser un array de tamaño 2, la primera posicion debe tener un indicador de si la frecuencia es diaria semanal, mensual o anual representado por una letra.
+        "D": diaria
+        "S": semanal
+        "M": mensual
+        "A": anual
+        En la segunda posicion se debe indicar cada cuantos dias/semanas/meses/años se produce el evento
 
 
 Cosas a implementar:
