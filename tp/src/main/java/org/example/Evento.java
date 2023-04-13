@@ -85,7 +85,7 @@ public class Evento {
             }
             if (funcionAUtilizar.equals("PD")) { // Repito codigo a lo loco
                 for (LocalDateTime dia = this.fechaInicio; dia.isBefore(this.fechaFinalDefinitivo); dia = dia.plusDays(multiplicador)) {
-                    if (dia.isEqual(diaAAnalizar)) {
+                    if (dia.isEqual(diaAAnalizar)) { // deberia hacer que si diaAAnalizar isBetween dia y dia + duracion
                         return true;
                     }
                 }
