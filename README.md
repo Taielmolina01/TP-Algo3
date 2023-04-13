@@ -48,14 +48,21 @@ Molina, Taiel. Padrón: 109458
 Hay varios escenarios posibles a la hora de crear un evento:
 
 Según su repetición:
+
     + De única vez.
+    
     + Repetición diaria (todos los días o cada tantos dias).
+    
     + Repeticion semanal (todos los martes y jueves por ej).
+    
     + Repeticion mensual (todos los 10 de cada mes).
+    
     + Repeticion anual.
 
 Según su fechaFinDefinitivo:
+
     + Dada su fecha de fin.
+    
     + Dada la cantidad de veces que se repite el evento (20 repeticiones).
     
 A su vez se pueden combinar las primeras cuatro condiciones de repeticion con cualquiera de las ultimas dos condiciones de fechaFinDefinitivo.
@@ -64,11 +71,17 @@ A su vez se pueden combinar las primeras cuatro condiciones de repeticion con cu
 
 Repeticion:
 
+
 Si es de unica vez, la fechaFinDefinitivo == fechaFin.
+
 Repeticion diaria le paso un Integer al constructor, y ya se que es cada esa cantidad de dias.
+
 Repeticion semanal paso un []String con los días en los que se repite el Evento (ej: ["lunes", "miercoles"]) entonces el evento se repetiria todos los lunes y miercoles de cada semana.
+
 Repeticion semanal paso un Integer que sea 30 y asumo que es todos los meses ?
+
 Repeticion anual paso Integer 365 y asumo que es una vez al año ? 
+
 
 Frecuencia:
 
