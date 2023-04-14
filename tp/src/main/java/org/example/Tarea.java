@@ -2,8 +2,8 @@ package org.example;
 
 public class Tarea {
 
-    private String titulo;
-    private String descripcion;
+    private final String titulo;
+    private final String descripcion;
 
     private boolean completada;
 
@@ -12,7 +12,19 @@ public class Tarea {
         this.descripcion = descripcion;
     }
 
+    public String verTitulo() {
+        return  this.titulo;
+    }
+
+    public String verDescripcion() {
+        return  this.descripcion;
+    }
+
     public void toggleTarea() {
-        completada = !completada;
+        this.completada = !this.completada;
+    }
+
+    public boolean estaCompletada() {
+        return this.completada;
     }
 }
