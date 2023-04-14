@@ -7,7 +7,12 @@ public class Tarea {
 
     private boolean completada;
 
-    public void toddleTarea() {
+    public Tarea(String titulo, String descripcion) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+    }
+
+    public void toggleTarea() {
         completada = !completada;
     }
 }
