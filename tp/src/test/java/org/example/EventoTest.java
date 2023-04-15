@@ -34,7 +34,7 @@ public class EventoTest {
         Duration duracion = Duration.ofHours(26);
         String[] frecuencia = {"D", "3"};
         Evento evento = new Evento("Evento1", "Este es el evento1", fechaInicio, duracion, fechaFinal, frecuencia);
-        LocalDateTime fechaAAnalizar = LocalDateTime.of(2001, 12, 25, 0, 0, 0);
+        LocalDateTime fechaAAnalizar = LocalDateTime.of(2001, 12, 23, 0, 0, 0);
 
         assertTrue(evento.hayEvento(fechaAAnalizar));
     }

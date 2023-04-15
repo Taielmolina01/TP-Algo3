@@ -66,7 +66,6 @@ public class Evento {
                     multiplicador = Long.parseLong(this.frecuencia[1]);
                     break;
             }
-            { 
                 while (dia.isBefore(this.fechaFinalDefinitivo)) {
                     if (diaAAnalizar.isEqual(dia) || (diaAAnalizar.isAfter(dia) && diaAAnalizar.isBefore(this.calcularFechaFin(this.duracion, dia)))) { // deberia hacer que si diaAAnalizar isBetween dia y dia + duracion
                         return true;
@@ -80,8 +79,8 @@ public class Evento {
                         dia = dia.plusYears(multiplicador);
                     }
                 }
+                return false;
             }
-        }
     }
 
 
