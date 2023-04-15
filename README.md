@@ -6,6 +6,12 @@ Kriger, Lucas. Padrón: 109344
 
 Molina, Taiel. Padrón: 109458
 
+## Tareas a implementar
+
+- [ ] Evento dado las ocurrencias.
+- [ ] Evento dados los dias de la semana en los que se repite (hacer con frecuencia y poner mas componentes en el array. Ej:
+    ["D", "2", "5"] si se arranca un lunes la tarea, despues se repetiria el miercoles y luego el lunes de nuevo)
+
 ## Requerimientos etapa 1
 
 1. En un **calendario** se pueden crear, modificar y eliminar **eventos** y **tareas**.
@@ -28,7 +34,7 @@ Molina, Taiel. Padrón: 109458
          2. Terminar en una fecha determinada (ej: hasta el 13 de enero).
          3. Terminar luego de una cantidad de repeticiones dada (ej: luego de 20 ocurrencias).
             
-      5. Al modificar o eliminar un evento con repetición, el cambio o eliminación se aplica a todas sus repticiones.
+      5. Al modificar o eliminar un evento con repetición, el cambio o eliminación se aplica a todas sus repeticiones.
 7. En un **evento** o **tarea** se pueden configurar una o más **alarmas**:
       1. La alarma se dispara en un instante de tiempo, que se puede determinar de dos maneras:
 
@@ -41,3 +47,70 @@ Molina, Taiel. Padrón: 109458
                 3. Enviar un email.
                 Nota: dado que en la primera etapa no se implementa la interacción con el usuario, no se deben implementar los 
                 efectos de las alarmas; pero sí deben tener pruebas asociadas.
+                
+                
+## Notas Evento
+
+Hay varios escenarios posibles a la hora de crear un evento:
+
+Según su repetición:
+
+    + De única vez.
+    
+    + Repetición diaria (todos los días o cada tantos dias).
+    
+    + Repeticion semanal (todos los martes y jueves por ej).
+    
+    + Repeticion mensual (todos los 10 de cada mes).
+    
+    + Repeticion anual.
+
+Según su fechaFinDefinitivo:
+
+    + Dada su fecha de fin.
+    
+    + Dada la cantidad de veces que se repite el evento (20 repeticiones).
+    
+A su vez se pueden combinar las primeras cuatro condiciones de repeticion con cualquiera de las ultimas dos condiciones de fechaFinDefinitivo.
+
+### Ideas
+
+##### Repeticion:
+
+
+- Si es de unica vez, la fechaFinDefinitivo == fechaFin.
+
+- Repeticion diaria le paso un Integer al constructor, y ya se que es cada esa cantidad de dias.
+
+- Repeticion semanal paso un []String con los días en los que se repite el Evento (ej: ["lunes", "miercoles"]) entonces el evento se repetiria todos los lunes y miercoles de cada semana.
+
+- Repeticion semanal paso un Integer que sea 30 y asumo que es todos los meses ?
+
+- Repeticion anual paso Integer 365 y asumo que es una vez al año ? 
+
+
+#### Frecuencia:
+
+Los eventos se pueden repetir:
+
+    - Con frecuencia diaria, semanal, mensual o anual.
+    
+    - En caso de frecuencia diaria, es posible definir un intervalo (ej: “cada 3 días”).
+    
+    - En caso de frecuencia semanal, es posible definir los días de la semana (ej: “todos los martes y jueves”).
+    
+    - La repetición puede ser:
+    
+        + Infinita.
+        + Terminar en una fecha determinada (ej: hasta el 13 de enero).
+        + Terminar luego de una cantidad de repeticiones dada (ej: luego de 20 ocurrencias).
+        
+    - Al modificar o eliminar un evento con repetición, el cambio o eliminación se aplica a todas sus repeticiones.
+
+
+Frecuencia debe ser un array de tamaño 2, la primera posicion debe tener un indicador de si la frecuencia es diaria semanal, mensual o anual representado por una letra.
+        "D": diaria
+        "S": semanal
+        "M": mensual
+        "A": anual
+        En la segunda posicion se debe indicar cada cuantos dias/semanas/meses/años se produce el evento
