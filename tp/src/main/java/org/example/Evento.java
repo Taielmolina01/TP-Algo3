@@ -3,23 +3,13 @@ package org.example;
 import java.time.*;
 import java.lang.String;
 
-public class Evento {
-    private String nombre;
-    private String descripcion;
-    private LocalDateTime fechaInicio;
+public class Evento extends elementoCalendario{
+
     private LocalDateTime fechaFin; // Fin del evento sin contar sus repeticiones, NO es la fecha en donde terminan las repeticiones.
     private LocalDateTime fechaFinalDefinitivo; // Fecha en la que terminan las repeticiones del evento.
     private Duration duracion;
     private Integer repeticiones;
     private String[] frecuencia;
-
-    private void constructorDefault(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.fechaInicio = fechaInicio;
-        this.duracion = duracion;
-        this.calcularFechaFin(duracion, fechaInicio);
-    }
 
     private LocalDateTime calcularFechaFin(Duration duracion, LocalDateTime fechaInicio) {
         fechaFin = fechaInicio.plusHours(duracion.toHours());
@@ -86,14 +76,17 @@ public class Evento {
 
     // Constructor si no se repite el evento nunca.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion) {
-        this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
+        super(nombre, descripcion, fechaInicio);
+        this.duracion = duracion;
+        this.fechaFin = this.calcularFechaFin(this.duracion, this.fechaInicio);
         this.fechaFinalDefinitivo = this.fechaFin;
     }
 
     // Constructor si se repite el evento dada la fecha de fin.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                   LocalDateTime fechaFinalDefinitivo, String[] frecuencia) {
-        this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
+        super(nombre, descripcion, fechaInicio);
+        this.duracion = duracion;
         this.fechaFinalDefinitivo = fechaFinalDefinitivo;
         this.frecuencia = frecuencia;
     }
@@ -102,28 +95,9 @@ public class Evento {
     // Constructor si se repite el evento dada las veces que se va a repetir el evento.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                   Integer ocurrencias, String[] frecuencia) {
-        this.constructorDefault(nombre, descripcion, fechaInicio, duracion);
+        super(nombre, descripcion, fechaInicio);
+        this.duracion = duracion;
         this.frecuencia = frecuencia;
-    }
-
-    public String getNombre() {
-        return this.nombre;
-    }
-
-    public String getDescripcion() {
-        return this.descripcion;
-    }
-
-    public void modificarNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void modificarDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public void modificarFechaInicio(LocalDateTime fechaInicio) {
-        this.fechaInicio = fechaInicio;
     }
 
     public void modificarDuracion(Duration duracion) {

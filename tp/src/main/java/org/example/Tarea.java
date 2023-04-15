@@ -1,4 +1,13 @@
 package org.example;
 
-public class Tarea {
+import java.time.LocalDateTime;
+
+public class Tarea extends elementoCalendario {
+
+    private Boolean estaCompletada;
+
+    public Tarea(String nombre, String descripcion, LocalDateTime fechaInicio) {
+        super(nombre, descripcion, fechaInicio);
+        this.estaCompletada = false;
+    }
 }
