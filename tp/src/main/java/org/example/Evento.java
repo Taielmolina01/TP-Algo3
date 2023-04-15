@@ -50,43 +50,37 @@ public class Evento {
             LocalDateTime dia = this.fechaInicio;
             switch (this.frecuencia[0]) {
                 case "D":
-                    funcionAUtilizar = "PD"; multiplicador = Long.parseLong(this.frecuencia[1]);
+                    funcionAUtilizar = "PD";
+                    multiplicador = Long.parseLong(this.frecuencia[1]);
                     break;
                 case "S":
-                    funcionAUtilizar = "PD"; multiplicador = Long.parseLong(this.frecuencia[1]) * 7;
+                    funcionAUtilizar = "PD";
+                    multiplicador = Long.parseLong(this.frecuencia[1]) * 7;
                     break;
                 case "M":
-                    funcionAUtilizar = "PM"; multiplicador = Long.parseLong(this.frecuencia[1]);
+                    funcionAUtilizar = "PM";
+                    multiplicador = Long.parseLong(this.frecuencia[1]);
                     break;
                 case "A":
-                    funcionAUtilizar = "PY"; multiplicador = Long.parseLong(this.frecuencia[1]);
+                    funcionAUtilizar = "PY";
+                    multiplicador = Long.parseLong(this.frecuencia[1]);
                     break;
             }
-            if (funcionAUtilizar.equals("PD")) { // Repito codigo a lo loco
+            { 
                 while (dia.isBefore(this.fechaFinalDefinitivo)) {
                     if (diaAAnalizar.isEqual(dia) || (diaAAnalizar.isAfter(dia) && diaAAnalizar.isBefore(this.calcularFechaFin(this.duracion, dia)))) { // deberia hacer que si diaAAnalizar isBetween dia y dia + duracion
                         return true;
                     }
-                    dia = dia.plusDays(multiplicador);
-                }
-            }
-            if (funcionAUtilizar.equals("PM")) {
-                while (dia.isBefore(this.fechaFinalDefinitivo)) {
-                    if (diaAAnalizar.isEqual(dia) || (diaAAnalizar.isAfter(dia) && diaAAnalizar.isBefore(this.calcularFechaFin(this.duracion, dia)))) {
-                        return true;
+                    if (funcionAUtilizar.equals("PD")) {
+                        dia = dia.plusDays(multiplicador);
                     }
-                    dia = dia.plusMonths(multiplicador);
-                }
-            }
-            if (funcionAUtilizar.equals("PY")) {
-                while (dia.isBefore(this.fechaFinalDefinitivo)) {
-                    if (diaAAnalizar.isEqual(dia) || (diaAAnalizar.isAfter(dia) && diaAAnalizar.isBefore(this.calcularFechaFin(this.duracion, dia)))) {
-                        return true;
+                    if (funcionAUtilizar.equals("PM")) {
+                        dia = dia.plusMonths(multiplicador);
+                    } else {
+                        dia = dia.plusYears(multiplicador);
                     }
                 }
-                dia = dia.plusYears(multiplicador);
             }
-            return false;
         }
     }
 
