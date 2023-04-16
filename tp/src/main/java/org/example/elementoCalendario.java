@@ -3,7 +3,7 @@ package org.example;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class elementoCalendario {
+public abstract class elementoCalendario {
     private String nombre;
     private String descripcion;
     protected LocalDateTime fechaInicio;
