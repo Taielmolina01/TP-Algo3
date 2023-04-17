@@ -108,9 +108,10 @@ Los eventos se pueden repetir:
     - Al modificar o eliminar un evento con repetición, el cambio o eliminación se aplica a todas sus repeticiones.
 
 
-Frecuencia debe ser un array de tamaño 2, la primera posicion debe tener un indicador de si la frecuencia es diaria semanal, mensual o anual representado por una letra.
-        "D": diaria
-        "S": semanal
-        "M": mensual
-        "A": anual
-        En la segunda posicion se debe indicar cada cuantos dias/semanas/meses/años se produce el evento
+Frecuencia es un array de DayOfWeek, deberia pasar un integer para los casos en los que se repita cada mas de una semana o cada mas de un mes o cada mas de un año.
+
+
+
+DayOfWeek is an enum representing the 7 days of the week - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday and Sunday.
+
+
