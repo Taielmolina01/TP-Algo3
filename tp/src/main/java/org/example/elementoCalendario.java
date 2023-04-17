@@ -13,9 +13,17 @@ public abstract class elementoCalendario {
     public elementoCalendario(String nombre, String descripcion, LocalDateTime fechaInicio, Boolean todoElDia) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.fechaInicio = fechaInicio;
-        this.alarmas = new ArrayList<>();
         this.todoElDia = todoElDia;
+        this.definirFechaInicio(fechaInicio);
+        this.alarmas = new ArrayList<>();
+    }
+
+   private void definirFechaInicio(LocalDateTime fechaInicio) {
+        if (this.todoElDia) {
+            this.fechaInicio = this.fechaInicio.toLocalDate().atStartOfDay();
+        } else {
+            this.fechaInicio = fechaInicio;
+        }
     }
 
     public void agregarAlarma(Alarma alarma) {
