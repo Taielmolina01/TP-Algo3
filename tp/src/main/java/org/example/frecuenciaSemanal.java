@@ -1,21 +1,24 @@
 package org.example;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class frecuenciaSemanal extends Frecuencia{
+public class frecuenciaSemanal extends Frecuencia {
 
-    private Integer cantidadSemanas;
-    public frecuenciaSemanal(DayOfWeek[] frecuencia, Integer cantidadSemanas) {
-        super(frecuencia);
-        this.cantidadSemanas = cantidadSemanas;
+    private DayOfWeek[] diasRepeticion;
+
+    public frecuenciaSemanal(DayOfWeek[] diasRepeticion, Integer frecuenciaDiaria) {
+        super(frecuenciaDiaria);
+        this.diasRepeticion = diasRepeticion;
     }
 
-    public void modificarCantidadSemanas(Integer cantidadSemanas){
-        this.cantidadSemanas = cantidadSemanas;
+    public ArrayList<DayOfWeek> getDiasRepeticion() {
+        return new ArrayList<>(Arrays.asList(this.diasRepeticion));
     }
 
-    public Integer getCantidadSemanas() {
-        return this.cantidadSemanas;
+    public void modificarDiasRepeticion(DayOfWeek[] diasRepeticion) {
+        this.diasRepeticion = diasRepeticion;
     }
 
 }

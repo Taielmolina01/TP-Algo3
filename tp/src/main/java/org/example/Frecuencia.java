@@ -1,20 +1,18 @@
 package org.example;
 
-import java.time.DayOfWeek;
+public abstract class Frecuencia {
+    private Integer frecuenciaRepeticiones;
 
-public class Frecuencia {
-
-    protected DayOfWeek[] frecuencia;
-
-    public Frecuencia(DayOfWeek[] frecuencia){
-        this.frecuencia = frecuencia;
+    public Frecuencia(Integer frecuenciaRepeticiones) {
+        this.frecuenciaRepeticiones = frecuenciaRepeticiones;
     }
 
-    public DayOfWeek[] getFrecuencia() {
-        return this.frecuencia;
+    public Integer getFrecuenciaRepeticiones() {
+        return this.frecuenciaRepeticiones;
     }
 
-    public void modificarFrecuencia(DayOfWeek[] frecuencia) {
-        this.frecuencia = frecuencia;
+    public void modificarFrecuenciaRepeticiones(Integer frecuenciaRepeticiones) {
+        this.frecuenciaRepeticiones = frecuenciaRepeticiones;
     }
+
 }
