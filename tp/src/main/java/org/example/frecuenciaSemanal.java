@@ -1,8 +1,6 @@
 package org.example;
 
 import java.time.DayOfWeek;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class frecuenciaSemanal extends Frecuencia {
 
