@@ -9,7 +9,7 @@ public class Evento extends elementoCalendario {
     private LocalDateTime fechaFinalDefinitivo; // Fecha en la que terminan las repeticiones del evento.
     private Duration duracion;
     private Integer ocurrencias;
-    private Frecuencia frecuencia;
+    private frecuencia frecuencia;
 
     private static LocalDateTime calcularFechaFin(LocalDateTime fechaInicio, Duration duracion) {
         return fechaInicio.plusHours(duracion.toHours());
@@ -46,7 +46,7 @@ public class Evento extends elementoCalendario {
     // Constructor si se repite el evento dada la fecha de fin, si es de duracion infinita se pasa
     // localdatetime.MAX.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
-                  Boolean todoElDia, LocalDateTime fechaFinalDefinitivo, Frecuencia frecuencia) {
+                  Boolean todoElDia, LocalDateTime fechaFinalDefinitivo, frecuencia frecuencia) {
         super(nombre, descripcion, fechaInicio, todoElDia);
         this.definirDuracion(duracion);
         this.fechaFinalDefinitivo = fechaFinalDefinitivo;
@@ -56,7 +56,7 @@ public class Evento extends elementoCalendario {
 
     // Constructor si se repite el evento dada las veces que se va a repetir el evento.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
-                  Boolean todoElDia, Integer ocurrencias, Frecuencia frecuencia) {
+                  Boolean todoElDia, Integer ocurrencias, frecuencia frecuencia) {
         super(nombre, descripcion, fechaInicio, todoElDia);
         this.definirDuracion(duracion);
         this.frecuencia = frecuencia;
@@ -71,7 +71,7 @@ public class Evento extends elementoCalendario {
         this.fechaFinalDefinitivo = fechaFinalDefinitivo;
     }
 
-    public void modificarFrecuencia(Frecuencia frecuencia) {
+    public void modificarFrecuencia(frecuencia frecuencia) {
         this.frecuencia = frecuencia;
     }
 

@@ -12,13 +12,11 @@ public enum frecuencia {
     },
 
     SEMANAL {
-
         /*diasSemana debe estar en orden segun el ordinal*/
         public LocalDateTime getProximaFecha(LocalDateTime fechaInicial, DayOfWeek[] diasSemana,
                                              Integer frecuenciaSemanal) {
             DayOfWeek diaActual = fechaInicial.getDayOfWeek();
             LocalDateTime fechaProxima = null;
-            // [MONDAY, THURSDAY]
             for (int i = 0; i < diasSemana.length; i++) {
                 var dia = diasSemana[i];
                 if (diaActual == dia) {
