@@ -13,8 +13,8 @@ public class frecuenciaSemanal extends Frecuencia {
         this.diasRepeticion = diasRepeticion;
     }
 
-    public ArrayList<DayOfWeek> getDiasRepeticion() {
-        return new ArrayList<>(Arrays.asList(this.diasRepeticion));
+    public DayOfWeek[] getDiasRepeticion() {
+        return this.diasRepeticion;
     }
 
     public void modificarDiasRepeticion(DayOfWeek[] diasRepeticion) {
