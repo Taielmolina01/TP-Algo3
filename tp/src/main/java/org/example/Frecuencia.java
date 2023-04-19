@@ -17,8 +17,6 @@ public abstract class Frecuencia {
         this.frecuenciaRepeticiones = frecuenciaRepeticiones;
     }
 
-    public LocalDateTime getProximaFecha(LocalDateTime fechaInicial) {
-        return fechaInicial;
-    }
+    public abstract LocalDateTime getProximaFecha(LocalDateTime fechaInicial);
 
 }
