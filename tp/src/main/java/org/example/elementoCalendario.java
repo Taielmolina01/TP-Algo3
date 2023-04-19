@@ -13,9 +13,10 @@ public abstract class elementoCalendario {
 
     private final ArrayList<Alarma> alarmas;
 
-    public elementoCalendario(String nombre, String descripcion, LocalDateTime fechaInicio) {
+    public elementoCalendario(String nombre, String descripcion, boolean deDiaCompleto, LocalDateTime fechaInicio) {
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.deDiaCompleto = deDiaCompleto;
         this.fechaInicio = fechaInicio;
         this.alarmas = new ArrayList<>();
     }
