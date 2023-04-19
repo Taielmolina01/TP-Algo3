@@ -46,8 +46,8 @@ public class EventoTest {
         Evento evento = new Evento("Cumpleaños", "de Diego Essaya", fechaInicio, duracion, true, fechaFinal, frecuencia);
 
         for (int i = 2001; i < 2091; i++) {
-            assertTrue(evento.hayEvento(LocalDateTime.of(i, 12, 22, 0,0,0)));
-            assertFalse(evento.hayEvento(LocalDateTime.of(i, 12, 23, 0,0,1)));
+            assertTrue(evento.hayEvento(LocalDateTime.of(i, 12, 22, 0, 0, 0)));
+            assertFalse(evento.hayEvento(LocalDateTime.of(i, 12, 23, 0, 0, 0)));
         }
     }
 
