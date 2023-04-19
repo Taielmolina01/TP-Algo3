@@ -6,14 +6,16 @@ import java.time.LocalDateTime;
 public class frecuenciaSemanal extends Frecuencia {
     private DayOfWeek[] diasSemana;
 
-    public frecuenciaSemanal(DayOfWeek[] diasSemana, Integer frecuenciaDiaria) {
-        super(frecuenciaDiaria);
+    public frecuenciaSemanal(DayOfWeek[] diasSemana, Integer frecuenciaSemanal) {
+        super(frecuenciaSemanal);
         this.diasSemana = diasSemana;
     }
 
     @Override
     public LocalDateTime getProximaFecha(LocalDateTime fechaInicial) { // Está mal
         DayOfWeek diaActual = fechaInicial.getDayOfWeek();
+        System.out.println(diaActual);
+        // 18/3/2020
         LocalDateTime fechaProxima = null;
         for (int i = 0; i < this.diasSemana.length; i++) {
             DayOfWeek dia = this.diasSemana[i];
@@ -21,7 +23,7 @@ public class frecuenciaSemanal extends Frecuencia {
                 if (i != this.diasSemana.length - 1) {
                     fechaProxima = fechaInicial.plusDays(this.diasSemana[i+1].getValue() - diaActual.getValue());
                 } else {
-                    fechaProxima = fechaInicial.plusDays((this.diasSemana[0].getValue() + diaActual.getValue()) % 8 + (this.frecuenciaRepeticiones - 1));
+                    fechaProxima = fechaInicial.plusDays((diaActual.getValue() - this.diasSemana[0].getValue() - 1) % 8 + ((this.frecuenciaRepeticiones - 1) * 7));
                 }
             }
         }
