@@ -55,14 +55,6 @@ public class Evento extends elementoCalendario {
         return eventos;
     }
 
-    private Long[] formatearDuracion() {
-        Long duracionHoras = this.duracion.toHours();
-        Long duracionMinutos = this.duracion.minusHours(duracionHoras).toMinutes();
-        Long duracionSegundos = this.duracion.minusHours(duracionHoras).minusMinutes(duracionMinutos).toSeconds();
-        Long[] duracionFormateada = {duracionHoras , duracionMinutos, duracionSegundos};
-        return duracionFormateada;
-    }
-
     public boolean hayEvento(LocalDateTime diaAAnalizar) {
         ArrayList<LocalDateTime> eventos = eventosHastaFecha(diaAAnalizar);
         LocalDateTime ultimoDiaInicio = eventos.get(eventos.size()-1);
@@ -105,8 +97,17 @@ public class Evento extends elementoCalendario {
         this.calcularFechaFin();
     }
 
+    private Long[] formatearDuracion() {
+        Long duracionHoras = this.duracion.toHours();
+        Long duracionMinutos = this.duracion.minusHours(duracionHoras).toMinutes();
+        Long duracionSegundos = this.duracion.minusHours(duracionHoras).minusMinutes(duracionMinutos).toSeconds();
+        Long[] duracionFormateada = {duracionHoras , duracionMinutos, duracionSegundos};
+        return duracionFormateada;
+    }
+
+
     private boolean isBetween(LocalDateTime diaAAnalizar, LocalDateTime diaInicio, LocalDateTime diaFin) {
         return diaAAnalizar.equals(diaInicio) || diaAAnalizar.equals(diaFin) || (diaAAnalizar.isAfter(diaInicio) && diaAAnalizar.isBefore(diaFin));
     }
-    
+
 }
