@@ -109,7 +109,7 @@ public class EventoTest {
     @Test
     public void testFrecuenciaDiaria() {
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 3, 16, 12, 30, 0);
-        LocalDateTime fechaFinal = LocalDateTime.of(2023, 4, 16, 0,0,0);
+        LocalDateTime fechaFinal = LocalDateTime.of(2023, 4, 16, 0, 0, 0);
         Frecuencia frecuencia = new frecuenciaDiaria(2);
         Duration duracion = Duration.ofHours(2).plusMinutes(20);
         Evento evento = new Evento("Almuerzo", "con mi abuela", fechaInicio, duracion, false, fechaFinal, frecuencia);
