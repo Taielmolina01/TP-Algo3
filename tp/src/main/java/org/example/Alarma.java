@@ -1,4 +1,11 @@
 package org.example;
-public interface Alarma {
+
+import java.time.LocalDateTime;
+
+public class Alarma {
+
+    public void dispararAlarma() {
+
+    }
 
 }
