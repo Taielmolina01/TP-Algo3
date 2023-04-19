@@ -1,4 +1,4 @@
 package org.example;
+public interface Alarma {
 
-public class Alarma {
 }
