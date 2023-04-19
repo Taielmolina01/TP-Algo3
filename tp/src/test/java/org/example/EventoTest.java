@@ -69,7 +69,7 @@ public class EventoTest {
     @Test
     public void testFrecuenciaSemanal() {
         LocalDateTime fechaInicio = LocalDateTime.of(2020, 3, 16, 0, 0, 0);
-        LocalDateTime fechaFinal = LocalDateTime.of(2020, 4, 1, 0,0,0);
+        LocalDateTime fechaFinal = LocalDateTime.of(2020, 4, 1, 0, 0, 0);
         DayOfWeek[] diasSemana = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY};
         Frecuencia frecuencia = new frecuenciaSemanal(diasSemana, 1);
         Evento evento = new Evento("Clases", "en FIUBA", fechaInicio, null, true, fechaFinal, frecuencia);
@@ -78,18 +78,18 @@ public class EventoTest {
         int[] diasFalse = {18, 21, 22, 25, 28, 29};
 
         for (int dia : diasTrue) {
-            assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 0,0,0)));
+            assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 0, 0, 0)));
         }
         for (int dia : diasFalse) {
-            assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 0,0,0)));
+            assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 0, 0, 0)));
         }
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 4, 1, 0,0,0)));
+        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 4, 1, 0, 0, 0)));
     }
 
     @Test
     public void testFrecuenciaSemanal2() {
         LocalDateTime fechaInicio = LocalDateTime.of(2020, 3, 16, 0, 0, 0);
-        LocalDateTime fechaFinal = LocalDateTime.of(2020, 4, 1, 0,0,0);
+        LocalDateTime fechaFinal = LocalDateTime.of(2020, 4, 1, 0, 0, 0);
         DayOfWeek[] diasSemana = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY};
         Frecuencia frecuencia = new frecuenciaSemanal(diasSemana, 2);
         Evento evento = new Evento("Clases", "en FIUBA", fechaInicio, null, true, fechaFinal, frecuencia);
@@ -98,12 +98,12 @@ public class EventoTest {
         int[] diasFalse = {18, 21, 22, 23, 24, 25, 26, 27, 28, 29};
 
         for (int dia : diasTrue) {
-            assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 0,0,0)));
+            assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 0, 0, 0)));
         }
         for (int dia : diasFalse) {
-            assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 0,0,0)));
+            assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 0, 0, 0)));
         }
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 4, 1, 0,0,0)));
+        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 4, 1, 0, 0, 0)));
     }
 
     @Test
@@ -116,17 +116,17 @@ public class EventoTest {
 
 
         for (int i = 16; i < 31; i = i + 2) {
-            assertTrue(evento.hayEvento(LocalDateTime.of(2023,3, i, 12,30,0)));
-            assertTrue(evento.hayEvento(LocalDateTime.of(2023,3, i, 13,30,0)));
-            assertTrue(evento.hayEvento(LocalDateTime.of(2023,3, i, 14,30,0)));
-            assertTrue(evento.hayEvento(LocalDateTime.of(2023,3, i, 14,49,0)));
+            assertTrue(evento.hayEvento(LocalDateTime.of(2023,3, i, 12, 30, 0)));
+            assertTrue(evento.hayEvento(LocalDateTime.of(2023,3, i, 13, 30, 0)));
+            assertTrue(evento.hayEvento(LocalDateTime.of(2023,3, i, 14, 30, 0)));
+            assertTrue(evento.hayEvento(LocalDateTime.of(2023,3, i, 14, 49, 0)));
         }
 
         for (int i = 17; i < 31; i = i + 2) {
-            assertFalse(evento.hayEvento(LocalDateTime.of(2023,3, i, 12,30,0)));
-            assertFalse(evento.hayEvento(LocalDateTime.of(2023,3, i, 13,30,0)));
-            assertFalse(evento.hayEvento(LocalDateTime.of(2023,3, i, 14,30,0)));
-            assertFalse(evento.hayEvento(LocalDateTime.of(2023,3, i, 14,49,0)));
+            assertFalse(evento.hayEvento(LocalDateTime.of(2023,3, i, 12, 30, 0)));
+            assertFalse(evento.hayEvento(LocalDateTime.of(2023,3, i, 13, 30, 0)));
+            assertFalse(evento.hayEvento(LocalDateTime.of(2023,3, i, 14, 30, 0)));
+            assertFalse(evento.hayEvento(LocalDateTime.of(2023,3, i, 14, 49, 0)));
         }
 
     }
