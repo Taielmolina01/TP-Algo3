@@ -90,7 +90,7 @@ public class Evento extends elementoCalendario {
 
     private void definirDuracion(Duration duracion) {
         if (this.todoElDia) {
-            this.duracion = Duration.ofDays(1);
+            this.duracion = Duration.ofHours(23).plusMinutes(59).plusSeconds(59);
         } else {
             this.duracion = duracion;
         }

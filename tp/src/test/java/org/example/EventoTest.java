@@ -74,25 +74,16 @@ public class EventoTest {
         Frecuencia frecuencia = new frecuenciaSemanal(diasSemana, 1);
         Evento evento = new Evento("Clases", "en FIUBA", fechaInicio, null, true, fechaFinal, frecuencia);
 
-        // marzo: 16,17,19,20,23,24,26,27, 30, 31
+        int[] diasTrue = {16, 17, 19, 20, 23, 24, 26, 27, 30, 31};
+        int[] diasFalse = {18, 21, 22, 25, 28, 29};
 
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 16, 0,0,0)));
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 17, 0,0,0)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 18, 0,0,1)));
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 19, 0,0,0)));
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 20, 0,0,0)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 21, 0,0,1)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 22, 0,0,1)));
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 23, 0,0,0)));
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 24, 0,0,0)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 25, 0,0,1)));
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 26, 0,0,0)));
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 27, 0,0,0)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 28, 0,0,1)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 29, 0,0,1)));
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 30, 0,0,0)));
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 31, 0,0,0)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 4, 1, 0,0,1)));
+        for (int dia : diasTrue) {
+            assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 0,0,0)));
+        }
+        for (int dia : diasFalse) {
+            assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 0,0,0)));
+        }
+        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 4, 1, 0,0,0)));
     }
 
     @Test
@@ -103,26 +94,16 @@ public class EventoTest {
         Frecuencia frecuencia = new frecuenciaSemanal(diasSemana, 2);
         Evento evento = new Evento("Clases", "en FIUBA", fechaInicio, null, true, fechaFinal, frecuencia);
 
-        // marzo: 16,17,19,20, 30, 31
+        int[] diasTrue = {16, 17, 19, 20, 30, 31};
+        int[] diasFalse = {18, 21, 22, 23, 24, 25, 26, 27, 28, 29};
 
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 16, 0,0,0)));
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 17, 0,0,0)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 18, 0,0,1)));
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 19, 0,0,0)));
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 20, 0,0,0)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 21, 0,0,1)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 22, 0,0,1)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 23, 0,0,0)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 24, 0,0,0)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 25, 0,0,1)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 26, 0,0,0)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 27, 0,0,0)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 28, 0,0,1)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, 29, 0,0,1)));
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 30, 0,0,0)));
-        assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, 31, 0,0,0)));
-        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 4, 1, 0,0,1)));
-
+        for (int dia : diasTrue) {
+            assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 0,0,0)));
+        }
+        for (int dia : diasFalse) {
+            assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 0,0,0)));
+        }
+        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 4, 1, 0,0,0)));
     }
 
     @Test
