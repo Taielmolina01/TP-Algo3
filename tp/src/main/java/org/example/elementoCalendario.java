@@ -20,7 +20,7 @@ public abstract class elementoCalendario {
 
    private void definirFechaInicio(LocalDateTime fechaInicio) {
         if (this.todoElDia) {
-            this.fechaInicio = this.fechaInicio.toLocalDate().atStartOfDay();
+            this.fechaInicio = fechaInicio.toLocalDate().atStartOfDay();
         } else {
             this.fechaInicio = fechaInicio;
         }
@@ -41,6 +41,8 @@ public abstract class elementoCalendario {
     public String getDescripcion() {
         return this.descripcion;
     }
+
+    public LocalDateTime getFechaInicio() { return this.fechaInicio; }
 
     public void modificarNombre(String nombre) {
         this.nombre = nombre;
