@@ -119,14 +119,14 @@ public class EventoTest {
             assertTrue(evento.hayEvento(LocalDateTime.of(2023,3, i, 12, 30, 0)));
             assertTrue(evento.hayEvento(LocalDateTime.of(2023,3, i, 13, 30, 0)));
             assertTrue(evento.hayEvento(LocalDateTime.of(2023,3, i, 14, 30, 0)));
-            assertTrue(evento.hayEvento(LocalDateTime.of(2023,3, i, 14, 49, 0)));
+            assertTrue(evento.hayEvento(LocalDateTime.of(2023,3, i, 14, 50, 0)));
         }
 
         for (int i = 17; i < 31; i = i + 2) {
             assertFalse(evento.hayEvento(LocalDateTime.of(2023,3, i, 12, 30, 0)));
             assertFalse(evento.hayEvento(LocalDateTime.of(2023,3, i, 13, 30, 0)));
             assertFalse(evento.hayEvento(LocalDateTime.of(2023,3, i, 14, 30, 0)));
-            assertFalse(evento.hayEvento(LocalDateTime.of(2023,3, i, 14, 49, 0)));
+            assertFalse(evento.hayEvento(LocalDateTime.of(2023,3, i, 14, 50, 0)));
         }
 
     }
