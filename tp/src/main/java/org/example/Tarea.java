@@ -1,23 +1,13 @@
 package org.example;
 
-public class Tarea {
+import java.time.LocalDateTime;
 
-    private final String titulo;
-    private final String descripcion;
+public class Tarea extends elementoCalendario {
 
     private boolean completada;
 
-    public Tarea(String titulo, String descripcion) {
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-    }
-
-    public String verTitulo() {
-        return  this.titulo;
-    }
-
-    public String verDescripcion() {
-        return  this.descripcion;
+    public Tarea(String nombre, String descripcion, LocalDateTime fechaInicio) {
+        super(nombre, descripcion, fechaInicio);
     }
 
     public void toggleTarea() {
