@@ -3,7 +3,6 @@ package org.example;
 import org.junit.Test;
 
 import java.time.*;
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
