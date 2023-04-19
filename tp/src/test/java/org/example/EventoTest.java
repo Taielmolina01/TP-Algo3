@@ -54,13 +54,13 @@ public class EventoTest {
     @Test
     public void testFrecuenciaMensual() {
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 3, 15, 14, 0, 0);
-        LocalDateTime fechaFinal = LocalDateTime.of(2023, 7, 1, 0,0,0);
+        LocalDateTime fechaFinal = LocalDateTime.of(2023, 7, 1, 0, 0, 0);
         Duration duracion = Duration.ofHours(3);
         Frecuencia frecuencia = new frecuenciaMensual(1);
         Evento evento = new Evento("Reunión", "de FIUBA", fechaInicio, duracion, false, fechaFinal, frecuencia);
 
         for (int i = 3; i < 7; i++) {
-            assertTrue(evento.hayEvento(LocalDateTime.of(2023, i, 15, 14, 0,0)));
+            assertTrue(evento.hayEvento(LocalDateTime.of(2023, i, 15, 14, 0, 0)));
         }
 
         assertFalse(evento.hayEvento(LocalDateTime.of(2023, 7, 15, 14, 0, 0)));
