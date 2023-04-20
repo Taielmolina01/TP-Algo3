@@ -6,8 +6,8 @@ public class Tarea extends elementoCalendario {
 
     private boolean completada;
 
-    public Tarea(String nombre, String descripcion, LocalDateTime fechaInicio) {
-        super(nombre, descripcion, true, fechaInicio);
+    public Tarea(String nombre, String descripcion, boolean deDiaCompleto, LocalDateTime fechaInicio) {
+        super(nombre, descripcion, deDiaCompleto, fechaInicio);
     }
 
     public void toggleTarea() {
