@@ -10,7 +10,7 @@ public class Evento extends elementoCalendario {
     private LocalDateTime fechaFin; // Fin del evento sin contar sus repeticiones, NO es la fecha en donde terminan las repeticiones.
     private LocalDateTime fechaFinalDefinitivo; // Fecha en la que terminan las repeticiones del evento.
     private Duration duracion;
-    private int ocurrencias;
+    private Integer ocurrencias;
     private Frecuencia frecuencia;
 
     // Constructores.
@@ -67,12 +67,21 @@ public class Evento extends elementoCalendario {
         this.calcularFechaFin();
     }
 
+    public void modificarOcurrencias(int ocurrencias) {
+        if (this.ocurrencias != null) {
+            this.ocurrencias = ocurrencias;
+            this.calcularFechaFinDefinitivo();
+        }
+    }
     public void modificarFechaFinal(LocalDateTime fechaFinalDefinitivo) {
         this.fechaFinalDefinitivo = fechaFinalDefinitivo;
     }
 
     public void modificarFrecuencia(Frecuencia frecuencia) {
         this.frecuencia = frecuencia;
+        if (this.ocurrencias != null) {
+            this.calcularFechaFinDefinitivo();
+        }
     }
 
     public Duration getDuracion() {
