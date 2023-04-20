@@ -29,11 +29,7 @@ public class frecuenciaSemanal extends Frecuencia {
         return fechaProxima;
     }
 
-    public DayOfWeek[] getDiasSemana() {
-        return this.diasSemana;
-    }
+    public DayOfWeek[] getDiasSemana() { return this.diasSemana; }
 
-    public void modificarDiasSemana(DayOfWeek[] diasSemana) {
-        this.diasSemana = diasSemana;
-    }
+    public void modificarDiasSemana(DayOfWeek[] diasSemana) { this.diasSemana = diasSemana; }
 }

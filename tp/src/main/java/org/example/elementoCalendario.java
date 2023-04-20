@@ -27,33 +27,21 @@ public abstract class elementoCalendario {
         }
     }
 
-    public void agregarAlarma(Alarma alarma) {
-        this.alarmas.add(alarma);
-    }
+    public void agregarAlarma(Alarma alarma) { this.alarmas.add(alarma); }
 
     public Boolean getTodoElDia() { return this.todoElDia; }
 
     public void modificarTodoElDia(Boolean todoElDia) { this.todoElDia = todoElDia; }
 
-    public String getNombre() {
-        return this.nombre;
-    }
+    public String getNombre() { return this.nombre; }
 
-    public String getDescripcion() {
-        return this.descripcion;
-    }
+    public String getDescripcion() { return this.descripcion; }
 
     public LocalDateTime getFechaInicio() { return this.fechaInicio; }
 
-    public void modificarNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public void modificarNombre(String nombre) { this.nombre = nombre; }
 
-    public void modificarDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+    public void modificarDescripcion(String descripcion) {  this.descripcion = descripcion; }
 
-    public void modificarFechaInicio(LocalDateTime fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
+    public void modificarFechaInicio(LocalDateTime fechaInicio) { this.fechaInicio = fechaInicio; }
 }
