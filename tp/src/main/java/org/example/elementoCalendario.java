@@ -4,12 +4,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public abstract class elementoCalendario {
+
     private String nombre;
     private String descripcion;
-
     protected boolean todoElDia;
     protected LocalDateTime fechaInicio;
-
     private final ArrayList<Alarma> alarmas;
 
     public elementoCalendario(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {

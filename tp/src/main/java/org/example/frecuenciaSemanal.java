@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
 public class frecuenciaSemanal extends Frecuencia {
+
     private DayOfWeek[] diasSemana;
 
     public frecuenciaSemanal(DayOfWeek[] diasSemana, Integer frecuenciaSemanal) {

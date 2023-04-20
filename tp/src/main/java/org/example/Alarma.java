@@ -32,8 +32,8 @@ public class Alarma {
 
     public efecto dispararAlarma(LocalDateTime fechaActual) {
         if (!fechaActual.isEqual(fechaDisparador)) {
-            return  efecto.NADA;
+            return efecto.NADA;
         }
-        return  efectoProducido;
+        return efectoProducido;
     }
 }
