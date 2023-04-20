@@ -3,11 +3,17 @@ package org.example;
 import java.time.LocalDateTime;
 
 public class Tarea extends elementoCalendario {
+    private boolean completada;
 
-    private Boolean estaCompletada;
+    public Tarea(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {
+        super(nombre, descripcion, fechaInicio, todoElDia);
+    }
 
-    public Tarea(String nombre, String descripcion, LocalDateTime fechaInicio) {
-        super(nombre, descripcion, fechaInicio);
-        this.estaCompletada = false;
+    public void toggleTarea() {
+        this.completada = !this.completada;
+    }
+
+    public boolean estaCompletada() {
+        return this.completada;
     }
 }

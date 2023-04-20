@@ -1,143 +1,135 @@
 package org.example;
 
+
 import java.time.*;
 import java.lang.String;
+import java.util.ArrayList;
 
-public class Evento extends elementoCalendario{
+public class Evento extends elementoCalendario {
 
     private LocalDateTime fechaFin; // Fin del evento sin contar sus repeticiones, NO es la fecha en donde terminan las repeticiones.
     private LocalDateTime fechaFinalDefinitivo; // Fecha en la que terminan las repeticiones del evento.
     private Duration duracion;
-    private Integer repeticiones;
-    private String[] frecuencia;
+    private Integer ocurrencias;
+    private Frecuencia frecuencia;
 
-    private LocalDateTime calcularFechaFin(Duration duracion, LocalDateTime fechaInicio) {
-        fechaFin = fechaInicio.plusHours(duracion.toHours());
-        return fechaFin;
-    }
-
-    /*
-        Frecuencia debe ser un array de tamaño 2, la primera posicion debe tener un indicador de si la frecuencia es diaria
-        semanal, mensual o anual representado por una letra
-        "D": diaria
-        "S": semanal
-        "M": mensual
-        "A": anual
-        En la segunda posicion se debe indicar cada cuantos dias/semanas/meses/años se produce el evento
-    */
-
-    public boolean hayEvento(LocalDateTime diaAAnalizar) {
-        if (diaAAnalizar.isBefore(this.fechaInicio) || diaAAnalizar.isAfter(this.fechaFinalDefinitivo)) {
-            return false;
-        } else {
-            /*
-                Puede haber evento porque está entre el rango en el que inicio el evento y cuando termina
-                deberia analizar como hago para ir avanzando desde la fecha inicial hasta al fechaAAnalizar SIN PASARME,
-                y devolver true si en la fechaAAnalizar hubo evento
-            */
-            String funcionAUtilizar = ""; // Ver q onda esto
-            Long multiplicador = Long.parseLong("1");
-            LocalDateTime dia = this.fechaInicio;
-            switch (this.frecuencia[0]) {
-                case "D":
-                    funcionAUtilizar = "PD";
-                    multiplicador = Long.parseLong(this.frecuencia[1]);
-                    break;
-                case "S":
-                    funcionAUtilizar = "PD";
-                    multiplicador = Long.parseLong(this.frecuencia[1]) * 7;
-                    break;
-                case "M":
-                    funcionAUtilizar = "PM";
-                    multiplicador = Long.parseLong(this.frecuencia[1]);
-                    break;
-                case "A":
-                    funcionAUtilizar = "PY";
-                    multiplicador = Long.parseLong(this.frecuencia[1]);
-                    break;
-            }
-                while (dia.isBefore(this.fechaFinalDefinitivo)) {
-                    if (diaAAnalizar.isEqual(dia) || (diaAAnalizar.isAfter(dia) && diaAAnalizar.isBefore(this.calcularFechaFin(this.duracion, dia)))) { // deberia hacer que si diaAAnalizar isBetween dia y dia + duracion
-                        return true;
-                    }
-                    if (funcionAUtilizar.equals("PD")) {
-                        dia = dia.plusDays(multiplicador);
-                    }
-                    if (funcionAUtilizar.equals("PM")) {
-                        dia = dia.plusMonths(multiplicador);
-                    } else {
-                        dia = dia.plusYears(multiplicador);
-                    }
-                }
-                return false;
-            }
-    }
-
+    // Constructores.
 
     // Constructor si no se repite el evento nunca.
-    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion) {
-        super(nombre, descripcion, fechaInicio);
-        this.duracion = duracion;
-        this.fechaFin = this.calcularFechaFin(this.duracion, this.fechaInicio);
+    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
+                  boolean todoElDia) {
+        super(nombre, descripcion, fechaInicio, todoElDia);
+        this.definirDuracion(duracion);
         this.fechaFinalDefinitivo = this.fechaFin;
     }
 
     // Constructor si se repite el evento dada la fecha de fin.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
-                  LocalDateTime fechaFinalDefinitivo, String[] frecuencia) {
-        super(nombre, descripcion, fechaInicio);
-        this.duracion = duracion;
+                  boolean todoElDia, LocalDateTime fechaFinalDefinitivo, Frecuencia frecuencia) {
+        super(nombre, descripcion, fechaInicio, todoElDia);
+        this.definirDuracion(duracion);
         this.fechaFinalDefinitivo = fechaFinalDefinitivo;
         this.frecuencia = frecuencia;
     }
 
-
     // Constructor si se repite el evento dada las veces que se va a repetir el evento.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
-                  Integer ocurrencias, String[] frecuencia) {
-        super(nombre, descripcion, fechaInicio);
-        this.duracion = duracion;
+                  boolean todoElDia, Integer ocurrencias, Frecuencia frecuencia) {
+        super(nombre, descripcion, fechaInicio, todoElDia);
+        this.definirDuracion(duracion);
         this.frecuencia = frecuencia;
+        this.ocurrencias = ocurrencias;
+        this.calcularFechaFinDefinitivo();
+    }
+
+    // Métodos públicos.
+
+    public ArrayList<LocalDateTime> eventosHastaFecha(LocalDateTime fechaFinal) {
+        LocalDateTime dia = this.fechaInicio;
+        ArrayList<LocalDateTime> eventos = new ArrayList<>();
+        while (dia.isBefore(this.fechaFinalDefinitivo) && (dia.isBefore(fechaFinal) || dia.isEqual(fechaFinal))) {
+            eventos.add(dia);
+            dia = this.frecuencia.getProximaFecha(dia);
+        }
+        return eventos;
+    }
+
+    public boolean hayEvento(LocalDateTime diaAAnalizar) {
+        ArrayList<LocalDateTime> eventos = eventosHastaFecha(diaAAnalizar);
+        LocalDateTime ultimoDiaInicio = eventos.get(eventos.size()-1);
+        Long[] duracionFormateada = this.formatearDuracion();
+        LocalDateTime ultimoDiaFin = ultimoDiaInicio.plusHours(duracionFormateada[0]).plusMinutes(duracionFormateada[1]).plusSeconds(duracionFormateada[2]);
+        return this.isBetween(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
     }
 
     public void modificarDuracion(Duration duracion) {
-        this.fechaFin = this.calcularFechaFin(duracion, this.fechaInicio);
+        this.duracion = duracion;
+        this.calcularFechaFin();
     }
 
+    public void modificarOcurrencias(Integer ocurrencias) {
+        if (this.ocurrencias != null) {
+            this.ocurrencias = ocurrencias;
+            this.calcularFechaFinDefinitivo();
+        }
+    }
     public void modificarFechaFinal(LocalDateTime fechaFinalDefinitivo) {
         this.fechaFinalDefinitivo = fechaFinalDefinitivo;
     }
 
-    // Verificaciones que hice que estan al pedo en principio
-
-        /*private static boolean esNumero(String cadena) { // No hace falta verificar en principio
-        try {
-            Integer.parseInt(cadena);
-            return true;
-        } catch (NumberFormatException nfe) {
-            return false;
+    public void modificarFrecuencia(Frecuencia frecuencia) {
+        this.frecuencia = frecuencia;
+        if (this.ocurrencias != null) {
+            this.calcularFechaFinDefinitivo();
         }
     }
 
-    private static boolean esLetraValida(String letra) {
-        String[] letrasValidas = new String[]{"D", "S", "M", "A"};
-        for (String letraValida : letrasValidas) {
-            if (letra.equals(letraValida)) {
-                return true;
-            }
+    public LocalDateTime getFechaFinal() { return this.fechaFinalDefinitivo; }
+
+    public Duration getDuracion() {
+        return this.duracion;
+    }
+
+    public Frecuencia getFrecuencia() {
+        return this.frecuencia;
+    }
+
+    // Métodos privados.
+
+    private void calcularFechaFinDefinitivo() {
+        int ocurrenciasContadas = 0;
+        LocalDateTime diaActual = this.fechaInicio;
+        while (this.ocurrencias != ocurrenciasContadas) {
+            diaActual = this.frecuencia.getProximaFecha(diaActual);
+            ocurrenciasContadas++;
         }
-        return false;
-    }*/
+        this.fechaFinalDefinitivo = diaActual;
+    }
 
-        /*private boolean validarFrecuencia(String[] frecuencia) { // Va o no? pienso que no porque sino tendria que validar cada cosa que ingreso.
-        frecuencia[1] = frecuencia[1].toUpperCase();
-        if (frecuencia.length != 2 || !esLetraValida(frecuencia[0]) || !esNumero(frecuencia[1])) {
-            System.out.println("Error con los datos ingresados en la frecuencia");
-            return false;
+    private void calcularFechaFin() {
+        Long[] duracionFormateada = this.formatearDuracion();
+        this.fechaFin = this.fechaInicio.plusHours(duracionFormateada[0]).plusMinutes(duracionFormateada[1]).plusSeconds(duracionFormateada[2]);
+    }
+
+    private void definirDuracion(Duration duracion) {
+        if (this.todoElDia) {
+            this.duracion = Duration.ofHours(23).plusMinutes(59).plusSeconds(59);
+        } else {
+            this.duracion = duracion;
         }
-        return true;
-    }*/
+        this.calcularFechaFin();
+    }
 
+    private Long[] formatearDuracion() {
+        Long duracionHoras = this.duracion.toHours();
+        Long duracionMinutos = this.duracion.minusHours(duracionHoras).toMinutes();
+        Long duracionSegundos = this.duracion.minusHours(duracionHoras).minusMinutes(duracionMinutos).toSeconds();
+        Long[] duracionFormateada = {duracionHoras , duracionMinutos, duracionSegundos};
+        return duracionFormateada;
+    }
 
+    private boolean isBetween(LocalDateTime diaAAnalizar, LocalDateTime diaInicio, LocalDateTime diaFin) {
+        return diaAAnalizar.equals(diaInicio) || diaAAnalizar.equals(diaFin) || (diaAAnalizar.isAfter(diaInicio) && diaAAnalizar.isBefore(diaFin));
+    }
 
 }
