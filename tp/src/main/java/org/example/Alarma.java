@@ -1,21 +1,28 @@
 package org.example;
 
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAmount;
 
 public class Alarma {
 
+    private efecto efectoProducido;
     private LocalDateTime fechaAbsoluta;
-    private TemporalAmount tiempoRelativo;
-    private LocalDateTime fechaDisparador;
 
-    public Alarma(LocalDateTime fechaAbsoluta, TemporalAmount tiempoRelativo) {
-        this.fechaAbsoluta = fechaAbsoluta;
-        this.tiempoRelativo = tiempoRelativo;
-        this.fechaDisparador = fechaAbsoluta.minus(tiempoRelativo);
+    public enum efecto {
+        NOTIFICACION,
+        SONIDO,
+        EMAIL,
+        NADA,
     }
 
-    public void dispararAlarma() {
+    public Alarma (efecto efectoProducido, LocalDateTime fechaAbsoluta) {
+        this.efectoProducido = efectoProducido;
+        this.fechaAbsoluta = fechaAbsoluta;
+    }
 
+    public efecto dispararAlarma(LocalDateTime fechaActual) {
+        if (fechaActual != fechaAbsoluta) {
+            return  efecto.NADA;
+        }
+        return  efectoProducido;
     }
 }
