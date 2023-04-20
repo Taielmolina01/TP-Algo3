@@ -34,7 +34,7 @@ public class Evento extends elementoCalendario {
 
     // Constructor si se repite el evento dada las veces que se va a repetir el evento.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
-                  boolean todoElDia, int ocurrencias, Frecuencia frecuencia) {
+                  boolean todoElDia, Integer ocurrencias, Frecuencia frecuencia) {
         super(nombre, descripcion, fechaInicio, todoElDia);
         this.definirDuracion(duracion);
         this.frecuencia = frecuencia;
@@ -67,7 +67,7 @@ public class Evento extends elementoCalendario {
         this.calcularFechaFin();
     }
 
-    public void modificarOcurrencias(int ocurrencias) {
+    public void modificarOcurrencias(Integer ocurrencias) {
         if (this.ocurrencias != null) {
             this.ocurrencias = ocurrencias;
             this.calcularFechaFinDefinitivo();
@@ -83,6 +83,8 @@ public class Evento extends elementoCalendario {
             this.calcularFechaFinDefinitivo();
         }
     }
+
+    public LocalDateTime getFechaFinal() { return this.fechaFinalDefinitivo; }
 
     public Duration getDuracion() {
         return this.duracion;

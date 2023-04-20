@@ -61,6 +61,7 @@ public class EventoTest {
         evento.modificarDuracion(Duration.ofHours(1));
         evento.modificarNombre("Futbol 5");
         evento.modificarDescripcion("con los compañeros de FIUBA");
+        evento.modificarFechaFinal(LocalDateTime.of(2021, 1, 22, 0, 0, 0));
 
         assertEquals(nuevaFrecuencia, evento.getFrecuencia());
         for (int i = 1; i < 12; i++) {
@@ -69,7 +70,7 @@ public class EventoTest {
         }
 
         assertEquals(1, evento.getFrecuencia().getFrecuenciaRepeticiones());
-
+        assertEquals(LocalDateTime.of(2021, 1, 22, 0, 0, 0), evento.getFechaFinal());
     }
 
     @Test
