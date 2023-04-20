@@ -4,13 +4,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public abstract class elementoCalendario {
-    protected String nombre;
-    protected String descripcion;
-    protected LocalDateTime fechaInicio;
-    protected final ArrayList<Alarma> alarmas;
-    protected Boolean todoElDia;
+    private String nombre;
+    private String descripcion;
 
-    public elementoCalendario(String nombre, String descripcion, LocalDateTime fechaInicio, Boolean todoElDia) {
+    protected boolean todoElDia;
+    protected LocalDateTime fechaInicio;
+
+    private final ArrayList<Alarma> alarmas;
+
+    public elementoCalendario(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.todoElDia = todoElDia;
@@ -55,5 +57,4 @@ public abstract class elementoCalendario {
     public void modificarFechaInicio(LocalDateTime fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
-
 }
