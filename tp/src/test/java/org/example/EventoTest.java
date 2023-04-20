@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 public class EventoTest {
     @Test
-    public void testGettersandSetters() {
+    public void testGettersAndSettersCompartidos() {
 
         LocalDateTime fechaEvento = LocalDateTime.of(2023, 4, 24, 16, 30, 0);
         Duration duracion = Duration.ofHours(3);
@@ -20,6 +20,7 @@ public class EventoTest {
         assertEquals(descripcionEvento, evento.getDescripcion());
         assertEquals(duracion, evento.getDuracion());
         assertEquals(fechaEvento, evento.getFechaInicio());
+        assertEquals(false, evento.getTodoElDia());
 
         LocalDateTime fechaEventoModificada = LocalDateTime.of(2023, 4, 24, 14, 30, 0);
         Duration duracionModificada = Duration.ofHours(2);
@@ -30,11 +31,45 @@ public class EventoTest {
         evento.modificarDescripcion(descripcionEventoMModificada);
         evento.modificarDuracion(duracionModificada);
         evento.modificarFechaInicio(fechaEventoModificada);
+        evento.modificarTodoElDia(true);
 
         assertEquals(nombreEventoModificado, evento.getNombre());
         assertEquals(descripcionEventoMModificada, evento.getDescripcion());
         assertEquals(duracionModificada, evento.getDuracion());
         assertEquals(fechaEventoModificada, evento.getFechaInicio());
+        assertEquals(true, evento.getTodoElDia());
+    }
+
+    @Test
+    public void testModificarFrecuencia() {
+        LocalDateTime fechaInicio = LocalDateTime.of(2019, 1, 22, 0, 0, 0);
+        LocalDateTime fechaFinal = LocalDateTime.MAX;
+        Duration duracion = Duration.ofHours(12);
+        Frecuencia frecuencia = new frecuenciaAnual(1);
+        Evento evento = new Evento("Cumpleaños", "de Fede Esteban", fechaInicio, duracion, true, fechaFinal, frecuencia);
+
+        assertEquals(frecuencia, evento.getFrecuencia());
+        for (int i = 2019; i < 2091; i++) {
+            assertTrue(evento.hayEvento(LocalDateTime.of(i, 1, 22, 0, 0, 0)));
+            assertFalse(evento.hayEvento(LocalDateTime.of(i, 1, 23, 0, 0, 0)));
+        }
+
+        Frecuencia nuevaFrecuencia = new frecuenciaMensual(1);
+
+        evento.modificarFrecuencia(nuevaFrecuencia);
+        evento.modificarTodoElDia(false);
+        evento.modificarDuracion(Duration.ofHours(1));
+        evento.modificarNombre("Futbol 5");
+        evento.modificarDescripcion("con los compañeros de FIUBA");
+
+        assertEquals(nuevaFrecuencia, evento.getFrecuencia());
+        for (int i = 1; i < 12; i++) {
+            assertTrue(evento.hayEvento(LocalDateTime.of(2019, i, 22, 0, 0, 0)));
+            assertFalse(evento.hayEvento(LocalDateTime.of(2019, i, 23, 0, 0, 0)));
+        }
+
+        assertEquals(1, evento.getFrecuencia().getFrecuenciaRepeticiones());
+
     }
 
     @Test
@@ -79,11 +114,17 @@ public class EventoTest {
 
         for (int dia : diasTrue) {
             assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 0, 0, 0)));
+            assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 12, 0, 0)));
+            assertTrue(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 23, 59, 59)));
         }
         for (int dia : diasFalse) {
             assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 0, 0, 0)));
+            assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 12, 0, 0)));
+            assertFalse(evento.hayEvento(LocalDateTime.of(2020, 3, dia, 23, 59, 59)));
         }
         assertFalse(evento.hayEvento(LocalDateTime.of(2020, 4, 1, 0, 0, 0)));
+        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 4, 1, 12, 0, 0)));
+        assertFalse(evento.hayEvento(LocalDateTime.of(2020, 4, 1, 23, 59, 59)));
     }
 
     @Test
@@ -128,6 +169,27 @@ public class EventoTest {
             assertFalse(evento.hayEvento(LocalDateTime.of(2023,3, i, 14, 30, 0)));
             assertFalse(evento.hayEvento(LocalDateTime.of(2023,3, i, 14, 50, 0)));
         }
+    }
 
+    @Test
+    public void testEventoOcurrencias() {
+        LocalDateTime fechaInicio = LocalDateTime.of(2021, 5, 10, 21, 0, 0);
+        LocalDateTime fechaFinal = LocalDateTime.of(2021, 7, 11, 21, 0, 0);
+        Frecuencia frecuencia = new frecuenciaDiaria(1);
+        Duration duracion = Duration.ofHours(2).plusMinutes(20);
+        Evento evento = new Evento("Cena", "con decano FIUBA", fechaInicio, duracion, false, 20, frecuencia);
+
+        for (int i = 10; i < 30; i++) {
+            assertTrue(evento.hayEvento(LocalDateTime.of(2021,5, i, 21, 0, 0)));
+        }
+        for (int i = 30; i < 32; i++) {
+            assertFalse(evento.hayEvento(LocalDateTime.of(2021, 5, i, 21, 0, 0)));
+        }
+        for (int i = 1; i < 31; i++) {
+            assertFalse(evento.hayEvento(LocalDateTime.of(2021,6, i, 21, 0, 0)));
+        }
+        for (int i = 1; i < 11; i++) {
+            assertFalse(evento.hayEvento(LocalDateTime.of(2021,7, i, 21, 0, 0)));
+        }
     }
 }
