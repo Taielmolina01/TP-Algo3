@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public abstract class elementoCalendario {
-
     private String nombre;
     private String descripcion;
 
@@ -21,7 +20,7 @@ public abstract class elementoCalendario {
         this.alarmas = new ArrayList<>();
     }
 
-    private void definirFechaInicio(LocalDateTime fechaInicio) {
+   private void definirFechaInicio(LocalDateTime fechaInicio) {
         if (this.todoElDia) {
             this.fechaInicio = fechaInicio.toLocalDate().atStartOfDay();
         } else {
