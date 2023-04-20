@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public abstract class Frecuencia {
 
     protected int frecuenciaRepeticiones;
+    protected int ocurrencias;
 
     public Frecuencia(int frecuenciaRepeticiones) {
         this.frecuenciaRepeticiones = frecuenciaRepeticiones;

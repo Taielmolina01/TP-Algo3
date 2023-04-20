@@ -43,7 +43,8 @@ public class Evento extends elementoCalendario {
 
     // Métodos públicos.
 
-    public ArrayList<LocalDateTime> eventosHastaFecha(LocalDateTime fechaFinal) {
+    public ArrayList<LocalDateTime> eventosHastaFecha(LocalDateTime fechaFinal) { // podria ser desde un dia
+        // de inicio distinto al dia inicial mientras sea igual o despues que la fecha inicial.
         LocalDateTime dia = this.fechaInicio;
         ArrayList<LocalDateTime> eventos = new ArrayList<>();
         while (dia.isBefore(this.fechaFinalDefinitivo) && (dia.isBefore(fechaFinal) || dia.isEqual(fechaFinal))) {
@@ -55,6 +56,8 @@ public class Evento extends elementoCalendario {
 
     public boolean hayEvento(LocalDateTime diaAAnalizar) {
         ArrayList<LocalDateTime> eventos = eventosHastaFecha(diaAAnalizar);
+        System.out.println(diaAAnalizar);
+        System.out.println(eventos);
         LocalDateTime ultimoDiaInicio = eventos.get(eventos.size()-1);
         Long[] duracionFormateada = this.formatearDuracion();
         LocalDateTime ultimoDiaFin = ultimoDiaInicio.plusHours(duracionFormateada[0]).plusMinutes(duracionFormateada[1]).plusSeconds(duracionFormateada[2]);
@@ -67,11 +70,10 @@ public class Evento extends elementoCalendario {
     }
 
     public void modificarOcurrencias(Integer ocurrencias) {
-        if (this.ocurrencias != null) {
-            this.ocurrencias = ocurrencias;
-            this.calcularFechaFinDefinitivo();
-        }
+        this.ocurrencias = ocurrencias;
+        this.calcularFechaFinDefinitivo();
     }
+
     public void modificarFechaFinal(LocalDateTime fechaFinalDefinitivo) {
         this.fechaFinalDefinitivo = fechaFinalDefinitivo;
     }
@@ -82,6 +84,8 @@ public class Evento extends elementoCalendario {
             this.calcularFechaFinDefinitivo();
         }
     }
+
+
 
     public LocalDateTime getFechaFinal() { return this.fechaFinalDefinitivo; }
 
