@@ -56,8 +56,6 @@ public class Evento extends elementoCalendario {
 
     public boolean hayEvento(LocalDateTime diaAAnalizar) {
         ArrayList<LocalDateTime> eventos = eventosHastaFecha(diaAAnalizar);
-        System.out.println(diaAAnalizar);
-        System.out.println(eventos);
         LocalDateTime ultimoDiaInicio = eventos.get(eventos.size()-1);
         Long[] duracionFormateada = this.formatearDuracion();
         LocalDateTime ultimoDiaFin = ultimoDiaInicio.plusHours(duracionFormateada[0]).plusMinutes(duracionFormateada[1]).plusSeconds(duracionFormateada[2]);
