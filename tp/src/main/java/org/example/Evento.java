@@ -22,7 +22,7 @@ public class Evento extends elementoCalendario {
 
         this.modificarFrecuencia(new frecuenciaDiaria(0));
         this.modificarOcurrencias(0);
-        this.fechaFinalDefinitivo = this.fechaFin;
+        this.calcularFechaFinRepeticiones(this.fechaFin);
     }
 
     // Constructor si se repite el evento dada la fecha de fin.

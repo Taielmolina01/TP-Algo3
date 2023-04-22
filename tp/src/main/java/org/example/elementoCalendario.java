@@ -17,20 +17,12 @@ public abstract class elementoCalendario {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.todoElDia = todoElDia;
-        this.definirFechaInicio(fechaInicio);
+        this.modificarFechaInicio(fechaInicio);
         this.alarmas = new ArrayList<>();
     }
 
     public elementoCalendario() {
         this.alarmas = new ArrayList<>();
-    }
-
-   private void definirFechaInicio(LocalDateTime fechaInicio) {
-        if (this.todoElDia) {
-            fechaInicio = fechaInicio.toLocalDate().atStartOfDay();
-        }
-
-        this.fechaInicio = fechaInicio;
     }
 
     public void agregarAlarma(Alarma alarma) { this.alarmas.add(alarma); }
@@ -49,10 +41,14 @@ public abstract class elementoCalendario {
 
     public void modificarTodoElDia(Boolean todoElDia) {
         this.todoElDia = todoElDia;
-        this.definirFechaInicio(this.fechaInicio);
+        this.modificarFechaInicio(this.fechaInicio);
     }
 
     public void modificarFechaInicio(LocalDateTime fechaInicio) {
-        this.definirFechaInicio(fechaInicio);
+        if (this.todoElDia) {
+            fechaInicio = fechaInicio.toLocalDate().atStartOfDay();
+        }
+
+        this.fechaInicio = fechaInicio;
     }
 }
