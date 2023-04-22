@@ -19,29 +19,34 @@ public abstract class elementoCalendario {
         this.alarmas = new ArrayList<>();
     }
 
+    public elementoCalendario() {
+        this.alarmas = new ArrayList<>();
+    }
+
    private void definirFechaInicio(LocalDateTime fechaInicio) {
         if (this.todoElDia) {
-            this.fechaInicio = fechaInicio.toLocalDate().atStartOfDay();
-        } else {
-            this.fechaInicio = fechaInicio;
+            fechaInicio = fechaInicio.toLocalDate().atStartOfDay();
         }
+
+        this.fechaInicio = fechaInicio;
     }
 
     public void agregarAlarma(Alarma alarma) { this.alarmas.add(alarma); }
 
-    public Boolean getTodoElDia() { return this.todoElDia; }
 
-    public void modificarTodoElDia(Boolean todoElDia) { this.todoElDia = todoElDia; }
+    public String obtenerNombre() { return this.nombre; }
 
-    public String getNombre() { return this.nombre; }
+    public Boolean obtenerTodoElDia() { return this.todoElDia; }
 
-    public String getDescripcion() { return this.descripcion; }
+    public String obtenerDescripcion() { return this.descripcion; }
 
-    public LocalDateTime getFechaInicio() { return this.fechaInicio; }
+    public LocalDateTime obtenerFechaInicio() { return this.fechaInicio; }
 
     public void modificarNombre(String nombre) { this.nombre = nombre; }
 
     public void modificarDescripcion(String descripcion) {  this.descripcion = descripcion; }
+
+    public void modificarTodoElDia(Boolean todoElDia) { this.todoElDia = todoElDia; }
 
     public void modificarFechaInicio(LocalDateTime fechaInicio) { this.fechaInicio = fechaInicio; }
 }

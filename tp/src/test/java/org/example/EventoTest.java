@@ -16,11 +16,11 @@ public class EventoTest {
         String descripcionEvento = "con los chicos del secundario";
         Evento evento = new Evento(nombreEvento, descripcionEvento, fechaEvento, duracion, false);
 
-        assertEquals(nombreEvento, evento.getNombre());
-        assertEquals(descripcionEvento, evento.getDescripcion());
+        assertEquals(nombreEvento, evento.obtenerNombre());
+        assertEquals(descripcionEvento, evento.obtenerDescripcion());
         assertEquals(duracion, evento.getDuracion());
-        assertEquals(fechaEvento, evento.getFechaInicio());
-        assertEquals(false, evento.getTodoElDia());
+        assertEquals(fechaEvento, evento.obtenerFechaInicio());
+        assertEquals(false, evento.obtenerTodoElDia());
 
         LocalDateTime fechaEventoModificada = LocalDateTime.of(2023, 4, 24, 14, 30, 0);
         Duration duracionModificada = Duration.ofHours(2);
@@ -33,11 +33,11 @@ public class EventoTest {
         evento.modificarFechaInicio(fechaEventoModificada);
         evento.modificarTodoElDia(true);
 
-        assertEquals(nombreEventoModificado, evento.getNombre());
-        assertEquals(descripcionEventoMModificada, evento.getDescripcion());
+        assertEquals(nombreEventoModificado, evento.obtenerNombre());
+        assertEquals(descripcionEventoMModificada, evento.obtenerDescripcion());
         assertEquals(duracionModificada, evento.getDuracion());
-        assertEquals(fechaEventoModificada, evento.getFechaInicio());
-        assertEquals(true, evento.getTodoElDia());
+        assertEquals(fechaEventoModificada, evento.obtenerFechaInicio());
+        assertEquals(true, evento.obtenerTodoElDia());
     }
 
     @Test
