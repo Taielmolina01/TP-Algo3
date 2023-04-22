@@ -1,6 +1,5 @@
 package org.example;
 
-
 import java.time.*;
 import java.lang.String;
 import java.util.ArrayList;
@@ -44,7 +43,8 @@ public class Evento extends elementoCalendario {
 
     // Métodos públicos.
 
-    public ArrayList<LocalDateTime> eventosHastaFecha(LocalDateTime fechaFinal) {
+    public ArrayList<LocalDateTime> eventosHastaFecha(LocalDateTime fechaFinal) { // podria ser desde un dia
+        // de inicio distinto al dia inicial mientras sea igual o despues que la fecha inicial.
         LocalDateTime dia = this.fechaInicio;
         ArrayList<LocalDateTime> eventos = new ArrayList<>();
         while (dia.isBefore(this.fechaFinalDefinitivo) && (dia.isBefore(fechaFinal) || dia.isEqual(fechaFinal))) {
@@ -68,11 +68,10 @@ public class Evento extends elementoCalendario {
     }
 
     public void modificarOcurrencias(Integer ocurrencias) {
-        if (this.ocurrencias != null) {
-            this.ocurrencias = ocurrencias;
-            this.calcularFechaFinDefinitivo();
-        }
+        this.ocurrencias = ocurrencias;
+        this.calcularFechaFinDefinitivo();
     }
+
     public void modificarFechaFinal(LocalDateTime fechaFinalDefinitivo) {
         this.fechaFinalDefinitivo = fechaFinalDefinitivo;
     }
@@ -83,6 +82,8 @@ public class Evento extends elementoCalendario {
             this.calcularFechaFinDefinitivo();
         }
     }
+
+
 
     public LocalDateTime getFechaFinal() { return this.fechaFinalDefinitivo; }
 

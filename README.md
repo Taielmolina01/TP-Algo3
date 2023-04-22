@@ -6,6 +6,8 @@ Kriger, Lucas. Padrón: 109344
 
 Molina, Taiel. Padrón: 109458
 
-## Cosas que me faltan
+## Cosas que faltan
 
--   Manejar cuando se termina el evento dadas las ocurrencias.
+- Clase calendario y sus pruebas asociadas.
+- Dividir los archivos en diferentes paquetes.
+- Emprolijar código.

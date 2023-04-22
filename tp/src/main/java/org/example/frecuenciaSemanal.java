@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
 public class frecuenciaSemanal extends Frecuencia {
+
     private DayOfWeek[] diasSemana;
 
     public frecuenciaSemanal(DayOfWeek[] diasSemana, Integer frecuenciaSemanal) {
@@ -28,11 +29,7 @@ public class frecuenciaSemanal extends Frecuencia {
         return fechaProxima;
     }
 
-    public DayOfWeek[] getDiasSemana() {
-        return this.diasSemana;
-    }
+    public DayOfWeek[] getDiasSemana() { return this.diasSemana; }
 
-    public void modificarDiasSemana(DayOfWeek[] diasSemana) {
-        this.diasSemana = diasSemana;
-    }
+    public void modificarDiasSemana(DayOfWeek[] diasSemana) { this.diasSemana = diasSemana; }
 }

@@ -3,6 +3,7 @@ package org.example;
 import java.time.LocalDateTime;
 
 public class frecuenciaDiaria extends Frecuencia {
+
     public frecuenciaDiaria(Integer frecuenciaRepeticiones) {
         super(frecuenciaRepeticiones);
     }
