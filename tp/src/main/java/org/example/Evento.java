@@ -18,7 +18,7 @@ public class Evento extends elementoCalendario {
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                   boolean todoElDia) {
         super(nombre, descripcion, fechaInicio, todoElDia);
-        this.definirDuracion(duracion);
+        this.modificarDuracion(duracion);
         this.fechaFinalDefinitivo = this.fechaFin;
     }
 
@@ -26,7 +26,7 @@ public class Evento extends elementoCalendario {
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                   boolean todoElDia, LocalDateTime fechaFinalDefinitivo, Frecuencia frecuencia) {
         super(nombre, descripcion, fechaInicio, todoElDia);
-        this.definirDuracion(duracion);
+        this.modificarDuracion(duracion);
         this.modificarFrecuencia(frecuencia);
         this.modificarOcurrencias(0);
         this.calcularFechaFinDefinitivo(fechaFinalDefinitivo);
@@ -36,12 +36,15 @@ public class Evento extends elementoCalendario {
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                   boolean todoElDia, Integer ocurrencias, Frecuencia frecuencia) {
         super(nombre, descripcion, fechaInicio, todoElDia);
-        this.definirDuracion(duracion);
+        this.modificarDuracion(duracion);
         this.modificarFrecuencia(frecuencia);
         this.modificarOcurrencias(ocurrencias);
     }
 
     public void modificarDuracion(Duration duracion) {
+        if (this.todoElDia) {
+            duracion = Duration.ofHours(23).plusMinutes(59).plusSeconds(59);
+        }
         this.duracion = duracion;
         this.calcularFechaFin();
     }
@@ -101,15 +104,6 @@ public class Evento extends elementoCalendario {
 
     private void calcularFechaFin() {
         this.fechaFin = this.fechaInicio.plus(this.duracion);
-    }
-
-    private void definirDuracion(Duration duracion) {
-        if (this.todoElDia) {
-            this.duracion = Duration.ofHours(23).plusMinutes(59).plusSeconds(59);
-        } else {
-            this.duracion = duracion;
-        }
-        this.calcularFechaFin();
     }
 
     private boolean isBetween(LocalDateTime diaAAnalizar, LocalDateTime diaInicio, LocalDateTime diaFin) {
