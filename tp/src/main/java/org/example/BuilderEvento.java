@@ -11,31 +11,35 @@ public class BuilderEvento {
 
     }
 
-    public void setNombre(String nombre) {
+    public void definirNombre(String nombre) {
         evento.modificarNombre(nombre);
     }
 
-    public void setDescripcion(String descripcion) {
+    public void definirDescripcion(String descripcion) {
         evento.modificarDescripcion(descripcion);
     }
 
-    public void setFechaInicial(LocalDateTime fechaInicial) {
+    public  void definirTodoElDia(boolean todoElDia) {
+        evento.modificarTodoElDia(todoElDia);
+    }
+
+    public void definirFechaInicial(LocalDateTime fechaInicial) {
         evento.modificarFechaInicio(fechaInicial);
     }
 
-    public void setDuracion(Duration duracion, boolean todoElDia) {
+    public void definirDuracion(Duration duracion, boolean todoElDia) {
         evento.modificarDuracion(duracion);
     }
 
-    public void setFrecuencia(Frecuencia frecuencia) {
+    public void definirFrecuencia(Frecuencia frecuencia) {
         evento.modificarFrecuencia(frecuencia);
     }
 
-    public void setRepeticion(int repeticion) {
+    public void definirRepeticion(int repeticion) {
         evento.modificarOcurrencias(repeticion);
     }
 
-    public Evento getResultado() {
+    public Evento obtenerResultado() {
         return this.evento;
     }
 }

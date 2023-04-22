@@ -41,27 +41,6 @@ public class Evento extends elementoCalendario {
         this.calcularFechaFinDefinitivo();
     }
 
-    // Métodos públicos.
-
-    public ArrayList<LocalDateTime> eventosHastaFecha(LocalDateTime fechaFinal) { // podria ser desde un dia
-        // de inicio distinto al dia inicial mientras sea igual o despues que la fecha inicial.
-        LocalDateTime dia = this.fechaInicio;
-        ArrayList<LocalDateTime> eventos = new ArrayList<>();
-        while (dia.isBefore(this.fechaFinalDefinitivo) && (dia.isBefore(fechaFinal) || dia.isEqual(fechaFinal))) {
-            eventos.add(dia);
-            dia = this.frecuencia.getProximaFecha(dia);
-        }
-        return eventos;
-    }
-
-    public boolean hayEvento(LocalDateTime diaAAnalizar) {
-        ArrayList<LocalDateTime> eventos = eventosHastaFecha(diaAAnalizar);
-        LocalDateTime ultimoDiaInicio = eventos.get(eventos.size()-1);
-        Long[] duracionFormateada = this.formatearDuracion();
-        LocalDateTime ultimoDiaFin = ultimoDiaInicio.plusHours(duracionFormateada[0]).plusMinutes(duracionFormateada[1]).plusSeconds(duracionFormateada[2]);
-        return this.isBetween(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
-    }
-
     public void modificarDuracion(Duration duracion) {
         this.duracion = duracion;
         this.calcularFechaFin();
@@ -83,19 +62,34 @@ public class Evento extends elementoCalendario {
         }
     }
 
-
-
-    public LocalDateTime getFechaFinal() { return this.fechaFinalDefinitivo; }
-
-    public Duration getDuracion() {
+    public Duration obtenerDuracion() {
         return this.duracion;
     }
 
-    public Frecuencia getFrecuencia() {
+    public LocalDateTime obtenerFechaFinal() { return this.fechaFinalDefinitivo; }
+
+    public Frecuencia obtenerFrecuencia() {
         return this.frecuencia;
     }
 
-    // Métodos privados.
+    public ArrayList<LocalDateTime> eventosHastaFecha(LocalDateTime fechaFinal) { // podria ser desde un dia
+        // de inicio distinto al dia inicial mientras sea igual o despues que la fecha inicial.
+        LocalDateTime dia = this.fechaInicio;
+        ArrayList<LocalDateTime> eventos = new ArrayList<>();
+        while (dia.isBefore(this.fechaFinalDefinitivo) && (dia.isBefore(fechaFinal) || dia.isEqual(fechaFinal))) {
+            eventos.add(dia);
+            dia = this.frecuencia.getProximaFecha(dia);
+        }
+        return eventos;
+    }
+
+    public boolean hayEvento(LocalDateTime diaAAnalizar) {
+        ArrayList<LocalDateTime> eventos = eventosHastaFecha(diaAAnalizar);
+        LocalDateTime ultimoDiaInicio = eventos.get(eventos.size()-1);
+        Long[] duracionFormateada = this.formatearDuracion();
+        LocalDateTime ultimoDiaFin = ultimoDiaInicio.plusHours(duracionFormateada[0]).plusMinutes(duracionFormateada[1]).plusSeconds(duracionFormateada[2]);
+        return this.isBetween(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
+    }
 
     private void calcularFechaFinDefinitivo() {
         int ocurrenciasContadas = 0;

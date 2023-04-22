@@ -7,8 +7,10 @@ public abstract class elementoCalendario {
 
     private String nombre;
     private String descripcion;
+
     protected boolean todoElDia;
     protected LocalDateTime fechaInicio;
+
     private final ArrayList<Alarma> alarmas;
 
     public elementoCalendario(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {
@@ -33,12 +35,11 @@ public abstract class elementoCalendario {
 
     public void agregarAlarma(Alarma alarma) { this.alarmas.add(alarma); }
 
-
     public String obtenerNombre() { return this.nombre; }
 
-    public Boolean obtenerTodoElDia() { return this.todoElDia; }
-
     public String obtenerDescripcion() { return this.descripcion; }
+
+    public Boolean obtenerTodoElDia() { return this.todoElDia; }
 
     public LocalDateTime obtenerFechaInicio() { return this.fechaInicio; }
 
@@ -46,7 +47,12 @@ public abstract class elementoCalendario {
 
     public void modificarDescripcion(String descripcion) {  this.descripcion = descripcion; }
 
-    public void modificarTodoElDia(Boolean todoElDia) { this.todoElDia = todoElDia; }
+    public void modificarTodoElDia(Boolean todoElDia) {
+        this.todoElDia = todoElDia;
+        this.definirFechaInicio(this.fechaInicio);
+    }
 
-    public void modificarFechaInicio(LocalDateTime fechaInicio) { this.fechaInicio = fechaInicio; }
+    public void modificarFechaInicio(LocalDateTime fechaInicio) {
+        this.definirFechaInicio(fechaInicio);
+    }
 }
