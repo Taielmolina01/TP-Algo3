@@ -1,5 +1,6 @@
 package org.example;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAmount;
 
@@ -14,7 +15,6 @@ public class Alarma {
         NOTIFICACION,
         SONIDO,
         EMAIL,
-        NADA,
     }
 
     public Alarma (efecto efectoProducido, LocalDateTime fechaAbsoluta, TemporalAmount tiempoRelativo) {
@@ -30,10 +30,11 @@ public class Alarma {
         this.fechaDisparador = fechaAbsoluta;
     }
 
-    public efecto dispararAlarma(LocalDateTime fechaActual) {
-        if (!fechaActual.isEqual(fechaDisparador)) {
-            return efecto.NADA;
-        }
-        return efectoProducido;
+    public Duration cuantoFaltaParaDisparar(LocalDateTime fechaActual) {
+        return Duration.between(fechaActual, this.fechaDisparador);
+    }
+
+    public efecto dispararAlarma() {
+        return  efectoProducido;
     }
 }
