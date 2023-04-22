@@ -46,7 +46,7 @@ public class Evento extends elementoCalendario {
             duracion = Duration.ofHours(23).plusMinutes(59).plusSeconds(59);
         }
         this.duracion = duracion;
-        this.calcularFechaFin();
+        this.fechaFin = this.fechaInicio.plus(this.duracion);
     }
 
     public void modificarOcurrencias(Integer ocurrencias) {
@@ -65,15 +65,11 @@ public class Evento extends elementoCalendario {
         }
     }
 
-    public Duration obtenerDuracion() {
-        return this.duracion;
-    }
+    public Duration obtenerDuracion() { return this.duracion; }
 
     public LocalDateTime obtenerFechaFinal() { return this.fechaFinalDefinitivo; }
 
-    public Frecuencia obtenerFrecuencia() {
-        return this.frecuencia;
-    }
+    public Frecuencia obtenerFrecuencia() { return this.frecuencia; }
 
     public ArrayList<LocalDateTime> eventosHastaFecha(LocalDateTime fechaFinal) { // podria ser desde un dia
         // de inicio distinto al dia inicial mientras sea igual o despues que la fecha inicial.
@@ -100,10 +96,6 @@ public class Evento extends elementoCalendario {
             ocurrenciasContadas++;
         }
         this.fechaFinalDefinitivo = diaActual;
-    }
-
-    private void calcularFechaFin() {
-        this.fechaFin = this.fechaInicio.plus(this.duracion);
     }
 
     private boolean isBetween(LocalDateTime diaAAnalizar, LocalDateTime diaInicio, LocalDateTime diaFin) {
