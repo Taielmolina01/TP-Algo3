@@ -12,13 +12,6 @@ public class Evento extends ElementoCalendario {
     private Frecuencia frecuencia;
     private int ocurrencias;
 
-    // Constructores.
-
-    // Constructor si no se repite el evento nunca.
-    public Evento() {
-
-    }
-
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                   boolean todoElDia) {
         super(nombre, descripcion, fechaInicio, todoElDia);
@@ -72,6 +65,13 @@ public class Evento extends ElementoCalendario {
         this.calcularFechaFinDefinitivo(this.fechaInicio);
     }
 
+    private void calcularFechaFinDefinitivo(LocalDateTime fecha) {
+        for (int i = 0; i < this.ocurrencias; i++) {
+            fecha = this.frecuencia.obtenerProximaFecha(fecha);
+        }
+        this.fechaFinalDefinitivo = fecha;
+    }
+
     public Duration obtenerDuracion() { return this.duracion; }
 
     public LocalDateTime obtenerFechaFinal() { return this.fechaFinalDefinitivo; }
@@ -94,13 +94,6 @@ public class Evento extends ElementoCalendario {
         LocalDateTime ultimaFechaEncontradaInicio = eventos.get(eventos.size()-1);
         LocalDateTime ultimaFechaEncontradaFinal = ultimaFechaEncontradaInicio.plus(this.duracion);
         return this.estaEntreFechas(fecha, ultimaFechaEncontradaInicio, ultimaFechaEncontradaFinal);
-    }
-
-    private void calcularFechaFinDefinitivo(LocalDateTime fecha) {
-        for (int i = 0; i < this.ocurrencias; i++) {
-            fecha = this.frecuencia.obtenerProximaFecha(fecha);
-        }
-        this.fechaFinalDefinitivo = fecha;
     }
 
     private boolean estaEntreFechas(LocalDateTime fecha, LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
