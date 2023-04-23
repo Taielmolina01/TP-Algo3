@@ -2,7 +2,7 @@ package org.example;
 
 import java.time.LocalDateTime;
 
-public class Tarea extends elementoCalendario {
+public class Tarea extends ElementoCalendario {
 
     private boolean completada;
 

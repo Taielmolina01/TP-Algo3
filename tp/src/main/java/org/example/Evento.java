@@ -4,7 +4,7 @@ import java.time.*;
 import java.lang.String;
 import java.util.ArrayList;
 
-public class Evento extends elementoCalendario {
+public class Evento extends ElementoCalendario {
 
     private LocalDateTime fechaFin; // Fin del evento sin contar sus repeticiones, NO es la fecha en donde terminan las repeticiones.
     private LocalDateTime fechaFinalDefinitivo; // Fecha en la que terminan las repeticiones del evento.
@@ -15,6 +15,10 @@ public class Evento extends elementoCalendario {
     // Constructores.
 
     // Constructor si no se repite el evento nunca.
+    public Evento() {
+
+    }
+
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                   boolean todoElDia) {
         super(nombre, descripcion, fechaInicio, todoElDia);
@@ -85,22 +89,22 @@ public class Evento extends elementoCalendario {
         return eventos;
     }
 
-    public boolean hayEvento(LocalDateTime diaAAnalizar) {
-        ArrayList<LocalDateTime> eventos = eventosHastaFecha(diaAAnalizar);
-        LocalDateTime ultimoDiaInicio = eventos.get(eventos.size()-1);
-        LocalDateTime ultimoDiaFin = ultimoDiaInicio.plus(this.duracion);
-        return this.isBetween(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
+    public boolean hayEvento(LocalDateTime fecha) {
+        ArrayList<LocalDateTime> eventos = eventosHastaFecha(fecha);
+        LocalDateTime ultimaFechaEncontradaInicio = eventos.get(eventos.size()-1);
+        LocalDateTime ultimaFechaEncontradaFinal = ultimaFechaEncontradaInicio.plus(this.duracion);
+        return this.estaEntreFechas(fecha, ultimaFechaEncontradaInicio, ultimaFechaEncontradaFinal);
     }
 
-    private void calcularFechaFinDefinitivo(LocalDateTime diaActual) {
+    private void calcularFechaFinDefinitivo(LocalDateTime fecha) {
         for (int i = 0; i < this.ocurrencias; i++) {
-            diaActual = this.frecuencia.obtenerProximaFecha(diaActual);
+            fecha = this.frecuencia.obtenerProximaFecha(fecha);
         }
-        this.fechaFinalDefinitivo = diaActual;
+        this.fechaFinalDefinitivo = fecha;
     }
 
-    private boolean isBetween(LocalDateTime diaAAnalizar, LocalDateTime diaInicio, LocalDateTime diaFin) {
-        return diaAAnalizar.equals(diaInicio) || diaAAnalizar.equals(diaFin) || (diaAAnalizar.isAfter(diaInicio) && diaAAnalizar.isBefore(diaFin));
+    private boolean estaEntreFechas(LocalDateTime fecha, LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
+        return (fecha.equals(fechaInicio) || fecha.isAfter(fechaInicio)) && (fecha.isBefore(fechaFinal) || fecha.isEqual(fechaFinal));
     }
 
 }

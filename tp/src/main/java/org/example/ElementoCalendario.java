@@ -3,7 +3,7 @@ package org.example;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public abstract class elementoCalendario {
+public abstract class ElementoCalendario {
 
     private String nombre;
     private String descripcion;
@@ -13,7 +13,7 @@ public abstract class elementoCalendario {
 
     private final ArrayList<Alarma> alarmas;
 
-    public elementoCalendario(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {
+    public ElementoCalendario(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.todoElDia = todoElDia;
@@ -21,7 +21,7 @@ public abstract class elementoCalendario {
         this.alarmas = new ArrayList<>();
     }
 
-    public elementoCalendario() {
+    public ElementoCalendario() {
         this.alarmas = new ArrayList<>();
     }
 
