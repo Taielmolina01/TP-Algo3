@@ -28,6 +28,9 @@ public class Calendario {
     public Alarma obtenerProximaAlarma() {
         // capaz aca tendria que llamar a un metodo privado que me agregue todas las alarmas existentes
         // en cada Evento/Tarea, al arrayList correspondiente en su valor en el hash, y despues hacer todo esto.
+        // IDEA: cuando llamamos aca hacemos por todas las claves de ambos hash evento.obtenerAlarmas()/tarea.obtenerAlarmas()
+        // y rehasheamos las claves con los valores nuevos (los resultados de obtenerAlarmas()) o utilizar el metodo replace
+        // de HashMap que creo que hace eso (asocia un nuevo valor a una clave existente).
         Iterator<Entry<Evento, ArrayList<Alarma>> iteradorEventos = eventos.entrySet().iterator();
         Iterator<Entry<Tarea, ArrayList<Alarma>> iteradorTareas = tareas.entrySet().iterator();
         while (iteradorEventos.hasNext()) {
