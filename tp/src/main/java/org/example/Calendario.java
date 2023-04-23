@@ -1,5 +1,7 @@
 package org.example;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -13,7 +15,9 @@ public class Calendario {
         this.eventos = new HashMap<>();
         this.tareas = new HashMap<>();
         this.comparador = (alarma1, alarma2) -> {
-            if (alarma1.obtenerFechaAbsoluta().isBefore(alarma2.obtenerFechaAbsoluta())) {
+            Duration faltaParaAlarma1 = alarma1.cuantoFaltaParaDisparar(LocalDateTime.of(1000, 1, 1, 0, 0, 0)).abs();
+            Duration faltaParaAlarma2 = alarma2.cuantoFaltaParaDisparar(LocalDateTime.of(1000, 1, 1, 0, 0, 0)).abs();
+            if (faltaParaAlarma1.compareTo(faltaParaAlarma2) > 0) { // capaz sea al reves el 1 y -1
                 return 1;
             }
             return -1;
