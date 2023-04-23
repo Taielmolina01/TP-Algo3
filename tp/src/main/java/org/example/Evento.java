@@ -66,7 +66,7 @@ public class Evento extends ElementoCalendario {
     }
 
     private void calcularFechaFinDefinitivo(LocalDateTime fecha) {
-        for (int i = 0; i < this.ocurrencias; i++) {
+        for (int i = 1; i < this.ocurrencias; i++) {
             fecha = this.frecuencia.obtenerProximaFecha(fecha);
         }
         this.fechaFinalDefinitivo = fecha;
@@ -78,13 +78,12 @@ public class Evento extends ElementoCalendario {
 
     public Frecuencia obtenerFrecuencia() { return this.frecuencia; }
 
-    public ArrayList<LocalDateTime> eventosHastaFecha(LocalDateTime fechaFinal) { // podria ser desde un dia
-        // de inicio distinto al dia inicial mientras sea igual o despues que la fecha inicial.
-        LocalDateTime dia = this.fechaInicio;
-        ArrayList<LocalDateTime> eventos = new ArrayList<>();
-        while (dia.isBefore(this.fechaFinalDefinitivo) && (dia.isBefore(fechaFinal) || dia.isEqual(fechaFinal))) {
-            eventos.add(dia);
-            dia = this.frecuencia.obtenerProximaFecha(dia);
+    public ArrayList<LocalDateTime> eventosHastaFecha(LocalDateTime fechaFinal) {
+        LocalDateTime fecha = this.fechaInicio;
+        var eventos = new ArrayList<LocalDateTime>();
+        while (estaEntreFechas(fecha, this.fechaInicio, this.fechaFinalDefinitivo) && estaEntreFechas(fecha, this.fechaInicio, fechaFinal)) {
+            eventos.add(fecha);
+            fecha = this.frecuencia.obtenerProximaFecha(fecha);
         }
         return eventos;
     }
