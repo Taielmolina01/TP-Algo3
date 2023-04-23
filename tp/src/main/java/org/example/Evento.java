@@ -5,55 +5,48 @@ import java.lang.String;
 import java.util.ArrayList;
 
 public class Evento extends ElementoCalendario {
-
     private LocalDateTime fechaFin; // Fin del evento sin contar sus repeticiones, NO es la fecha en donde terminan las repeticiones.
     private LocalDateTime fechaFinalDefinitivo; // Fecha en la que terminan las repeticiones del evento.
     private Duration duracion;
+    private Integer ocurrencias;
     private Frecuencia frecuencia;
-    private int ocurrencias;
 
+    // Constructores.
+
+    // Constructor si no se repite el evento nunca.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                   boolean todoElDia) {
         super(nombre, descripcion, fechaInicio, todoElDia);
-        this.modificarDuracion(duracion);
-
-        this.modificarFrecuencia(new FrecuenciaDiaria(0));
-        this.modificarOcurrencias(0);
-        this.calcularFechaFinDefinitivo(this.fechaFin);
+        this.definirDuracion(duracion);
+        this.fechaFinalDefinitivo = this.fechaFin;
     }
-
     // Constructor si se repite el evento dada la fecha de fin.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                   boolean todoElDia, LocalDateTime fechaFinalDefinitivo, Frecuencia frecuencia) {
         super(nombre, descripcion, fechaInicio, todoElDia);
-        this.modificarDuracion(duracion);
-
-        this.modificarFrecuencia(frecuencia);
-        this.modificarOcurrencias(0);
-        this.calcularFechaFinDefinitivo(fechaFinalDefinitivo);
+        this.definirDuracion(duracion);
+        this.fechaFinalDefinitivo = fechaFinalDefinitivo;
+        this.frecuencia = frecuencia;
     }
 
     // Constructor si se repite el evento dada las veces que se va a repetir el evento.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                   boolean todoElDia, Integer ocurrencias, Frecuencia frecuencia) {
         super(nombre, descripcion, fechaInicio, todoElDia);
-        this.modificarDuracion(duracion);
-
-        this.modificarFrecuencia(frecuencia);
-        this.modificarOcurrencias(ocurrencias);
+        this.definirDuracion(duracion);
+        this.frecuencia = frecuencia;
+        this.ocurrencias = ocurrencias;
+        this.calcularFechaFinDefinitivo();
     }
 
     public void modificarDuracion(Duration duracion) {
-        if (this.todoElDia) {
-            duracion = Duration.ofHours(23).plusMinutes(59).plusSeconds(59);
-        }
         this.duracion = duracion;
-        this.fechaFin = this.fechaInicio.plus(this.duracion);
+        this.calcularFechaFin();
     }
 
     public void modificarOcurrencias(Integer ocurrencias) {
         this.ocurrencias = ocurrencias;
-        this.calcularFechaFinDefinitivo(this.fechaInicio);
+        this.calcularFechaFinDefinitivo();
     }
 
     public void modificarFechaFinal(LocalDateTime fechaFinalDefinitivo) {
@@ -62,41 +55,68 @@ public class Evento extends ElementoCalendario {
 
     public void modificarFrecuencia(Frecuencia frecuencia) {
         this.frecuencia = frecuencia;
-        this.calcularFechaFinDefinitivo(this.fechaInicio);
+        if (this.ocurrencias != null) {
+            this.calcularFechaFinDefinitivo();
+        }
     }
 
-    private void calcularFechaFinDefinitivo(LocalDateTime fecha) {
-        for (int i = 1; i < this.ocurrencias; i++) {
-            fecha = this.frecuencia.obtenerProximaFecha(fecha);
+    private void calcularFechaFinDefinitivo() {
+        int ocurrenciasContadas = 0;
+        LocalDateTime diaActual = this.fechaInicio;
+        while (this.ocurrencias != ocurrenciasContadas) {
+            diaActual = this.frecuencia.obtenerProximaFecha(diaActual);
+            ocurrenciasContadas++;
         }
-        this.fechaFinalDefinitivo = fecha;
+        this.fechaFinalDefinitivo = diaActual;
+    }
+
+    private void calcularFechaFin() {
+        Long[] duracionFormateada = this.formatearDuracion();
+        this.fechaFin = this.fechaInicio.plusHours(duracionFormateada[0]).plusMinutes(duracionFormateada[1]).plusSeconds(duracionFormateada[2]);
+    }
+
+    private void definirDuracion(Duration duracion) {
+        if (this.todoElDia) {
+            this.duracion = Duration.ofHours(23).plusMinutes(59).plusSeconds(59);
+        } else {
+            this.duracion = duracion;
+        }
+        this.calcularFechaFin();
     }
 
     public Duration obtenerDuracion() { return this.duracion; }
-
-    public LocalDateTime obtenerFechaFinal() { return this.fechaFinalDefinitivo; }
+    public LocalDateTime obtenerFechaFinalDefinitivo() { return this.fechaFinalDefinitivo; }
 
     public Frecuencia obtenerFrecuencia() { return this.frecuencia; }
 
+
     public ArrayList<LocalDateTime> eventosHastaFecha(LocalDateTime fechaFinal) {
-        LocalDateTime fecha = this.fechaInicio;
-        var eventos = new ArrayList<LocalDateTime>();
-        while (estaEntreFechas(fecha, this.fechaInicio, this.fechaFinalDefinitivo) && estaEntreFechas(fecha, this.fechaInicio, fechaFinal)) {
-            eventos.add(fecha);
-            fecha = this.frecuencia.obtenerProximaFecha(fecha);
+        LocalDateTime dia = this.fechaInicio;
+        ArrayList<LocalDateTime> eventos = new ArrayList<>();
+        while (dia.isBefore(this.fechaFinalDefinitivo) && (dia.isBefore(fechaFinal) || dia.isEqual(fechaFinal))) {
+            eventos.add(dia);
+            dia = this.frecuencia.obtenerProximaFecha(dia);
         }
         return eventos;
     }
 
-    public boolean hayEvento(LocalDateTime fecha) {
-        ArrayList<LocalDateTime> eventos = eventosHastaFecha(fecha);
-        LocalDateTime ultimaFechaEncontradaInicio = eventos.get(eventos.size()-1);
-        LocalDateTime ultimaFechaEncontradaFinal = ultimaFechaEncontradaInicio.plus(this.duracion);
-        return this.estaEntreFechas(fecha, ultimaFechaEncontradaInicio, ultimaFechaEncontradaFinal);
+    public boolean hayEvento(LocalDateTime diaAAnalizar) {
+        ArrayList<LocalDateTime> eventos = eventosHastaFecha(diaAAnalizar);
+        LocalDateTime ultimoDiaInicio = eventos.get(eventos.size()-1);
+        Long[] duracionFormateada = this.formatearDuracion();
+        LocalDateTime ultimoDiaFin = ultimoDiaInicio.plusHours(duracionFormateada[0]).plusMinutes(duracionFormateada[1]).plusSeconds(duracionFormateada[2]);
+        return this.estaEntreFechas(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
     }
 
-    private boolean estaEntreFechas(LocalDateTime fecha, LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
-        return (fecha.equals(fechaInicio) || fecha.isAfter(fechaInicio)) && (fecha.isBefore(fechaFinal) || fecha.isEqual(fechaFinal));
+    private boolean estaEntreFechas(LocalDateTime diaAAnalizar, LocalDateTime diaInicio, LocalDateTime diaFin) {
+        return diaAAnalizar.equals(diaInicio) || diaAAnalizar.equals(diaFin) || (diaAAnalizar.isAfter(diaInicio) && diaAAnalizar.isBefore(diaFin));
     }
 
+    private Long[] formatearDuracion() {
+        Long duracionHoras = this.duracion.toHours();
+        Long duracionMinutos = this.duracion.minusHours(duracionHoras).toMinutes();
+        Long duracionSegundos = this.duracion.minusHours(duracionHoras).minusMinutes(duracionMinutos).toSeconds();
+        Long[] duracionFormateada = {duracionHoras , duracionMinutos, duracionSegundos};
+        return duracionFormateada;
+    }
 }

@@ -42,9 +42,9 @@ public abstract class ElementoCalendario {
 
     public void modificarFechaInicio(LocalDateTime fechaInicio) {
         if (this.todoElDia) {
-            fechaInicio = fechaInicio.toLocalDate().atStartOfDay();
+            this.fechaInicio = fechaInicio.toLocalDate().atStartOfDay();
+        } else {
+            this.fechaInicio = fechaInicio;
         }
-
-        this.fechaInicio = fechaInicio;
     }
 }

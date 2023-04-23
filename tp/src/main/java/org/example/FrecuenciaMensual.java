@@ -2,16 +2,14 @@ package org.example;
 
 import java.time.LocalDateTime;
 
-public class FrecuenciaMensual implements Frecuencia {
+public class FrecuenciaMensual extends Frecuencia {
 
-    private final int valorRepeticion;
-
-    public  FrecuenciaMensual() {
-        valorRepeticion = 1;
+    public FrecuenciaMensual(int frecuenciaMensual) {
+        super(frecuenciaMensual);
     }
 
     @Override
-    public LocalDateTime obtenerProximaFecha(LocalDateTime fecha) {
-        return fecha.plusMonths(this.valorRepeticion);
+    public LocalDateTime obtenerProximaFecha(LocalDateTime fechaInicial) {
+        return fechaInicial.plusMonths(this.valorRepeticion);
     }
 }

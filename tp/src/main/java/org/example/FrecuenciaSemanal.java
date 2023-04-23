@@ -7,31 +7,38 @@ import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 
-public class FrecuenciaSemanal implements Frecuencia {
+public class FrecuenciaSemanal extends Frecuencia {
 
     private DayOfWeek[] diasSemana;
 
-    public FrecuenciaSemanal(DayOfWeek[] diasSemana) {
+    public FrecuenciaSemanal(DayOfWeek[] diasSemana, int frecuenciaSemanal) {
+        super(frecuenciaSemanal);
         this.diasSemana = diasSemana;
     }
 
     @Override
-    public LocalDateTime obtenerProximaFecha(LocalDateTime fecha) { // Está mal
-        DayOfWeek fechaDia = fecha.getDayOfWeek();
-        DayOfWeek proximoDia = diasSemana[0];
-
-        for (DayOfWeek dia: diasSemana) {
-            if (dia.ordinal() > fechaDia.ordinal()) {
-                proximoDia = dia;
-                break;
+    public LocalDateTime obtenerProximaFecha(LocalDateTime fechaInicial) { // Está mal
+        DayOfWeek diaActual = fechaInicial.getDayOfWeek();
+        LocalDateTime fechaProxima = null;
+        for (int i = 0; i < this.diasSemana.length; i++) {
+            DayOfWeek dia = this.diasSemana[i];
+            if (diaActual == dia) {
+                if (i != this.diasSemana.length - 1) {
+                    fechaProxima = fechaInicial.plusDays(this.diasSemana[i+1].getValue() - diaActual.getValue());
+                } else {
+                    fechaProxima = fechaInicial.plusDays((diaActual.getValue() - this.diasSemana[0].getValue() - 1) % 8 + ((this.valorRepeticion - 1) * 7));
+                }
             }
         }
-
-        return fecha.with(TemporalAdjusters.nextOrSame(proximoDia));
+        return fechaProxima;
     }
 
-    public void modificarDiasSemana(DayOfWeek[] nuevosDiasSemana) {
-        this.diasSemana = nuevosDiasSemana;
+    public DayOfWeek[] obtenerDiasSemana() {
+        return this.diasSemana;
+    }
+
+    public void modificarDiasSemana(DayOfWeek[] diasSemana) {
+        this.diasSemana = diasSemana;
     }
 
 }

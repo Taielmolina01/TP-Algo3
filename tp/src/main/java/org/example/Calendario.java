@@ -1,16 +1,12 @@
 package org.example;
 
-import java.time.Duration;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.PriorityQueue;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class Calendario {
-    public HashMap<Evento, String> eventos;
-    public HashMap<Tarea, String> tareas;
-    private PriorityQueue<Alarma> alarmas; // puede ser period el tipo tambien, no estoy seguro si funcionaria
-    // igual o no
-
+    public HashMap<Evento, ArrayList<Alarma>> eventos;
+    public HashMap<Tarea, ArrayList<Alarma>> tareas;
+    private PriorityQueue<Alarma> alarmas;
     private Comparator<Alarma> comparador;
 
     public Calendario() {
@@ -22,6 +18,7 @@ public class Calendario {
             }
             return -1;
         };
+        this.alarmas = new PriorityQueue<>(this.comparador);
     }
 
     public PriorityQueue<Alarma> obtenerAlarmas() {
@@ -29,6 +26,26 @@ public class Calendario {
     }
 
     public Alarma obtenerProximaAlarma() {
+        // capaz aca tendria que llamar a un metodo privado que me agregue todas las alarmas existentes
+        // en cada Evento/Tarea, al arrayList correspondiente en su valor en el hash, y despues hacer todo esto.
+        Iterator<Entry<Evento, ArrayList<Alarma>> iteradorEventos = eventos.entrySet().iterator();
+        Iterator<Entry<Tarea, ArrayList<Alarma>> iteradorTareas = tareas.entrySet().iterator();
+        while (iteradorEventos.hasNext()) {
+            Entry<Evento, ArrayList<Alarma>> entradaClaveValor = iteradorEventos.next();
+            for (Alarma alarma : entradaClaveValor.getValue()) {
+                if (!this.alarmas.contains(alarma)) {
+                    this.alarmas.add(alarma);
+                }
+            }
+        }
+        while (iteradorTareas.hasNext()) {
+            Entry<Tarea, ArrayList<Alarma>> entradaClaveValor = iteradorTareas.next();
+            for (Alarma alarma : entradaClaveValor.getValue()) {
+                if (!this.alarmas.contains(alarma)) {
+                    this.alarmas.add(alarma);
+                }
+            }
+        }
         return this.alarmas.peek();
     }
 }
