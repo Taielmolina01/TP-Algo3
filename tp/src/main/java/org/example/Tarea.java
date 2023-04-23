@@ -10,7 +10,7 @@ public class Tarea extends ElementoCalendario {
         super(nombre, descripcion, fechaInicio, todoElDia);
     }
 
-    public void toggleTarea() {
+    public void cambiarEstadoTarea() {
         this.completada = !this.completada;
     }
 

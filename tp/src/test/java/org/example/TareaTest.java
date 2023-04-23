@@ -39,13 +39,13 @@ public class TareaTest {
     }
 
     @Test
-    public void toggleTareaTest() {
+    public void cambiarEstadoTareaTest() {
         var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
         var tarea = new Tarea("nombre", "descripcion", fecha, true);
         assertFalse(tarea.estaCompletada());
-        tarea.toggleTarea();
+        tarea.cambiarEstadoTarea();
         assertTrue(tarea.estaCompletada());
-        tarea.toggleTarea();
+        tarea.cambiarEstadoTarea();
         assertFalse(tarea.estaCompletada());
     }
 }
