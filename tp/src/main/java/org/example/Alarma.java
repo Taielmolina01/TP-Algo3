@@ -37,4 +37,8 @@ public class Alarma {
     public efecto dispararAlarma() {
         return  efectoProducido;
     }
+
+    public LocalDateTime obtenerFechaAbsoluta() {
+        return this.fechaAbsoluta;
+    }
 }
