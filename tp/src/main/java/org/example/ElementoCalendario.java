@@ -21,10 +21,6 @@ public abstract class ElementoCalendario {
         this.alarmas = new ArrayList<>();
     }
 
-    public ElementoCalendario() {
-        this.alarmas = new ArrayList<>();
-    }
-
     public void agregarAlarma(Alarma alarma) { this.alarmas.add(alarma); }
 
     public String obtenerNombre() { return this.nombre; }
