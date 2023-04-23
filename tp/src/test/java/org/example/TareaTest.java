@@ -12,14 +12,14 @@ public class TareaTest {
     public void getNombreTest() {
         var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
         var tarea = new Tarea("nombre", "descripcion", fecha, true);
-        assertEquals("nombre", tarea.getNombre());
+        assertEquals("nombre", tarea.obtenerNombre());
     }
 
     @Test
     public void getDescripcionTest() {
         var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
         var tarea = new Tarea("nombre", "descripcion", fecha, true);
-        assertEquals("descripcion", tarea.getDescripcion());
+        assertEquals("descripcion", tarea.obtenerDescripcion());
     }
 
     @Test
@@ -27,7 +27,7 @@ public class TareaTest {
         var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
         var tarea = new Tarea("nombre", "descripcion", fecha, true);
         tarea.modificarNombre("nuevo nombre");
-        assertEquals("nuevo nombre", tarea.getNombre());
+        assertEquals("nuevo nombre", tarea.obtenerNombre());
     }
 
     @Test
@@ -35,17 +35,17 @@ public class TareaTest {
         var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
         var tarea = new Tarea("nombre", "descripcion", fecha, true);
         tarea.modificarDescripcion("nueva descripcion");
-        assertEquals("nueva descripcion", tarea.getDescripcion());
+        assertEquals("nueva descripcion", tarea.obtenerDescripcion());
     }
 
     @Test
-    public void toggleTareaTest() {
+    public void cambiarEstadoTareaTest() {
         var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
         var tarea = new Tarea("nombre", "descripcion", fecha, true);
         assertFalse(tarea.estaCompletada());
-        tarea.toggleTarea();
+        tarea.cambiarEstadoTarea();
         assertTrue(tarea.estaCompletada());
-        tarea.toggleTarea();
+        tarea.cambiarEstadoTarea();
         assertFalse(tarea.estaCompletada());
     }
 }

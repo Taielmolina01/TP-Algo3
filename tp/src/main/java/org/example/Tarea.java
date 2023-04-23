@@ -2,7 +2,7 @@ package org.example;
 
 import java.time.LocalDateTime;
 
-public class Tarea extends elementoCalendario {
+public class Tarea extends ElementoCalendario {
 
     private boolean completada;
 
@@ -10,7 +10,7 @@ public class Tarea extends elementoCalendario {
         super(nombre, descripcion, fechaInicio, todoElDia);
     }
 
-    public void toggleTarea() {
+    public void cambiarEstadoTarea() {
         this.completada = !this.completada;
     }
 
