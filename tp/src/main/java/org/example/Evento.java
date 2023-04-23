@@ -20,9 +20,9 @@ public class Evento extends elementoCalendario {
         super(nombre, descripcion, fechaInicio, todoElDia);
         this.modificarDuracion(duracion);
 
-        this.modificarFrecuencia(new frecuenciaDiaria(0));
+        this.modificarFrecuencia(new FrecuenciaDiaria(0));
         this.modificarOcurrencias(0);
-        this.calcularFechaFinRepeticiones(this.fechaFin);
+        this.calcularFechaFinDefinitivo(this.fechaFin);
     }
 
     // Constructor si se repite el evento dada la fecha de fin.
@@ -33,7 +33,7 @@ public class Evento extends elementoCalendario {
 
         this.modificarFrecuencia(frecuencia);
         this.modificarOcurrencias(0);
-        this.calcularFechaFinRepeticiones(fechaFinalDefinitivo);
+        this.calcularFechaFinDefinitivo(fechaFinalDefinitivo);
     }
 
     // Constructor si se repite el evento dada las veces que se va a repetir el evento.
@@ -56,7 +56,7 @@ public class Evento extends elementoCalendario {
 
     public void modificarOcurrencias(Integer ocurrencias) {
         this.ocurrencias = ocurrencias;
-        this.calcularFechaFinRepeticiones(this.fechaInicio);
+        this.calcularFechaFinDefinitivo(this.fechaInicio);
     }
 
     public void modificarFechaFinal(LocalDateTime fechaFinalDefinitivo) {
@@ -65,7 +65,7 @@ public class Evento extends elementoCalendario {
 
     public void modificarFrecuencia(Frecuencia frecuencia) {
         this.frecuencia = frecuencia;
-        this.calcularFechaFinRepeticiones(this.fechaInicio);
+        this.calcularFechaFinDefinitivo(this.fechaInicio);
     }
 
     public Duration obtenerDuracion() { return this.duracion; }
@@ -80,7 +80,7 @@ public class Evento extends elementoCalendario {
         ArrayList<LocalDateTime> eventos = new ArrayList<>();
         while (dia.isBefore(this.fechaFinalDefinitivo) && (dia.isBefore(fechaFinal) || dia.isEqual(fechaFinal))) {
             eventos.add(dia);
-            dia = this.frecuencia.getProximaFecha(dia);
+            dia = this.frecuencia.obtenerProximaFecha(dia);
         }
         return eventos;
     }
@@ -92,11 +92,9 @@ public class Evento extends elementoCalendario {
         return this.isBetween(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
     }
 
-    private void calcularFechaFinRepeticiones(LocalDateTime diaActual) {
-        int ocurrenciasContadas = 0;
-        while (this.ocurrencias != ocurrenciasContadas) {
-            diaActual = this.frecuencia.getProximaFecha(diaActual);
-            ocurrenciasContadas++;
+    private void calcularFechaFinDefinitivo(LocalDateTime diaActual) {
+        for (int i = 0; i < this.ocurrencias; i++) {
+            diaActual = this.frecuencia.obtenerProximaFecha(diaActual);
         }
         this.fechaFinalDefinitivo = diaActual;
     }
