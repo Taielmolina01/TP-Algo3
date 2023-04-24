@@ -90,31 +90,49 @@ public class AlarmaTest {
     }
 
     @Test
-    public void testIntentarDispararAlarmaAntesDeFecha() {
-        var fechaAntes = LocalDateTime.of(2020, 1, 5, 0, 0, 0, 0);
-        var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 0, 0, 0, 0);
+    public void intentarDispararAlarmaAntesDeFechaTest() {
+        var fechaAntes = LocalDateTime.of(2020, 1, 5, 00, 0, 0, 0);
+        var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 00, 0, 0, 0);
 
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta);
 
-        assertTrue(alarma.cuantoFaltaParaDisparar(fechaAntes).isPositive());
+        if (alarma.cuantoFaltaParaDisparar(fechaAntes).isPositive()) {
+            assertTrue(true);
+        } else if (alarma.cuantoFaltaParaDisparar(fechaAntes).isZero()) {
+            assertTrue(false);
+        } else if (alarma.cuantoFaltaParaDisparar(fechaAntes).isNegative()) {
+            assertTrue(false);
+        }
     }
 
     @Test
-    public void testIntentarDispararAlarmaEnFecha() {
+    public void intentarDispararAlarmaEnFechaTest() {
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 00, 0, 0, 0);
 
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta);
 
-        assertEquals(Alarma.efecto.NOTIFICACION, alarma.dispararAlarma());
+        if (alarma.cuantoFaltaParaDisparar(fechaAbsoluta).isPositive()) {
+            assertTrue(false);
+        } else if (alarma.cuantoFaltaParaDisparar(fechaAbsoluta).isZero()) {
+            assertEquals(Alarma.efecto.NOTIFICACION, alarma.dispararAlarma());
+        } else if (alarma.cuantoFaltaParaDisparar(fechaAbsoluta).isNegative()) {
+            assertTrue(false);
+        }
     }
 
     @Test
-    public void testIntentarDispararAlarmaDespuesDeFecha() {
+    public void intentarDispararAlarmaDespuesDeFechaTest() {
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 00, 0, 0, 0);
         var fechaDespues = LocalDateTime.of(2020, 1, 15, 00, 0, 0, 0);
 
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta);
 
-        assertTrue(alarma.cuantoFaltaParaDisparar(fechaDespues).isNegative());
+        if (alarma.cuantoFaltaParaDisparar(fechaDespues).isPositive()) {
+            assertTrue(false);
+        } else if (alarma.cuantoFaltaParaDisparar(fechaDespues).isZero()) {
+            assertTrue(false);
+        } else if (alarma.cuantoFaltaParaDisparar(fechaDespues).isNegative()) {
+            assertTrue(true);
+        }
     }
 }
