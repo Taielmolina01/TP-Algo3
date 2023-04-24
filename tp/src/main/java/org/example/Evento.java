@@ -85,6 +85,7 @@ public class Evento extends ElementoCalendario {
     }
 
     public Duration obtenerDuracion() { return this.duracion; }
+
     public LocalDateTime obtenerFechaFinalDefinitivo() { return this.fechaFinalDefinitivo; }
 
     public Frecuencia obtenerFrecuencia() { return this.frecuencia; }

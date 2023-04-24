@@ -3,7 +3,7 @@ package org.example;
 import java.time.LocalDateTime;
 
 public abstract class Frecuencia {
-    protected int valorRepeticion;
+    private int valorRepeticion;
 
     public Frecuencia(int frecuenciaRepeticiones) {
         this.valorRepeticion = frecuenciaRepeticiones;

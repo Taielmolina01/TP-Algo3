@@ -10,7 +10,7 @@ public class FrecuenciaAnual extends Frecuencia {
 
     @Override
     public LocalDateTime obtenerProximaFecha(LocalDateTime fechaInicial) {
-        return fechaInicial.plusYears(this.valorRepeticion);
+        return fechaInicial.plusYears(this.obtenerValorRepeticion());
     }
 
 }

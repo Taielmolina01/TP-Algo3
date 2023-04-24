@@ -7,10 +7,8 @@ public abstract class ElementoCalendario {
 
     private String nombre;
     private String descripcion;
-
     protected boolean todoElDia;
     protected LocalDateTime fechaInicio;
-
     private final ArrayList<Alarma> alarmas;
 
     public ElementoCalendario(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {
@@ -26,6 +24,8 @@ public abstract class ElementoCalendario {
     public ArrayList<Alarma> obtenerAlarmas() { return this.alarmas; }
 
     public String obtenerNombre() { return this.nombre; }
+
+    protected ArrayList<Alarma> obtenerAlarmas() { return this.alarmas; }
 
     public String obtenerDescripcion() { return this.descripcion; }
 

@@ -65,7 +65,7 @@ public class Calendario {
 
     public void eliminarEvento(int id) {
         Evento eventoEliminado = this.eventos.remove(id);
-        for (Alarma alarma:eventoEliminado.obtenerAlarmas()) {
+        for (Alarma alarma : eventoEliminado.obtenerAlarmas()) {
             this.alarmas.remove(alarma);
         }
     }
