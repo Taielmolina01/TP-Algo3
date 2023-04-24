@@ -6,7 +6,7 @@ import java.util.*;
 
 
 public class Calendario {
-    private final HashMap<Integer, Evento> eventos;
+    public final HashMap<Integer, Evento> eventos;
     private final HashMap<Integer, Tarea> tareas;
     private Integer indice;
     private final PriorityQueue<Alarma> alarmas;
@@ -55,8 +55,8 @@ public class Calendario {
         tareas.put(indice++, tarea);
     }
 
-    public void modificarEvento(int id) {
-
+    public boolean modificarEvento(int id) {
+       return this.eventos.get(id) != null;
     }
 
     public void modificarTarea(int id) {
@@ -72,7 +72,7 @@ public class Calendario {
 
     public void eliminarTarea(int id) {
         Tarea tareaEliminada = this.tareas.remove(id);
-        for (Alarma alarma:tareaEliminada.obtenerAlarmas()) {
+        for (Alarma alarma : tareaEliminada.obtenerAlarmas()) {
             this.alarmas.remove(alarma);
         }
     }
