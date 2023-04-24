@@ -3,56 +3,91 @@ package org.example;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.Map.Entry;
 
 public class Calendario {
-    public HashMap<Evento, ArrayList<Alarma>> eventos;
-    public HashMap<Tarea, ArrayList<Alarma>> tareas;
-    private PriorityQueue<Alarma> alarmas;
-    private Comparator<Alarma> comparador;
+    private final HashMap<Integer, Evento> eventos;
+    private final HashMap<Integer, Tarea> tareas;
+    private Integer indice;
+
+    private final PriorityQueue<Alarma> alarmas;
+    private final Comparator<Alarma> funcComparacion;
 
     public Calendario() {
         this.eventos = new HashMap<>();
         this.tareas = new HashMap<>();
-        this.comparador = (alarma1, alarma2) -> {
-            Duration faltaParaAlarma1 = alarma1.cuantoFaltaParaDisparar(LocalDateTime.of(1000, 1, 1, 0, 0, 0)).abs();
-            Duration faltaParaAlarma2 = alarma2.cuantoFaltaParaDisparar(LocalDateTime.of(1000, 1, 1, 0, 0, 0)).abs();
-            if (faltaParaAlarma1.compareTo(faltaParaAlarma2) > 0) { // capaz sea al reves el 1 y -1
+        this.indice = 0;
+
+        this.funcComparacion = (alarma1, alarma2) -> {
+            LocalDateTime fechaArbitraria = LocalDateTime.of(2000, 1, 1, 0, 0);
+            var duracion1 = alarma1.cuantoFaltaParaDisparar(fechaArbitraria);
+            var duracion2 = alarma2.cuantoFaltaParaDisparar(fechaArbitraria);
+            if (duracion1.minus(duracion2).isZero()) {
+                return 0;
+            } else if (duracion1.minus(duracion2).isPositive()) {
                 return 1;
+            } else {
+                return -1;
             }
-            return -1;
         };
-        this.alarmas = new PriorityQueue<>(this.comparador);
+        this.alarmas = new PriorityQueue<>(this.funcComparacion);
     }
 
-    public PriorityQueue<Alarma> obtenerAlarmas() {
-        return this.alarmas;
+    public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia,
+                            Duration duracion) {
+        Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia);
+        eventos.put(indice++, evento);
     }
 
-    public Alarma obtenerProximaAlarma() {
-        // capaz aca tendria que llamar a un metodo privado que me agregue todas las alarmas existentes
-        // en cada Evento/Tarea, al arrayList correspondiente en su valor en el hash, y despues hacer todo esto.
-        // IDEA: cuando llamamos aca hacemos por todas las claves de ambos hash evento.obtenerAlarmas()/tarea.obtenerAlarmas()
-        // y rehasheamos las claves con los valores nuevos (los resultados de obtenerAlarmas()) o utilizar el metodo replace
-        // de HashMap que creo que hace eso (asocia un nuevo valor a una clave existente).
-        Iterator<Entry<Evento, ArrayList<Alarma>> iteradorEventos = eventos.entrySet().iterator();
-        Iterator<Entry<Tarea, ArrayList<Alarma>> iteradorTareas = tareas.entrySet().iterator();
-        while (iteradorEventos.hasNext()) {
-            Entry<Evento, ArrayList<Alarma>> entradaClaveValor = iteradorEventos.next();
-            for (Alarma alarma : entradaClaveValor.getValue()) {
-                if (!this.alarmas.contains(alarma)) {
-                    this.alarmas.add(alarma);
-                }
-            }
+    public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia,
+                            Duration duracion, LocalDateTime fechaFinalRepeticion, Frecuencia frecuencia) {
+        Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia, fechaFinalRepeticion, frecuencia);
+        eventos.put(indice++, evento);
+    }
+
+    public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia,
+                            Duration duracion, Integer ocurrencias, Frecuencia frecuencia) {
+        Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia, ocurrencias, frecuencia);
+        eventos.put(indice++, evento);
+    }
+
+    public void crearTarea(String nombre, String descripcion, LocalDateTime fecha, boolean todoElDia) {
+        Tarea tarea = new Tarea(nombre, descripcion, fecha, todoElDia);
+        tareas.put(indice++, tarea);
+    }
+
+    public void modificarEvento(int id) {
+
+    }
+
+    public void modificarTarea(int id) {
+
+    }
+
+    public void eliminarEvento(int id) {
+        Evento eventoEliminado = this.eventos.remove(id);
+        for (Alarma alarma:eventoEliminado.obtenerAlarmas()) {
+            this.alarmas.remove(alarma);
         }
-        while (iteradorTareas.hasNext()) {
-            Entry<Tarea, ArrayList<Alarma>> entradaClaveValor = iteradorTareas.next();
-            for (Alarma alarma : entradaClaveValor.getValue()) {
-                if (!this.alarmas.contains(alarma)) {
-                    this.alarmas.add(alarma);
-                }
-            }
+    }
+
+    public void eliminarTarea(int id) {
+        Tarea tareaEliminada = this.tareas.remove(id);
+        for (Alarma alarma:tareaEliminada.obtenerAlarmas()) {
+            this.alarmas.remove(alarma);
         }
-        return this.alarmas.peek();
+    }
+
+    public void configurarAlarma(int id, Alarma.efecto efecto, LocalDateTime fechaActivacion) {
+        ElementoCalendario elemento = eventos.containsKey(id) ? eventos.get(id) : tareas.get(id);
+        Alarma alarma = new Alarma(efecto, fechaActivacion);
+        elemento.agregarAlarma(alarma);
+        this.alarmas.add(alarma);
+    }
+
+    public void configurarAlarma(int id, Alarma.efecto efecto, Duration intervaloTiempo) {
+        ElementoCalendario elemento = eventos.containsKey(id) ? eventos.get(id) : tareas.get(id);
+        Alarma alarma = new Alarma(efecto, elemento.obtenerFechaInicio(), intervaloTiempo);
+        elemento.agregarAlarma(alarma);
+        this.alarmas.add(alarma);
     }
 }
