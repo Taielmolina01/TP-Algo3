@@ -10,14 +10,13 @@ public class Calendario {
     private final HashMap<Integer, Tarea> tareas;
     private Integer indice;
     private final PriorityQueue<Alarma> alarmas;
-    private final Comparator<Alarma> funcComparacion;
 
     public Calendario() {
         this.eventos = new HashMap<>();
         this.tareas = new HashMap<>();
         this.indice = 0;
 
-        this.funcComparacion = (alarma1, alarma2) -> {
+        Comparator<Alarma> funcComparacion = (alarma1, alarma2) -> {
             LocalDateTime fechaArbitraria = LocalDateTime.of(2000, 1, 1, 0, 0);
             var duracion1 = alarma1.cuantoFaltaParaDisparar(fechaArbitraria);
             var duracion2 = alarma2.cuantoFaltaParaDisparar(fechaArbitraria);
@@ -29,7 +28,7 @@ public class Calendario {
                 return -1;
             }
         };
-        this.alarmas = new PriorityQueue<>(this.funcComparacion);
+        this.alarmas = new PriorityQueue<>(funcComparacion);
     }
 
     public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
