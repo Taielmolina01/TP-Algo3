@@ -90,4 +90,8 @@ public class Calendario {
         elemento.agregarAlarma(alarma);
         this.alarmas.add(alarma);
     }
+
+    public Alarma obtenerSiguienteAlarma() {
+        return this.alarmas.peek();
+    }
 }
