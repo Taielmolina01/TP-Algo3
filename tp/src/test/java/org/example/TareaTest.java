@@ -23,6 +23,20 @@ public class TareaTest {
     }
 
     @Test
+    public void testObtenerTodoElDia() {
+        var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
+        var tarea = new Tarea("nombre", "descipcion", fecha, true);
+        assertTrue(tarea.obtenerTodoElDia());
+    }
+
+    @Test
+    public void testObtenerFechaTarea() {
+        var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
+        var tarea = new Tarea("nombre", "descipcion", fecha, true);
+        assertEquals(fecha, tarea.obtenerFechaInicio());
+    }
+
+    @Test
     public void testModificarNombre() {
         var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
         var tarea = new Tarea("nombre", "descripcion", fecha, true);
@@ -36,6 +50,29 @@ public class TareaTest {
         var tarea = new Tarea("nombre", "descripcion", fecha, true);
         tarea.modificarDescripcion("nueva descripcion");
         assertEquals("nueva descripcion", tarea.obtenerDescripcion());
+    }
+
+    @Test
+    public void testModificarTodoElDia() {
+        var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
+        var tarea = new Tarea("nombre", "descipcion", fecha, true);
+
+        tarea.modificarTodoElDia(false);
+        assertFalse(tarea.obtenerTodoElDia());
+
+        tarea.modificarTodoElDia(true);
+        assertTrue(tarea.obtenerTodoElDia());
+    }
+
+    @Test
+    public void testModificarFechaTarea() {
+        var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
+        var nuevaFecha = LocalDateTime.of(2023, 4, 24, 0, 0);
+        var tarea = new Tarea("nombre", "descipcion", fecha, true);
+
+        tarea.modificarFechaInicio(nuevaFecha);
+        assertEquals(nuevaFecha, tarea.obtenerFechaInicio());
+        assertNotEquals(fecha, tarea.obtenerFechaInicio());
     }
 
     @Test
