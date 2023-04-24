@@ -55,10 +55,6 @@ public class Calendario {
         tareas.put(indice++, tarea);
     }
 
-    public boolean modificarEvento(int id) {
-       return this.eventos.get(id) != null;
-    }
-
     public void modificarNombre(int idElemento, String nuevoNombre) {
         ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : tareas.get(idElemento);
         elemento.modificarNombre(nuevoNombre);
