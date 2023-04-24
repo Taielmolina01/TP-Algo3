@@ -37,7 +37,7 @@ public class Calendario {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia);
         eventos.put(indice++, evento);
     }
-
+    
     public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia,
                             Duration duracion, LocalDateTime fechaFinalRepeticion, Frecuencia frecuencia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia, fechaFinalRepeticion, frecuencia);
@@ -93,5 +93,22 @@ public class Calendario {
 
     public Alarma obtenerSiguienteAlarma() {
         return this.alarmas.peek();
+    }
+
+    private void actualizarAlarmas() {
+        Iterator<Entry<Evento, ArrayList<Alarma>>> iteradorEventos = this.eventos.entrySet().iterator();
+        Iterator<Entry<Tarea, ArrayList<Alarma>>> iteradorTareas = this.tareas.entrySet().iterator();
+        while (iteradorEventos.hasNext()) {
+            Entry<Evento, ArrayList<Alarma>> entradaClaveValor = iteradorEventos.next();
+            Evento eventoActual = entradaClaveValor.getKey();
+            ArrayList<Alarma> alarmasEventoActual = entradaClaveValor.getValue();
+            this.eventos.replace(eventoActual, alarmasEventoActual);
+        }
+        while (iteradorTareas.hasNext()) {
+            Entry<Tarea, ArrayList<Alarma>> entradaClaveValor = iteradorTareas.next();
+            Tarea tareaActual = entradaClaveValor.getKey();
+            ArrayList<Alarma> alarmasTareaActual = entradaClaveValor.getValue();
+            this.tareas.replace(tareaActual, alarmasTareaActual);
+        }
     }
 }
