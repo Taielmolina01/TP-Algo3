@@ -38,7 +38,7 @@ public class Alarma {
         return  efectoProducido;
     }
 
-    public LocalDateTime obtenerFechaActivacion() {
+    public LocalDateTime obtenerFechaDisparaAlarma() {
         return this.fechaDisparador;
     }
 }

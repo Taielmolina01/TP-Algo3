@@ -5,8 +5,9 @@ import java.lang.String;
 import java.util.ArrayList;
 
 public class Evento extends ElementoCalendario {
+
     private LocalDateTime fechaFin; // Fin del evento sin contar sus repeticiones, NO es la fecha en donde terminan las repeticiones.
-    private LocalDateTime fechaFinalDefinitivo; // Fecha en la que terminan las repeticiones del evento.
+    private LocalDateTime fechaFinalRepeticion; // Fecha en la que terminan las repeticiones del evento.
     private Duration duracion;
     private Integer ocurrencias;
     private Frecuencia frecuencia;
@@ -18,14 +19,14 @@ public class Evento extends ElementoCalendario {
                   boolean todoElDia) {
         super(nombre, descripcion, fechaInicio, todoElDia);
         this.definirDuracion(duracion);
-        this.fechaFinalDefinitivo = this.fechaFin;
+        this.fechaFinalRepeticion = this.fechaFin;
     }
     // Constructor si se repite el evento dada la fecha de fin.
     public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
-                  boolean todoElDia, LocalDateTime fechaFinalDefinitivo, Frecuencia frecuencia) {
+                  boolean todoElDia, LocalDateTime fechaFinalRepeticion, Frecuencia frecuencia) {
         super(nombre, descripcion, fechaInicio, todoElDia);
         this.definirDuracion(duracion);
-        this.fechaFinalDefinitivo = fechaFinalDefinitivo;
+        this.fechaFinalRepeticion = fechaFinalRepeticion;
         this.frecuencia = frecuencia;
     }
 
@@ -49,8 +50,8 @@ public class Evento extends ElementoCalendario {
         this.calcularFechaFinDefinitivo();
     }
 
-    public void modificarFechaFinal(LocalDateTime fechaFinalDefinitivo) {
-        this.fechaFinalDefinitivo = fechaFinalDefinitivo;
+    public void modificarFechaFinal(LocalDateTime fechaFinalRepeticion) {
+        this.fechaFinalRepeticion = fechaFinalRepeticion;
     }
 
     public void modificarFrecuencia(Frecuencia frecuencia) {
@@ -67,7 +68,7 @@ public class Evento extends ElementoCalendario {
             diaActual = this.frecuencia.obtenerProximaFecha(diaActual);
             ocurrenciasContadas++;
         }
-        this.fechaFinalDefinitivo = diaActual;
+        this.fechaFinalRepeticion = diaActual;
     }
 
     private void calcularFechaFin() {
@@ -86,7 +87,7 @@ public class Evento extends ElementoCalendario {
 
     public Duration obtenerDuracion() { return this.duracion; }
 
-    public LocalDateTime obtenerFechaFinalDefinitivo() { return this.fechaFinalDefinitivo; }
+    public LocalDateTime obtenerFechaFinalDefinitivo() { return this.fechaFinalRepeticion; }
 
     public Frecuencia obtenerFrecuencia() { return this.frecuencia; }
 
@@ -94,7 +95,7 @@ public class Evento extends ElementoCalendario {
     public ArrayList<LocalDateTime> eventosHastaFecha(LocalDateTime fechaFinal) {
         LocalDateTime dia = this.fechaInicio;
         ArrayList<LocalDateTime> eventos = new ArrayList<>();
-        while (dia.isBefore(this.fechaFinalDefinitivo) && (dia.isBefore(fechaFinal) || dia.isEqual(fechaFinal))) {
+        while (dia.isBefore(this.fechaFinalRepeticion) && (dia.isBefore(fechaFinal) || dia.isEqual(fechaFinal))) {
             eventos.add(dia);
             dia = this.frecuencia.obtenerProximaFecha(dia);
         }

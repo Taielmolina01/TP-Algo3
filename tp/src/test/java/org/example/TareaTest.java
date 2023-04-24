@@ -9,21 +9,21 @@ import static org.junit.Assert.*;
 public class TareaTest {
 
     @Test
-    public void getNombreTest() {
+    public void testGetNombre() {
         var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
         var tarea = new Tarea("nombre", "descripcion", fecha, true);
         assertEquals("nombre", tarea.obtenerNombre());
     }
 
     @Test
-    public void getDescripcionTest() {
+    public void testGetDescripcion() {
         var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
         var tarea = new Tarea("nombre", "descripcion", fecha, true);
         assertEquals("descripcion", tarea.obtenerDescripcion());
     }
 
     @Test
-    public void modificarNombreTest() {
+    public void testModificarNombre() {
         var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
         var tarea = new Tarea("nombre", "descripcion", fecha, true);
         tarea.modificarNombre("nuevo nombre");
@@ -31,7 +31,7 @@ public class TareaTest {
     }
 
     @Test
-    public void modificarDescripcionTest() {
+    public void testModificarDescripcion() {
         var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
         var tarea = new Tarea("nombre", "descripcion", fecha, true);
         tarea.modificarDescripcion("nueva descripcion");
@@ -39,7 +39,7 @@ public class TareaTest {
     }
 
     @Test
-    public void cambiarEstadoTareaTest() {
+    public void testCambiarEstadoTarea() {
         var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
         var tarea = new Tarea("nombre", "descripcion", fecha, true);
         assertFalse(tarea.estaCompletada());
