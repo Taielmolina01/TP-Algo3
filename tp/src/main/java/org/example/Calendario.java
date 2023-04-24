@@ -6,7 +6,7 @@ import java.util.*;
 
 
 public class Calendario {
-    public final HashMap<Integer, Evento> eventos;
+    private final HashMap<Integer, Evento> eventos;
     private final HashMap<Integer, Tarea> tareas;
     private Integer indice;
     private final PriorityQueue<Alarma> alarmas;
@@ -60,18 +60,26 @@ public class Calendario {
         elemento.modificarNombre(nuevoNombre);
     }
 
+    public String obtenerNombre(int idElemento) {
+        return this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento).obtenerNombre() : this.tareas.get(idElemento).obtenerNombre();
+    }
+
     public void modificarDescripcion(int idElemento, String nuevaDescripcion) {
-        ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : tareas.get(idElemento);
+        ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : this.tareas.get(idElemento);
         elemento.modificarDescripcion(nuevaDescripcion);
     }
 
+    public String obtenerDescripcion(int idElemento) {
+        return this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento).obtenerDescripcion() : this.tareas.get(idElemento).obtenerDescripcion();
+    }
+
     public void modificarFechaInicio(int idElemento, LocalDateTime nuevaFechaInicio) {
-        ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : tareas.get(idElemento);
+        ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : this.tareas.get(idElemento);
         elemento.modificarFechaInicio(nuevaFechaInicio);
     }
 
     public void modificarTodoElDia(int idElemento, boolean todoElDia) {
-        ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : tareas.get(idElemento);
+        ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : this.tareas.get(idElemento);
         elemento.modificarTodoElDia(todoElDia);
     }
 
@@ -110,12 +118,12 @@ public class Calendario {
     }
 
     public void configurarAlarma(int id, Alarma.efecto efecto, LocalDateTime fechaActivacion) {
-        ElementoCalendario elemento = eventos.containsKey(id) ? eventos.get(id) : tareas.get(id);
+        ElementoCalendario elemento = this.eventos.containsKey(id) ? this.eventos.get(id) : this.tareas.get(id);
         this.alarmas.add(elemento.agregarAlarma(efecto, fechaActivacion));
     }
 
     public void configurarAlarma(int id, Alarma.efecto efecto, Duration intervaloTiempo) {
-        ElementoCalendario elemento = eventos.containsKey(id) ? eventos.get(id) : tareas.get(id);
+        ElementoCalendario elemento = this.eventos.containsKey(id) ? this.eventos.get(id) : this.tareas.get(id);
         this.alarmas.add(elemento.agregarAlarma(efecto, intervaloTiempo));
     }
 

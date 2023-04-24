@@ -20,7 +20,7 @@ public class AlarmaTest {
     }
 
     @Test
-    public void crearAlarmaTiempoRelativoTest() {
+    public void testCrearAlarmaTiempoRelativo() {
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 00, 0, 0, 0);
         var fechaDisparador = LocalDateTime.of(2019,12,31,23,30);
         var tiempo = Duration.of(30, ChronoUnit.MINUTES);
@@ -28,7 +28,7 @@ public class AlarmaTest {
     }
 
     @Test
-    public void cuantoFaltaAntesDeFechaAlarmaTest() {
+    public void testCuantoFaltaAntesDeFechaAlarma() {
         var fechaAntes = LocalDateTime.of(2020, 1, 5, 00, 0, 0, 0);
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 00, 0, 0, 0);
 
@@ -42,7 +42,7 @@ public class AlarmaTest {
     }
 
     @Test
-    public void cuantoFaltaEnFechaAlarmaTest() {
+    public void testCuantoFaltaEnFechaAlarma() {
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 00, 0, 0, 0);
 
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta);
@@ -55,7 +55,7 @@ public class AlarmaTest {
     }
 
     @Test
-    public  void cuantoFaltaDespuesDeFechaAlarmaTest() {
+    public  void testCuantoFaltaDespuesDeFechaAlarma() {
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 00, 0, 0, 0);
         var fechaDespues = LocalDateTime.of(2020, 1, 15, 00, 0, 0, 0);
 
@@ -69,28 +69,28 @@ public class AlarmaTest {
     }
 
     @Test
-    public void dispararAlarmaNotificacionTest() {
+    public void testDispararAlarmaNotificacion() {
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 00, 0, 0, 0);
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta);
         assertEquals(Alarma.efecto.NOTIFICACION, alarma.dispararAlarma());
     }
 
     @Test
-    public void dispararAlarmaSonidoTest() {
+    public void testDispararAlarmaSonido() {
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 00, 0, 0, 0);
         var alarma = new Alarma(Alarma.efecto.SONIDO, fechaAbsoluta);
         assertEquals(Alarma.efecto.SONIDO, alarma.dispararAlarma());
     }
 
     @Test
-    public void dispararAlarmaEmailTest() {
+    public void testDispararAlarmaEmailTest() {
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 00, 0, 0, 0);
         var alarma = new Alarma(Alarma.efecto.EMAIL, fechaAbsoluta);
         assertEquals(Alarma.efecto.EMAIL, alarma.dispararAlarma());
     }
 
     @Test
-    public void intentarDispararAlarmaAntesDeFechaTest() {
+    public void testIntentarDispararAlarmaAntesDeFecha() {
         var fechaAntes = LocalDateTime.of(2020, 1, 5, 00, 0, 0, 0);
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 00, 0, 0, 0);
 
@@ -106,7 +106,7 @@ public class AlarmaTest {
     }
 
     @Test
-    public void intentarDispararAlarmaEnFechaTest() {
+    public void testIntentarDispararAlarmaEnFecha() {
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 00, 0, 0, 0);
 
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta);
@@ -121,7 +121,7 @@ public class AlarmaTest {
     }
 
     @Test
-    public void intentarDispararAlarmaDespuesDeFechaTest() {
+    public void testIntentarDispararAlarmaDespuesDeFecha() {
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 00, 0, 0, 0);
         var fechaDespues = LocalDateTime.of(2020, 1, 15, 00, 0, 0, 0);
 
