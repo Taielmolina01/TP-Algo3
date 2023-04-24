@@ -5,22 +5,12 @@ import java.util.ArrayList;
 
 public abstract class ElementoCalendario {
 
-<<<<<<< HEAD
-
     private String nombre;
     private String descripcion;
     protected boolean todoElDia;
     protected LocalDateTime fechaInicio;
     private final ArrayList<Alarma> alarmas;
 
-=======
-    private String nombre;
-    private String descripcion;
-    protected boolean todoElDia;
-    protected LocalDateTime fechaInicio;
-    private final ArrayList<Alarma> alarmas;
-
->>>>>>> 9fb49bd (poniendome al dia)
     public ElementoCalendario(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -31,21 +21,13 @@ public abstract class ElementoCalendario {
 
     public void agregarAlarma(Alarma alarma) { this.alarmas.add(alarma); }
 
-    public ArrayList<Alarma> obtenerAlarmas() { return this.alarmas; }
+    protected ArrayList<Alarma> obtenerAlarmas() { return this.alarmas; }
 
     public String obtenerNombre() { return this.nombre; }
-
-<<<<<<< HEAD
-    protected ArrayList<Alarma> obtenerAlarmas() { return this.alarmas; }
 
     public String obtenerDescripcion() { return this.descripcion; }
 
     public Boolean obtenerTodoElDia() { return this.todoElDia; }
-=======
-    public String obtenerDescripcion() { return this.descripcion; }
-
-    public boolean obtenerTodoElDia() { return this.todoElDia; }
->>>>>>> 9fb49bd (poniendome al dia)
 
     public LocalDateTime obtenerFechaInicio() { return this.fechaInicio; }
 
