@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public abstract class ElementoCalendario {
 
+
     private String nombre;
     private String descripcion;
     protected boolean todoElDia;
@@ -49,4 +50,4 @@ public abstract class ElementoCalendario {
             this.fechaInicio = fechaInicio;
         }
     }
-}
+    }
