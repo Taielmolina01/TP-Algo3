@@ -19,10 +19,15 @@ public class CalendarioTest {
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 24, 0, 0, 0);
         Duration duracion = Duration.ofHours(2);
 
-        nuevoCalendario.crearEvento("Evento1", "este es el evento1", fechaInicio, false, Duration.ofHours(2));
-        assertTrue(nuevoCalendario.modificarEvento(0));
-        nuevoCalendario.crearEvento("Evento1", "este es el evento1", fechaInicio, false, Duration.ofHours(2));
-        assertTrue(nuevoCalendario.modificarEvento(1));
+        String nombreEvento2 = "Evento2";
+        String descripcion2 = "descripcion del evento2";
+        LocalDateTime fechaInicio2 = LocalDateTime.of(2023, 4, 23, 0, 0, 0);
+
+        nuevoCalendario.crearEvento(nombreEvento, descripcion, fechaInicio, false, duracion);
+        nuevoCalendario.crearEvento(nombreEvento2, descripcion2, fechaInicio2, false, duracion);
+
+        nuevoCalendario.configurarAlarma(0, Alarma.efecto.), ;
+
     }
 
 }
