@@ -56,7 +56,7 @@ public class Calendario {
         }
 
         public void modificarEvento(int id) {
-            System.out.println("hola");
+        
         }
 
         public void modificarTarea(int id) {
