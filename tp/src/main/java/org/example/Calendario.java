@@ -32,20 +32,20 @@ public class Calendario {
         this.alarmas = new PriorityQueue<>(this.funcComparacion);
     }
 
-    public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia,
-                            Duration duracion) {
+    public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
+                            boolean todoElDia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia);
         eventos.put(indice++, evento);
     }
 
-    public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia,
-                            Duration duracion, LocalDateTime fechaFinalRepeticion, Frecuencia frecuencia) {
+    public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
+                            boolean todoElDia, LocalDateTime fechaFinalRepeticion, Frecuencia frecuencia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia, fechaFinalRepeticion, frecuencia);
         eventos.put(indice++, evento);
     }
 
-    public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia,
-                            Duration duracion, Integer ocurrencias, Frecuencia frecuencia) {
+    public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
+                            boolean todoElDia, Integer ocurrencias, Frecuencia frecuencia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia, ocurrencias, frecuencia);
         eventos.put(indice++, evento);
     }
