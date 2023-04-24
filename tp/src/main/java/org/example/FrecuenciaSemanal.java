@@ -26,7 +26,7 @@ public class FrecuenciaSemanal extends Frecuencia {
                 if (i != this.diasSemana.length - 1) {
                     fechaProxima = fechaInicial.plusDays(this.diasSemana[i+1].getValue() - diaActual.getValue());
                 } else {
-                    fechaProxima = fechaInicial.plusDays((diaActual.getValue() - this.diasSemana[0].getValue() - 1) % 8 + ((this.valorRepeticion - 1) * 7));
+                    fechaProxima = fechaInicial.plusDays((diaActual.getValue() - this.diasSemana[0].getValue() - 1) % 8 + ((this.obtenerValorRepeticion() - 1) * 7));
                 }
             }
         }

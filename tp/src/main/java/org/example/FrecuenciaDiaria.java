@@ -10,6 +10,6 @@ public class FrecuenciaDiaria extends Frecuencia {
 
     @Override
     public LocalDateTime obtenerProximaFecha(LocalDateTime fechaInicial) {
-        return fechaInicial.plusDays(this.valorRepeticion);
+        return fechaInicial.plusDays(this.obtenerValorRepeticion());
     }
 }

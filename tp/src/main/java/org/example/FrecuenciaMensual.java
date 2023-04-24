@@ -10,6 +10,6 @@ public class FrecuenciaMensual extends Frecuencia {
 
     @Override
     public LocalDateTime obtenerProximaFecha(LocalDateTime fechaInicial) {
-        return fechaInicial.plusMonths(this.valorRepeticion);
+        return fechaInicial.plusMonths(this.obtenerValorRepeticion());
     }
 }
