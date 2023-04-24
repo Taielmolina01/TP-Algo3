@@ -18,19 +18,18 @@ public class FrecuenciaSemanal extends Frecuencia {
 
     @Override
     public LocalDateTime obtenerProximaFecha(LocalDateTime fechaInicial) { // Está mal
-        DayOfWeek diaActual = fechaInicial.getDayOfWeek();
-        LocalDateTime fechaProxima = null;
-        for (int i = 0; i < this.diasSemana.length; i++) {
-            DayOfWeek dia = this.diasSemana[i];
-            if (diaActual == dia) {
-                if (i != this.diasSemana.length - 1) {
-                    fechaProxima = fechaInicial.plusDays(this.diasSemana[i+1].getValue() - diaActual.getValue());
-                } else {
-                    fechaProxima = fechaInicial.plusDays((diaActual.getValue() - this.diasSemana[0].getValue() - 1) % 8 + ((this.obtenerValorRepeticion() - 1) * 7));
-                }
+        DayOfWeek fechaDia = fechaInicial.getDayOfWeek();
+        DayOfWeek proximoDia = diasSemana[0];
+
+        for (DayOfWeek dia: diasSemana) {
+            if (dia.ordinal() > fechaDia.ordinal()) {
+                proximoDia = dia;
+                break;
             }
         }
-        return fechaProxima;
+
+        int saltarSemanas = fechaDia == diasSemana[diasSemana.length - 1] ? 1 : 0;
+        return fechaInicial.with(TemporalAdjusters.nextOrSame(proximoDia)).plusWeeks((this.obtenerValorRepeticion() - 1) * saltarSemanas);
     }
 
     public DayOfWeek[] obtenerDiasSemana() {
