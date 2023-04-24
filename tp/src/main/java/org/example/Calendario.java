@@ -63,6 +63,46 @@ public class Calendario {
 
     }
 
+    public void modificarNombre(int idElemento, String nuevoNombre) {
+        ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : tareas.get(idElemento);
+        elemento.modificarNombre(nuevoNombre);
+    }
+
+    public void modificarDescripcion(int idElemento, String nuevaDescripcion) {
+        ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : tareas.get(idElemento);
+        elemento.modificarDescripcion(nuevaDescripcion);
+    }
+
+    public void modificarFechaInicio(int idElemento, LocalDateTime nuevaFechaInicio) {
+        ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : tareas.get(idElemento);
+        elemento.modificarFechaInicio(nuevaFechaInicio);
+    }
+
+    public void modificarTodoElDia(int idElemento, boolean todoElDia) {
+        ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : tareas.get(idElemento);
+        elemento.modificarTodoElDia(todoElDia);
+    }
+
+    public void modificarDuracion(int idEvento, Duration nuevaDuracion) {
+        Evento evento = this.eventos.get(idEvento);
+        evento.modificarDuracion(nuevaDuracion);
+    }
+
+    public void modificarFechaFinal(int idEvento, LocalDateTime nuevaFechaFinal) {
+        Evento evento = this.eventos.get(idEvento);
+        evento.modificarFechaFinal(nuevaFechaFinal);
+    }
+
+    public void moficiarFrecuencia(int idEvento, Frecuencia nuevaFrecuencia) {
+        Evento evento = this.eventos.get(idEvento);
+        evento.modificarFrecuencia(nuevaFrecuencia);
+    }
+
+    public void modificarOcurrencias(int idEvento, int ocurrencias) {
+        Evento evento = this.eventos.get(idEvento);
+        evento.modificarOcurrencias(ocurrencias);
+    }
+
     public void eliminarEvento(int id) {
         Evento eventoEliminado = this.eventos.remove(id);
         for (Alarma alarma : eventoEliminado.obtenerAlarmas()) {
