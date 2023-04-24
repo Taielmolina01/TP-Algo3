@@ -23,7 +23,7 @@ public class CalendarioTest {
         String descripcionTarea = "descripcion de la tarea";
         LocalDateTime fechaInicioTarea = LocalDateTime.of(2023, 4, 30, 0, 0, 0);
 
-        nuevoCalendario.crearEvento(nombreEvento, descripcionEvento, fechaInicioEvento, false, duracion);
+        nuevoCalendario.crearEvento(nombreEvento, descripcionEvento, fechaInicioEvento, duracion, false);
         nuevoCalendario.crearTarea(nombreTarea, descripcionTarea, fechaInicioTarea, false);
 
         nuevoCalendario.configurarAlarma(0, Alarma.efecto.EMAIL, Duration.ofMinutes(30));
@@ -49,7 +49,7 @@ public class CalendarioTest {
         String descripcionTarea = "descripcion de la tarea";
         LocalDateTime fechaInicioTarea = LocalDateTime.of(2023, 4, 30, 0, 0, 0);
 
-        nuevoCalendario.crearEvento(nombreEvento, descripcionEvento, fechaInicioEvento, false, duracion);
+        nuevoCalendario.crearEvento(nombreEvento, descripcionEvento, fechaInicioEvento, duracion, false);
         nuevoCalendario.crearTarea(nombreTarea, descripcionTarea, fechaInicioTarea, false);
 
         assertEquals(nombreEvento, nuevoCalendario.obtenerNombre(0));

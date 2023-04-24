@@ -14,23 +14,23 @@ public class AlarmaTest {
 
     @Test
     public void crearAlarmaFechaAbsolutaTest() {
-        var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 00, 0, 0, 0);
-        var otraFecha = LocalDateTime.of(1,1,1,1,1);
+        var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 0, 0, 0, 0);
+        var otraFecha = LocalDateTime.of(1, 1, 1, 1, 1);
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta);
     }
 
     @Test
     public void testCrearAlarmaTiempoRelativo() {
-        var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 00, 0, 0, 0);
-        var fechaDisparador = LocalDateTime.of(2019,12,31,23,30);
+        var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 0, 0, 0, 0);
+        var fechaDisparador = LocalDateTime.of(2019, 12, 31, 23, 30);
         var tiempo = Duration.of(30, ChronoUnit.MINUTES);
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta, tiempo);
     }
 
     @Test
     public void testCuantoFaltaAntesDeFechaAlarma() {
-        var fechaAntes = LocalDateTime.of(2020, 1, 5, 00, 0, 0, 0);
-        var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 00, 0, 0, 0);
+        var fechaAntes = LocalDateTime.of(2020, 1, 5, 0, 0, 0, 0);
+        var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 0, 0, 0, 0);
 
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta);
 
@@ -43,7 +43,7 @@ public class AlarmaTest {
 
     @Test
     public void testCuantoFaltaEnFechaAlarma() {
-        var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 00, 0, 0, 0);
+        var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 0, 0, 0, 0);
 
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta);
 
@@ -56,8 +56,8 @@ public class AlarmaTest {
 
     @Test
     public  void testCuantoFaltaDespuesDeFechaAlarma() {
-        var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 00, 0, 0, 0);
-        var fechaDespues = LocalDateTime.of(2020, 1, 15, 00, 0, 0, 0);
+        var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 0, 0, 0, 0);
+        var fechaDespues = LocalDateTime.of(2020, 1, 15, 0, 0, 0, 0);
 
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta);
 
@@ -70,39 +70,33 @@ public class AlarmaTest {
 
     @Test
     public void testDispararAlarmaNotificacion() {
-        var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 00, 0, 0, 0);
+        var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 0, 0, 0, 0);
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta);
         assertEquals(Alarma.efecto.NOTIFICACION, alarma.dispararAlarma());
     }
 
     @Test
     public void testDispararAlarmaSonido() {
-        var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 00, 0, 0, 0);
+        var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 0, 0, 0, 0);
         var alarma = new Alarma(Alarma.efecto.SONIDO, fechaAbsoluta);
         assertEquals(Alarma.efecto.SONIDO, alarma.dispararAlarma());
     }
 
     @Test
     public void testDispararAlarmaEmailTest() {
-        var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 00, 0, 0, 0);
+        var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 0, 0, 0, 0);
         var alarma = new Alarma(Alarma.efecto.EMAIL, fechaAbsoluta);
         assertEquals(Alarma.efecto.EMAIL, alarma.dispararAlarma());
     }
 
     @Test
     public void testIntentarDispararAlarmaAntesDeFecha() {
-        var fechaAntes = LocalDateTime.of(2020, 1, 5, 00, 0, 0, 0);
-        var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 00, 0, 0, 0);
+        var fechaAntes = LocalDateTime.of(2020, 1, 5, 0, 0, 0, 0);
+        var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 0, 0, 0, 0);
 
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta);
 
-        if (alarma.cuantoFaltaParaDisparar(fechaAntes).isPositive()) {
-            assertTrue(true);
-        } else if (alarma.cuantoFaltaParaDisparar(fechaAntes).isZero()) {
-            assertTrue(false);
-        } else if (alarma.cuantoFaltaParaDisparar(fechaAntes).isNegative()) {
-            assertTrue(false);
-        }
+        assertTrue(alarma.cuantoFaltaParaDisparar(fechaAntes).isPositive());
     }
 
     @Test
@@ -111,13 +105,7 @@ public class AlarmaTest {
 
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta);
 
-        if (alarma.cuantoFaltaParaDisparar(fechaAbsoluta).isPositive()) {
-            assertTrue(false);
-        } else if (alarma.cuantoFaltaParaDisparar(fechaAbsoluta).isZero()) {
-            assertEquals(Alarma.efecto.NOTIFICACION, alarma.dispararAlarma());
-        } else if (alarma.cuantoFaltaParaDisparar(fechaAbsoluta).isNegative()) {
-            assertTrue(false);
-        }
+        assertEquals(Alarma.efecto.NOTIFICACION, alarma.dispararAlarma());
     }
 
     @Test
@@ -127,12 +115,6 @@ public class AlarmaTest {
 
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta);
 
-        if (alarma.cuantoFaltaParaDisparar(fechaDespues).isPositive()) {
-            assertTrue(false);
-        } else if (alarma.cuantoFaltaParaDisparar(fechaDespues).isZero()) {
-            assertTrue(false);
-        } else if (alarma.cuantoFaltaParaDisparar(fechaDespues).isNegative()) {
-            assertTrue(true);
-        }
+        assertTrue(alarma.cuantoFaltaParaDisparar(fechaDespues).isNegative());
     }
 }
