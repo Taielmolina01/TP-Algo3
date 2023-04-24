@@ -117,12 +117,12 @@ public class Calendario {
         }
     }
 
-    public void configurarAlarma(int id, Alarma.efecto efecto, LocalDateTime fechaActivacion) {
+    public void configurarAlarma(int id, Alarma.Efecto efecto, LocalDateTime fechaActivacion) {
         ElementoCalendario elemento = this.eventos.containsKey(id) ? this.eventos.get(id) : this.tareas.get(id);
         this.alarmas.add(elemento.agregarAlarma(efecto, fechaActivacion));
     }
 
-    public void configurarAlarma(int id, Alarma.efecto efecto, Duration intervaloTiempo) {
+    public void configurarAlarma(int id, Alarma.Efecto efecto, Duration intervaloTiempo) {
         ElementoCalendario elemento = this.eventos.containsKey(id) ? this.eventos.get(id) : this.tareas.get(id);
         this.alarmas.add(elemento.agregarAlarma(efecto, intervaloTiempo));
     }

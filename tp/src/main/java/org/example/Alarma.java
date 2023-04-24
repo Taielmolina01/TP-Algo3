@@ -2,43 +2,40 @@ package org.example;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAmount;
 
 public class Alarma {
 
-    private efecto efectoProducido;
-    private LocalDateTime fechaAbsoluta;
-    private TemporalAmount tiempoRelativo;
-    private LocalDateTime fechaDisparador;
+    private final Efecto efectoProducido;
+    private final LocalDateTime fechaArbitraria;
+    private final LocalDateTime fechaActivacion;
 
-    public enum efecto {
+    public enum Efecto {
         NOTIFICACION,
         SONIDO,
         EMAIL,
     }
 
-    public Alarma (efecto efectoProducido, LocalDateTime fechaAbsoluta, TemporalAmount tiempoRelativo) {
+    public Alarma (Efecto efectoProducido, LocalDateTime fechaArbitraria, Duration intervaloTiempo) {
         this.efectoProducido = efectoProducido;
-        this.fechaAbsoluta = fechaAbsoluta;
-        this.tiempoRelativo = tiempoRelativo;
-        this.fechaDisparador = fechaAbsoluta.minus(tiempoRelativo);
+        this.fechaArbitraria = fechaArbitraria;
+        this.fechaActivacion = fechaArbitraria.minus(intervaloTiempo);
     }
 
-    public Alarma (efecto efectoProducido, LocalDateTime fechaAbsoluta) {
+    public Alarma (Efecto efectoProducido, LocalDateTime fechaAbsoluta) {
         this.efectoProducido = efectoProducido;
-        this.fechaAbsoluta = fechaAbsoluta;
-        this.fechaDisparador = fechaAbsoluta;
+        this.fechaArbitraria = fechaAbsoluta;
+        this.fechaActivacion = fechaAbsoluta;
     }
 
     public Duration cuantoFaltaParaDisparar(LocalDateTime fechaActual) {
-        return Duration.between(fechaActual, this.fechaDisparador);
+        return Duration.between(fechaActual, this.fechaActivacion);
     }
 
-    public efecto dispararAlarma() {
+    public Efecto dispararAlarma() {
         return  efectoProducido;
     }
 
-    public LocalDateTime obtenerFechaDisparaAlarma() {
-        return this.fechaDisparador;
+    public LocalDateTime obtenerFechaActivacion() {
+        return this.fechaActivacion;
     }
 }

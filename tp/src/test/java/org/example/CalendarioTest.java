@@ -26,14 +26,14 @@ public class CalendarioTest {
         nuevoCalendario.crearEvento(nombreEvento, descripcionEvento, fechaInicioEvento, duracion, false);
         nuevoCalendario.crearTarea(nombreTarea, descripcionTarea, fechaInicioTarea, false);
 
-        nuevoCalendario.configurarAlarma(0, Alarma.efecto.EMAIL, Duration.ofMinutes(30));
-        nuevoCalendario.configurarAlarma(0, Alarma.efecto.EMAIL, Duration.ofHours(2));
+        nuevoCalendario.configurarAlarma(0, Alarma.Efecto.EMAIL, Duration.ofMinutes(30));
+        nuevoCalendario.configurarAlarma(0, Alarma.Efecto.EMAIL, Duration.ofHours(2));
 
-        assertEquals(LocalDateTime.of(2023, 4, 29, 22, 0, 0), nuevoCalendario.obtenerSiguienteAlarma().obtenerFechaDisparaAlarma());
+        assertEquals(LocalDateTime.of(2023, 4, 29, 22, 0, 0), nuevoCalendario.obtenerSiguienteAlarma().obtenerFechaActivacion());
 
-        nuevoCalendario.configurarAlarma(1, Alarma.efecto.SONIDO, Duration.ofHours(3));
+        nuevoCalendario.configurarAlarma(1, Alarma.Efecto.SONIDO, Duration.ofHours(3));
 
-        assertEquals(LocalDateTime.of(2023, 4, 29, 21, 0, 0), nuevoCalendario.obtenerSiguienteAlarma().obtenerFechaDisparaAlarma());
+        assertEquals(LocalDateTime.of(2023, 4, 29, 21, 0, 0), nuevoCalendario.obtenerSiguienteAlarma().obtenerFechaActivacion());
     }
 
     @Test

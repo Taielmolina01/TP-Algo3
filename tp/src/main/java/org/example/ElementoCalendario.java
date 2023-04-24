@@ -20,13 +20,13 @@ public abstract class ElementoCalendario {
         this.alarmas = new ArrayList<>();
     }
 
-    public Alarma agregarAlarma(Alarma.efecto efecto, LocalDateTime fechaActivacion) {
+    public Alarma agregarAlarma(Alarma.Efecto efecto, LocalDateTime fechaActivacion) {
         Alarma alarma = new Alarma(efecto, fechaActivacion);
         this.alarmas.add(alarma);
         return alarma;
     }
 
-    public Alarma agregarAlarma(Alarma.efecto efecto, Duration intervaloTiempo) {
+    public Alarma agregarAlarma(Alarma.Efecto efecto, Duration intervaloTiempo) {
         Alarma alarma = new Alarma(efecto, this.obtenerFechaInicio(), intervaloTiempo);
         this.alarmas.add(alarma);
         return alarma;
