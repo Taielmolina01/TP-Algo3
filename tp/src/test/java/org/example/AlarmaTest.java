@@ -17,6 +17,7 @@ public class AlarmaTest {
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 00, 0, 0, 0);
         var otraFecha = LocalDateTime.of(1,1,1,1,1);
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta);
+        assertEquals(fechaAbsoluta, alarma.obtenerFechaActivacion());
     }
 
     @Test
@@ -25,6 +26,7 @@ public class AlarmaTest {
         var fechaDisparador = LocalDateTime.of(2019,12,31,23,30);
         var tiempo = Duration.of(30, ChronoUnit.MINUTES);
         var alarma = new Alarma(Alarma.efecto.NOTIFICACION, fechaAbsoluta, tiempo);
+        assertEquals(fechaDisparador, alarma.obtenerFechaActivacion());
     }
 
     @Test
