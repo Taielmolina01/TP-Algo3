@@ -1,5 +1,6 @@
 package org.example;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -19,7 +20,17 @@ public abstract class ElementoCalendario {
         this.alarmas = new ArrayList<>();
     }
 
-    public void agregarAlarma(Alarma alarma) { this.alarmas.add(alarma); }
+    public Alarma agregarAlarma(Alarma.efecto efecto, LocalDateTime fechaActivacion) {
+        Alarma alarma = new Alarma(efecto, fechaActivacion);
+        this.alarmas.add(alarma);
+        return alarma;
+    }
+
+    public Alarma agregarAlarma(Alarma.efecto efecto, Duration intervaloTiempo) {
+        Alarma alarma = new Alarma(efecto, this.obtenerFechaInicio(), intervaloTiempo);
+        this.alarmas.add(alarma);
+        return alarma;
+    }
 
     protected ArrayList<Alarma> obtenerAlarmas() { return this.alarmas; }
 

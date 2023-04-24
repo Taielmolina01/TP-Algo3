@@ -59,10 +59,6 @@ public class Calendario {
        return this.eventos.get(id) != null;
     }
 
-    public void modificarTarea(int id) {
-
-    }
-
     public void modificarNombre(int idElemento, String nuevoNombre) {
         ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : tareas.get(idElemento);
         elemento.modificarNombre(nuevoNombre);
@@ -119,16 +115,12 @@ public class Calendario {
 
     public void configurarAlarma(int id, Alarma.efecto efecto, LocalDateTime fechaActivacion) {
         ElementoCalendario elemento = eventos.containsKey(id) ? eventos.get(id) : tareas.get(id);
-        Alarma alarma = new Alarma(efecto, fechaActivacion);
-        elemento.agregarAlarma(alarma);
-        this.alarmas.add(alarma);
+        this.alarmas.add(elemento.agregarAlarma(efecto, fechaActivacion));
     }
 
     public void configurarAlarma(int id, Alarma.efecto efecto, Duration intervaloTiempo) {
         ElementoCalendario elemento = eventos.containsKey(id) ? eventos.get(id) : tareas.get(id);
-        Alarma alarma = new Alarma(efecto, elemento.obtenerFechaInicio(), intervaloTiempo);
-        elemento.agregarAlarma(alarma);
-        this.alarmas.add(alarma);
+        this.alarmas.add(elemento.agregarAlarma(efecto, intervaloTiempo));
     }
 
     public Alarma obtenerSiguienteAlarma() {
