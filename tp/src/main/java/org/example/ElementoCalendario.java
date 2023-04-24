@@ -52,10 +52,6 @@ public abstract class ElementoCalendario {
     }
 
     public void modificarFechaInicio(LocalDateTime fechaInicio) {
-        if (this.todoElDia) {
-            this.fechaInicio = fechaInicio.toLocalDate().atStartOfDay();
-        } else {
-            this.fechaInicio = fechaInicio;
-        }
+        this.fechaInicio = this.todoElDia ? fechaInicio.toLocalDate().atStartOfDay() : fechaInicio;
     }
 }
