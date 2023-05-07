@@ -1,10 +1,7 @@
 package org.example;
 
 import java.time.DayOfWeek;
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAccessor;
-import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 
 public class FrecuenciaSemanal extends Frecuencia {
