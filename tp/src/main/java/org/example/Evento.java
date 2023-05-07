@@ -94,9 +94,7 @@ public class Evento extends ElementoCalendario {
     public ArrayList<LocalDateTime> eventosEntreFechas(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
         LocalDateTime dia = fechaInicial.isBefore(this.fechaInicio) ? this.fechaInicio : fechaInicial;
         ArrayList<LocalDateTime> eventos = new ArrayList<>();
-        if (this.fechaFinalRepeticion.isBefore(fechaInicial)) { // Mejorar esto
-            return eventos;
-        }
+        if (fechaInicial.isAfter(this.fechaFinalRepeticion)) { return eventos; }
         while (estaEntreFechas(dia, fechaInicial, this.fechaFinalRepeticion) && estaEntreFechas(dia, fechaInicial, fechaFinal)) {
             eventos.add(dia);
             dia = this.frecuencia.obtenerProximaFecha(dia);
