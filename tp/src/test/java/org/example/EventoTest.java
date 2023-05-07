@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TreeSet;
 import java.util.SortedSet;
@@ -331,5 +332,28 @@ public class EventoTest {
             assertFalse(evento.hayEvento(LocalDateTime.of(2023, 3, dia, 14, 30, 0)));
             assertFalse(evento.hayEvento(LocalDateTime.of(2023, 3, dia, 14, 50, 0)));
         }
+    }
+
+    @Test
+    public void testEventosEntreFechas() {
+        LocalDateTime fechaInicio = LocalDateTime.of(2023, 9, 11, 21, 0, 0);
+        LocalDateTime fechaFinal = LocalDateTime.of(2023, 9, 26, 0, 0, 0);
+        Duration duracion = Duration.ofHours(3);
+        DayOfWeek[] dias = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY};
+        TreeSet<DayOfWeek> diasSemana = new TreeSet<>(Arrays.asList(dias));
+
+        Frecuencia frecuenciaSemanal = new FrecuenciaSemanal(diasSemana, 1);
+        Evento evento = new Evento("Conciertos", "de Mora", fechaInicio, duracion, false, fechaFinal, frecuenciaSemanal);
+
+        int[] diasTrue = {11, 12, 14, 15, 18, 19, 21, 22, 25};
+        ArrayList<LocalDateTime> fechasTrue = new ArrayList<>();
+        for (int dia : diasTrue){
+            fechasTrue.add(LocalDateTime.of(2023, 9, dia, 21, 0, 0));
+        }
+
+        assertEquals(evento.eventosEntreFechas(fechaInicio.minusMonths(2), fechaFinal), fechasTrue);
+        assertEquals(evento.eventosEntreFechas(fechaInicio, fechaFinal), fechasTrue);
+        assertEquals(evento.eventosEntreFechas(fechaInicio.plusWeeks(1), fechaFinal), fechasTrue.subList(4, diasTrue.length));
+        assertEquals(evento.eventosEntreFechas(fechaInicio.plusWeeks(4), fechaFinal), new ArrayList<>());
     }
 }

@@ -8,7 +8,7 @@ import java.util.Comparator;
 
 public class Calendario {
     private final HashMap<Integer, ElementoCalendario> elementosCalendario;
-    private Integer indice;
+    private int indice;
     private final PriorityQueue<Alarma> alarmas;
 
     public Calendario() {
