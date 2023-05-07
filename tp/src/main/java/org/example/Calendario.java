@@ -1,19 +1,18 @@
 package org.example;
 
+import javax.swing.text.Element;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 
 
 public class Calendario {
-    private final HashMap<Integer, Evento> eventos;
-    private final HashMap<Integer, Tarea> tareas;
+    private final HashMap<Integer, ElementoCalendario> elementosCalendario;
     private Integer indice;
     private final PriorityQueue<Alarma> alarmas;
 
     public Calendario() {
-        this.eventos = new HashMap<>();
-        this.tareas = new HashMap<>();
+        this.elementosCalendario = new HashMap<>();
         this.indice = 0;
 
         Comparator<Alarma> funcComparacion = (alarma1, alarma2) -> {
@@ -34,95 +33,84 @@ public class Calendario {
     public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                             boolean todoElDia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia);
-        eventos.put(indice++, evento);
+        elementosCalendario.put(indice++, evento);
     }
 
     public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                             boolean todoElDia, LocalDateTime fechaFinalRepeticion, Frecuencia frecuencia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia, fechaFinalRepeticion, frecuencia);
-        eventos.put(indice++, evento);
+        elementosCalendario.put(indice++, evento);
     }
 
     public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                             boolean todoElDia, Integer ocurrencias, Frecuencia frecuencia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia, ocurrencias, frecuencia);
-        eventos.put(indice++, evento);
+        elementosCalendario.put(indice++, evento);
     }
 
     public void crearTarea(String nombre, String descripcion, LocalDateTime fecha, boolean todoElDia) {
         Tarea tarea = new Tarea(nombre, descripcion, fecha, todoElDia);
-        tareas.put(indice++, tarea);
+        elementosCalendario.put(indice++, tarea);
     }
 
-    public void modificarNombre(int idElemento, String nuevoNombre) {
-        ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : tareas.get(idElemento);
-        elemento.modificarNombre(nuevoNombre);
+    public void modificarNombre(int id, String nuevoNombre) {
+        this.elementosCalendario.get(id).modificarNombre(nuevoNombre);
     }
 
-    public String obtenerNombre(int idElemento) {
-        return this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento).obtenerNombre() : this.tareas.get(idElemento).obtenerNombre();
+    public String obtenerNombre(int id) {
+        return this.elementosCalendario.get(id).obtenerNombre();
     }
 
-    public void modificarDescripcion(int idElemento, String nuevaDescripcion) {
-        ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : this.tareas.get(idElemento);
-        elemento.modificarDescripcion(nuevaDescripcion);
+    public void modificarDescripcion(int id, String nuevaDescripcion) {
+        this.elementosCalendario.get(id).modificarDescripcion(nuevaDescripcion);
     }
 
-    public String obtenerDescripcion(int idElemento) {
-        return this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento).obtenerDescripcion() : this.tareas.get(idElemento).obtenerDescripcion();
+    public String obtenerDescripcion(int id) {
+        return this.elementosCalendario.get(id).obtenerDescripcion();
     }
 
-    public void modificarFechaInicio(int idElemento, LocalDateTime nuevaFechaInicio) {
-        ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : this.tareas.get(idElemento);
-        elemento.modificarFechaInicio(nuevaFechaInicio);
+    public void modificarFechaInicio(int id, LocalDateTime nuevaFechaInicio) {
+        this.elementosCalendario.get(id).modificarFechaInicio(nuevaFechaInicio);
     }
 
-    public void modificarTodoElDia(int idElemento, boolean todoElDia) {
-        ElementoCalendario elemento = this.eventos.containsKey(idElemento) ? this.eventos.get(idElemento) : this.tareas.get(idElemento);
-        elemento.modificarTodoElDia(todoElDia);
+    public void modificarTodoElDia(int id, boolean todoElDia) {
+        this.elementosCalendario.get(id).modificarTodoElDia(todoElDia);
     }
 
-    public void modificarDuracion(int idEvento, Duration nuevaDuracion) {
-        Evento evento = this.eventos.get(idEvento);
+    public void modificarDuracion(int id, Duration nuevaDuracion) {
+        Evento evento = (Evento)this.elementosCalendario.get(id);
         evento.modificarDuracion(nuevaDuracion);
     }
 
-    public void modificarFechaFinal(int idEvento, LocalDateTime nuevaFechaFinal) {
-        Evento evento = this.eventos.get(idEvento);
+    public void modificarFechaFinal(int id, LocalDateTime nuevaFechaFinal) {
+        Evento evento = (Evento)this.elementosCalendario.get(id);
         evento.modificarFechaFinal(nuevaFechaFinal);
     }
 
-    public void moficiarFrecuencia(int idEvento, Frecuencia nuevaFrecuencia) {
-        Evento evento = this.eventos.get(idEvento);
+    public void moficiarFrecuencia(int id, Frecuencia nuevaFrecuencia) {
+        Evento evento = (Evento)this.elementosCalendario.get(id);
         evento.modificarFrecuencia(nuevaFrecuencia);
     }
 
-    public void modificarOcurrencias(int idEvento, int ocurrencias) {
-        Evento evento = this.eventos.get(idEvento);
+    public void modificarOcurrencias(int id, int ocurrencias) {
+        Evento evento = (Evento)this.elementosCalendario.get(id);
         evento.modificarOcurrencias(ocurrencias);
     }
 
-    public void eliminarEvento(int id) {
-        Evento eventoEliminado = this.eventos.remove(id);
-        for (Alarma alarma : eventoEliminado.obtenerAlarmas()) {
-            this.alarmas.remove(alarma);
-        }
-    }
-
-    public void eliminarTarea(int id) {
-        Tarea tareaEliminada = this.tareas.remove(id);
-        for (Alarma alarma : tareaEliminada.obtenerAlarmas()) {
+    public void eliminarElementoCalendario(int id) {
+        ElementoCalendario elementoEliminado = this.elementosCalendario.remove(id);
+        for (Alarma alarma : elementoEliminado.obtenerAlarmas()) {
             this.alarmas.remove(alarma);
         }
     }
 
     public void configurarAlarma(int id, Alarma.Efecto efecto, LocalDateTime fechaActivacion) {
-        ElementoCalendario elemento = this.eventos.containsKey(id) ? this.eventos.get(id) : this.tareas.get(id);
+        ElementoCalendario elemento = this.elementosCalendario.get(id);
         this.alarmas.add(elemento.agregarAlarma(efecto, fechaActivacion));
     }
 
     public void configurarAlarma(int id, Alarma.Efecto efecto, Duration intervaloTiempo) {
-        ElementoCalendario elemento = this.eventos.containsKey(id) ? this.eventos.get(id) : this.tareas.get(id);
+        ElementoCalendario elemento = this.elementosCalendario.get(id);
         this.alarmas.add(elemento.agregarAlarma(efecto, intervaloTiempo));
     }
 
