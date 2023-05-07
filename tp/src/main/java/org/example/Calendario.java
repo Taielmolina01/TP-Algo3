@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.PriorityQueue;
-import java.util.Comparator;
 
 public class Calendario {
     private final HashMap<Integer, ElementoCalendario> elementosCalendario;
@@ -13,8 +12,6 @@ public class Calendario {
 
     public Calendario() {
         this.elementosCalendario = new HashMap<>();
-        this.indice = 0;
-
         this.alarmas = new PriorityQueue<>(Alarma::compararAlarmas);
     }
 
