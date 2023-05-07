@@ -1,10 +1,10 @@
 package org.example;
 
-import javax.swing.text.Element;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.*;
-
+import java.util.HashMap;
+import java.util.PriorityQueue;
+import java.util.Comparator;
 
 public class Calendario {
     private final HashMap<Integer, ElementoCalendario> elementosCalendario;

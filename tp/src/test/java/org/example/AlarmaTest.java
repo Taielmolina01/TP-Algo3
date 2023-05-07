@@ -5,8 +5,6 @@ import org.junit.Test;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAmount;
-import java.time.temporal.TemporalUnit;
 
 import static org.junit.Assert.*;
 

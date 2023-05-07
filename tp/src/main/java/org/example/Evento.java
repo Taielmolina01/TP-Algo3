@@ -1,6 +1,7 @@
 package org.example;
 
-import java.time.*;
+import java.time.LocalDateTime;
+import java.time.Duration;
 import java.lang.String;
 import java.util.ArrayList;
 
@@ -67,7 +68,6 @@ public class Evento extends ElementoCalendario {
         for (int i = 1; i < this.ocurrencias; i++) {
             fecha = this.frecuencia.obtenerProximaFecha(fecha);
         }
-        System.out.println(fecha);
         this.fechaFinalRepeticion = fecha;
     }
 
