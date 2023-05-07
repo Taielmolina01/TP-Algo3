@@ -38,4 +38,17 @@ public class Alarma {
     public LocalDateTime obtenerFechaActivacion() {
         return this.fechaActivacion;
     }
+
+    protected static int compararAlarmas(Alarma alarma1, Alarma alarma2) {
+            LocalDateTime fechaArbitraria = LocalDateTime.of(2000, 1, 1, 0, 0);
+            var duracion1 = alarma1.cuantoFaltaParaDisparar(fechaArbitraria);
+            var duracion2 = alarma2.cuantoFaltaParaDisparar(fechaArbitraria);
+            if (duracion1.minus(duracion2).isZero()) {
+                return 0;
+            } else if (duracion1.minus(duracion2).isPositive()) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
 }
