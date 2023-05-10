@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 
 public class Calendario {
     private final HashMap<Integer, ElementoCalendario> elementosCalendario;
-    private int indice;
+    private int indiceElementoCalendario;
     private final PriorityQueue<Alarma> alarmas;
 
     public Calendario() {
@@ -18,24 +18,24 @@ public class Calendario {
     public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                             boolean todoElDia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia);
-        elementosCalendario.put(indice++, evento);
+        this.elementosCalendario.put(this.indiceElementoCalendario++, evento);
     }
 
     public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                             boolean todoElDia, LocalDateTime fechaFinalRepeticion, Frecuencia frecuencia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia, fechaFinalRepeticion, frecuencia);
-        elementosCalendario.put(indice++, evento);
+        this.elementosCalendario.put(this.indiceElementoCalendario++, evento);
     }
 
     public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                             boolean todoElDia, Integer ocurrencias, Frecuencia frecuencia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia, ocurrencias, frecuencia);
-        elementosCalendario.put(indice++, evento);
+        this.elementosCalendario.put(this.indiceElementoCalendario++, evento);
     }
 
     public void crearTarea(String nombre, String descripcion, LocalDateTime fecha, boolean todoElDia) {
         Tarea tarea = new Tarea(nombre, descripcion, fecha, todoElDia);
-        elementosCalendario.put(indice++, tarea);
+        this.elementosCalendario.put(this.indiceElementoCalendario++, tarea);
     }
 
     public void modificarNombre(int id, String nuevoNombre) {
@@ -84,7 +84,7 @@ public class Calendario {
 
     public void eliminarElementoCalendario(int id) {
         ElementoCalendario elementoEliminado = this.elementosCalendario.remove(id);
-        for (Alarma alarma : elementoEliminado.obtenerAlarmas()) {
+        for (Alarma alarma : elementoEliminado.obtenerAlarmas().values()) {
             this.alarmas.remove(alarma);
         }
     }
@@ -97,6 +97,22 @@ public class Calendario {
     public void configurarAlarma(int id, Alarma.Efecto efecto, Duration intervaloTiempo) {
         ElementoCalendario elemento = this.elementosCalendario.get(id);
         this.alarmas.add(elemento.agregarAlarma(efecto, intervaloTiempo));
+    }
+
+    public void modificarEfectoAlarma(int idElemento, int idAlarma, Alarma.Efecto nuevoEfecto) {
+        this.elementosCalendario.get(idElemento).modificarNotificacionAlarma(idAlarma, nuevoEfecto);
+    }
+
+    public void modificarFechaActivacionAlarma(int idElemento, int idAlarma, LocalDateTime fechaAbsoluta) {
+        this.elementosCalendario.get(idElemento).modificarFechaActivacionAlarma(idAlarma, fechaAbsoluta);
+    }
+
+    public void modificarFechaActivacionAlarma(int idElemento, int idAlarma, LocalDateTime fechaArbitraria, Duration intervaloTiempoNuevo) {
+        this.elementosCalendario.get(idElemento).modificarFechaActivacionAlarma(idAlarma, fechaArbitraria, intervaloTiempoNuevo);
+    }
+
+    public void eliminarAlarma(int idElemento, int idAlarma) {
+        this.elementosCalendario.get(idElemento).eliminarAlarma(idAlarma);
     }
 
     public Alarma obtenerSiguienteAlarma() {
