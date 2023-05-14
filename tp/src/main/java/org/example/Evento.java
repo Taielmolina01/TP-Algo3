@@ -4,8 +4,9 @@ import java.time.LocalDateTime;
 import java.time.Duration;
 import java.lang.String;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Evento extends ElementoCalendario {
+public class Evento extends ElementoCalendario implements Serializable {
 
     private LocalDateTime fechaFin; // Fin del evento sin contar sus repeticiones, NO es la fecha en donde terminan las repeticiones.
     private LocalDateTime fechaFinalRepeticion; // Fecha en la que terminan las repeticiones del evento.

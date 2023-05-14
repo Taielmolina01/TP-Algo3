@@ -1,11 +1,12 @@
 package org.example;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class ElementoCalendario {
+
+public abstract class ElementoCalendario implements Serializable {
 
     private String nombre;
     private String descripcion;
@@ -36,6 +37,10 @@ public abstract class ElementoCalendario {
 
     protected HashMap<Integer, Alarma> obtenerAlarmas() {
         return this.alarmas;
+    }
+
+    protected Alarma obtenerAlarma(int id) {
+        return this.alarmas.get(id);
     }
 
     public String obtenerNombre() {
@@ -71,8 +76,7 @@ public abstract class ElementoCalendario {
         this.fechaInicio = this.todoElDia ? fechaInicio.toLocalDate().atStartOfDay() : fechaInicio;
     }
 
-    public void modificarNotificacionAlarma(int idAlarma,
-                                            Alarma.Efecto nuevoEfecto) {
+    public void modificarNotificacionAlarma(int idAlarma, Alarma.Efecto nuevoEfecto) {
         this.alarmas.get(idAlarma).modificarEfecto(nuevoEfecto);
     }
 
@@ -84,7 +88,7 @@ public abstract class ElementoCalendario {
         this.alarmas.get(idAlarma).modificarFechaActivacion(fechaAbsolutaNueva);
     }
 
-    public void eliminarAlarma(int idAlarma) {
-        this.alarmas.remove(idAlarma);
+    public Alarma eliminarAlarma(int idAlarma) {
+        return this.alarmas.remove(idAlarma);
     }
 }

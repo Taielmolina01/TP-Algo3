@@ -1,8 +1,9 @@
 package org.example;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Tarea extends ElementoCalendario {
+public class Tarea extends ElementoCalendario implements Serializable {
 
     private boolean completada;
 

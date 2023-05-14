@@ -1,10 +1,10 @@
 package org.example;
 
+import java.io.Serializable;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class Alarma {
+public class Alarma implements Serializable {
 
     private Efecto efectoProducido;
     private LocalDateTime fechaArbitraria;
