@@ -158,10 +158,12 @@ public class Calendario implements Serializable {
     }
 
     public void guardarEstado() throws IOException {
-        manejadorGuardado.guardarEstado(this);
+        ManejadorGuardado manejador = new ManejadorGuardado();
+        manejador.guardarEstado(this);
     }
 
     public void recuperarEstado() throws IOException {
-        manejadorGuardado.recuperarEstado(this);
+        ManejadorGuardado manejador = new ManejadorGuardado();
+        manejador.recuperarEstado(this);
     }
 }
