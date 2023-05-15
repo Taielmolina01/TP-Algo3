@@ -1,35 +1,50 @@
 package org.example;
 
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-import java.util.HashMap;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
-public class ManejadorGuardado {
+public class ManejadorGuardado implements Serializable {
 
-    protected void guardarEstado(Calendario calendario) throws IOException {
-        FileOutputStream archivoDestino = new FileOutputStream("MiCalendario.txt");
-        ObjectOutputStream elementoAGuardar = new ObjectOutputStream(archivoDestino);
-        elementoAGuardar.writeObject(calendario.elementosCalendario);
+    private final String nombreArchivoGuardado = "MiCalendario.txt";
+    protected final Pantalla printStreamMock;
+    private final OutputStream salida = System.out;
+
+    public ManejadorGuardado() {
+        this.printStreamMock = new Pantalla(new PrintStream(this.salida));
     }
 
-    protected void recuperarEstado(Calendario calendario) throws IOException {
-        FileInputStream archivoARecuperar = new FileInputStream("MiCalendario.txt");
-        calendario.elementosCalendario = new HashMap<>();
-        while (true) {
-            try (ObjectInputStream input = new ObjectInputStream(archivoARecuperar)) {
-                HashMap<Integer, ElementoCalendario> obj = (HashMap<Integer, ElementoCalendario>) input.readObject();
-                if (obj != null) {
-                    calendario.elementosCalendario.putAll(obj);
-                } else {
-                    break;
-                }
-            } catch (Exception e) {
-                System.out.println("Se terminó de leer la entrada.");
-                break;
+    protected void guardarEstado(Calendario calendario) {
+        this.crearArchivoGuardado();
+        try {
+            FileOutputStream archivoDestino = new FileOutputStream(this.nombreArchivoGuardado);
+            calendario.serializar(archivoDestino);
+        } catch (IOException e) {
+            this.printStreamMock.println("No existe el archivo de guardado.");
+        }
+    }
+
+    protected static Calendario recuperarEstado(InputStream is) {
+        return Calendario.deserializar(is);
+    }
+
+    protected void borrarEstadoGuardado() {
+        try (BufferedWriter bf = Files.newBufferedWriter(Path.of(this.nombreArchivoGuardado),
+                StandardOpenOption.TRUNCATE_EXISTING)) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void crearArchivoGuardado() {
+        try {
+            File archivo = new File(this.nombreArchivoGuardado);
+            if (!archivo.exists()) {
+                archivo.createNewFile();
             }
+        } catch (IOException e) {
+            this.printStreamMock.println("No se pudo crear el archivo de guardado.");
         }
     }
 }

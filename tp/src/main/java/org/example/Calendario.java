@@ -10,9 +10,12 @@ public class Calendario implements Serializable {
     protected HashMap<Integer, ElementoCalendario> elementosCalendario;
     private int indiceElementoCalendario;
     private final ArrayList<Alarma> alarmas;
+    private final ManejadorGuardado manejador;
+    private final Pantalla salida;
 
     public Calendario() {
-        File archivo = new File("MiCalendario.txt");
+        this.manejador = new ManejadorGuardado();
+        this.salida = new Pantalla(System.out);
         this.elementosCalendario = new HashMap<>();
         this.alarmas = new ArrayList<>();
     }
@@ -157,13 +160,51 @@ public class Calendario implements Serializable {
         return -1;
     }
 
-    public void guardarEstado() throws IOException {
-        ManejadorGuardado manejador = new ManejadorGuardado();
-        manejador.guardarEstado(this);
+    public void guardarEstado() {
+        this.manejador.guardarEstado(this);
     }
 
-    public void recuperarEstado() throws IOException {
-        ManejadorGuardado manejador = new ManejadorGuardado();
-        manejador.recuperarEstado(this);
+    public static Calendario recuperarEstado(String nombreArchivo) {
+        try {
+            FileInputStream archivo = new FileInputStream(nombreArchivo);
+            Calendario nuevoCalendario = ManejadorGuardado.recuperarEstado(archivo);
+            return nuevoCalendario;
+        } catch (FileNotFoundException e) {
+            return null;
+        }
+    }
+
+    public void borrarEstadoGuardado() {
+        this.manejador.borrarEstadoGuardado();
+    }
+
+    public void serializar(OutputStream os) {
+        try {
+            ObjectOutputStream elementos = new ObjectOutputStream(os);
+            elementos.writeObject(this.elementosCalendario);
+            elementos.flush();
+        } catch (IOException e) {
+            //
+        }
+    }
+
+    public static Calendario deserializar(InputStream is) {
+        try {
+            ObjectInputStream objectInStream = new ObjectInputStream(is);
+            HashMap<Integer, ElementoCalendario> elementosCalendario = (HashMap<Integer, ElementoCalendario>) objectInStream.readObject();
+            Calendario calendarioNuevo = new Calendario();
+            calendarioNuevo.elementosCalendario.putAll(elementosCalendario);
+            for (ElementoCalendario elemento : calendarioNuevo.elementosCalendario.values()) {
+                calendarioNuevo.alarmas.addAll(elemento.obtenerAlarmas().values());
+            }
+            calendarioNuevo.indiceElementoCalendario = calendarioNuevo.elementosCalendario.size();
+            return calendarioNuevo;
+        } catch (IOException e) {
+            System.out.println("La entrada se encuentra vacía.");
+        } catch (ClassNotFoundException e) {
+            System.out.println("El objeto guardado no es de tipo calendario.");
+        }
+        return null;
+
     }
 }

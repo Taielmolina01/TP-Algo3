@@ -1,8 +1,6 @@
 package org.example;
 
 import org.junit.Test;
-
-import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -10,21 +8,28 @@ import static org.junit.Assert.*;
 
 public class ManejadorGuardadoTest {
 
+    private String nombreArchivo = "MiCalendario.txt";
+
     @Test
-    public void testGuardarCalendarioVacio() throws IOException {
+    public void testRecuperarCalendarioArchivoVacio() {
+        Calendario nuevoCalendario = new Calendario();
+        assertThrows(NullPointerException.class, () -> nuevoCalendario.obtenerNombre(0));
+    }
+
+    @Test
+    public void testGuardarCalendarioVacio() {
         Calendario nuevoCalendario = new Calendario();
         nuevoCalendario.guardarEstado();
     }
 
     @Test
-    public void testRecuperarCalendarioVacio() throws IOException, ClassNotFoundException {
-        Calendario nuevoCalendario = new Calendario();
-        nuevoCalendario.recuperarEstado();
+    public void testRecuperarCalendarioVacio() {
+        Calendario nuevoCalendario = Calendario.recuperarEstado(nombreArchivo);
         assertThrows(NullPointerException.class, () -> nuevoCalendario.obtenerNombre(0));
     }
 
     @Test
-    public void testGuardarEstadoCalendario() throws IOException, ClassNotFoundException {
+    public void testGuardarEstadoCalendario() {
 
         Calendario nuevoCalendario = new Calendario();
 
@@ -54,10 +59,8 @@ public class ManejadorGuardadoTest {
     }
 
     @Test
-    public void TestRecuperarEstado() throws IOException, ClassNotFoundException{
-        Calendario nuevoCalendario2 = new Calendario();
-
-        nuevoCalendario2.recuperarEstado();
+    public void TestRecuperarEstado() {
+        Calendario nuevoCalendario2 = Calendario.recuperarEstado(nombreArchivo);
 
         assertEquals("Evento", nuevoCalendario2.obtenerNombre(0));
         assertEquals("descripcion del evento", nuevoCalendario2.obtenerDescripcion(0));
@@ -71,5 +74,4 @@ public class ManejadorGuardadoTest {
         assertEquals("Tarea2", nuevoCalendario2.obtenerNombre(3));
         assertEquals("descripcion de la tarea2", nuevoCalendario2.obtenerDescripcion(3));
     }
-
 }
