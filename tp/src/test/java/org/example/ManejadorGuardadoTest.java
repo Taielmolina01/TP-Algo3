@@ -26,8 +26,8 @@ public class ManejadorGuardadoTest {
 
         ManejadorGuardado manejador = new ManejadorGuardado();
 
-        manejador.guardarEstado("carpetaInexistente/MICALENDARIO.txt", calendario); // Si envio un directorio valido, FileOutputStream crea
-        // el archivo con el nombre enviado y nunca caería en el FileNotFoundException.
+        manejador.guardarEstado("carpetaInexistente/MICALENDARIO.txt", calendario);
+        // Si envio un directorio valido, FileOutputStream crea el archivo con el nombre enviado y nunca caería en el FileNotFoundException.
 
         assertEquals("El archivo de guardado no existe.", manejador.salida.obtenerLoQueSeImprimio());
     }
@@ -68,8 +68,8 @@ public class ManejadorGuardadoTest {
 
         /*
             Dos alarmas en el calendario:
-            1. Suena el 29/3/2023 a las 12:00
-            2. Suena el 31/3/2023 a las 23:30
+            1. Suena el 29/3/2023 a las 12:00 (Efecto: EMAIL)
+            2. Suena el 31/3/2023 a las 23:30 (Efecto: NOTIFICACION)
         */
 
         LocalDateTime fechaAnteriorAAlarmas = LocalDateTime.of(2023, 3, 28, 0, 0, 0);
@@ -80,12 +80,14 @@ public class ManejadorGuardadoTest {
         assertNotNull(calendario2.obtenerSiguienteAlarma(fechaAnteriorAAlarmas));
         assertEquals(LocalDateTime.of(2023, 3, 29, 12, 0, 0), calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas).obtenerFechaActivacion());
         assertEquals(calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas).obtenerFechaActivacion(), calendario2.obtenerSiguienteAlarma(fechaAnteriorAAlarmas).obtenerFechaActivacion());
+        assertEquals(Alarma.Efecto.EMAIL, calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas).dispararAlarma());
         assertEquals(calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas).dispararAlarma(), calendario2.obtenerSiguienteAlarma(fechaAnteriorAAlarmas).dispararAlarma());
 
         assertNotNull(calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas));
         assertNotNull(calendario2.obtenerSiguienteAlarma(fechaAnteriorAAlarmas));
         assertEquals(LocalDateTime.of(2023, 3, 31, 23, 30, 0), calendario1.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma).obtenerFechaActivacion());
         assertEquals(calendario1.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma).obtenerFechaActivacion(), calendario2.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma).obtenerFechaActivacion());
+        assertEquals(Alarma.Efecto.NOTIFICACION, calendario1.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma).dispararAlarma());
         assertEquals(calendario1.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma).dispararAlarma(), calendario2.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma).dispararAlarma());
 
         assertNull(calendario1.obtenerSiguienteAlarma(fechaPosteriorAAmbasAlarmas));
