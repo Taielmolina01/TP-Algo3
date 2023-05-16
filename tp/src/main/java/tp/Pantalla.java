@@ -1,4 +1,4 @@
-package org.example;
+package tp;
 
 import java.io.PrintStream;
 import java.io.Serializable;
@@ -6,10 +6,11 @@ import java.io.Serializable;
 public class Pantalla implements Serializable {
 
     private final PrintStream out;
-    private String loQueSeImprimio = "";
+    private String loQueSeImprimio;
 
     public Pantalla(PrintStream out) {
         this.out = out;
+        this.loQueSeImprimio = "";
     }
 
     public void println(String mensaje) {

@@ -1,4 +1,4 @@
-package org.example;
+package tp;
 
 import java.io.*;
 import java.nio.file.Files;
