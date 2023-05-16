@@ -1,4 +1,4 @@
-package tp;
+package org.example;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;

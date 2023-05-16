@@ -1,4 +1,4 @@
-package tp;
+package org.example;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -9,10 +9,10 @@ public class ManejadorGuardado implements Serializable {
 
     private final String nombreArchivoGuardado = "MiCalendario.txt";
     protected final Pantalla printStreamMock;
-    private final OutputStream salida = System.out;
 
-    public ManejadorGuardado() {
-        this.printStreamMock = new Pantalla(new PrintStream(this.salida));
+
+    protected ManejadorGuardado() {
+        this.printStreamMock = new Pantalla(new PrintStream(System.out));
     }
 
     protected void guardarEstado(Calendario calendario) {

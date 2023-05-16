@@ -1,4 +1,4 @@
-package tp;
+package org.example;
 
 import java.io.*;
 import java.time.Duration;
@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Calendario {
+public class Calendario implements Serializable {
     protected HashMap<Integer, ElementoCalendario> elementosCalendario;
     private int indiceElementoCalendario;
     private final ArrayList<Alarma> alarmas;
@@ -167,7 +167,8 @@ public class Calendario {
     public static Calendario recuperarEstado(String nombreArchivo) {
         try {
             FileInputStream archivo = new FileInputStream(nombreArchivo);
-            return ManejadorGuardado.recuperarEstado(archivo);
+            Calendario nuevoCalendario = ManejadorGuardado.recuperarEstado(archivo);
+            return nuevoCalendario;
         } catch (FileNotFoundException e) {
             return null;
         }
@@ -204,5 +205,6 @@ public class Calendario {
             System.out.println("El objeto guardado no es de tipo calendario.");
         }
         return null;
+
     }
 }
