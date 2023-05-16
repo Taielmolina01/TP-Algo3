@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Calendario implements Serializable {
-    protected HashMap<Integer, ElementoCalendario> elementosCalendario;
+    private HashMap<Integer, ElementoCalendario> elementosCalendario;
     private int indiceElementoCalendario;
     private final ArrayList<Alarma> alarmas;
     private final ManejadorGuardado manejador;
