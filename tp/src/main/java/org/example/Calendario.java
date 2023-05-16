@@ -10,12 +10,12 @@ public class Calendario implements Serializable {
     protected HashMap<Integer, ElementoCalendario> elementosCalendario;
     private int indiceElementoCalendario;
     private final ArrayList<Alarma> alarmas;
-    private final ManejadorGuardado manejador;
-    private final Pantalla salida;
+    protected final ManejadorGuardado manejador;
+    private final String rutaArchivoGuardado;
 
     public Calendario() {
+        this.rutaArchivoGuardado = "MiCalendario.txt";
         this.manejador = new ManejadorGuardado();
-        this.salida = new Pantalla(System.out);
         this.elementosCalendario = new HashMap<>();
         this.alarmas = new ArrayList<>();
     }
@@ -138,7 +138,7 @@ public class Calendario implements Serializable {
         this.alarmas.remove(alarmaEliminada);
     }
 
-    public Alarma obtenerSiguienteAlarma() {
+    public Alarma obtenerSiguienteAlarma(LocalDateTime fechaActual) {
         if (this.alarmas.isEmpty()) {
             return null;
         }
@@ -148,7 +148,11 @@ public class Calendario implements Serializable {
                 posMaxima = i;
             }
         }
-        return this.alarmas.get(posMaxima);
+        Alarma sigAlarma = this.alarmas.get(posMaxima);
+        if (sigAlarma.obtenerFechaActivacion().isBefore(fechaActual)) { // La hora de la última alarma ya pasó.
+            return null;
+        }
+        return sigAlarma;
     }
 
     private int obtenerPosicionAlarma(Alarma alarmaBuscada) {
@@ -161,21 +165,15 @@ public class Calendario implements Serializable {
     }
 
     public void guardarEstado() {
-        this.manejador.guardarEstado(this);
+        this.manejador.guardarEstado(this.rutaArchivoGuardado, this);
     }
 
-    public static Calendario recuperarEstado(String nombreArchivo) {
-        try {
-            FileInputStream archivo = new FileInputStream(nombreArchivo);
-            Calendario nuevoCalendario = ManejadorGuardado.recuperarEstado(archivo);
-            return nuevoCalendario;
-        } catch (FileNotFoundException e) {
-            return null;
-        }
+    public Calendario recuperarEstado() {
+        return this.manejador.recuperarEstado(this.rutaArchivoGuardado);
     }
 
     public void borrarEstadoGuardado() {
-        this.manejador.borrarEstadoGuardado();
+        this.manejador.borrarEstadoGuardado(this.rutaArchivoGuardado);
     }
 
     public void serializar(OutputStream os) {
@@ -188,7 +186,7 @@ public class Calendario implements Serializable {
         }
     }
 
-    public static Calendario deserializar(InputStream is) {
+    public Calendario deserializar(InputStream is) {
         try {
             ObjectInputStream objectInStream = new ObjectInputStream(is);
             HashMap<Integer, ElementoCalendario> elementosCalendario = (HashMap<Integer, ElementoCalendario>) objectInStream.readObject();
@@ -205,6 +203,5 @@ public class Calendario implements Serializable {
             System.out.println("El objeto guardado no es de tipo calendario.");
         }
         return null;
-
     }
 }

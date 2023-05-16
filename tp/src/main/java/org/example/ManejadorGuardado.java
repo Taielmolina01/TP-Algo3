@@ -7,44 +7,38 @@ import java.nio.file.StandardOpenOption;
 
 public class ManejadorGuardado implements Serializable {
 
-    private final String nombreArchivoGuardado = "MiCalendario.txt";
-    protected final Pantalla printStreamMock;
+    protected final PrintStreamMock salida;
+    private final PrintStream salidaReal;
 
-
-    protected ManejadorGuardado() {
-        this.printStreamMock = new Pantalla(new PrintStream(System.out));
+    public ManejadorGuardado() {
+        this.salidaReal = System.out;
+        this.salida = new PrintStreamMock(this.salidaReal);
     }
 
-    protected void guardarEstado(Calendario calendario) {
-        this.crearArchivoGuardado();
+    protected void guardarEstado(String rutaArchivo, Calendario calendario) {
         try {
-            FileOutputStream archivoDestino = new FileOutputStream(this.nombreArchivoGuardado);
+            FileOutputStream archivoDestino = new FileOutputStream(rutaArchivo);
             calendario.serializar(archivoDestino);
-        } catch (IOException e) {
-            this.printStreamMock.println("No existe el archivo de guardado.");
+        } catch (FileNotFoundException e) {
+            this.salida.println("El archivo de guardado no existe.");
         }
     }
 
-    protected static Calendario recuperarEstado(InputStream is) {
-        return Calendario.deserializar(is);
+    protected Calendario recuperarEstado(String rutaArchivo) {
+        try {
+            FileInputStream archivo = new FileInputStream(rutaArchivo);
+            return (new Calendario()).deserializar(archivo);
+        } catch (FileNotFoundException e ) {
+            this.salida.println("El archivo de recuperado no existe.");
+            return null;
+        }
     }
 
-    protected void borrarEstadoGuardado() {
-        try (BufferedWriter bf = Files.newBufferedWriter(Path.of(this.nombreArchivoGuardado),
+    protected void borrarEstadoGuardado(String rutaArchivo) {
+        try (BufferedWriter bf = Files.newBufferedWriter(Path.of(rutaArchivo),
                 StandardOpenOption.TRUNCATE_EXISTING)) {
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private void crearArchivoGuardado() {
-        try {
-            File archivo = new File(this.nombreArchivoGuardado);
-            if (!archivo.exists()) {
-                archivo.createNewFile();
-            }
-        } catch (IOException e) {
-            this.printStreamMock.println("No se pudo crear el archivo de guardado.");
         }
     }
 }
