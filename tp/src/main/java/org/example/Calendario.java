@@ -10,7 +10,7 @@ public class Calendario implements Serializable {
     protected HashMap<Integer, ElementoCalendario> elementosCalendario;
     private int indiceElementoCalendario;
     private final ArrayList<Alarma> alarmas;
-    protected final ManejadorGuardado manejador;
+    private final ManejadorGuardado manejador;
     private final String rutaArchivoGuardado;
 
     public Calendario() {
@@ -176,6 +176,10 @@ public class Calendario implements Serializable {
 
     public void borrarEstadoGuardado() {
         this.manejador.borrarEstadoGuardado(this.rutaArchivoGuardado);
+    }
+
+    public PrintStreamMock obtenerSalidaManejador() {
+        return this.manejador.salida;
     }
 
     public void serializar(OutputStream os) {

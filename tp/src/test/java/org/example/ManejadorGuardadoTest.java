@@ -17,7 +17,7 @@ public class ManejadorGuardadoTest {
         new File("MiCalendario.txt").delete();
         Calendario calendario = new Calendario();
         assertNull(calendario.recuperarEstado());
-        assertEquals("El archivo de recuperado no existe.", calendario.manejador.salida.obtenerLoQueSeImprimio());
+        assertEquals("El archivo de recuperado no existe.", calendario.obtenerSalidaManejador().obtenerLoQueSeImprimio());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class ManejadorGuardadoTest {
     }
 
     @Test
-    public void testGuardadoYOriginalSonIguales() {
+    public void testDeserializadoYOriginalSonIguales() {
         Calendario calendario1 = crearCalendarioDosEventos();
 
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
