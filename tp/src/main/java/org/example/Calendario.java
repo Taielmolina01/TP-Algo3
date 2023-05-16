@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Calendario implements Serializable {
+    
     private HashMap<Integer, ElementoCalendario> elementosCalendario;
     private int indiceElementoCalendario;
     private final ArrayList<Alarma> alarmas;
@@ -98,7 +99,7 @@ public class Calendario implements Serializable {
         }
     }
 
-    
+
 
     public void agregarAlarma(int id, Alarma.Efecto efecto, LocalDateTime fechaActivacion) {
         ElementoCalendario elemento = this.elementosCalendario.get(id);
