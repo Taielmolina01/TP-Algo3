@@ -91,8 +91,10 @@ public class Calendario implements Serializable {
 
     public void eliminarElementoCalendario(int id) {
         ElementoCalendario elementoEliminado = this.elementosCalendario.remove(id);
-        for (Alarma alarma : elementoEliminado.obtenerAlarmas().values()) {
-            this.alarmas.remove(alarma);
+        if (elementoEliminado != null) {
+            for (Alarma alarma : elementoEliminado.obtenerAlarmas().values()) {
+                this.alarmas.remove(alarma);
+            }
         }
     }
 
@@ -135,7 +137,9 @@ public class Calendario implements Serializable {
 
     public void eliminarAlarma(int idElemento, int idAlarma) {
         Alarma alarmaEliminada = this.elementosCalendario.get(idElemento).eliminarAlarma(idAlarma);
-        this.alarmas.remove(alarmaEliminada);
+        if (alarmaEliminada != null) {
+            this.alarmas.remove(alarmaEliminada);
+        }
     }
 
     public Alarma obtenerSiguienteAlarma(LocalDateTime fechaActual) {
