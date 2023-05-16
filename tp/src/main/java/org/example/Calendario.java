@@ -12,10 +12,12 @@ public class Calendario implements Serializable {
     private final ArrayList<Alarma> alarmas;
     private final ManejadorGuardado manejador;
     private final String rutaArchivoGuardado;
+    private final PrintStreamMock salida;
 
     public Calendario() {
         this.rutaArchivoGuardado = "MiCalendario.txt";
         this.manejador = new ManejadorGuardado();
+        this.salida = new PrintStreamMock(System.out);
         this.elementosCalendario = new HashMap<>();
         this.alarmas = new ArrayList<>();
     }
@@ -105,8 +107,8 @@ public class Calendario implements Serializable {
     }
 
     public void modificarEfectoAlarma(int idElemento, int idAlarma, Alarma.Efecto nuevoEfecto) {
-        Alarma alarma = this.elementosCalendario.get(idElemento).obtenerAlarma(idAlarma);
         this.elementosCalendario.get(idElemento).modificarNotificacionAlarma(idAlarma, nuevoEfecto);
+        Alarma alarma = this.elementosCalendario.get(idElemento).obtenerAlarma(idAlarma);
         int posicionAlarma = this.obtenerPosicionAlarma(alarma);
         if (posicionAlarma != -1) {
             this.alarmas.get(posicionAlarma).modificarEfecto(nuevoEfecto);
@@ -114,8 +116,8 @@ public class Calendario implements Serializable {
     }
 
     public void modificarFechaActivacionAlarma(int idElemento, int idAlarma, LocalDateTime fechaAbsoluta) {
-        Alarma alarma = this.elementosCalendario.get(idElemento).obtenerAlarma(idAlarma);
         this.elementosCalendario.get(idElemento).modificarFechaActivacionAlarma(idAlarma, fechaAbsoluta);
+        Alarma alarma = this.elementosCalendario.get(idElemento).obtenerAlarma(idAlarma);
         int posicionAlarma = this.obtenerPosicionAlarma(alarma);
         if (posicionAlarma != -1) {
             this.alarmas.get(posicionAlarma).modificarFechaActivacion(fechaAbsoluta);
@@ -123,15 +125,13 @@ public class Calendario implements Serializable {
     }
 
     public void modificarFechaActivacionAlarma(int idElemento, int idAlarma, LocalDateTime fechaArbitraria, Duration intervaloTiempoNuevo) {
-        Alarma alarma = this.elementosCalendario.get(idElemento).obtenerAlarma(idAlarma);
         this.elementosCalendario.get(idElemento).modificarFechaActivacionAlarma(idAlarma, fechaArbitraria, intervaloTiempoNuevo);
+        Alarma alarma = this.elementosCalendario.get(idElemento).obtenerAlarma(idAlarma);
         int posicionAlarma = this.obtenerPosicionAlarma(alarma);
         if (posicionAlarma != -1) {
             this.alarmas.get(posicionAlarma).modificarFechaActivacion(fechaArbitraria, intervaloTiempoNuevo);
         }
     }
-
-    // Ver repeticion de codigo
 
     public void eliminarAlarma(int idElemento, int idAlarma) {
         Alarma alarmaEliminada = this.elementosCalendario.get(idElemento).eliminarAlarma(idAlarma);
@@ -178,21 +178,24 @@ public class Calendario implements Serializable {
         this.manejador.borrarEstadoGuardado(this.rutaArchivoGuardado);
     }
 
-    public PrintStreamMock obtenerSalidaManejador() {
-        return this.manejador.salida;
+    public String obtenerSalidaManejador() {
+        return this.manejador.salida.obtenerLoQueSeImprimio();
     }
 
-    public void serializar(OutputStream os) {
+    public String obtenerSalida() {return this.salida.obtenerLoQueSeImprimio(); }
+
+    protected void serializar(OutputStream os) {
         try {
             ObjectOutputStream elementos = new ObjectOutputStream(os);
             elementos.writeObject(this.elementosCalendario);
             elementos.flush();
+            elementos.close();
         } catch (IOException e) {
-            //
+            this.salida.println("El flujo de salida no existe.");
         }
     }
 
-    public Calendario deserializar(InputStream is) {
+    protected Calendario deserializar(InputStream is) {
         try {
             ObjectInputStream objectInStream = new ObjectInputStream(is);
             HashMap<Integer, ElementoCalendario> elementosCalendario = (HashMap<Integer, ElementoCalendario>) objectInStream.readObject();
@@ -204,10 +207,10 @@ public class Calendario implements Serializable {
             calendarioNuevo.indiceElementoCalendario = calendarioNuevo.elementosCalendario.size();
             return calendarioNuevo;
         } catch (IOException e) {
-            System.out.println("La entrada se encuentra vacía.");
+            this.salida.println("El flujo de entrada no existe o está vacío.");
         } catch (ClassNotFoundException e) {
-            System.out.println("El objeto guardado no es de tipo calendario.");
+            this.salida.println("La clase Calendario no se encuentra en este paquete.");
         }
-        return null;
+        return this;
     }
 }
