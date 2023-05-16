@@ -145,14 +145,16 @@ public class Calendario implements Serializable {
         int posMaxima = 0;
         for (int i = 0; i < alarmas.size(); i++) {
             if (Alarma.compararAlarmas(this.alarmas.get(posMaxima), this.alarmas.get(i)) > 0) {
+                if (this.alarmas.get(i).obtenerFechaActivacion().isBefore(fechaActual)) { // La hora de la última alarma ya pasó.
+                    continue;
+                }
                 posMaxima = i;
             }
         }
-        Alarma sigAlarma = this.alarmas.get(posMaxima);
-        if (sigAlarma.obtenerFechaActivacion().isBefore(fechaActual)) { // La hora de la última alarma ya pasó.
+        if (this.alarmas.get(posMaxima).obtenerFechaActivacion().isBefore(fechaActual)) { // La hora de la última alarma ya pasó.
             return null;
         }
-        return sigAlarma;
+        return this.alarmas.get(posMaxima);
     }
 
     private int obtenerPosicionAlarma(Alarma alarmaBuscada) {
