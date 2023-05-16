@@ -98,6 +98,8 @@ public class Calendario implements Serializable {
         }
     }
 
+    
+
     public void agregarAlarma(int id, Alarma.Efecto efecto, LocalDateTime fechaActivacion) {
         ElementoCalendario elemento = this.elementosCalendario.get(id);
         this.alarmas.add(elemento.agregarAlarma(efecto, fechaActivacion));
@@ -135,13 +137,6 @@ public class Calendario implements Serializable {
         }
     }
 
-    public void eliminarAlarma(int idElemento, int idAlarma) {
-        Alarma alarmaEliminada = this.elementosCalendario.get(idElemento).eliminarAlarma(idAlarma);
-        if (alarmaEliminada != null) {
-            this.alarmas.remove(alarmaEliminada);
-        }
-    }
-
     public Alarma obtenerSiguienteAlarma(LocalDateTime fechaActual) {
         if (this.alarmas.isEmpty()) {
             return null;
@@ -169,6 +164,15 @@ public class Calendario implements Serializable {
         }
         return -1;
     }
+
+    public void eliminarAlarma(int idElemento, int idAlarma) {
+        Alarma alarmaEliminada = this.elementosCalendario.get(idElemento).eliminarAlarma(idAlarma);
+        if (alarmaEliminada != null) {
+            this.alarmas.remove(alarmaEliminada);
+        }
+    }
+
+
 
     public void guardarEstado() {
         this.manejador.guardarEstado(this.rutaArchivoGuardado, this);
