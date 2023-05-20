@@ -207,9 +207,9 @@ public class Calendario implements Serializable {
     protected Calendario deserializar(InputStream is) {
         try {
             ObjectInputStream objectInStream = new ObjectInputStream(is);
-            HashMap<Integer, ElementoCalendario> elementosCalendario = (HashMap<Integer, ElementoCalendario>) objectInStream.readObject();
+            HashMap<Integer, ElementoCalendario> elementos = (HashMap<Integer, ElementoCalendario>) objectInStream.readObject();
             Calendario calendarioNuevo = new Calendario();
-            calendarioNuevo.elementosCalendario.putAll(elementosCalendario);
+            calendarioNuevo.elementosCalendario.putAll(elementos);
             for (ElementoCalendario elemento : calendarioNuevo.elementosCalendario.values()) {
                 calendarioNuevo.alarmas.addAll(elemento.obtenerAlarmas().values());
             }
