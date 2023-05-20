@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public class ManejadorGuardado implements Serializable {
+public class ManejadorGuardado {
 
     protected final PrintStreamMock salida;
     private final PrintStream salidaReal;
