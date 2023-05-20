@@ -9,7 +9,5 @@ public class Main {
 
     public static void main(String[] args){
 
-        HashMap<Integer, String> numeros = new HashMap<>();
-        System.out.println(numeros.remove(0));
     }
 }
