@@ -15,7 +15,7 @@ public class FrecuenciaSemanal extends Frecuencia {
     }
 
     @Override
-    public LocalDateTime obtenerProximaFecha(LocalDateTime fechaInicial) { // Está mal
+    public LocalDateTime obtenerProximaFecha(LocalDateTime fechaInicial) {
         DayOfWeek fechaDia = fechaInicial.getDayOfWeek();
         DayOfWeek proximoDia = this.diasSemana.first();
 
