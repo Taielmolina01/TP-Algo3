@@ -1,10 +1,12 @@
 package org.example;
 
-import java.time.*;
+import java.time.LocalDateTime;
+import java.time.Duration;
 import java.lang.String;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Evento extends ElementoCalendario {
+public class Evento extends ElementoCalendario implements Serializable {
 
     private LocalDateTime fechaFin; // Fin del evento sin contar sus repeticiones, NO es la fecha en donde terminan las repeticiones.
     private LocalDateTime fechaFinalRepeticion; // Fecha en la que terminan las repeticiones del evento.
@@ -67,7 +69,6 @@ public class Evento extends ElementoCalendario {
         for (int i = 1; i < this.ocurrencias; i++) {
             fecha = this.frecuencia.obtenerProximaFecha(fecha);
         }
-        System.out.println(fecha);
         this.fechaFinalRepeticion = fecha;
     }
 
@@ -91,10 +92,11 @@ public class Evento extends ElementoCalendario {
     public Frecuencia obtenerFrecuencia() { return this.frecuencia; }
 
 
-    public ArrayList<LocalDateTime> eventosHastaFecha(LocalDateTime fechaFinal) {
-        LocalDateTime dia = this.fechaInicio;
+    public ArrayList<LocalDateTime> eventosEntreFechas(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
+        LocalDateTime dia = fechaInicial.isBefore(this.fechaInicio) ? this.fechaInicio : fechaInicial;
         ArrayList<LocalDateTime> eventos = new ArrayList<>();
-        while (estaEntreFechas(dia, this.fechaInicio, this.fechaFinalRepeticion) && estaEntreFechas(dia, this.fechaInicio, fechaFinal)) {
+        if (fechaInicial.isAfter(this.fechaFinalRepeticion)) { return eventos; }
+        while (estaEntreFechas(dia, fechaInicial, this.fechaFinalRepeticion) && estaEntreFechas(dia, fechaInicial, fechaFinal)) {
             eventos.add(dia);
             dia = this.frecuencia.obtenerProximaFecha(dia);
         }
@@ -102,7 +104,7 @@ public class Evento extends ElementoCalendario {
     }
 
     public boolean hayEvento(LocalDateTime diaAAnalizar) {
-        ArrayList<LocalDateTime> eventos = eventosHastaFecha(diaAAnalizar);
+        ArrayList<LocalDateTime> eventos = eventosEntreFechas(this.fechaInicio, diaAAnalizar);
         LocalDateTime ultimoDiaInicio = eventos.get(eventos.size()-1);
         LocalDateTime ultimoDiaFin = ultimoDiaInicio.plus(this.duracion);
         return this.estaEntreFechas(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);

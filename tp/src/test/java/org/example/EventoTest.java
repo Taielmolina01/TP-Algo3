@@ -2,7 +2,13 @@ package org.example;
 
 import org.junit.Test;
 
-import java.time.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.TreeSet;
+import java.util.SortedSet;
 
 import static org.junit.Assert.*;
 
@@ -106,12 +112,13 @@ public class EventoTest {
     public void testFrecuenciaSemanal() {
         LocalDateTime fechaInicio = LocalDateTime.of(2020, 3, 16, 0, 0, 0);
         LocalDateTime fechaFinal = LocalDateTime.of(2020, 4, 1, 0, 0, 0);
-        DayOfWeek[] diasSemana = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY};
+        DayOfWeek[] dias = new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY};
+        SortedSet<DayOfWeek> diasSemana = new TreeSet<>(Arrays.asList(dias));
         FrecuenciaSemanal frecuencia = new FrecuenciaSemanal(diasSemana, 1);
         Evento evento = new Evento("Clases", "en FIUBA", fechaInicio, null, true, fechaFinal, frecuencia);
 
-        for (int i = 0; i < frecuencia.obtenerDiasSemana().length ; i++) {
-            assertEquals(diasSemana[i], frecuencia.obtenerDiasSemana()[i]);
+        for (int i = 0; i < frecuencia.obtenerDiasSemana().size() ; i++) {
+            assertEquals(dias[i], frecuencia.obtenerDiasSemana().toArray()[i]);
         }
 
         int[] diasTrue = {16, 17, 19, 20, 23, 24, 26, 27, 30, 31};
@@ -131,12 +138,13 @@ public class EventoTest {
         assertFalse(evento.hayEvento(LocalDateTime.of(2020, 4, 1, 12, 0, 0)));
         assertFalse(evento.hayEvento(LocalDateTime.of(2020, 4, 1, 23, 59, 59)));
 
-        DayOfWeek[] nuevosDiasSemana = {DayOfWeek.WEDNESDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
+        DayOfWeek[] nuevosDias = {DayOfWeek.WEDNESDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
+        SortedSet<DayOfWeek> nuevosDiasSemana = new TreeSet<>(Arrays.asList(nuevosDias));
         frecuencia.modificarDiasSemana(nuevosDiasSemana);
         evento.modificarFechaInicio(LocalDateTime.of(2020, 3, 18, 0,0,0));
 
-        for (int i = 0; i < frecuencia.obtenerDiasSemana().length ; i++) {
-            assertEquals(nuevosDiasSemana[i], frecuencia.obtenerDiasSemana()[i]);
+        for (int i = 0; i < frecuencia.obtenerDiasSemana().size() ; i++) {
+            assertEquals(nuevosDias[i], frecuencia.obtenerDiasSemana().toArray()[i]);
         }
 
         for (int dia : diasFalse) {
@@ -149,7 +157,8 @@ public class EventoTest {
     @Test
     public void testFrecuenciaSemanal2() {
         LocalDateTime fechaInicio = LocalDateTime.of(2020, 3, 16, 0, 0, 0);
-        DayOfWeek[] diasSemana = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY};
+        DayOfWeek[] dias = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY};
+        TreeSet<DayOfWeek> diasSemana = new TreeSet<>(Arrays.asList(dias));
         FrecuenciaSemanal frecuencia = new FrecuenciaSemanal(diasSemana, 2);
         Evento evento = new Evento("Clases", "en FIUBA", fechaInicio, null, true, 6, frecuencia);
 
@@ -164,7 +173,8 @@ public class EventoTest {
         }
         assertFalse(evento.hayEvento(LocalDateTime.of(2020, 4, 1, 0, 0, 0)));
 
-        DayOfWeek[] diasSemanaNuevos = {DayOfWeek.WEDNESDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
+        DayOfWeek[] diasNuevos = {DayOfWeek.WEDNESDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
+        TreeSet<DayOfWeek> diasSemanaNuevos = new TreeSet<>(Arrays.asList(diasNuevos));
         FrecuenciaSemanal frecuenciaNueva = new FrecuenciaSemanal(diasSemanaNuevos, 1);
         evento.modificarFechaInicio(LocalDateTime.of(2020, 3, 18, 0, 0, 0));
         evento.modificarFrecuencia(frecuenciaNueva);
@@ -242,7 +252,8 @@ public class EventoTest {
     @Test
     public void testModificarTipoFrecuencia() {
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 3, 6, 17, 30, 0);
-        DayOfWeek[] diasSemana = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY};
+        DayOfWeek[] dias = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY};
+        TreeSet<DayOfWeek> diasSemana = new TreeSet<>(Arrays.asList(dias));
         Frecuencia frecuencia = new FrecuenciaSemanal(diasSemana,1);
         Duration duracion = Duration.ofHours(2);
         Evento evento = new Evento("Ir al gimnasio", "de a la vuelta de casa", fechaInicio, duracion, false, 11, frecuencia);
@@ -301,7 +312,8 @@ public class EventoTest {
             assertFalse(evento.hayEvento(LocalDateTime.of(2023, 3, i + 1, 14, 50, 0)));
         }
 
-        DayOfWeek[] diasSemana = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY};
+        DayOfWeek[] dias = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY};
+        TreeSet<DayOfWeek> diasSemana = new TreeSet<>(Arrays.asList(dias));
         Frecuencia frecuenciaNueva = new FrecuenciaSemanal(diasSemana, 1);
 
         evento.modificarFrecuencia(frecuenciaNueva);
@@ -320,5 +332,28 @@ public class EventoTest {
             assertFalse(evento.hayEvento(LocalDateTime.of(2023, 3, dia, 14, 30, 0)));
             assertFalse(evento.hayEvento(LocalDateTime.of(2023, 3, dia, 14, 50, 0)));
         }
+    }
+
+    @Test
+    public void testEventosEntreFechas() {
+        LocalDateTime fechaInicio = LocalDateTime.of(2023, 9, 11, 21, 0, 0);
+        LocalDateTime fechaFinal = LocalDateTime.of(2023, 9, 26, 0, 0, 0);
+        Duration duracion = Duration.ofHours(3);
+        DayOfWeek[] dias = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY};
+        TreeSet<DayOfWeek> diasSemana = new TreeSet<>(Arrays.asList(dias));
+
+        Frecuencia frecuenciaSemanal = new FrecuenciaSemanal(diasSemana, 1);
+        Evento evento = new Evento("Conciertos", "de Mora", fechaInicio, duracion, false, fechaFinal, frecuenciaSemanal);
+
+        int[] diasTrue = {11, 12, 14, 15, 18, 19, 21, 22, 25};
+        ArrayList<LocalDateTime> fechasTrue = new ArrayList<>();
+        for (int dia : diasTrue){
+            fechasTrue.add(LocalDateTime.of(2023, 9, dia, 21, 0, 0));
+        }
+
+        assertEquals(evento.eventosEntreFechas(fechaInicio.minusMonths(2), fechaFinal), fechasTrue);
+        assertEquals(evento.eventosEntreFechas(fechaInicio, fechaFinal), fechasTrue);
+        assertEquals(evento.eventosEntreFechas(fechaInicio.plusWeeks(1), fechaFinal), fechasTrue.subList(4, diasTrue.length));
+        assertEquals(evento.eventosEntreFechas(fechaInicio.plusWeeks(4), fechaFinal), new ArrayList<>());
     }
 }

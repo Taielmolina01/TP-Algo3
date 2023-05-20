@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class FrecuenciaDiaria extends Frecuencia {
 
-    public FrecuenciaDiaria(Integer frecuenciaRepeticiones) {
+    public FrecuenciaDiaria(int frecuenciaRepeticiones) {
         super(frecuenciaRepeticiones);
     }
 

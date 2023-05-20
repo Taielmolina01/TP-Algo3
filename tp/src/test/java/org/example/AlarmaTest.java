@@ -5,8 +5,6 @@ import org.junit.Test;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAmount;
-import java.time.temporal.TemporalUnit;
 
 import static org.junit.Assert.*;
 
@@ -136,5 +134,26 @@ public class AlarmaTest {
         } else if (alarma.cuantoFaltaParaDisparar(fechaDespues).isNegative()) {
             assertTrue(true);
         }
+    }
+
+    @Test
+    public void modificarAlarmas() {
+        var fechaAbsoluta = LocalDateTime.of(2023, 5, 10, 0, 0, 0, 0);
+        var fechaDisparador = LocalDateTime.of(2023, 5, 9, 23, 30, 0);
+        var tiempo = Duration.of(30, ChronoUnit.MINUTES);
+        var efecto = Alarma.Efecto.NOTIFICACION;
+        var alarma = new Alarma(efecto, fechaAbsoluta, tiempo);
+
+        assertEquals(fechaDisparador, alarma.obtenerFechaActivacion());
+        assertEquals(efecto, alarma.dispararAlarma());
+
+        var fechaNueva = LocalDateTime.of(2023, 5, 8, 0, 0, 0);
+        var efectoNuevo = Alarma.Efecto.SONIDO;
+
+        alarma.modificarFechaActivacion(fechaNueva);
+        alarma.modificarEfecto(efectoNuevo);
+
+        assertEquals(fechaNueva, alarma.obtenerFechaActivacion());
+        assertEquals(efectoNuevo, alarma.dispararAlarma());
     }
 }
