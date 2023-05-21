@@ -10,7 +10,7 @@ public class ManejadorGuardado {
     protected final PrintStreamMock salida;
     private final PrintStream salidaReal;
     private final String rutaArchivoGuardado = "MiCalendario.txt";
-    private File archivoGuardado;
+    private final File archivoGuardado = new File(rutaArchivoGuardado);
 
 
     public ManejadorGuardado() {
@@ -47,7 +47,6 @@ public class ManejadorGuardado {
     }
 
     private void crearArchivoGuardado() {
-        this.archivoGuardado = new File(rutaArchivoGuardado);
         try {
             this.archivoGuardado.createNewFile();
         } catch (IOException e) {
