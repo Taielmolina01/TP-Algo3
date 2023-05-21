@@ -11,14 +11,10 @@ public class Calendario implements Serializable {
     private HashMap<Integer, ElementoCalendario> elementosCalendario;
     private int indiceElementoCalendario;
     private final ArrayList<Alarma> alarmas;
-    private final ManejadorGuardado manejador;
-    private final String rutaArchivoGuardado;
-    private final PrintStreamMock salida;
+    private static final ManejadorGuardado manejador = new ManejadorGuardado();
+    private static final PrintStreamMock salida = new PrintStreamMock(System.out);
 
     public Calendario() {
-        this.rutaArchivoGuardado = "MiCalendario.txt";
-        this.manejador = new ManejadorGuardado();
-        this.salida = new PrintStreamMock(System.out);
         this.elementosCalendario = new HashMap<>();
         this.alarmas = new ArrayList<>();
     }
@@ -176,31 +172,32 @@ public class Calendario implements Serializable {
 
 
     public void guardarEstado() {
-        this.manejador.guardarEstado(this.rutaArchivoGuardado, this);
+        manejador.guardarEstado(this);
     }
 
     public Calendario recuperarEstado() {
-        return this.manejador.recuperarEstado(this.rutaArchivoGuardado);
+        return manejador.recuperarEstado();
     }
 
     public void borrarEstadoGuardado() {
-        this.manejador.borrarEstadoGuardado(this.rutaArchivoGuardado);
+        manejador.borrarEstadoGuardado();
     }
 
     public String obtenerSalidaManejador() {
-        return this.manejador.salida.obtenerLoQueSeImprimio();
+        return manejador.salida.obtenerLoQueSeImprimio();
     }
 
-    public String obtenerSalida() {return this.salida.obtenerLoQueSeImprimio(); }
+    public String obtenerSalida() {return salida.obtenerLoQueSeImprimio(); }
 
     protected void serializar(OutputStream os) {
         try {
-            ObjectOutputStream elementos = new ObjectOutputStream(os);
-            elementos.writeObject(this.elementosCalendario);
-            elementos.flush();
-            elementos.close();
+            ObjectOutputStream objectOutStream = new ObjectOutputStream(os);
+            objectOutStream.writeObject(this.elementosCalendario);
+            objectOutStream.writeObject(this.indiceElementoCalendario);
+            objectOutStream.flush();
+            objectOutStream.close();
         } catch (IOException e) {
-            this.salida.println("El flujo de salida no existe.");
+            salida.println("El flujo de salida no existe.");
         }
     }
 
@@ -213,12 +210,12 @@ public class Calendario implements Serializable {
             for (ElementoCalendario elemento : calendarioNuevo.elementosCalendario.values()) {
                 calendarioNuevo.alarmas.addAll(elemento.obtenerAlarmas().values());
             }
-            calendarioNuevo.indiceElementoCalendario = calendarioNuevo.elementosCalendario.size();
+            calendarioNuevo.indiceElementoCalendario = (Integer) objectInStream.readObject();
             return calendarioNuevo;
         } catch (IOException e) {
-            this.salida.println("El flujo de entrada no existe o está vacío.");
+            salida.println("El flujo de entrada no existe o está vacío.");
         } catch (ClassNotFoundException e) {
-            this.salida.println("La clase Calendario no se encuentra en este paquete.");
+            salida.println("La clase Calendario no se encuentra en este paquete.");
         }
         return this;
     }

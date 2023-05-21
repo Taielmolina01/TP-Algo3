@@ -28,18 +28,6 @@ public class PersistenciaTest {
     }
 
     @Test
-    public void testArchivoGuardadoNoExiste() {
-        Calendario calendario = new Calendario();
-
-        ManejadorGuardado manejador = new ManejadorGuardado();
-
-        manejador.guardarEstado("carpetaInexistente/MICALENDARIO.txt", calendario);
-        // Si envio un directorio valido, FileOutputStream crea el archivo con el nombre enviado y nunca caería en el FileNotFoundException.
-
-        assertEquals("El archivo de guardado no existe.", manejador.salida.obtenerLoQueSeImprimio());
-    }
-
-    @Test
     public void testGuardarYRecuperarCalendarioVacio() {
         Calendario calendario1 = new Calendario();
         calendario1.guardarEstado();
@@ -100,6 +88,41 @@ public class PersistenciaTest {
 
         assertNull(calendario1.obtenerSiguienteAlarma(fechaPosteriorAAmbasAlarmas));
         assertNull(calendario2.obtenerSiguienteAlarma(fechaPosteriorAAmbasAlarmas));
+    }
+
+    @Test
+    public void testBorraElementoYSerializar() {
+        Calendario calendario1 = new Calendario();
+
+        LocalDateTime fechaInicioEvento = LocalDateTime.of(2023, 5, 1, 0, 0, 0);
+        Duration duracion = Duration.ofHours(1);
+
+        String nombreEvento1 = "Evento1";
+        String descripcionEvento1 = "descripcion del evento 1";
+
+        String nombreEvento2 = "Evento2";
+        String descripcionEvento2 = "descripcion del evento 2";
+
+        calendario1.crearEvento(nombreEvento1, descripcionEvento1, fechaInicioEvento, duracion, false);
+        calendario1.crearEvento(nombreEvento2, descripcionEvento2, fechaInicioEvento, duracion, false);
+
+        calendario1.eliminarElementoCalendario(0);
+
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+
+        calendario1.serializar(bytes);
+
+        Calendario calendario2 = (new Calendario()).deserializar(new ByteArrayInputStream(bytes.toByteArray()));
+
+        String nombreEvento3 = "Evento3";
+        String descripcionEvento3 = "descripcion del evento3";
+
+        calendario2.crearEvento(nombreEvento3, descripcionEvento3, fechaInicioEvento, duracion, false);
+
+        assertEquals(nombreEvento2, calendario2.obtenerNombre(1));
+        assertEquals(descripcionEvento2, calendario2.obtenerDescripcion(1));
+        assertEquals(nombreEvento3, calendario2.obtenerNombre(2));
+        assertEquals(descripcionEvento3, calendario2.obtenerDescripcion(2));
     }
 
     private Calendario crearCalendarioDosEventos() {
