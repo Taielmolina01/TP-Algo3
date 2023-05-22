@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.ElementosCalendario.Evento;
+import org.example.Frecuencia.*;
 import org.junit.Test;
 
 import java.time.Duration;

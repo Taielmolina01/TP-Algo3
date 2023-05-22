@@ -2,7 +2,6 @@ package org.example;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.Serializable;
 
 public class PrintStreamMock extends PrintStream {
 

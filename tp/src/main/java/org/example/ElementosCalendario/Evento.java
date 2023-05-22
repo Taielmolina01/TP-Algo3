@@ -1,10 +1,12 @@
-package org.example;
+package org.example.ElementosCalendario;
 
-import java.time.LocalDateTime;
-import java.time.Duration;
+import org.example.Frecuencia.Frecuencia;
+
+import java.io.Serializable;
 import java.lang.String;
 import java.util.ArrayList;
-import java.io.Serializable;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class Evento extends ElementoCalendario implements Serializable {
 

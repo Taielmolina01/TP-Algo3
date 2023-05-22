@@ -1,10 +1,11 @@
-package org.example;
+package org.example.ElementosCalendario;
+
+import org.example.Alarma.Alarma;
 
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
-
 
 public abstract class ElementoCalendario implements Serializable {
 
@@ -35,11 +36,11 @@ public abstract class ElementoCalendario implements Serializable {
         return alarma;
     }
 
-    protected HashMap<Integer, Alarma> obtenerAlarmas() {
+    public HashMap<Integer, Alarma> obtenerAlarmas() {
         return this.alarmas;
     }
 
-    protected Alarma obtenerAlarma(int id) {
+    public Alarma obtenerAlarma(int id) {
         return this.alarmas.get(id);
     }
 
