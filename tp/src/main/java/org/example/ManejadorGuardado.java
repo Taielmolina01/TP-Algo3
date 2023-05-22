@@ -10,8 +10,7 @@ public class ManejadorGuardado {
     protected final PrintStream salida;
     private final String rutaArchivoGuardado = "MiCalendario.txt";
     private final File archivoGuardado = new File(rutaArchivoGuardado);
-
-
+    
     public ManejadorGuardado(PrintStream salida) {
         this.salida = salida;
         this.crearArchivoGuardado();
