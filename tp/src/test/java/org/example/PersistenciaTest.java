@@ -13,18 +13,18 @@ public class PersistenciaTest {
     @Test
     public void testArchivoRecuperadoNoExiste() {
         Calendario calendario = new Calendario();
-        PrintStreamMock salida = new PrintStreamMock(new ByteArrayOutputStream());
+        PrintStreamMock salida = new PrintStreamMock(System.out);
         ManejadorGuardado manejador = new ManejadorGuardado(salida);
         manejador.borrarEstadoGuardado();
         new File("MiCalendario.txt").delete();
-        calendario.recuperarEstado(manejador);
+        assertNull(calendario.recuperarEstado(manejador));
         assertEquals("El archivo de recuperado no existe.", salida.obtenerLoQueSeImprimio());
     }
 
     @Test
     public void testDeserializarEntradaVacía() {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        PrintStreamMock salida = new PrintStreamMock(new ByteArrayOutputStream());
+        PrintStreamMock salida = new PrintStreamMock(System.out);
         Calendario calendario = new Calendario().deserializar(salida, new ByteArrayInputStream(bytes.toByteArray()));
         assertEquals("El flujo de entrada no existe o está vacío.", salida.obtenerLoQueSeImprimio());
     }

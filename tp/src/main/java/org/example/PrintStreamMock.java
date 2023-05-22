@@ -13,7 +13,8 @@ public class PrintStreamMock extends PrintStream {
         super(out);
         this.out = out;
     }
-    
+
+    @Override
     public void println(String mensaje) {
         this.loQueSeImprimio = mensaje;
         super.println(mensaje);

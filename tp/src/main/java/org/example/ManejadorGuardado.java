@@ -20,7 +20,7 @@ public class ManejadorGuardado {
     protected void guardarEstado(Calendario calendario) {
         try {
             FileOutputStream archivoDestino = new FileOutputStream(this.rutaArchivoGuardado);
-            calendario.serializar(salida, archivoDestino);
+            calendario.serializar(this.salida, archivoDestino);
         } catch (FileNotFoundException e) {
             this.salida.println("El archivo de guardado no existe.");
         }
@@ -29,7 +29,7 @@ public class ManejadorGuardado {
     protected Calendario recuperarEstado() {
         try {
             FileInputStream archivo = new FileInputStream(this.rutaArchivoGuardado);
-            return (new Calendario()).deserializar(salida, archivo);
+            return (new Calendario()).deserializar(this.salida, archivo);
         } catch (FileNotFoundException e ) {
             this.salida.println("El archivo de recuperado no existe.");
             return null;
