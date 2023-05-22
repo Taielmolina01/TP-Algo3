@@ -1,20 +1,22 @@
 package org.example;
 
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Serializable;
 
-public class PrintStreamMock implements Serializable {
+public class PrintStreamMock extends PrintStream {
 
-    private final PrintStream out;
+    private final OutputStream out;
     private String loQueSeImprimio = "";
 
-    public PrintStreamMock(PrintStream out) {
+    public PrintStreamMock(OutputStream out) {
+        super(out);
         this.out = out;
     }
-
+    
     public void println(String mensaje) {
-        this.out.println(mensaje);
         this.loQueSeImprimio = mensaje;
+        super.println(mensaje);
     }
 
     public String obtenerLoQueSeImprimio() {

@@ -2,9 +2,7 @@ package org.example;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.io.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -14,24 +12,30 @@ public class PersistenciaTest {
 
     @Test
     public void testArchivoRecuperadoNoExiste() {
-        new File("MiCalendario.txt").delete();
         Calendario calendario = new Calendario();
-        assertNull(calendario.recuperarEstado());
-        assertEquals("El archivo de recuperado no existe.", calendario.obtenerSalidaManejador());
+        PrintStreamMock salida = new PrintStreamMock(new ByteArrayOutputStream());
+        ManejadorGuardado manejador = new ManejadorGuardado(salida);
+        manejador.borrarEstadoGuardado();
+        new File("MiCalendario.txt").delete();
+        calendario.recuperarEstado(manejador);
+        assertEquals("El archivo de recuperado no existe.", salida.obtenerLoQueSeImprimio());
     }
 
     @Test
     public void testDeserializarEntradaVacía() {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        Calendario calendario = new Calendario().deserializar(new ByteArrayInputStream(bytes.toByteArray()));
-        assertEquals("El flujo de entrada no existe o está vacío.", calendario.obtenerSalida());
+        PrintStreamMock salida = new PrintStreamMock(new ByteArrayOutputStream());
+        Calendario calendario = new Calendario().deserializar(salida, new ByteArrayInputStream(bytes.toByteArray()));
+        assertEquals("El flujo de entrada no existe o está vacío.", salida.obtenerLoQueSeImprimio());
     }
 
     @Test
     public void testGuardarYRecuperarCalendarioVacio() {
         Calendario calendario1 = new Calendario();
-        calendario1.guardarEstado();
-        Calendario calendario2 = (new Calendario()).recuperarEstado();
+        PrintStreamMock salida = new PrintStreamMock(System.out);
+        ManejadorGuardado manejador = new ManejadorGuardado(salida);
+        calendario1.guardarEstado(manejador);
+        Calendario calendario2 = (new Calendario()).recuperarEstado(manejador);
         assertThrows(NullPointerException.class, () -> calendario2.obtenerNombre(0));
     }
 
@@ -40,10 +44,12 @@ public class PersistenciaTest {
     public void testDeserializadoYOriginalSonIguales() {
         Calendario calendario1 = crearCalendarioDosEventos();
 
+        PrintStreamMock salida = new PrintStreamMock(System.out);
+        ManejadorGuardado manejador = new ManejadorGuardado(salida);
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 
-        calendario1.serializar(bytes);
-        Calendario calendario2 = (new Calendario()).deserializar(new ByteArrayInputStream(bytes.toByteArray()));
+        calendario1.serializar(salida, bytes);
+        Calendario calendario2 = (new Calendario()).deserializar(salida, new ByteArrayInputStream(bytes.toByteArray()));
 
         assertEquals(calendario1.obtenerNombre(0), calendario2.obtenerNombre(0));
         assertEquals(calendario1.obtenerDescripcion(0), calendario2.obtenerDescripcion(0));
@@ -94,6 +100,8 @@ public class PersistenciaTest {
     public void testBorraElementoYSerializar() {
         Calendario calendario1 = new Calendario();
 
+        PrintStreamMock salida = new PrintStreamMock(System.out);
+
         LocalDateTime fechaInicioEvento = LocalDateTime.of(2023, 5, 1, 0, 0, 0);
         Duration duracion = Duration.ofHours(1);
 
@@ -110,9 +118,9 @@ public class PersistenciaTest {
 
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 
-        calendario1.serializar(bytes);
+        calendario1.serializar(salida, bytes);
 
-        Calendario calendario2 = (new Calendario()).deserializar(new ByteArrayInputStream(bytes.toByteArray()));
+        Calendario calendario2 = (new Calendario()).deserializar(salida, new ByteArrayInputStream(bytes.toByteArray()));
 
         String nombreEvento3 = "Evento3";
         String descripcionEvento3 = "descripcion del evento3";
@@ -140,7 +148,6 @@ public class PersistenciaTest {
 
         String nombreEvento2 = "Evento2";
         String descripcionEvento2 = "descripcion del evento2";
-
 
         String nombreTarea2 = "Tarea2";
         String descripcionTarea2 = "descripcion de la tarea2";
