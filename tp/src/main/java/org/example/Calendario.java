@@ -11,8 +11,6 @@ public class Calendario implements Serializable {
     private HashMap<Integer, ElementoCalendario> elementosCalendario;
     private int indiceElementoCalendario;
     private final ArrayList<Alarma> alarmas;
-    private static final ManejadorGuardado manejador = new ManejadorGuardado();
-    private static final PrintStreamMock salida = new PrintStreamMock(System.out);
 
     public Calendario() {
         this.elementosCalendario = new HashMap<>();
@@ -171,37 +169,31 @@ public class Calendario implements Serializable {
 
 
 
-    public void guardarEstado() {
+    public void guardarEstado(ManejadorGuardado manejador) {
         manejador.guardarEstado(this);
     }
 
-    public Calendario recuperarEstado() {
+    public Calendario recuperarEstado(ManejadorGuardado manejador) {
         return manejador.recuperarEstado();
     }
 
-    public void borrarEstadoGuardado() {
+    public void borrarEstadoGuardado(ManejadorGuardado manejador) {
         manejador.borrarEstadoGuardado();
     }
 
-    public String obtenerSalidaManejador() {
-        return manejador.salida.obtenerLoQueSeImprimio();
-    }
-
-    public String obtenerSalida() {return salida.obtenerLoQueSeImprimio(); }
-
-    protected void serializar(OutputStream os) {
-        try {
-            ObjectOutputStream objectOutStream = new ObjectOutputStream(os);
-            objectOutStream.writeObject(this.elementosCalendario);
-            objectOutStream.writeObject(this.indiceElementoCalendario);
-            objectOutStream.flush();
-            objectOutStream.close();
+    protected void serializar(PrintStream salida, OutputStream os) {
+        try { // Hacerlo con un finally el close.
+            ObjectOutputStream o = new ObjectOutputStream(os);
+            o.writeObject(this.elementosCalendario);
+            o.writeObject(this.indiceElementoCalendario);
+            o.flush();
+            o.close();
         } catch (IOException e) {
             salida.println("El flujo de salida no existe.");
         }
     }
 
-    protected Calendario deserializar(InputStream is) {
+    protected Calendario deserializar(PrintStream salida, InputStream is) {
         try {
             ObjectInputStream objectInStream = new ObjectInputStream(is);
             HashMap<Integer, ElementoCalendario> elementos = (HashMap<Integer, ElementoCalendario>) objectInStream.readObject();
