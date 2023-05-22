@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Alarma.Alarma;
 import org.junit.Test;
 
 import java.time.Duration;

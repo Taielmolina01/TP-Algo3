@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Alarma;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -37,7 +37,7 @@ public class Alarma implements Serializable {
         return this.fechaActivacion;
     }
 
-    protected static int compararAlarmas(Alarma alarma1, Alarma alarma2) {
+    public static int compararAlarmas(Alarma alarma1, Alarma alarma2) {
         var fechaActivacion1 = alarma1.obtenerFechaActivacion();
         var fechaActivacion2 = alarma2.obtenerFechaActivacion();
         if (fechaActivacion1.isEqual(fechaActivacion2)) {

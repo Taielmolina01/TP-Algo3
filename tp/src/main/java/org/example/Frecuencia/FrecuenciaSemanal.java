@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Frecuencia;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
