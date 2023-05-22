@@ -6,12 +6,10 @@ import java.io.Serializable;
 
 public class PrintStreamMock extends PrintStream {
 
-    private final OutputStream out;
     private String loQueSeImprimio = "";
 
     public PrintStreamMock(OutputStream out) {
         super(out);
-        this.out = out;
     }
 
     @Override
