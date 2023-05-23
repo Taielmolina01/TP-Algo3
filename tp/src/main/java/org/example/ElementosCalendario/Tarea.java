@@ -2,6 +2,8 @@ package org.example.ElementosCalendario;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Tarea extends ElementoCalendario implements Serializable {
 
@@ -17,5 +19,9 @@ public class Tarea extends ElementoCalendario implements Serializable {
 
     public boolean estaCompletada() {
         return this.completada;
+    }
+
+    public ArrayList<LocalDateTime> elementosEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
+        return new ArrayList<>(Arrays.asList(this.fechaInicio));
     }
 }

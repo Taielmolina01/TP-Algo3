@@ -353,9 +353,9 @@ public class EventoTest {
             fechasTrue.add(LocalDateTime.of(2023, 9, dia, 21, 0, 0));
         }
 
-        assertEquals(evento.eventosEntreFechas(fechaInicio.minusMonths(2), fechaFinal), fechasTrue);
-        assertEquals(evento.eventosEntreFechas(fechaInicio, fechaFinal), fechasTrue);
-        assertEquals(evento.eventosEntreFechas(fechaInicio.plusWeeks(1), fechaFinal), fechasTrue.subList(4, diasTrue.length));
-        assertEquals(evento.eventosEntreFechas(fechaInicio.plusWeeks(4), fechaFinal), new ArrayList<>());
+        assertEquals(evento.elementosEntreFechas(fechaInicio.minusMonths(2), fechaFinal), fechasTrue);
+        assertEquals(evento.elementosEntreFechas(fechaInicio, fechaFinal), fechasTrue);
+        assertEquals(evento.elementosEntreFechas(fechaInicio.plusWeeks(1), fechaFinal), fechasTrue.subList(4, diasTrue.length));
+        assertEquals(evento.elementosEntreFechas(fechaInicio.plusWeeks(4), fechaFinal), new ArrayList<>());
     }
 }

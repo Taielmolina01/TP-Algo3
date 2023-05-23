@@ -5,6 +5,8 @@ import org.example.Alarma.Alarma;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.HashMap;
 
 public abstract class ElementoCalendario implements Serializable {
@@ -99,6 +101,8 @@ public abstract class ElementoCalendario implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Nombre: %s.\nDescripción: %s\nFecha: %s", this.nombre, this.descripcion, this.fechaInicio.toString());
+        return String.format("Nombre: %s.\nDescripción: %s\nFecha: %s\n", this.nombre, this.descripcion, this.fechaInicio.toString());
     }
+
+    public abstract ArrayList<LocalDateTime> elementosEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin);
 }

@@ -7,8 +7,10 @@ import javafx.scene.control.Button;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
+import org.example.ElementosCalendario.ElementoCalendario;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -31,42 +33,65 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("escena.fxml"));
-        loader.setController(this);
-        VBox contenedor = loader.load();
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/escena.fxml"));
+        //loader.setController(this);
+        //VBox contenedor = loader.load();
 
-        stage.setTitle("Calendario Molina-Kriger");
-        Calendario calendario = new Calendario();
-        LocalDateTime fechaActual = LocalDateTime.now();
         this.establecerMeses();
-        int anio = fechaActual.getYear();
-        Month mes = fechaActual.getMonth();
-        var label = new Label(this.meses.get(mes.toString()) + " " + String.valueOf(anio));
-        var scene = new Scene(contenedor, 640, 480);
-        stage.setScene(scene);
-        stage.show();
 
-
-        /*this.myStage = stage;
+        this.myStage = stage;
         this.botonIzquierda = new Button();
         this.botonDerecha = new Button();
 
         this.myStage.setTitle("Calendario Molina-Kriger");
         this.calendario = new Calendario();
         this.fechaActual = LocalDateTime.now();
-        this.establecerMeses();
+
+        this.crearEventosyTareas();
         this.actualizarMes();
+    }
+
+    private void clickEnBotonIzquierda() {
+        this.fechaActual = this.fechaActual.minusMonths(1);
+        this.actualizarMes();
+    }
+
+    private void clickEnBotonDerecha() {
+        this.fechaActual = this.fechaActual.plusMonths(1);
+        this.actualizarMes();
+    }
+
+    private void actualizarMes() {
+        this.mes = this.fechaActual.getMonth();
+        this.anio = this.fechaActual.getYear();
+        this.label = new Label(this.meses.get(mes.toString()) + " " + String.valueOf(anio));
 
         var fechaMesSiguiente = this.fechaActual.plusMonths(1);
         var anioNuevo = fechaMesSiguiente.getYear();
         var mesNuevo = fechaMesSiguiente.getMonth().getValue();
         var fechaLimite = LocalDateTime.of(anioNuevo, mesNuevo, 1, 0, 0, 0).minusSeconds(1);
         var fechaInicio = LocalDateTime.of(this.fechaActual.getYear(), this.fechaActual.getMonth().getValue(), 1, 0, 0, 0);
-        this.calendario.obtenerElementosCalendarioEntreFechas(fechaInicio, fechaLimite);
-        */
 
+        StringBuilder aMostrar1 = new StringBuilder();
+        for (ElementoCalendario elemento : this.calendario.obtenerElementosCalendarioEntreFechas(fechaInicio, fechaLimite)) {
+            aMostrar1.append(elemento.toString());
+        }
 
+        String aMostrar = aMostrar1.toString();
+        System.out.println(aMostrar);
+
+        this.contenedor = new VBox(this.label);
+        this.scene = new Scene(contenedor, 640, 480, Color.BLUEVIOLET);
+        this.botonIzquierda.setOnAction(event -> this.clickEnBotonIzquierda());
+        this.botonDerecha.setOnAction(event -> this.clickEnBotonDerecha());
+        this.contenedor.getChildren().addAll(this.botonIzquierda, this.botonDerecha);
+        this.contenedor.setAlignment(Pos.BASELINE_CENTER);
+        this.contenedor.setSpacing(20);
+        this.myStage.setResizable(true);
+        this.myStage.setScene(scene);
+        this.myStage.show();
     }
+
 
     private void crearEventosyTareas() {
         String nombreEvento = "Evento";
@@ -92,32 +117,6 @@ public class Main extends Application {
         this.calendario.crearTarea(nombreTarea, descripcionTarea, fechaInicioTarea, false);
         this.calendario.crearEvento(nombreEvento2, descripcionEvento2, fechaInicioEvento2, duracion, false);
         this.calendario.crearTarea(nombreTarea2, descripcionTarea2, fechaInicioTarea2, false);
-
-    }
-
-    private void clickEnBotonIzquierda() {
-        this.fechaActual = this.fechaActual.minusMonths(1);
-        this.actualizarMes();
-    }
-
-    private void clickEnBotonDerecha() {
-        this.fechaActual = this.fechaActual.plusMonths(1);
-        this.actualizarMes();
-    }
-
-    private void actualizarMes() {
-        this.mes = this.fechaActual.getMonth();
-        this.anio = this.fechaActual.getYear();
-        this.label = new Label(this.meses.get(mes.toString()) + " " + String.valueOf(anio));
-        this.contenedor = new VBox(this.label);
-        this.scene = new Scene(contenedor, 640, 480);
-        this.botonIzquierda.setOnAction(event -> this.clickEnBotonIzquierda());
-        this.botonDerecha.setOnAction(event -> this.clickEnBotonDerecha());
-        this.contenedor.getChildren().addAll(this.botonIzquierda, this.botonDerecha);
-        this.contenedor.setAlignment(Pos.BASELINE_CENTER);
-        this.contenedor.setSpacing(20);
-        this.myStage.setScene(scene);
-        this.myStage.show();
     }
 
     private void establecerMeses() {

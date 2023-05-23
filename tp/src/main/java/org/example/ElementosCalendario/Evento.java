@@ -94,7 +94,8 @@ public class Evento extends ElementoCalendario implements Serializable {
     public Frecuencia obtenerFrecuencia() { return this.frecuencia; }
 
 
-    public ArrayList<LocalDateTime> eventosEntreFechas(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
+    @Override
+    public ArrayList<LocalDateTime> elementosEntreFechas(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
         LocalDateTime dia = fechaInicial.isBefore(this.fechaInicio) ? this.fechaInicio : fechaInicial;
         ArrayList<LocalDateTime> eventos = new ArrayList<>();
         if (fechaInicial.isAfter(this.fechaFinalRepeticion)) { return eventos; }
@@ -106,7 +107,7 @@ public class Evento extends ElementoCalendario implements Serializable {
     }
 
     public boolean hayEvento(LocalDateTime diaAAnalizar) {
-        ArrayList<LocalDateTime> eventos = eventosEntreFechas(this.fechaInicio, diaAAnalizar);
+        ArrayList<LocalDateTime> eventos = elementosEntreFechas(this.fechaInicio, diaAAnalizar);
         LocalDateTime ultimoDiaInicio = eventos.get(eventos.size()-1);
         LocalDateTime ultimoDiaFin = ultimoDiaInicio.plus(this.duracion);
         return estaEntreFechas(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
