@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class CalendarioTest {
 
     @Test
-    public void alarmasEnEventoyTarea() {
+    public void testAlarmasEnEventoyTarea() {
         Calendario nuevoCalendario = new Calendario();
         LocalDateTime fechaActual = LocalDateTime.of(2023, 4, 29, 0, 0, 0);
 

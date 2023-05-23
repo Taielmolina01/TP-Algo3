@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class AlarmaTest {
 
     @Test
-    public void crearAlarmaFechaAbsolutaTest() {
+    public void testCrearAlarmaFechaAbsoluta() {
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 0, 0, 0, 0);
         var otraFecha = LocalDateTime.of(1, 1, 1, 1, 1);
         var alarma = new Alarma(Alarma.Efecto.NOTIFICACION, fechaAbsoluta);
@@ -91,7 +91,7 @@ public class AlarmaTest {
     }
 
     @Test
-    public void intentarDispararAlarmaAntesDeFechaTest() {
+    public void testIntentarDispararAlarmaAntesDeFecha() {
         var fechaAntes = LocalDateTime.of(2020, 1, 5, 00, 0, 0, 0);
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 00, 0, 0, 0);
 
@@ -107,7 +107,7 @@ public class AlarmaTest {
     }
 
     @Test
-    public void intentarDispararAlarmaEnFechaTest() {
+    public void testIntentarDispararAlarmaEnFecha() {
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 1, 00, 0, 0, 0);
 
         var alarma = new Alarma(Alarma.Efecto.NOTIFICACION, fechaAbsoluta);
@@ -122,7 +122,7 @@ public class AlarmaTest {
     }
 
     @Test
-    public void intentarDispararAlarmaDespuesDeFechaTest() {
+    public void testIntentarDispararAlarmaDespuesDeFecha() {
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 00, 0, 0, 0);
         var fechaDespues = LocalDateTime.of(2020, 1, 15, 00, 0, 0, 0);
 
@@ -138,7 +138,7 @@ public class AlarmaTest {
     }
 
     @Test
-    public void modificarAlarmas() {
+    public void testModificarAlarmas() {
         var fechaAbsoluta = LocalDateTime.of(2023, 5, 10, 0, 0, 0, 0);
         var fechaDisparador = LocalDateTime.of(2023, 5, 9, 23, 30, 0);
         var tiempo = Duration.of(30, ChronoUnit.MINUTES);
