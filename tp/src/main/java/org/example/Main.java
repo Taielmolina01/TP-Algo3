@@ -33,12 +33,22 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/escena.fxml"));
-        //loader.setController(this);
-        //VBox contenedor = loader.load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/escena.fxml"));
+        loader.setController(this);
+        VBox contenedor = loader.load();
 
+        stage.setTitle("Calendario Molina-Kriger");
+        Calendario calendario = new Calendario();
+        LocalDateTime fechaActual = LocalDateTime.now();
         this.establecerMeses();
+        int anio = fechaActual.getYear();
+        Month mes = fechaActual.getMonth();
+        var label = new Label(this.meses.get(mes.toString()) + " " + String.valueOf(anio));
+        var scene = new Scene(contenedor, 640, 480);
+        stage.setScene(scene);
+        stage.show();
 
+        /*
         this.myStage = stage;
         this.botonIzquierda = new Button();
         this.botonDerecha = new Button();
@@ -49,6 +59,7 @@ public class Main extends Application {
 
         this.crearEventosyTareas();
         this.actualizarMes();
+         */
     }
 
     private void clickEnBotonIzquierda() {
