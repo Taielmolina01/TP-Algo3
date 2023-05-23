@@ -109,10 +109,6 @@ public class Evento extends ElementoCalendario implements Serializable {
         ArrayList<LocalDateTime> eventos = eventosEntreFechas(this.fechaInicio, diaAAnalizar);
         LocalDateTime ultimoDiaInicio = eventos.get(eventos.size()-1);
         LocalDateTime ultimoDiaFin = ultimoDiaInicio.plus(this.duracion);
-        return this.estaEntreFechas(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
-    }
-
-    private boolean estaEntreFechas(LocalDateTime diaAAnalizar, LocalDateTime diaInicio, LocalDateTime diaFin) {
-        return diaAAnalizar.equals(diaInicio) || diaAAnalizar.equals(diaFin) || (diaAAnalizar.isAfter(diaInicio) && diaAAnalizar.isBefore(diaFin));
+        return estaEntreFechas(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
     }
 }

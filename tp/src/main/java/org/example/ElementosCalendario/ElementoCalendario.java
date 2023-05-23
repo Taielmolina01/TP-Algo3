@@ -92,4 +92,13 @@ public abstract class ElementoCalendario implements Serializable {
     public Alarma eliminarAlarma(int idAlarma) {
         return this.alarmas.remove(idAlarma);
     }
+
+    public static boolean estaEntreFechas(LocalDateTime diaAAnalizar, LocalDateTime diaInicio, LocalDateTime diaFin) {
+        return diaAAnalizar.equals(diaInicio) || diaAAnalizar.equals(diaFin) || (diaAAnalizar.isAfter(diaInicio) && diaAAnalizar.isBefore(diaFin));
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Nombre: %s.\nDescripción: %s\nFecha: %s", this.nombre, this.descripcion, this.fechaInicio.toString());
+    }
 }

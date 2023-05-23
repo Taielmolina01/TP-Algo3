@@ -98,6 +98,16 @@ public class Calendario implements Serializable {
         }
     }
 
+    public ArrayList<ElementoCalendario> obtenerElementosCalendarioEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
+        ArrayList<ElementoCalendario> elementos = new ArrayList<>();
+        for (ElementoCalendario elemento : this.elementosCalendario.values()) {
+            if (ElementoCalendario.estaEntreFechas(elemento.obtenerFechaInicio(), fechaInicio, fechaFinal)) {
+                elementos.add(elemento);
+            }
+        }
+        return elementos;
+    }
+
 
 
     public void agregarAlarma(int id, Alarma.Efecto efecto, LocalDateTime fechaActivacion) {
