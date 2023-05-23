@@ -13,7 +13,7 @@ import org.example.Frecuencia.Frecuencia;
 
 public class Calendario implements Serializable {
 
-    private HashMap<Integer, ElementoCalendario> elementosCalendario;
+    private final HashMap<Integer, ElementoCalendario> elementosCalendario;
     private int indiceElementoCalendario;
     private final ArrayList<Alarma> alarmas;
 
