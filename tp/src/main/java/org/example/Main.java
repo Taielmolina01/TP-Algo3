@@ -2,132 +2,134 @@ package org.example;
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
+import javafx.fxml.Initializable;
+
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import org.example.ElementosCalendario.ElementoCalendario;
+import javafx.stage.WindowEvent;
 
-import java.time.Duration;
+import javafx.event.ActionEvent;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
-public class Main extends Application {
+public class Main extends Application implements Initializable {
 
+
+    @FXML
     private Button botonIzquierda;
+    @FXML
     private Button botonDerecha;
+    @FXML
+    private Text faText;
+    @FXML
+    private ChoiceBox<String> rangoTiempo;
+
     private LocalDateTime fechaActual;
-    private Stage myStage;
     private HashMap<String, String> meses;
-    private Label label;
-    private VBox contenedor;
-    private Scene scene;
     private Month mes;
     private int anio;
+    private ManejadorGuardado manejador;
     private Calendario calendario;
+
+    private String textoDiario;
+    private String textoSemanal;
+    private String textoMensual;
+
+    public Main() {
+        this.manejador = new ManejadorGuardado(System.out);
+        this.calendario = new Calendario().recuperarEstado(manejador);
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/escena.fxml"));
-        loader.setController(this);
-        VBox contenedor = loader.load();
-
+        Parent root = FXMLLoader.load(getClass().getResource("/escena.fxml"));
+        Scene scene = new Scene(root);
         stage.setTitle("Calendario Molina-Kriger");
-        Calendario calendario = new Calendario();
-        LocalDateTime fechaActual = LocalDateTime.now();
-        this.establecerMeses();
-        int anio = fechaActual.getYear();
-        Month mes = fechaActual.getMonth();
-        var label = new Label(this.meses.get(mes.toString()) + " " + String.valueOf(anio));
-        var scene = new Scene(contenedor, 640, 480);
         stage.setScene(scene);
         stage.show();
-
-        /*
-        this.myStage = stage;
-        this.botonIzquierda = new Button();
-        this.botonDerecha = new Button();
-
-        this.myStage.setTitle("Calendario Molina-Kriger");
-        this.calendario = new Calendario();
-        this.fechaActual = LocalDateTime.now();
-
-        this.crearEventosyTareas();
-        this.actualizarMes();
-         */
+        stage.setOnCloseRequest(this::guardarEstado);
     }
 
-    private void clickEnBotonIzquierda() {
-        this.fechaActual = this.fechaActual.minusMonths(1);
-        this.actualizarMes();
+    public void guardarEstado(WindowEvent event) {
+        System.out.println(this.calendario.elementosCalendario);
+        this.calendario.guardarEstado(this.manejador);
     }
 
-    private void clickEnBotonDerecha() {
-        this.fechaActual = this.fechaActual.plusMonths(1);
-        this.actualizarMes();
+    @FXML
+    public void clickEnBotonIzquierda() {
+        if (this.rangoTiempo.getValue().equals("Dia")) {
+            this.fechaActual = this.fechaActual.minusDays(1);
+            this.establecerText();
+            this.faText.setText(this.textoDiario);
+        } else if (this.rangoTiempo.getValue().equals("Semana")) {
+            this.fechaActual = this.fechaActual.minusWeeks(1);
+        } else {
+            this.fechaActual = this.fechaActual.minusMonths(1);
+            this.establecerText();
+            this.faText.setText(this.textoMensual);
+        }
+        this.actualizar();
     }
 
-    private void actualizarMes() {
+    @FXML
+    public void clickEnBotonDerecha() {
+        if (this.rangoTiempo.getValue().equals("Dia")) {
+            this.fechaActual = this.fechaActual.plusDays(1);
+            this.establecerText();
+            this.faText.setText(this.textoDiario);
+        } else if (this.rangoTiempo.getValue().equals("Semana")) {
+            this.fechaActual = this.fechaActual.plusWeeks(1);
+            this.establecerText();
+        } else {
+            this.fechaActual = this.fechaActual.plusMonths(1);
+            this.establecerText();
+            this.faText.setText(this.textoMensual);
+        }
+        this.actualizar();
+    }
+
+    private void actualizar() {
         this.mes = this.fechaActual.getMonth();
         this.anio = this.fechaActual.getYear();
-        this.label = new Label(this.meses.get(mes.toString()) + " " + String.valueOf(anio));
+        if (this.rangoTiempo.getValue().equals("Dia")) {
+            LocalDateTime fechaSiguiente = this.fechaActual.plusDays(1);
+            Integer anioNuevo = fechaSiguiente.getYear();
+            Integer mesNuevo = fechaSiguiente.getMonth().getValue();
+            LocalDateTime fechaInicio = LocalDateTime.of(this.fechaActual.getYear(), this.fechaActual.getMonth().getValue(),
+                    this.fechaActual.getDayOfMonth(), 0, 0, 0);
+            LocalDateTime fechaLimite = LocalDateTime.of(anioNuevo, mesNuevo, fechaSiguiente.getDayOfMonth(), 0, 0, 0).minusSeconds(1);
 
-        var fechaMesSiguiente = this.fechaActual.plusMonths(1);
-        var anioNuevo = fechaMesSiguiente.getYear();
-        var mesNuevo = fechaMesSiguiente.getMonth().getValue();
-        var fechaLimite = LocalDateTime.of(anioNuevo, mesNuevo, 1, 0, 0, 0).minusSeconds(1);
-        var fechaInicio = LocalDateTime.of(this.fechaActual.getYear(), this.fechaActual.getMonth().getValue(), 1, 0, 0, 0);
+            StringBuilder aMostrar1 = new StringBuilder();
+            for (ElementoCalendario elemento : this.calendario.obtenerElementosCalendarioEntreFechas(fechaInicio, fechaLimite)) {
+                aMostrar1.append(elemento.toString());
+            }
+            String aMostrar = aMostrar1.toString();
+        } else if (this.rangoTiempo.getValue().equals("Semana")) {
 
-        StringBuilder aMostrar1 = new StringBuilder();
-        for (ElementoCalendario elemento : this.calendario.obtenerElementosCalendarioEntreFechas(fechaInicio, fechaLimite)) {
-            aMostrar1.append(elemento.toString());
+        } else {
+            LocalDateTime fechaSiguiente = this.fechaActual.plusMonths(1);
+            Integer anioNuevo = fechaSiguiente.getYear();
+            Integer mesNuevo = fechaSiguiente.getMonth().getValue();
+            LocalDateTime fechaInicio = LocalDateTime.of(this.fechaActual.getYear(), this.fechaActual.getMonth().getValue(),
+                    1, 0, 0, 0);
+            LocalDateTime fechaLimite = LocalDateTime.of(anioNuevo, mesNuevo, 1, 0, 0, 0).minusSeconds(1);
+
+            StringBuilder aMostrar1 = new StringBuilder();
+            for (ElementoCalendario elemento : this.calendario.obtenerElementosCalendarioEntreFechas(fechaInicio, fechaLimite)) {
+                aMostrar1.append(elemento.toString());
+            }
+            String aMostrar = aMostrar1.toString();
         }
 
-        String aMostrar = aMostrar1.toString();
-        System.out.println(aMostrar);
-
-        this.contenedor = new VBox(this.label);
-        this.scene = new Scene(contenedor, 640, 480, Color.BLUEVIOLET);
-        this.botonIzquierda.setOnAction(event -> this.clickEnBotonIzquierda());
-        this.botonDerecha.setOnAction(event -> this.clickEnBotonDerecha());
-        this.contenedor.getChildren().addAll(this.botonIzquierda, this.botonDerecha);
-        this.contenedor.setAlignment(Pos.BASELINE_CENTER);
-        this.contenedor.setSpacing(20);
-        this.myStage.setResizable(true);
-        this.myStage.setScene(scene);
-        this.myStage.show();
-    }
-
-
-    private void crearEventosyTareas() {
-        String nombreEvento = "Evento";
-        String descripcionEvento = "descripcion del evento";
-        LocalDateTime fechaInicioEvento = LocalDateTime.of(2023, 5, 1, 0, 0, 0);
-        Duration duracion = Duration.ofHours(3);
-
-        String nombreTarea = "Tarea";
-        String descripcionTarea = "descripcion de la tarea";
-        LocalDateTime fechaInicioTarea = LocalDateTime.of(2023, 5, 30, 0, 0, 0);
-
-        String nombreEvento2 = "Evento2";
-        String descripcionEvento2 = "descripcion del evento2";
-        LocalDateTime fechaInicioEvento2 = LocalDateTime.of(2023, 6, 1, 0, 0, 0);
-
-
-        String nombreTarea2 = "Tarea2";
-        String descripcionTarea2 = "descripcion de la tarea2";
-        LocalDateTime fechaInicioTarea2 = LocalDateTime.of(2023, 4, 30, 0, 0, 0);
-
-
-        this.calendario.crearEvento(nombreEvento, descripcionEvento, fechaInicioEvento, duracion, false);
-        this.calendario.crearTarea(nombreTarea, descripcionTarea, fechaInicioTarea, false);
-        this.calendario.crearEvento(nombreEvento2, descripcionEvento2, fechaInicioEvento2, duracion, false);
-        this.calendario.crearTarea(nombreTarea2, descripcionTarea2, fechaInicioTarea2, false);
     }
 
     private void establecerMeses() {
@@ -146,4 +148,37 @@ public class Main extends Application {
         this.meses.put("DECEMBER", "Diciembre");
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.fechaActual = LocalDateTime.now();
+        this.mes = this.fechaActual.getMonth();
+        this.anio = this.fechaActual.getYear();
+        this.establecerMeses();
+        this.establecerText();
+        String[] valores = {"Dia", "Semana", "Mes"};
+        this.faText.setText(this.textoMensual);
+        this.rangoTiempo.getItems().addAll(valores);
+        this.rangoTiempo.setOnAction(this::actualizarRango);
+    }
+
+    private void establecerText() {
+        this.textoDiario = this.fechaActual.getDayOfMonth() + " " + this.meses.get(this.fechaActual.getMonth().toString()).toLowerCase() + " " + this.fechaActual.getYear();
+        this.textoMensual = this.meses.get(this.fechaActual.getMonth().toString()) + " " + this.fechaActual.getYear();
+    }
+
+
+
+    public void actualizarRango(ActionEvent event) {
+        String valor = this.rangoTiempo.getValue();
+        if (valor.equals("Dia")) {
+            this.faText.setText(this.textoDiario);
+        }
+        if (valor.equals("Semana")) {
+            // manejarme con los ordinals
+        }
+        if (valor.equals("Mes")) {
+            this.faText.setText(this.textoMensual);
+        }
+        this.actualizar();
+    }
 }

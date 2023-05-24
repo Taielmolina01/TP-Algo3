@@ -13,8 +13,8 @@ import org.example.Frecuencia.Frecuencia;
 
 public class Calendario implements Serializable {
 
-    private final HashMap<Integer, ElementoCalendario> elementosCalendario;
-    private int indiceElementoCalendario;
+    public final HashMap<Integer, ElementoCalendario> elementosCalendario;
+    public int indiceElementoCalendario;
     private final ArrayList<Alarma> alarmas;
 
     public Calendario() {
@@ -200,6 +200,8 @@ public class Calendario implements Serializable {
         try { // Hacerlo con un finally el close.
             ObjectOutputStream o = new ObjectOutputStream(os);
             o.writeObject(this.elementosCalendario);
+            System.out.println(this.elementosCalendario);
+            System.out.println(this.indiceElementoCalendario);
             o.writeObject(this.indiceElementoCalendario);
             o.flush();
             o.close();

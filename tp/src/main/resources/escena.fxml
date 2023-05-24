@@ -2,19 +2,43 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="678.0" style="-fx-background-color: #EAEDED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Main">
    <children>
-      <Button fx:id="botonIzquierda" mnemonicParsing="false" text="Izq">
-         <VBox.margin>
-            <Insets left="150.0" />
-         </VBox.margin>
-      </Button>
-      <Button fx:id="botonDerecha" mnemonicParsing="false" text="Der">
-         <VBox.margin>
-            <Insets left="400.0" />
-         </VBox.margin>
-      </Button>
+      <HBox layoutX="-3.0" prefHeight="100.0" prefWidth="686.0">
+         <children>
+            <Button fx:id="botonIzquierda" mnemonicParsing="false" onAction="#clickEnBotonIzquierda" style="-fx-background-color: #D6EAF8;" text="&lt;">
+               <HBox.margin>
+                  <Insets left="200.0" top="20.0" />
+               </HBox.margin>
+            </Button>
+            <Text fx:id="faText" strokeLineCap="BUTT" strokeType="OUTSIDE" strokeWidth="0.0" text="########" textAlignment="CENTER" wrappingWidth="214.9800033569336">
+               <HBox.margin>
+                  <Insets left="10.0" top="25.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
+            <Button fx:id="botonDerecha" mnemonicParsing="false" onAction="#clickEnBotonDerecha" style="-fx-background-color: #D6EAF8;" text="&gt;">
+               <HBox.margin>
+                  <Insets left="10.0" top="20.0" />
+               </HBox.margin>
+            </Button>
+            <ChoiceBox value="Mes" fx:id="rangoTiempo" prefHeight="17.0" prefWidth="150.0" style="-fx-background-color: #EAEDED; -fx-border-color: #BFC9CA;">
+               <HBox.margin>
+                  <Insets left="30.0" top="20.0" />
+               </HBox.margin>
+            </ChoiceBox>
+         </children>
+      </HBox>
+      <HBox layoutY="100.0" prefHeight="418.0" prefWidth="678.0" />
    </children>
-</VBox>
+</AnchorPane>
