@@ -5,16 +5,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import org.example.ElementosCalendario.ElementoCalendario;
 import javafx.stage.WindowEvent;
 
 import javafx.event.ActionEvent;
+
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -23,15 +25,12 @@ import java.util.ResourceBundle;
 
 public class Main extends Application implements Initializable {
 
-
-    @FXML
-    private Button botonIzquierda;
-    @FXML
-    private Button botonDerecha;
     @FXML
     private Text faText;
     @FXML
     private ChoiceBox<String> rangoTiempo;
+    @FXML
+    private ComboBox<String> cajaCrear;
 
     private LocalDateTime fechaActual;
     private HashMap<String, String> meses;
@@ -56,7 +55,6 @@ public class Main extends Application implements Initializable {
         stage.setTitle("Calendario Molina-Kriger");
         stage.setScene(scene);
         stage.show();
-        stage.setOnCloseRequest(this::guardarEstado);
     }
 
     public void guardarEstado(WindowEvent event) {
@@ -114,6 +112,7 @@ public class Main extends Application implements Initializable {
             }
             String aMostrar = aMostrar1.toString();
         } else if (this.rangoTiempo.getValue().equals("Semana")) {
+            // Hacer calculo de la semana
 
         } else {
             LocalDateTime fechaSiguiente = this.fechaActual.plusMonths(1);
@@ -155,10 +154,13 @@ public class Main extends Application implements Initializable {
         this.anio = this.fechaActual.getYear();
         this.establecerMeses();
         this.establecerText();
-        String[] valores = {"Dia", "Semana", "Mes"};
+        String[] valoresRango = {"Dia", "Semana", "Mes"};
+        String[] valoresCrear = {"Evento", "Tarea"};
+        this.cajaCrear.getItems().addAll(valoresCrear);
+        this.rangoTiempo.getItems().addAll(valoresRango);
         this.faText.setText(this.textoMensual);
-        this.rangoTiempo.getItems().addAll(valores);
         this.rangoTiempo.setOnAction(this::actualizarRango);
+        this.cajaCrear.setOnAction(this::crear);
     }
 
     private void establecerText() {
@@ -166,19 +168,36 @@ public class Main extends Application implements Initializable {
         this.textoMensual = this.meses.get(this.fechaActual.getMonth().toString()) + " " + this.fechaActual.getYear();
     }
 
-
-
-    public void actualizarRango(ActionEvent event) {
-        String valor = this.rangoTiempo.getValue();
-        if (valor.equals("Dia")) {
+    private void actualizarRango(ActionEvent event) {
+        String valorRango = this.rangoTiempo.getValue();
+        if (valorRango.equals("Dia")) {
             this.faText.setText(this.textoDiario);
         }
-        if (valor.equals("Semana")) {
+        if (valorRango.equals("Semana")) {
             // manejarme con los ordinals
         }
-        if (valor.equals("Mes")) {
+        if (valorRango.equals("Mes")) {
             this.faText.setText(this.textoMensual);
         }
         this.actualizar();
+    }
+
+    private void crear(ActionEvent event) {
+        String tipoElemento = this.cajaCrear.getValue();
+        if (tipoElemento.equals("Evento")) {
+            System.out.println("hola1");
+            try {
+                new eventoVentana().start(new Stage());
+                System.out.println("hola2");
+
+            } catch (Exception e) {
+                System.out.println("hola3");
+
+                //
+            }
+        } else {
+            // Creo una nueva escena para crear la tarea
+        }
+        this.cajaCrear.getSelectionModel().clearSelection();
     }
 }
