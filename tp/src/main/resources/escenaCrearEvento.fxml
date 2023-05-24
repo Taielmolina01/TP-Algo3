@@ -11,7 +11,7 @@
       <TextField fx:id="descripcionEvento" layoutX="32.0" layoutY="57.0" prefHeight="26.0" prefWidth="230.0" promptText="Descripción" style="-fx-background-color: #EAEDED;" />
       <TextField fx:id="fechaEvento" layoutX="32.0" layoutY="97.0" prefHeight="26.0" prefWidth="230.0" promptText="Fecha (dd/MM/yyyy HH:mm:ss)" style="-fx-background-color: #EAEDED;" />
       <Button fx:id="botonCrear" layoutX="123.0" layoutY="208.0" mnemonicParsing="false" onAction="#ingresarDatosEvento" style="-fx-background-color: #EAEDED; -fx-border-color: #BFC9CA; -fx-border-radius: 30;" text="Crear" />
-      <ComboBox fx:id="repeticion" layoutX="68.0" layoutY="136.0" prefHeight="26.0" prefWidth="162.0" promptText="Repetición" style="-fx-background-color: #EAEDED;" />
       <ComboBox fx:id="alarmas" layoutX="68.0" layoutY="168.0" prefHeight="26.0" prefWidth="162.0" promptText="Alarmas" style="-fx-background-color: #EAEDED;" />
+      <TextField fx:id="repeticiones" layoutX="35.0" layoutY="136.0" prefHeight="26.0" prefWidth="230.0" promptText="Repeticiones diarias" style="-fx-background-color: #EAEDED;" />
    </children>
 </AnchorPane>

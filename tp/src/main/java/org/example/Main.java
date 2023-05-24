@@ -58,7 +58,6 @@ public class Main extends Application implements Initializable {
     }
 
     public void guardarEstado(WindowEvent event) {
-        System.out.println(this.calendario.elementosCalendario);
         this.calendario.guardarEstado(this.manejador);
     }
 
@@ -185,14 +184,9 @@ public class Main extends Application implements Initializable {
     private void crear(ActionEvent event) {
         String tipoElemento = this.cajaCrear.getValue();
         if (tipoElemento.equals("Evento")) {
-            System.out.println("hola1");
             try {
                 new eventoVentana().start(new Stage());
-                System.out.println("hola2");
-
             } catch (Exception e) {
-                System.out.println("hola3");
-
                 //
             }
         } else {

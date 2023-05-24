@@ -29,7 +29,7 @@ public class eventoVentana extends Application implements Initializable {
     @FXML
     private TextField fechaEvento;
     @FXML
-    private ComboBox<String> repeticion;
+    private TextField repeticiones;
     @FXML
     private ComboBox<String> alarmas;
 
@@ -50,19 +50,37 @@ public class eventoVentana extends Application implements Initializable {
     public void ingresarDatosEvento() {
         String nombre = this.nombreEvento.getText();
         String descripcion = this.descripcionEvento.getText();
+        String repeticion = this.repeticiones.getText();
+        try {
+            int repeticiones = Integer.parseInt(repeticion);
+        } catch (NumberFormatException e1) {
+            this.lanzarVentanaError();
+            return;
+        }
+        if (nombre.equals("") || descripcion.equals("")) {
+            this.lanzarVentanaError();
+            return;
+        }
         try {
             LocalDateTime fecha = LocalDateTime.parse(this.fechaEvento.toString(), formatter);
-        } catch (DateTimeParseException e) {
-            // mensaje de error en la fecha
+        } catch (DateTimeParseException e4) {
+            this.lanzarVentanaError();
+            return;
         }
-        this.repeticion.getValue();
         this.alarmas.getValue();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String[] valoresPosibles = {"Sí", "No"};
-        this.repeticion.getItems().addAll(valoresPosibles);
         this.alarmas.getItems().addAll(valoresPosibles);
+    }
+
+    private void lanzarVentanaError() {
+        try {
+            new errorVentana().start(new Stage());
+        } catch (Exception e5) {
+            //
+        }
     }
 }
