@@ -15,5 +15,6 @@ Molina, Taiel. Padrón: 109458
 - Ver si todo tiene que ser Application/Initializable.
 - Revisar codigo de crearEvento de la interfaz
 - Hacer un archivo css con todo (agregar hover de los textfield)
+- Separar en dos paquetes grandes: Logica de negocio y GUI.
 - ???.
 
