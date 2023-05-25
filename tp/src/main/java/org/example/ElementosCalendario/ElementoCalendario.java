@@ -6,11 +6,9 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.HashMap;
 
 public abstract class ElementoCalendario implements Serializable {
-
     private String nombre;
     private String descripcion;
     protected boolean todoElDia;

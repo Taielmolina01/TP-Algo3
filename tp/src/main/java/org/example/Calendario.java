@@ -22,27 +22,31 @@ public class Calendario implements Serializable {
         this.alarmas = new ArrayList<>();
     }
 
-    public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
+    public int crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                             boolean todoElDia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia);
         this.elementosCalendario.put(this.indiceElementoCalendario++, evento);
+        return this.indiceElementoCalendario - 1;
     }
 
-    public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
+    public int crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                             boolean todoElDia, LocalDateTime fechaFinalRepeticion, Frecuencia frecuencia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia, fechaFinalRepeticion, frecuencia);
         this.elementosCalendario.put(this.indiceElementoCalendario++, evento);
+        return this.indiceElementoCalendario - 1;
     }
 
-    public void crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
+    public int crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                             boolean todoElDia, Integer ocurrencias, Frecuencia frecuencia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia, ocurrencias, frecuencia);
         this.elementosCalendario.put(this.indiceElementoCalendario++, evento);
+        return this.indiceElementoCalendario - 1;
     }
 
-    public void crearTarea(String nombre, String descripcion, LocalDateTime fecha, boolean todoElDia) {
+    public int crearTarea(String nombre, String descripcion, LocalDateTime fecha, boolean todoElDia) {
         Tarea tarea = new Tarea(nombre, descripcion, fecha, todoElDia);
         this.elementosCalendario.put(this.indiceElementoCalendario++, tarea);
+        return this.indiceElementoCalendario - 1;
     }
 
     public void modificarNombre(int id, String nuevoNombre) {
@@ -107,7 +111,6 @@ public class Calendario implements Serializable {
         }
         return elementos;
     }
-
 
 
     public void agregarAlarma(int id, Alarma.Efecto efecto, LocalDateTime fechaActivacion) {

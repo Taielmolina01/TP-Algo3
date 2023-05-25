@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class errorVentana extends Application {
-
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/escenaError.fxml"));
@@ -15,6 +14,6 @@ public class errorVentana extends Application {
         Stage stageCrearEvento = new Stage();
         stageCrearEvento.setTitle("Error");
         stageCrearEvento.setScene(scene);
-        stageCrearEvento.showAndWait();
+        stageCrearEvento.show();
     }
 }

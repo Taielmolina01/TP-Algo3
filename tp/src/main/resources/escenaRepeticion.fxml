@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="152.0" prefWidth="297.0" style="-fx-background-color: #EAEDED;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.repeticionVentana">
+   <children>
+      <TextField fx:id="repeticion" layoutX="20.0" layoutY="39.0" prefHeight="37.0" prefWidth="258.0" promptText="Ingrese cada cuantos días se repite" />
+      <Button fx:id="botonOk" layoutX="130.0" layoutY="95.0" mnemonicParsing="false" onAction="#clickOk" style="-fx-background-color: #EAEDED; -fx-border-color: #BFC9CA; -fx-border-radius: 30;" text="OK" />
+   </children>
+</AnchorPane>

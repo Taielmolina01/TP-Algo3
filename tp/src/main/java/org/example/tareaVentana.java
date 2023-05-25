@@ -21,86 +21,55 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class eventoVentana extends Application implements Initializable {
-
-
-    @FXML
+public class tareaVentana extends Application implements Initializable {
     private Button botonCrear;
     @FXML
-    private TextField nombreEvento;
+    private TextField nombreTarea;
     @FXML
-    private TextField descripcionEvento;
+    private TextField descripcionTarea;
     @FXML
     private TextField fechaInicio;
     @FXML
-    private TextField fechaFinal;
-    @FXML
-    private TextField duracionEvento;
-    @FXML
     private ComboBox<String> alarmas;
-    @FXML
-    private ComboBox<String> repeticion;
     @FXML
     private CheckBox diaCompleto;
     private String[] valoresPosibles = new String[]{"Sí", "No"};
     private ArrayList<Duration> duraciones;
-    private Integer repeticiones;
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/escenaCrearEvento.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/escenaCrearTarea.fxml"));
         Scene scene = new Scene(root);
         Stage stageCrearEvento = new Stage();
-        stageCrearEvento.setTitle("Creando evento");
+        stageCrearEvento.setTitle("Creando tarea");
         stageCrearEvento.setScene(scene);
         stageCrearEvento.show();
     }
 
     @FXML
-    public void ingresarDatosEvento() { // Revisar el orden de to-do esto.
-        String nombre = this.nombreEvento.getText();
-        String descripcion = this.descripcionEvento.getText();
+    public void ingresarDatosTarea() { // Revisar el orden de to-do esto.
+        String nombre = this.nombreTarea.getText();
+        String descripcion = this.descripcionTarea.getText();
         LocalDateTime fechaInicio;
-        LocalDateTime fechaFinal;
-        Duration duracionEvento = Main.formatearDuracion(this.duracionEvento.getText());
         if (nombre.equals("") || descripcion.equals("")) {
             Main.lanzarVentanaError();
             return;
         }
         try {
             fechaInicio = LocalDateTime.parse(this.fechaInicio.getText(), Main.formatter);
-            if (this.repeticiones == null) {
-                int ID = Main.calendario.crearEvento(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected());
-                for (Duration duracion : duraciones) {
-                    Main.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
-                }
-                return;
-            }
         } catch (DateTimeParseException e4) {
             Main.lanzarVentanaError();
             return;
         }
-        try {
-            fechaFinal = LocalDateTime.parse(this.fechaFinal.getText(), Main.formatter);
-        } catch (DateTimeParseException e5) {
-            Main.lanzarVentanaError();
-            return;
-        }
-        if (!this.diaCompleto.isSelected() && duracionEvento == null) {
-            Main.lanzarVentanaError();
-            return;
-        }
-        int ID = Main.calendario.crearEvento(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(), fechaFinal, new FrecuenciaDiaria(this.repeticiones));
+        int ID = Main.calendario.crearTarea(nombre, descripcion, fechaInicio, this.diaCompleto.isSelected());
         for (Duration duracion : duraciones) {
             Main.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
         }
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.alarmas.getItems().addAll(this.valoresPosibles);
-        this.repeticion.getItems().addAll(this.valoresPosibles);
     }
 
     @FXML
@@ -108,16 +77,6 @@ public class eventoVentana extends Application implements Initializable {
         try {
             intervaloAlarmaVentana ventana = new intervaloAlarmaVentana();
             this.duraciones = ventana.obtenerDuraciones();
-        } catch (Exception e) {
-            Main.lanzarVentanaError();
-        }
-    }
-
-    @FXML
-    public void establecerRepeticionDiaria() {
-        try {
-            repeticionVentana ventana = new repeticionVentana();
-            this.repeticiones = ventana.obtenerRepeticiones();
         } catch (Exception e) {
             Main.lanzarVentanaError();
         }

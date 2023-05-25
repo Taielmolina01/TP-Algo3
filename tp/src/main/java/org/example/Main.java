@@ -12,14 +12,15 @@ import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import org.example.ElementosCalendario.ElementoCalendario;
-import javafx.stage.WindowEvent;
 
 import javafx.event.ActionEvent;
 
-import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -31,34 +32,25 @@ public class Main extends Application implements Initializable {
     private ChoiceBox<String> rangoTiempo;
     @FXML
     private ComboBox<String> cajaCrear;
-
     private LocalDateTime fechaActual;
     private HashMap<String, String> meses;
     private Month mes;
     private int anio;
-    private ManejadorGuardado manejador;
-    private Calendario calendario;
-
+    private static ManejadorGuardado manejador = new ManejadorGuardado(System.out);
+    protected static Calendario calendario = new Calendario().recuperarEstado(manejador);
     private String textoDiario;
     private String textoSemanal;
     private String textoMensual;
+    protected static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-    public Main() {
-        this.manejador = new ManejadorGuardado(System.out);
-        this.calendario = new Calendario().recuperarEstado(manejador);
-    }
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/escena.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/escenaCalendario.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Calendario Molina-Kriger");
         stage.setScene(scene);
         stage.show();
-    }
-
-    public void guardarEstado(WindowEvent event) {
-        this.calendario.guardarEstado(this.manejador);
     }
 
     @FXML
@@ -154,12 +146,12 @@ public class Main extends Application implements Initializable {
         this.establecerMeses();
         this.establecerText();
         String[] valoresRango = {"Dia", "Semana", "Mes"};
-        String[] valoresCrear = {"Evento", "Tarea"};
+        String[] valoresCrear = {"", "Evento", "Tarea"};
         this.cajaCrear.getItems().addAll(valoresCrear);
         this.rangoTiempo.getItems().addAll(valoresRango);
         this.faText.setText(this.textoMensual);
         this.rangoTiempo.setOnAction(this::actualizarRango);
-        this.cajaCrear.setOnAction(this::crear);
+        this.cajaCrear.setOnAction(this::crearElementoCalendario);
     }
 
     private void establecerText() {
@@ -181,7 +173,7 @@ public class Main extends Application implements Initializable {
         this.actualizar();
     }
 
-    private void crear(ActionEvent event) {
+    private void crearElementoCalendario(ActionEvent event) {
         String tipoElemento = this.cajaCrear.getValue();
         if (tipoElemento.equals("Evento")) {
             try {
@@ -189,9 +181,40 @@ public class Main extends Application implements Initializable {
             } catch (Exception e) {
                 //
             }
-        } else {
-            // Creo una nueva escena para crear la tarea
+        } else if (tipoElemento.equals("Tarea")) {
+            try {
+                new tareaVentana().start(new Stage());
+            } catch (Exception e) {
+                //
+            }
         }
-        this.cajaCrear.getSelectionModel().clearSelection();
+    }
+
+    public static void lanzarVentanaError() {
+        try {
+            new errorVentana().start(new Stage());
+        } catch (Exception e5) {
+            //
+        }
+    }
+
+    protected static Duration formatearDuracion(String intervalo) {
+        String[] formateado = intervalo.split(":");
+
+        int horas;
+        int minutos;
+        int segundos;
+        try {
+            horas = Integer.parseInt(formateado[0]);
+            minutos = Integer.parseInt(formateado[1]);
+            segundos = Integer.parseInt(formateado[2]);
+        } catch (NumberFormatException e1) {
+            return null;
+        }
+        if (formateado.length != 3) {
+            return null;
+        }  else {
+            return Duration.ofHours(horas).plusMinutes(minutos).plusSeconds(segundos);
+        }
     }
 }
