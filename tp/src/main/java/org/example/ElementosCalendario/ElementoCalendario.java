@@ -1,7 +1,7 @@
 package org.example.ElementosCalendario;
 
 import org.example.Alarma.Alarma;
-import org.example.VisitorElementos;
+import org.example.Visitadores.visitorElementos;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -100,7 +100,7 @@ public abstract class ElementoCalendario implements Serializable {
 
     public abstract ArrayList<LocalDateTime> elementosEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
-    public abstract String obtenerInfoResumida(VisitorElementos visitante);
+    public abstract String obtenerInfoResumida(visitorElementos visitante);
 
-    public abstract String obtenerInfoCompleta(VisitorElementos visitante);
+    public abstract String obtenerInfoCompleta(visitorElementos visitante);
 }

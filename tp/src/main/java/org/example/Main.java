@@ -13,6 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.ElementosCalendario.ElementoCalendario;
+import org.example.Visitadores.visitadorElementosCalendario;
 
 import java.net.URL;
 import java.time.Duration;
@@ -46,8 +47,8 @@ public class Main extends Application implements Initializable {
     private String textoDiario;
     private String textoSemanal;
     private String textoMensual;
-    private VisitadorElementosCalendario visitador = new VisitadorElementosCalendario();
-    protected static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    private visitadorElementosCalendario visitador = new visitadorElementosCalendario();
+    public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     @Override
     public void start(Stage stage) throws Exception {

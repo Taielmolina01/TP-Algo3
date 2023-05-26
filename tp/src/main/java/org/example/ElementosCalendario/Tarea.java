@@ -1,6 +1,6 @@
 package org.example.ElementosCalendario;
 
-import org.example.VisitorElementos;
+import org.example.Visitadores.visitorElementos;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -27,11 +27,11 @@ public class Tarea extends ElementoCalendario implements Serializable {
         return new ArrayList<>(Arrays.asList(this.fechaInicio));
     }
 
-    public String obtenerInfoResumida(VisitorElementos visitante) {
+    public String obtenerInfoResumida(visitorElementos visitante) {
         return visitante.obtenerInfoResumida(this);
     }
 
-    public String obtenerInfoCompleta(VisitorElementos visitante) {
+    public String obtenerInfoCompleta(visitorElementos visitante) {
         return visitante.obtenerInfoCompleta(this);
     }
 

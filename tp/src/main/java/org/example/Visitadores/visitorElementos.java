@@ -1,9 +1,9 @@
-package org.example;
+package org.example.Visitadores;
 
 import org.example.ElementosCalendario.Evento;
 import org.example.ElementosCalendario.Tarea;
 
-public interface VisitorElementos {
+public interface visitorElementos {
 
     String obtenerInfoResumida(Evento evento);
 

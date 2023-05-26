@@ -1,17 +1,19 @@
-package org.example;
+package org.example.Visitadores;
 
 import org.example.Alarma.Alarma;
 import org.example.ElementosCalendario.ElementoCalendario;
 import org.example.ElementosCalendario.Evento;
 import org.example.ElementosCalendario.Tarea;
+import org.example.Main;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class VisitadorElementosCalendario implements VisitorElementos {
+public class visitadorElementosCalendario implements visitorElementos {
 
-    private VisitorFrecuencia visitanteFrecuencia = new VisitadorEventosFrecuencia();
+    private visitorFrecuencia visitanteFrecuencia = new visitadorEventosFrecuencia();
 
     public ArrayList<ArrayList<String>> visitarElementos(List<ElementoCalendario> elementos) {
         ArrayList<ArrayList<String>> infoElementos = new ArrayList<>();
@@ -67,7 +69,7 @@ public class VisitadorElementosCalendario implements VisitorElementos {
         HashMap<Integer, Alarma> alarmas = tarea.obtenerAlarmas();
         String stringAlarmas = "";
         for (Alarma alarma : alarmas.values()) {
-            stringAlarmas += alarma.obtenerFechaActivacion();
+            stringAlarmas += alarma.obtenerFechaActivacion().format(Main.formatter);
         }
         resultado += "\n Fechas alarmas: " + stringAlarmas;
         return resultado;

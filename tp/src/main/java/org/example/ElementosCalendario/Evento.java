@@ -1,8 +1,7 @@
 package org.example.ElementosCalendario;
 
 import org.example.Frecuencia.Frecuencia;
-import org.example.Frecuencia.FrecuenciaDiaria;
-import org.example.VisitorElementos;
+import org.example.Visitadores.visitorElementos;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -114,11 +113,11 @@ public class Evento extends ElementoCalendario implements Serializable {
         return estaEntreFechas(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
     }
 
-    public String obtenerInfoResumida(VisitorElementos visitante) {
+    public String obtenerInfoResumida(visitorElementos visitante) {
         return visitante.obtenerInfoResumida(this);
     }
 
-    public String obtenerInfoCompleta(VisitorElementos visitante) {
+    public String obtenerInfoCompleta(visitorElementos visitante) {
         return visitante.obtenerInfoCompleta(this);
     }
 }

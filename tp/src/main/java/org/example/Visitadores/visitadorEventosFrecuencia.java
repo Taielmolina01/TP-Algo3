@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Visitadores;
 
 import org.example.Frecuencia.FrecuenciaAnual;
 import org.example.Frecuencia.FrecuenciaDiaria;
@@ -7,7 +7,7 @@ import org.example.Frecuencia.FrecuenciaSemanal;
 
 import java.time.DayOfWeek;
 
-public class VisitadorEventosFrecuencia implements VisitorFrecuencia {
+public class visitadorEventosFrecuencia implements visitorFrecuencia {
 
     public String obtenerFrecuencia(FrecuenciaDiaria frecuencia) {
         return "Se repite cada " + frecuencia.obtenerValorRepeticion() + " días.";
