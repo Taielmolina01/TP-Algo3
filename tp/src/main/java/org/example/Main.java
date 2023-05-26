@@ -1,19 +1,18 @@
 package org.example;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-
-import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
-import javafx.stage.Stage;
+import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.example.ElementosCalendario.ElementoCalendario;
-
-import javafx.event.ActionEvent;
 
 import java.net.URL;
 import java.time.Duration;
@@ -22,6 +21,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -33,19 +33,21 @@ public class Main extends Application implements Initializable {
     private ChoiceBox<String> rangoTiempo;
     @FXML
     private ComboBox<String> cajaCrear;
+    @FXML
+    private ListView<String> listaEventosTareas;
     private LocalDateTime fechaActual;
     private LocalDateTime inicioSemana;
     private LocalDateTime finSemana;
     private HashMap<String, String> meses;
     private Month mes;
     private int anio;
+    protected static Calendario calendario = new Calendario();
     private static ManejadorGuardado manejador = new ManejadorGuardado(System.out);
-    protected static Calendario calendario = new Calendario().recuperarEstado(manejador);
     private String textoDiario;
     private String textoSemanal;
     private String textoMensual;
+    private VisitadorElementosCalendario visitador = new VisitadorElementosCalendario();
     protected static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -97,28 +99,26 @@ public class Main extends Application implements Initializable {
     private void actualizar() {
         this.mes = this.fechaActual.getMonth();
         this.anio = this.fechaActual.getYear();
+        listaEventosTareas.getItems().removeAll();
         if (this.rangoTiempo.getValue().equals("Dia")) {
             LocalDateTime fechaInicio = this.fechaActual.with(LocalTime.MIN);
             LocalDateTime fechaLimite = this.fechaActual.with(LocalTime.MAX);
-            StringBuilder aMostrar1 = new StringBuilder();
-            for (ElementoCalendario elemento : calendario.obtenerElementosCalendarioEntreFechas(fechaInicio, fechaLimite)) {
-                aMostrar1.append(elemento.toString());
-            }
-            String aMostrar = aMostrar1.toString();
+            this.crearLista(fechaInicio, fechaLimite);
         } else if (this.rangoTiempo.getValue().equals("Semana")) {
-            StringBuilder aMostrar1 = new StringBuilder();
-            for (ElementoCalendario elemento : calendario.obtenerElementosCalendarioEntreFechas(this.inicioSemana, this.finSemana)) {
-                aMostrar1.append(elemento.toString());
-            }
-            String aMostrar = aMostrar1.toString();
+            this.crearLista(this.inicioSemana, this.finSemana);
         } else {
             LocalDateTime fechaInicio = this.fechaActual.with(TemporalAdjusters.firstDayOfMonth()).with(LocalTime.MIN);
             LocalDateTime fechaLimite = this.fechaActual.with(TemporalAdjusters.lastDayOfMonth()).with(LocalTime.MAX);
-            StringBuilder aMostrar1 = new StringBuilder();
-            for (ElementoCalendario elemento : calendario.obtenerElementosCalendarioEntreFechas(fechaInicio, fechaLimite)) {
-                aMostrar1.append(elemento.toString());
-            }
-            String aMostrar = aMostrar1.toString();
+            this.crearLista(fechaInicio, fechaLimite);
+        }
+    }
+
+    private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+        ArrayList<ElementoCalendario> elementos = calendario.obtenerElementosCalendarioEntreFechas(fechaInicio, fechaFin);
+        ArrayList<ArrayList<String>> infos = this.visitador.visitarElementos(elementos);
+        // la info completa la tengo que guardar en algun lado
+        for (ElementoCalendario elemento : elementos) {
+            listaEventosTareas.getItems().addAll(infos.get(0));
         }
     }
 
@@ -140,6 +140,7 @@ public class Main extends Application implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        calendario.recuperarEstado(manejador);
         this.fechaActual = LocalDateTime.now();
         this.mes = this.fechaActual.getMonth();
         this.anio = this.fechaActual.getYear();
@@ -153,6 +154,7 @@ public class Main extends Application implements Initializable {
         this.faText.setText(this.textoMensual);
         this.rangoTiempo.setOnAction(this::actualizarRango);
         this.cajaCrear.setOnAction(this::crearElementoCalendario);
+        this.actualizar();
     }
     private void establecerText() {
         this.textoDiario = this.fechaActual.getDayOfMonth() + " " + this.meses.get(this.fechaActual.getMonth().toString()).toLowerCase()
@@ -236,5 +238,9 @@ public class Main extends Application implements Initializable {
         int aSumar = 7 - diaSemanaActual;
         this.inicioSemana = this.fechaActual.minusDays(aRestar).with(LocalTime.MIN);
         this.finSemana = this.fechaActual.plusDays(aSumar).with(LocalTime.MAX);
+    }
+
+    protected static void guardarEstado() {
+        calendario.guardarEstado(manejador);
     }
 }

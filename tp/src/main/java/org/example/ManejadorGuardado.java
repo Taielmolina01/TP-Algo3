@@ -45,7 +45,7 @@ public class ManejadorGuardado {
 
     private void crearArchivoGuardado() {
         try {
-            System.out.println(this.archivoGuardado.createNewFile());
+            this.archivoGuardado.createNewFile();
         } catch (IOException e) {
             //
         }

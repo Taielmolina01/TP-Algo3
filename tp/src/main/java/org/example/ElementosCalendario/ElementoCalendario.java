@@ -1,6 +1,7 @@
 package org.example.ElementosCalendario;
 
 import org.example.Alarma.Alarma;
+import org.example.VisitorElementos;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -9,8 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class ElementoCalendario implements Serializable {
-    private String nombre;
-    private String descripcion;
+    protected String nombre;
+    protected String descripcion;
     protected boolean todoElDia;
     protected LocalDateTime fechaInicio;
     private final HashMap<Integer, Alarma> alarmas;
@@ -97,10 +98,9 @@ public abstract class ElementoCalendario implements Serializable {
         return diaAAnalizar.equals(diaInicio) || diaAAnalizar.equals(diaFin) || (diaAAnalizar.isAfter(diaInicio) && diaAAnalizar.isBefore(diaFin));
     }
 
-    @Override
-    public String toString() {
-        return String.format("Nombre: %s.\nDescripción: %s\nFecha: %s\n", this.nombre, this.descripcion, this.fechaInicio.toString());
-    }
-
     public abstract ArrayList<LocalDateTime> elementosEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin);
+
+    public abstract String obtenerInfoResumida(VisitorElementos visitante);
+
+    public abstract String obtenerInfoCompleta(VisitorElementos visitante);
 }

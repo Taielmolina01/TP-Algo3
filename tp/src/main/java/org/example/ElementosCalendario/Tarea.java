@@ -1,5 +1,7 @@
 package org.example.ElementosCalendario;
 
+import org.example.VisitorElementos;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,4 +26,13 @@ public class Tarea extends ElementoCalendario implements Serializable {
     public ArrayList<LocalDateTime> elementosEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
         return new ArrayList<>(Arrays.asList(this.fechaInicio));
     }
+
+    public String obtenerInfoResumida(VisitorElementos visitante) {
+        return visitante.obtenerInfoResumida(this);
+    }
+
+    public String obtenerInfoCompleta(VisitorElementos visitante) {
+        return visitante.obtenerInfoCompleta(this);
+    }
+
 }

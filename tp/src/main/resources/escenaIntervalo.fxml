@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="152.0" prefWidth="297.0" style="-fx-background-color: #EAEDED;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.intervaloAlarmaVentana">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="152.0" prefWidth="297.0" style="-fx-background-color: #EAEDED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.intervaloAlarmaVentana">
    <children>
-      <TextField fx:id="intervalo" layoutX="20.0" layoutY="39.0" prefHeight="37.0" prefWidth="258.0" promptText="Ingrese intervalo relativo (HH:mm:ss)" />
-      <Button fx:id="botonOk" layoutX="130.0" layoutY="95.0" mnemonicParsing="false" onAction="#clickOk" style="-fx-background-color: #EAEDED; -fx-border-color: #BFC9CA; -fx-border-radius: 30;" text="OK" />
+      <TextField fx:id="intervalo" layoutX="20.0" layoutY="48.0" prefHeight="37.0" prefWidth="258.0" promptText="Ingrese intervalo relativo (HH:mm:ss)" />
+      <Button fx:id="botonOk" layoutX="129.0" layoutY="104.0" mnemonicParsing="false" onAction="#clickOk" style="-fx-background-color: #EAEDED; -fx-border-color: #BFC9CA; -fx-border-radius: 30;" text="OK" />
+      <Text fx:id="mensaje" layoutX="13.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="271.0" />
    </children>
 </AnchorPane>

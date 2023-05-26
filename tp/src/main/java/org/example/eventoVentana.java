@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -19,24 +18,20 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class eventoVentana extends Application implements Initializable {
 
-
     @FXML
-    private Button botonCrear;
+    private TextField nombreEventoText;
     @FXML
-    private TextField nombreEvento;
+    private TextField descripcionEventoText;
     @FXML
-    private TextField descripcionEvento;
+    private TextField fechaInicioText;
     @FXML
-    private TextField fechaInicio;
+    private TextField fechaFinalText;
     @FXML
-    private TextField fechaFinal;
-    @FXML
-    private TextField duracionEvento;
+    private TextField duracionEventoText;
     @FXML
     private ComboBox<String> alarmas;
     @FXML
@@ -45,9 +40,9 @@ public class eventoVentana extends Application implements Initializable {
     private CheckBox diaCompleto;
     @FXML
     private AnchorPane scenePane;
+    private intervaloAlarmaVentana ventanaAlarma;
+    private repeticionVentana repeticionVentana;
     private String[] valoresPosibles = new String[]{"Sí", "No"};
-    private ArrayList<Duration> duraciones;
-    private Integer repeticiones;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -60,37 +55,35 @@ public class eventoVentana extends Application implements Initializable {
     }
 
     @FXML
-    public void ingresarDatosEvento() { // Revisar el orden de to-do esto.
-        String nombre = this.nombreEvento.getText();
-        String descripcion = this.descripcionEvento.getText();
+    public void ingresarDatosEvento() { // Revisar si se me esta escapando algun caso borde mas
+        String nombre = this.nombreEventoText.getText();
+        String descripcion = this.descripcionEventoText.getText();
         LocalDateTime fechaInicio;
         LocalDateTime fechaFinal;
-        Duration duracionEvento = Main.formatearDuracion(this.duracionEvento.getText());
-        if (nombre.equals("") || descripcion.equals("") || (!this.diaCompleto.isSelected() && duracionEvento == null)) {
+        Duration duracionEvento = Main.formatearDuracion(this.duracionEventoText.getText());
+        if (this.datosInicialesNoSonValidos(nombre, descripcion, duracionEvento)) {
             Main.lanzarVentanaError();
             return;
         }
         try {
-            fechaInicio = LocalDateTime.parse(this.fechaInicio.getText(), Main.formatter);
-            if (this.repeticiones == null && this.diaCompleto.isSelected()) {
-                int ID = Main.calendario.crearEvento(nombre, descripcion, fechaInicio, duracionEvento, true);
-                for (Duration duracion : duraciones) {
-                    Main.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
-                }
+            fechaInicio = LocalDateTime.parse(this.fechaInicioText.getText(), Main.formatter);
+            if (this.noHayRepeticion()) {
+                int ID = Main.calendario.crearEvento(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected());
+                this.agregarAlarmas(ID);
                 Stage stage = (Stage) scenePane.getScene().getWindow();
                 stage.close();
+                Main.guardarEstado();
                 return;
             }
-            fechaFinal = LocalDateTime.parse(this.fechaFinal.getText(), Main.formatter);
+            fechaFinal = LocalDateTime.parse(this.fechaFinalText.getText(), Main.formatter);
         } catch (DateTimeParseException e4) {
             Main.lanzarVentanaError();
             return;
         }
         int ID = Main.calendario.crearEvento(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(),
-                fechaFinal, new FrecuenciaDiaria(this.repeticiones));
-        for (Duration duracion : duraciones) {
-            Main.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
-        }
+                fechaFinal, new FrecuenciaDiaria(this.repeticionVentana.obtenerRepeticiones()));
+        this.agregarAlarmas(ID);
+        Main.guardarEstado();
         Stage stage = (Stage) scenePane.getScene().getWindow();
         stage.close();
     }
@@ -103,21 +96,42 @@ public class eventoVentana extends Application implements Initializable {
 
     @FXML
     public void crearAlarmas() {
-        try {
-            intervaloAlarmaVentana ventana = new intervaloAlarmaVentana();
-            this.duraciones = ventana.obtenerDuraciones();
-        } catch (Exception e) {
-            Main.lanzarVentanaError();
+        if (this.alarmas.getValue().equals(this.valoresPosibles[0])) {
+            try {
+                this.ventanaAlarma = new intervaloAlarmaVentana();
+                this.ventanaAlarma.start(new Stage());
+            } catch (Exception e) {
+                Main.lanzarVentanaError();
+            }
         }
     }
 
     @FXML
     public void establecerRepeticionDiaria() {
-        try {
-            repeticionVentana ventana = new repeticionVentana();
-            this.repeticiones = ventana.obtenerRepeticiones();
-        } catch (Exception e) {
-            Main.lanzarVentanaError();
+        if (this.repeticion.getValue().equals(this.valoresPosibles[0])) {
+            try {
+                this.repeticionVentana = new repeticionVentana();
+                this.repeticionVentana.start(new Stage());
+            } catch (Exception e) {
+                Main.lanzarVentanaError();
+            }
+        }
+    }
+
+    private boolean datosInicialesNoSonValidos(String nombre, String descripcion, Duration duracionEvento) {
+        return nombre.equals("") || descripcion.equals("") || (!this.diaCompleto.isSelected() && duracionEvento == null);
+    }
+
+    private boolean noHayRepeticion() {
+        return this.repeticionVentana == null || this.repeticionVentana.obtenerRepeticiones() == null ||
+                this.repeticion.getValue().equals(valoresPosibles[1]);
+    }
+
+    private void agregarAlarmas(int ID) {
+        if (this.alarmas != null && this.alarmas.getValue().equals(valoresPosibles[0])) {
+            for (Duration duracion : this.ventanaAlarma.obtenerDuraciones()) {
+                Main.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
+            }
         }
     }
 }

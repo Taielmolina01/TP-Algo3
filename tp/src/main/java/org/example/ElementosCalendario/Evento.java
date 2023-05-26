@@ -1,12 +1,13 @@
 package org.example.ElementosCalendario;
 
 import org.example.Frecuencia.Frecuencia;
+import org.example.Frecuencia.FrecuenciaDiaria;
+import org.example.VisitorElementos;
 
 import java.io.Serializable;
-import java.lang.String;
-import java.util.ArrayList;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Evento extends ElementoCalendario implements Serializable {
 
@@ -24,6 +25,7 @@ public class Evento extends ElementoCalendario implements Serializable {
         super(nombre, descripcion, fechaInicio, todoElDia);
         this.definirDuracion(duracion);
         this.fechaFinalRepeticion = this.fechaFin;
+        this.frecuencia = new FrecuenciaDiaria(0);
     }
 
     // Constructor si se repite el evento dada la fecha de fin.
@@ -111,5 +113,13 @@ public class Evento extends ElementoCalendario implements Serializable {
         LocalDateTime ultimoDiaInicio = eventos.get(eventos.size()-1);
         LocalDateTime ultimoDiaFin = ultimoDiaInicio.plus(this.duracion);
         return estaEntreFechas(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
+    }
+
+    public String obtenerInfoResumida(VisitorElementos visitante) {
+        return visitante.obtenerInfoResumida(this);
+    }
+
+    public String obtenerInfoCompleta(VisitorElementos visitante) {
+        return visitante.obtenerInfoCompleta(this);
     }
 }

@@ -6,11 +6,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class repeticionVentana extends Application {
     @FXML
     private TextField repeticion;
+    @FXML
+    private Text mensaje;
 
     private Integer repeticiones;
 
@@ -29,12 +32,15 @@ public class repeticionVentana extends Application {
         String repeticion = this.repeticion.getText();
         try {
             this.repeticiones = Integer.parseInt(repeticion);
+            this.mensaje.setText("✓ Repeticion agregada");
         } catch (NumberFormatException e1) {
-            this.repeticiones = null;
+            this.mensaje.setText("✕ No se ha ingresado un número");
         }
     }
 
     public Integer obtenerRepeticiones() {
         return this.repeticiones;
     }
+
+
 }

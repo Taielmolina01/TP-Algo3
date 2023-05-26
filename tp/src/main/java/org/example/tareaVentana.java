@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.Alarma.Alarma;
-import org.example.Frecuencia.FrecuenciaDiaria;
 
 import java.net.URL;
 import java.time.Duration;
@@ -37,6 +36,7 @@ public class tareaVentana extends Application implements Initializable {
     @FXML
     private AnchorPane scenePane;
     private String[] valoresPosibles = new String[]{"Sí", "No"};
+    private intervaloAlarmaVentana ventanaAlarma;
     private ArrayList<Duration> duraciones;
 
     @Override
@@ -65,9 +65,10 @@ public class tareaVentana extends Application implements Initializable {
             return;
         }
         int ID = Main.calendario.crearTarea(nombre, descripcion, fechaInicio, this.diaCompleto.isSelected());
-        for (Duration duracion : duraciones) {
+        for (Duration duracion : this.ventanaAlarma.obtenerDuraciones()) {
             Main.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
         }
+        Main.guardarEstado();
         Stage stage = (Stage) scenePane.getScene().getWindow();
         stage.close();
     }
@@ -79,11 +80,13 @@ public class tareaVentana extends Application implements Initializable {
 
     @FXML
     public void crearAlarmas() {
-        try {
-            intervaloAlarmaVentana ventana = new intervaloAlarmaVentana();
-            this.duraciones = ventana.obtenerDuraciones();
-        } catch (Exception e) {
-            Main.lanzarVentanaError();
+        if (this.alarmas.getValue().equals("Sí")) {
+            try {
+                this.ventanaAlarma = new intervaloAlarmaVentana();
+                this.ventanaAlarma.start(new Stage());
+            } catch (Exception e) {
+                Main.lanzarVentanaError();
+            }
         }
     }
 }
