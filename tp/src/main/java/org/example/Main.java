@@ -74,7 +74,6 @@ public class Main extends Application implements Initializable {
         this.establecerText();
         this.faText.setText(textoAActualizar);
         this.actualizar();
-        this.actualizar();
     }
 
     @FXML
