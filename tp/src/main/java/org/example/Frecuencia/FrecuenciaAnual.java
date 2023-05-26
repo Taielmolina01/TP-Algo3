@@ -1,5 +1,7 @@
 package org.example.Frecuencia;
 
+import org.example.VisitorFrecuencia;
+
 import java.time.LocalDateTime;
 
 public class FrecuenciaAnual extends Frecuencia {
@@ -13,4 +15,7 @@ public class FrecuenciaAnual extends Frecuencia {
         return fechaInicial.plusYears(this.obtenerValorRepeticion());
     }
 
+    public String obtenerTipoFrecuencia(VisitorFrecuencia visitante) {
+        return visitante.obtenerFrecuencia(this);
+    }
 }

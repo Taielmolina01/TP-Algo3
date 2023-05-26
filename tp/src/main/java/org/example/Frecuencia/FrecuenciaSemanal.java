@@ -1,5 +1,7 @@
 package org.example.Frecuencia;
 
+import org.example.VisitorFrecuencia;
+
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
@@ -38,4 +40,7 @@ public class FrecuenciaSemanal extends Frecuencia {
         this.diasSemana = diasSemana;
     }
 
+    public String obtenerTipoFrecuencia(VisitorFrecuencia visitante) {
+        return visitante.obtenerFrecuencia(this);
+    }
 }

@@ -11,6 +11,8 @@ import java.util.List;
 
 public class VisitadorElementosCalendario implements VisitorElementos {
 
+    private VisitorFrecuencia visitanteFrecuencia = new VisitadorEventosFrecuencia();
+
     public ArrayList<ArrayList<String>> visitarElementos(List<ElementoCalendario> elementos) {
         ArrayList<ArrayList<String>> infoElementos = new ArrayList<>();
         ArrayList<String> infoResumida = new ArrayList<>();
@@ -43,8 +45,8 @@ public class VisitadorElementosCalendario implements VisitorElementos {
             stringAlarmas += alarma.obtenerFechaActivacion();
         }
         resultado += "\n Fechas alarmas: " + stringAlarmas;
-        if (evento.obtenerFrecuencia() != null) {
-            resultado += "\n Repetición: " + evento.obtenerFrecuencia().obtenerValorRepeticion();
+        if (evento.obtenerFrecuencia() != null) { // si no tiene frecuencia es que no se repite nunca
+            resultado += "\n" + evento.obtenerFrecuencia().obtenerTipoFrecuencia(this.visitanteFrecuencia);
         }
         return resultado;
     }

@@ -1,6 +1,8 @@
 package org.example.Frecuencia;
 
 
+import org.example.VisitorFrecuencia;
+
 import java.time.LocalDateTime;
 
 public abstract class Frecuencia {
@@ -21,5 +23,5 @@ public abstract class Frecuencia {
 
     public abstract LocalDateTime obtenerProximaFecha(LocalDateTime fechaInicial);
 
-
+    public abstract String obtenerTipoFrecuencia(VisitorFrecuencia visitante);
 }
