@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.Alarma.Alarma;
 import org.example.Frecuencia.FrecuenciaDiaria;
@@ -33,6 +34,8 @@ public class tareaVentana extends Application implements Initializable {
     private ComboBox<String> alarmas;
     @FXML
     private CheckBox diaCompleto;
+    @FXML
+    private AnchorPane scenePane;
     private String[] valoresPosibles = new String[]{"Sí", "No"};
     private ArrayList<Duration> duraciones;
 
@@ -40,10 +43,10 @@ public class tareaVentana extends Application implements Initializable {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/escenaCrearTarea.fxml"));
         Scene scene = new Scene(root);
-        Stage stageCrearEvento = new Stage();
-        stageCrearEvento.setTitle("Creando tarea");
-        stageCrearEvento.setScene(scene);
-        stageCrearEvento.show();
+        Stage stageCrearTarea = new Stage();
+        stageCrearTarea.setTitle("Creando tarea");
+        stageCrearTarea.setScene(scene);
+        stageCrearTarea.show();
     }
 
     @FXML
@@ -65,6 +68,8 @@ public class tareaVentana extends Application implements Initializable {
         for (Duration duracion : duraciones) {
             Main.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
         }
+        Stage stage = (Stage) scenePane.getScene().getWindow();
+        stage.close();
     }
 
     @Override

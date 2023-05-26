@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.Alarma.Alarma;
 import org.example.Frecuencia.FrecuenciaDiaria;
@@ -42,6 +43,8 @@ public class eventoVentana extends Application implements Initializable {
     private ComboBox<String> repeticion;
     @FXML
     private CheckBox diaCompleto;
+    @FXML
+    private AnchorPane scenePane;
     private String[] valoresPosibles = new String[]{"Sí", "No"};
     private ArrayList<Duration> duraciones;
     private Integer repeticiones;
@@ -63,39 +66,34 @@ public class eventoVentana extends Application implements Initializable {
         LocalDateTime fechaInicio;
         LocalDateTime fechaFinal;
         Duration duracionEvento = Main.formatearDuracion(this.duracionEvento.getText());
-        if (nombre.equals("") || descripcion.equals("")) {
+        if (nombre.equals("") || descripcion.equals("") || (!this.diaCompleto.isSelected() && duracionEvento == null)) {
             Main.lanzarVentanaError();
             return;
         }
         try {
             fechaInicio = LocalDateTime.parse(this.fechaInicio.getText(), Main.formatter);
-            if (this.repeticiones == null) {
-                int ID = Main.calendario.crearEvento(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected());
+            if (this.repeticiones == null && this.diaCompleto.isSelected()) {
+                int ID = Main.calendario.crearEvento(nombre, descripcion, fechaInicio, duracionEvento, true);
                 for (Duration duracion : duraciones) {
                     Main.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
                 }
+                Stage stage = (Stage) scenePane.getScene().getWindow();
+                stage.close();
                 return;
             }
+            fechaFinal = LocalDateTime.parse(this.fechaFinal.getText(), Main.formatter);
         } catch (DateTimeParseException e4) {
             Main.lanzarVentanaError();
             return;
         }
-        try {
-            fechaFinal = LocalDateTime.parse(this.fechaFinal.getText(), Main.formatter);
-        } catch (DateTimeParseException e5) {
-            Main.lanzarVentanaError();
-            return;
-        }
-        if (!this.diaCompleto.isSelected() && duracionEvento == null) {
-            Main.lanzarVentanaError();
-            return;
-        }
-        int ID = Main.calendario.crearEvento(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(), fechaFinal, new FrecuenciaDiaria(this.repeticiones));
+        int ID = Main.calendario.crearEvento(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(),
+                fechaFinal, new FrecuenciaDiaria(this.repeticiones));
         for (Duration duracion : duraciones) {
             Main.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
         }
+        Stage stage = (Stage) scenePane.getScene().getWindow();
+        stage.close();
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
