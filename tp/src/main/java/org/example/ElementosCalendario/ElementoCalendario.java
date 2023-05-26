@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class ElementoCalendario implements Serializable {
-    protected String nombre;
-    protected String descripcion;
+    private String nombre;
+    private String descripcion;
     protected boolean todoElDia;
     protected LocalDateTime fechaInicio;
     private final HashMap<Integer, Alarma> alarmas;

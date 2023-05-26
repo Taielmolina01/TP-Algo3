@@ -43,7 +43,9 @@ public class VisitadorElementosCalendario implements VisitorElementos {
             stringAlarmas += alarma.obtenerFechaActivacion();
         }
         resultado += "\n Fechas alarmas: " + stringAlarmas;
-        resultado += "\n Repetición: " + evento.obtenerFrecuencia().obtenerValorRepeticion();
+        if (evento.obtenerFrecuencia() != null) { // Si es null no se repite el evento
+            resultado += "\n Repetición: " + evento.obtenerFrecuencia().obtenerValorRepeticion();
+        }
         return resultado;
     }
 

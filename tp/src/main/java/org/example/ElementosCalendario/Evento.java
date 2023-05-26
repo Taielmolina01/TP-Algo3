@@ -25,7 +25,6 @@ public class Evento extends ElementoCalendario implements Serializable {
         super(nombre, descripcion, fechaInicio, todoElDia);
         this.definirDuracion(duracion);
         this.fechaFinalRepeticion = this.fechaFin;
-        this.frecuencia = new FrecuenciaDiaria(0);
     }
 
     // Constructor si se repite el evento dada la fecha de fin.
