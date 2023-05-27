@@ -1,6 +1,7 @@
 package org.example.ElementosCalendario;
 
 import org.example.Frecuencia.Frecuencia;
+import org.example.Visitadores.visitadorElementosCalendario;
 import org.example.Visitadores.visitorElementos;
 
 import java.io.Serializable;
@@ -113,11 +114,18 @@ public class Evento extends ElementoCalendario implements Serializable {
         return estaEntreFechas(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
     }
 
+     @Override
     public String obtenerInfoResumida(visitorElementos visitante) {
         return visitante.obtenerInfoResumida(this);
     }
 
+    @Override
     public String obtenerInfoCompleta(visitorElementos visitante) {
         return visitante.obtenerInfoCompleta(this);
+    }
+
+    @Override
+    public visitadorElementosCalendario.colorFondo obtenerColor(visitorElementos visitante) {
+        return visitante.obtenerColor(this);
     }
 }

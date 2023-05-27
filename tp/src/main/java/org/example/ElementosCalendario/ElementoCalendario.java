@@ -1,6 +1,7 @@
 package org.example.ElementosCalendario;
 
 import org.example.Alarma.Alarma;
+import org.example.Visitadores.visitadorElementosCalendario;
 import org.example.Visitadores.visitorElementos;
 
 import java.io.Serializable;
@@ -103,4 +104,6 @@ public abstract class ElementoCalendario implements Serializable {
     public abstract String obtenerInfoResumida(visitorElementos visitante);
 
     public abstract String obtenerInfoCompleta(visitorElementos visitante);
+
+    public abstract visitadorElementosCalendario.colorFondo obtenerColor(visitorElementos visitante);
 }

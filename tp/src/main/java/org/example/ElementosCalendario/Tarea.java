@@ -1,5 +1,6 @@
 package org.example.ElementosCalendario;
 
+import org.example.Visitadores.visitadorElementosCalendario;
 import org.example.Visitadores.visitorElementos;
 
 import java.io.Serializable;
@@ -35,4 +36,8 @@ public class Tarea extends ElementoCalendario implements Serializable {
         return visitante.obtenerInfoCompleta(this);
     }
 
+    @Override
+    public visitadorElementosCalendario.colorFondo obtenerColor(visitorElementos visitante) {
+        return visitante.obtenerColor(this);
+    }
 }

@@ -13,4 +13,9 @@ public interface visitorElementos {
 
     String obtenerInfoCompleta(Tarea tarea);
 
+    visitadorElementosCalendario.colorFondo obtenerColor(Evento evento);
+
+    visitadorElementosCalendario.colorFondo obtenerColor(Tarea tarea);
+
+
 }

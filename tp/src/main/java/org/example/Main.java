@@ -1,12 +1,16 @@
 package org.example;
 
 import javafx.application.Application;
+import javafx.beans.Observable;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -40,6 +44,7 @@ public class Main extends Application implements Initializable {
     private LocalDateTime inicioSemana;
     private LocalDateTime finSemana;
     private HashMap<String, String> meses;
+    private ArrayList<ArrayList<String>> info;
     private Month mes;
     private int anio;
     protected static Calendario calendario = new Calendario();
@@ -49,6 +54,8 @@ public class Main extends Application implements Initializable {
     private String textoMensual;
     private visitadorElementosCalendario visitador = new visitadorElementosCalendario();
     public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    public static DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -64,16 +71,18 @@ public class Main extends Application implements Initializable {
         String textoAActualizar;
         if (this.rangoTiempo.getValue().equals("Dia")) {
             this.fechaActual = this.fechaActual.minusDays(1);
+            this.establecerText();
             textoAActualizar = this.textoDiario;
         } else if (this.rangoTiempo.getValue().equals("Semana")) {
             this.fechaActual = this.fechaActual.minusWeeks(1);
+            this.establecerText();
             textoAActualizar = this.textoSemanal;
         } else {
             this.fechaActual = this.fechaActual.minusMonths(1);
+            this.establecerText();
             textoAActualizar = this.textoMensual;
         }
         this.establecerInicioYFinSemana();
-        this.establecerText();
         this.faText.setText(textoAActualizar);
         this.actualizar();
     }
@@ -83,16 +92,18 @@ public class Main extends Application implements Initializable {
         String textoAActualizar;
         if (this.rangoTiempo.getValue().equals("Dia")) {
             this.fechaActual = this.fechaActual.plusDays(1);
+            this.establecerText();
             textoAActualizar = this.textoDiario;
         } else if (this.rangoTiempo.getValue().equals("Semana")) {
             this.fechaActual = this.fechaActual.plusWeeks(1);
+            this.establecerText();
             textoAActualizar = this.textoSemanal;
         } else {
             this.fechaActual = this.fechaActual.plusMonths(1);
+            this.establecerText();
             textoAActualizar = this.textoMensual;
         }
         this.establecerInicioYFinSemana();
-        this.establecerText();
         this.faText.setText(textoAActualizar);
         this.actualizar();
     }
@@ -100,7 +111,7 @@ public class Main extends Application implements Initializable {
     private void actualizar() {
         this.mes = this.fechaActual.getMonth();
         this.anio = this.fechaActual.getYear();
-        listaEventosTareas.getItems().removeAll();
+        this.listaEventosTareas.getItems().clear();
         if (this.rangoTiempo.getValue().equals("Dia")) {
             LocalDateTime fechaInicio = this.fechaActual.with(LocalTime.MIN);
             LocalDateTime fechaLimite = this.fechaActual.with(LocalTime.MAX);
@@ -117,10 +128,9 @@ public class Main extends Application implements Initializable {
     private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
         ArrayList<ElementoCalendario> elementos = calendario.obtenerElementosCalendarioEntreFechas(fechaInicio, fechaFin);
         ArrayList<ArrayList<String>> infos = this.visitador.visitarElementos(elementos);
+        this.listaEventosTareas.getItems().addAll(infos.get(0));
         // la info completa la tengo que guardar en algun lado
-        for (ElementoCalendario elemento : elementos) {
-            listaEventosTareas.getItems().addAll(infos.get(0));
-        }
+        this.info = infos;
     }
 
     private void establecerMeses() {
@@ -155,8 +165,11 @@ public class Main extends Application implements Initializable {
         this.faText.setText(this.textoMensual);
         this.rangoTiempo.setOnAction(this::actualizarRango);
         this.cajaCrear.setOnAction(this::crearElementoCalendario);
+        this.listaEventosTareas.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
         this.actualizar();
+        this.listaEventosTareas.setCellFactory(param -> new coloreadorCeldas(this.info));
     }
+
     private void establecerText() {
         this.textoDiario = this.fechaActual.getDayOfMonth() + " " + this.meses.get(this.fechaActual.getMonth().toString()).toLowerCase()
                 + " " + this.fechaActual.getYear();
@@ -243,5 +256,9 @@ public class Main extends Application implements Initializable {
 
     protected static void guardarEstado() {
         calendario.guardarEstado(manejador);
+    }
+
+    private int cambioSeleccion(Observable Observable) {
+        return this.listaEventosTareas.getSelectionModel().getSelectedIndex();
     }
 }

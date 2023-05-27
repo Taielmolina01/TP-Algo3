@@ -65,8 +65,10 @@ public class tareaVentana extends Application implements Initializable {
             return;
         }
         int ID = Main.calendario.crearTarea(nombre, descripcion, fechaInicio, this.diaCompleto.isSelected());
-        for (Duration duracion : this.ventanaAlarma.obtenerDuraciones()) {
-            Main.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
+        if (this.ventanaAlarma != null) {
+            for (Duration duracion : this.ventanaAlarma.obtenerDuraciones()) {
+                Main.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
+            }
         }
         Main.guardarEstado();
         Stage stage = (Stage) scenePane.getScene().getWindow();

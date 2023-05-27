@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -44,7 +45,11 @@
             </ChoiceBox>
          </children>
       </HBox>
-      <Text layoutX="15.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Eventos y tareas próximos" />
+      <Text layoutX="14.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Eventos y tareas próximos" />
       <ListView fx:id="listaEventosTareas" layoutX="4.0" layoutY="118.0" prefHeight="390.0" prefWidth="670.0" style="-fx-background-color: #EAEDED;" />
+      <Circle fill="#85c1e9" layoutX="208.0" layoutY="102.0" radius="7.0" stroke="#85c1e9" strokeType="INSIDE" />
+      <Circle fill="#58d68d" layoutX="298.0" layoutY="102.0" radius="7.0" stroke="#58d68d" strokeType="INSIDE" />
+      <Text layoutX="221.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Eventos" textAlignment="CENTER" />
+      <Text layoutX="312.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tareas" />
    </children>
 </AnchorPane>
