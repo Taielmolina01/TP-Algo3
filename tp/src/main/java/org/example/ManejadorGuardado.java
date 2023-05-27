@@ -21,6 +21,7 @@ public class ManejadorGuardado {
             FileOutputStream archivoDestino = new FileOutputStream(this.rutaArchivoGuardado);
             calendario.serializar(this.salida, archivoDestino);
         } catch (FileNotFoundException e) {
+            System.out.println("Error");
             this.salida.println("El archivo de guardado no existe.");
         }
     }
@@ -30,6 +31,7 @@ public class ManejadorGuardado {
             FileInputStream archivo = new FileInputStream(this.rutaArchivoGuardado);
             return (new Calendario()).deserializar(this.salida, archivo);
         } catch (FileNotFoundException e ) {
+            System.out.println("Error");
             this.salida.println("El archivo de recuperado no existe.");
             return null;
         }

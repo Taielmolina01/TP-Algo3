@@ -128,7 +128,7 @@ public class eventoVentana extends Application implements Initializable {
     }
 
     private void agregarAlarmas(int ID) {
-        if (this.alarmas != null && this.alarmas.getValue().equals(valoresPosibles[0])) {
+        if (this.alarmas.getValue() != null && this.alarmas.getValue().equals(valoresPosibles[0])) {
             for (Duration duracion : this.ventanaAlarma.obtenerDuraciones()) {
                 Main.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
             }

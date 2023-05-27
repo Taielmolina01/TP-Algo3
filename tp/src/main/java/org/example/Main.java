@@ -48,7 +48,7 @@ public class Main extends Application implements Initializable {
     private Month mes;
     private int anio;
     protected static Calendario calendario = new Calendario();
-    private static ManejadorGuardado manejador = new ManejadorGuardado(System.out);
+    protected static ManejadorGuardado manejador = new ManejadorGuardado(System.out);
     private String textoDiario;
     private String textoSemanal;
     private String textoMensual;
@@ -89,6 +89,7 @@ public class Main extends Application implements Initializable {
 
     @FXML
     public void clickEnBotonDerecha() {
+        System.out.println(calendario.elementosCalendario);
         String textoAActualizar;
         if (this.rangoTiempo.getValue().equals("Dia")) {
             this.fechaActual = this.fechaActual.plusDays(1);
@@ -151,7 +152,7 @@ public class Main extends Application implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        calendario.recuperarEstado(manejador);
+        this.calendario.recuperarEstado(this.manejador);
         this.fechaActual = LocalDateTime.now();
         this.mes = this.fechaActual.getMonth();
         this.anio = this.fechaActual.getYear();
@@ -254,7 +255,8 @@ public class Main extends Application implements Initializable {
         this.finSemana = this.fechaActual.plusDays(aSumar).with(LocalTime.MAX);
     }
 
-    protected static void guardarEstado() {
+    public static void guardarEstado() {
+        System.out.println("se guarda");
         calendario.guardarEstado(manejador);
     }
 
