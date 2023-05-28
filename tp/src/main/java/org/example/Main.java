@@ -33,7 +33,7 @@ import java.util.ResourceBundle;
 public class Main extends Application implements Initializable {
 
     @FXML
-    private Text faText;
+    private Text lapsoTiempoActual;
     @FXML
     private ChoiceBox<String> rangoTiempo;
     @FXML
@@ -85,7 +85,7 @@ public class Main extends Application implements Initializable {
         }
         System.out.println("Fecha actual tras pasar a la izquierda: " + this.fechaActual);
         this.establecerInicioYFinSemana();
-        this.faText.setText(textoAActualizar);
+        this.lapsoTiempoActual.setText(textoAActualizar);
         this.actualizar();
     }
 
@@ -107,7 +107,7 @@ public class Main extends Application implements Initializable {
         }
         System.out.println("Fecha actual tras pasar a la derecha: " + this.fechaActual);
         this.establecerInicioYFinSemana();
-        this.faText.setText(textoAActualizar);
+        this.lapsoTiempoActual.setText(textoAActualizar);
         this.actualizar();
     }
 
@@ -168,7 +168,7 @@ public class Main extends Application implements Initializable {
         String[] valoresCrear = {"", "Evento", "Tarea"};
         this.cajaCrear.getItems().addAll(valoresCrear);
         this.rangoTiempo.getItems().addAll(valoresRango);
-        this.faText.setText(this.textoMensual);
+        this.lapsoTiempoActual.setText(this.textoMensual);
         this.rangoTiempo.setOnAction(this::actualizarRango);
         this.cajaCrear.setOnAction(this::crearElementoCalendario);
         this.listaEventosTareas.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
@@ -212,13 +212,13 @@ public class Main extends Application implements Initializable {
     private void actualizarRango(ActionEvent event) {
         String valorRango = this.rangoTiempo.getValue();
         if (valorRango.equals("Dia")) {
-            this.faText.setText(this.textoDiario);
+            this.lapsoTiempoActual.setText(this.textoDiario);
         }
         if (valorRango.equals("Semana")) {
-            this.faText.setText(this.textoSemanal);
+            this.lapsoTiempoActual.setText(this.textoSemanal);
         }
         if (valorRango.equals("Mes")) {
-            this.faText.setText(this.textoMensual);
+            this.lapsoTiempoActual.setText(this.textoMensual);
         }
         this.actualizar();
     }
