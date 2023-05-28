@@ -45,10 +45,11 @@ public class Main extends Application implements Initializable {
     private LocalDateTime finSemana;
     private HashMap<String, String> meses;
     private ArrayList<ArrayList<String>> info;
+    private coloreadorCeldas coloreador;
     private Month mes;
     private int anio;
-    protected static Calendario calendario = new Calendario();
     protected static ManejadorGuardado manejador = new ManejadorGuardado(System.out);
+    protected static Calendario calendario = new Calendario();
     private String textoDiario;
     private String textoSemanal;
     private String textoMensual;
@@ -82,6 +83,7 @@ public class Main extends Application implements Initializable {
             this.establecerText();
             textoAActualizar = this.textoMensual;
         }
+        System.out.println("Fecha actual tras pasar a la izquierda: " + this.fechaActual);
         this.establecerInicioYFinSemana();
         this.faText.setText(textoAActualizar);
         this.actualizar();
@@ -89,7 +91,6 @@ public class Main extends Application implements Initializable {
 
     @FXML
     public void clickEnBotonDerecha() {
-        System.out.println(calendario.elementosCalendario);
         String textoAActualizar;
         if (this.rangoTiempo.getValue().equals("Dia")) {
             this.fechaActual = this.fechaActual.plusDays(1);
@@ -104,6 +105,7 @@ public class Main extends Application implements Initializable {
             this.establecerText();
             textoAActualizar = this.textoMensual;
         }
+        System.out.println("Fecha actual tras pasar a la derecha: " + this.fechaActual);
         this.establecerInicioYFinSemana();
         this.faText.setText(textoAActualizar);
         this.actualizar();
@@ -112,12 +114,15 @@ public class Main extends Application implements Initializable {
     private void actualizar() {
         this.mes = this.fechaActual.getMonth();
         this.anio = this.fechaActual.getYear();
+        System.out.println(this.fechaActual);
         this.listaEventosTareas.getItems().clear();
         if (this.rangoTiempo.getValue().equals("Dia")) {
             LocalDateTime fechaInicio = this.fechaActual.with(LocalTime.MIN);
             LocalDateTime fechaLimite = this.fechaActual.with(LocalTime.MAX);
             this.crearLista(fechaInicio, fechaLimite);
         } else if (this.rangoTiempo.getValue().equals("Semana")) {
+            System.out.println("Inicio de la semana: " + this.inicioSemana);
+            System.out.println("Fin de la semana: " + this.finSemana);
             this.crearLista(this.inicioSemana, this.finSemana);
         } else {
             LocalDateTime fechaInicio = this.fechaActual.with(TemporalAdjusters.firstDayOfMonth()).with(LocalTime.MIN);
@@ -132,6 +137,7 @@ public class Main extends Application implements Initializable {
         this.listaEventosTareas.getItems().addAll(infos.get(0));
         // la info completa la tengo que guardar en algun lado
         this.info = infos;
+        //this.coloreador.actualizarInfo(this.info);
     }
 
     private void establecerMeses() {
@@ -152,7 +158,6 @@ public class Main extends Application implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.calendario.recuperarEstado(this.manejador);
         this.fechaActual = LocalDateTime.now();
         this.mes = this.fechaActual.getMonth();
         this.anio = this.fechaActual.getYear();
@@ -167,25 +172,41 @@ public class Main extends Application implements Initializable {
         this.rangoTiempo.setOnAction(this::actualizarRango);
         this.cajaCrear.setOnAction(this::crearElementoCalendario);
         this.listaEventosTareas.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
-        this.actualizar();
         this.listaEventosTareas.setCellFactory(param -> new coloreadorCeldas(this.info));
+        this.actualizar();
     }
 
     private void establecerText() {
-        this.textoDiario = this.fechaActual.getDayOfMonth() + " " + this.meses.get(this.fechaActual.getMonth().toString()).toLowerCase()
-                + " " + this.fechaActual.getYear();
-        this.textoMensual = this.meses.get(this.fechaActual.getMonth().toString()) + " " + this.fechaActual.getYear();
+        this.textoDiario = this.establecerTextoDiario();
+        this.textoMensual = this.establecerTextoMensual();
         if (this.inicioSemana.getMonth() != this.finSemana.getMonth()) {
             if (this.inicioSemana.getYear() == this.finSemana.getYear()) {
-                this.textoSemanal = this.meses.get(this.inicioSemana.getMonth().toString()) + " - " +
-                        this.meses.get(this.finSemana.getMonth().toString()).toLowerCase() + " " + this.finSemana.getYear();
+                this.textoSemanal = this.establecerTextoSemanalDistintosMeses();
             } else {
-                this.textoSemanal = this.meses.get(this.inicioSemana.getMonth().toString()) + " " + this.inicioSemana.getYear() + " - " +
-                        this.meses.get(this.finSemana.getMonth().toString()).toLowerCase() + " " + this.finSemana.getYear();
+                this.textoSemanal = this.establecerTextoSemanalDistintosAnios();
             }
         } else {
-            this.textoSemanal = this.meses.get(this.inicioSemana.getMonth().toString()) + " " + this.inicioSemana.getYear();
+            this.textoSemanal = this.establecerTextoMensual();
         }
+    }
+
+    private String establecerTextoDiario() {
+        return this.fechaActual.getDayOfMonth() + " " + this.meses.get(this.fechaActual.getMonth().toString()).toLowerCase()
+                + " " + this.fechaActual.getYear();
+    }
+
+    private String establecerTextoMensual() {
+        return this.meses.get(this.fechaActual.getMonth().toString()) + " " + this.fechaActual.getYear();
+    }
+
+    private String establecerTextoSemanalDistintosAnios() {
+        return this.meses.get(this.inicioSemana.getMonth().toString()) + " " + this.inicioSemana.getYear() + " - " +
+                this.meses.get(this.finSemana.getMonth().toString()).toLowerCase() + " " + this.finSemana.getYear();
+    }
+
+    private String establecerTextoSemanalDistintosMeses() {
+        return this.textoSemanal = this.meses.get(this.inicioSemana.getMonth().toString()) + " - " +
+                this.meses.get(this.finSemana.getMonth().toString()).toLowerCase() + " " + this.finSemana.getYear();
     }
 
     private void actualizarRango(ActionEvent event) {
@@ -256,11 +277,10 @@ public class Main extends Application implements Initializable {
     }
 
     public static void guardarEstado() {
-        System.out.println("se guarda");
         calendario.guardarEstado(manejador);
     }
 
-    private int cambioSeleccion(Observable Observable) {
-        return this.listaEventosTareas.getSelectionModel().getSelectedIndex();
+    private void cambioSeleccion(Observable Observable) {
+
     }
 }

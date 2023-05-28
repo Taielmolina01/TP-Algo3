@@ -26,6 +26,7 @@ public class coloreadorCeldas extends ListCell<String> {
         if (item != null && !empty) {
             setText(item);
             int i = getIndex();
+            System.out.println(this.info);
             if (this.info.get(2).get(i).equals(visitadorElementosCalendario.colorFondo.AZUL.toString())) {
                 setBackground(new Background(new BackgroundFill(Color.web(this.colorAzul), null, null)));
             } else {
@@ -36,7 +37,7 @@ public class coloreadorCeldas extends ListCell<String> {
         }
     }
 
-    private void actualizarInfo(ArrayList<ArrayList<String>> info) {
+    protected void actualizarInfo(ArrayList<ArrayList<String>> info) {
         this.info = info;
     }
 }

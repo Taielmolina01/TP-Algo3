@@ -20,7 +20,7 @@ public class visitadorElementosCalendario implements visitorElementos {
     private visitorFrecuencia visitanteFrecuencia = new visitadorEventosFrecuencia();
 
     public ArrayList<ArrayList<String>> visitarElementos(List<ElementoCalendario> elementos) { // ver bien como imprimir la info
-        ArrayList<ArrayList<String>> infoElementos = new ArrayList<>();
+        ArrayList<ArrayList<String>> infoElementosActuales = new ArrayList<>();
         ArrayList<String> infoResumida = new ArrayList<>();
         ArrayList<String> infoCompleta = new ArrayList<>();
         ArrayList<String> colores = new ArrayList<>();
@@ -32,10 +32,10 @@ public class visitadorElementosCalendario implements visitorElementos {
             infoCompleta.add(completa);
             colores.add(color);
         }
-        infoElementos.add(infoResumida);
-        infoElementos.add(infoCompleta);
-        infoElementos.add(colores);
-        return infoElementos;
+        infoElementosActuales.add(infoResumida);
+        infoElementosActuales.add(infoCompleta);
+        infoElementosActuales.add(colores);
+        return infoElementosActuales;
     }
 
     public String obtenerInfoResumida(Evento evento) {
@@ -53,7 +53,7 @@ public class visitadorElementosCalendario implements visitorElementos {
         HashMap<Integer, Alarma> alarmas = evento.obtenerAlarmas();
         String stringAlarmas = "";
         for (Alarma alarma : alarmas.values()) {
-            stringAlarmas += alarma.obtenerFechaActivacion().format(Main.formatter);
+            stringAlarmas += alarma.obtenerFechaActivacion().format(Main.formatter) + ", ";
         }
         resultado += "\nFechas alarmas: " + stringAlarmas;
         if (evento.obtenerFrecuencia() != null) { // si no tiene frecuencia es que no se repite nunca
@@ -65,13 +65,13 @@ public class visitadorElementosCalendario implements visitorElementos {
 
     public String obtenerInfoResumida(Tarea tarea) {
         String estado;
-        estado = tarea.estaCompletada() ? "Completada" : "No completada";
+        estado = tarea.estaCompletada() ? "Completada." : "No completada.";
         if (tarea.obtenerTodoElDia()) {
             return "Nombre: " + tarea.obtenerNombre() + ". Fecha de inicio: " + tarea.obtenerFechaInicio().toLocalDate().format(Main.formatter2) + ". Es de dia completo" +
-                    ". Estado: " + estado + ".";
+                    ". Estado: " + estado;
         }
         return "Nombre: " + tarea.obtenerNombre() + ". Fecha de inicio: " + tarea.obtenerFechaInicio().format(Main.formatter) + ". Estado: " +
-                estado + ".";
+                estado;
     }
 
     public String obtenerInfoCompleta(Tarea tarea) {
