@@ -59,7 +59,7 @@ public class tareaVentana extends Application implements Initializable {
             return;
         }
         try {
-            fechaInicio = LocalDateTime.parse(this.fechaInicio.getText(), Main.formatter);
+            fechaInicio = LocalDateTime.parse(this.fechaInicio.getText(), Main.formatterConHoras);
         } catch (DateTimeParseException e4) {
             Main.lanzarVentanaError();
             return;

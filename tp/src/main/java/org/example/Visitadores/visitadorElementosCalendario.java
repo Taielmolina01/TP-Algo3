@@ -40,22 +40,29 @@ public class visitadorElementosCalendario implements visitorElementos {
 
     public String obtenerInfoResumida(Evento evento) {
         if (evento.obtenerTodoElDia()) {
-            return "Nombre: " + evento.obtenerNombre() + ". Fecha de inicio: " + evento.obtenerFechaInicio().toLocalDate().format(Main.formatter2)
+            return "Nombre: " + evento.obtenerNombre() + ". Fecha de inicio: " + evento.obtenerFechaInicio().toLocalDate().format(Main.formatterSinHoras)
                     + ". Es de dia completo.";
         }
-        return "Nombre: " + evento.obtenerNombre() + ". Fecha de inicio: " + evento.obtenerFechaInicio().format(Main.formatter) + ". Fecha fin: " +
-                evento.obtenerFechaFinalDefinitivo().format(Main.formatter) + ".";
+        return "Nombre: " + evento.obtenerNombre() + ". Fecha de inicio: " + evento.obtenerFechaInicio().format(Main.formatterConHoras) + ". Fecha fin: " +
+                evento.obtenerFechaFinalDefinitivo().format(Main.formatterConHoras) + ".";
     }
 
     public String obtenerInfoCompleta(Evento evento) {
         String resultado;
-        resultado = obtenerInfoResumida(evento) + "\nDescripción: " + evento.obtenerDescripcion();
+        String fechaInicio = evento.obtenerTodoElDia() ? evento.obtenerFechaInicio().toLocalDate().format(Main.formatterSinHoras) : evento.obtenerFechaInicio().format(Main.formatterConHoras);
+        String esDeDiaCompleto = evento.obtenerTodoElDia() ? " Es de dia completo." : "";
+        resultado = "Nombre: " + evento.obtenerNombre() + "." + "\nDescripción: " + evento.obtenerDescripcion() + "." + "\nFecha de inicio: "
+        + fechaInicio + "." + esDeDiaCompleto + "\nFecha fin: " + evento.obtenerFechaFinalDefinitivo().format(Main.formatterConHoras) + ".";
         HashMap<Integer, Alarma> alarmas = evento.obtenerAlarmas();
         String stringAlarmas = "";
-        for (Alarma alarma : alarmas.values()) {
-            stringAlarmas += alarma.obtenerFechaActivacion().format(Main.formatter) + ", ";
+        if (alarmas.size() == 0) {
+            resultado += "\nEste evento no tiene alarmas configuradas.";
+        } else {
+            for (Alarma alarma : alarmas.values()) {
+                stringAlarmas += alarma.obtenerFechaActivacion().format(Main.formatterConHoras) + ", ";
+            }
+            resultado += "\nFechas alarmas: " + stringAlarmas;
         }
-        resultado += "\nFechas alarmas: " + stringAlarmas;
         if (evento.obtenerFrecuencia() != null) { // si no tiene frecuencia es que no se repite nunca
             resultado += "\n" + evento.obtenerFrecuencia().obtenerTipoFrecuencia(this.visitanteFrecuencia);
         }
@@ -67,22 +74,29 @@ public class visitadorElementosCalendario implements visitorElementos {
         String estado;
         estado = tarea.estaCompletada() ? "Completada." : "No completada.";
         if (tarea.obtenerTodoElDia()) {
-            return "Nombre: " + tarea.obtenerNombre() + ". Fecha de inicio: " + tarea.obtenerFechaInicio().toLocalDate().format(Main.formatter2) + ". Es de dia completo" +
+            return "Nombre: " + tarea.obtenerNombre() + ". Fecha de inicio: " + tarea.obtenerFechaInicio().toLocalDate().format(Main.formatterSinHoras) + ". Es de dia completo" +
                     ". Estado: " + estado;
         }
-        return "Nombre: " + tarea.obtenerNombre() + ". Fecha de inicio: " + tarea.obtenerFechaInicio().format(Main.formatter) + ". Estado: " +
+        return "Nombre: " + tarea.obtenerNombre() + ". Fecha de inicio: " + tarea.obtenerFechaInicio().format(Main.formatterConHoras) + ". Estado: " +
                 estado;
     }
 
     public String obtenerInfoCompleta(Tarea tarea) {
         String resultado;
-        resultado = obtenerInfoResumida(tarea) + "\n Descripción: " + tarea.obtenerDescripcion();
+        String fechaInicio = tarea.obtenerTodoElDia() ? tarea.obtenerFechaInicio().toLocalDate().format(Main.formatterSinHoras) : tarea.obtenerFechaInicio().format(Main.formatterConHoras);
+        String esDeDiaCompleto = tarea.obtenerTodoElDia() ? " Es de dia completo." : "";
+        resultado = "Nombre: " + tarea.obtenerNombre() + "." + "\nDescripción: " + tarea.obtenerDescripcion() + "." + "\nFecha de inicio: "
+                + fechaInicio + "." + esDeDiaCompleto;
         HashMap<Integer, Alarma> alarmas = tarea.obtenerAlarmas();
         String stringAlarmas = "";
-        for (Alarma alarma : alarmas.values()) {
-            stringAlarmas += alarma.obtenerFechaActivacion().format(Main.formatter);
+        if (alarmas.size() == 0) {
+            resultado += "\nEsta tarea no tiene alarmas configuradas.";
+        } else {
+            for (Alarma alarma : alarmas.values()) {
+                stringAlarmas += alarma.obtenerFechaActivacion().format(Main.formatterConHoras);
+            }
+            resultado += "\nFechas alarmas: " + stringAlarmas;
         }
-        resultado += "\n Fechas alarmas: " + stringAlarmas;
         return resultado;
     }
 

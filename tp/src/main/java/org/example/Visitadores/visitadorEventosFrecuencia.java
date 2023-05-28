@@ -1,35 +1,39 @@
 package org.example.Visitadores;
 
-import org.example.Frecuencia.FrecuenciaAnual;
-import org.example.Frecuencia.FrecuenciaDiaria;
-import org.example.Frecuencia.FrecuenciaMensual;
-import org.example.Frecuencia.FrecuenciaSemanal;
+import org.example.Frecuencia.*;
 
 import java.time.DayOfWeek;
 
 public class visitadorEventosFrecuencia implements visitorFrecuencia {
 
     public String obtenerFrecuencia(FrecuenciaDiaria frecuencia) {
-        return "Se repite cada " + frecuencia.obtenerValorRepeticion() + " días.";
+        return "Se repite cada " + frecuencia.obtenerValorRepeticion() + " día" + esPlural(frecuencia) + ".";
     }
 
     public String obtenerFrecuencia(FrecuenciaSemanal frecuencia) { // ver hacerlo por cada semana seria sin s
         if (frecuencia.obtenerDiasSemana().size() == 7) {
-            return "Se repite todos los días cada " + frecuencia.obtenerValorRepeticion() + " semanas.";
+            return "Se repite todos los días cada " + frecuencia.obtenerValorRepeticion() + " semana" + esPlural(frecuencia) + ".";
         }
-
         String resultado = "Se repite los ";
         for (DayOfWeek dia : frecuencia.obtenerDiasSemana()) {
             resultado += dia.name() + ", ";
         }
-        return resultado + "cada " + frecuencia.obtenerValorRepeticion() + " semanas.";
+        return resultado + "cada " + frecuencia.obtenerValorRepeticion() + " semana" + esPlural(frecuencia) + ".";
     }
 
     public String obtenerFrecuencia(FrecuenciaMensual frecuencia) {
-        return "Se repite cada " + frecuencia.obtenerValorRepeticion() + " meses.";
+        return "Se repite cada " + frecuencia.obtenerValorRepeticion() + " mes" + esPluralMeses(frecuencia) + ".";
     }
 
     public String obtenerFrecuencia(FrecuenciaAnual frecuencia) {
-        return "Se repite cada " + frecuencia.obtenerValorRepeticion() + " años.";
+        return "Se repite cada " + frecuencia.obtenerValorRepeticion() + " año" + esPlural(frecuencia) + ".";
+    }
+
+    private String esPlural(Frecuencia frecuencia) {
+        return frecuencia.obtenerValorRepeticion() == 1 ? "s" : "";
+    }
+
+    private String esPluralMeses(FrecuenciaMensual frecuencia) {
+        return frecuencia.obtenerValorRepeticion() == 1 ? "es" : "";
     }
 }

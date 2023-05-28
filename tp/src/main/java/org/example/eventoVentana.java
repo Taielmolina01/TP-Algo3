@@ -66,7 +66,7 @@ public class eventoVentana extends Application implements Initializable {
             return;
         }
         try {
-            fechaInicio = LocalDateTime.parse(this.fechaInicioText.getText(), Main.formatter);
+            fechaInicio = LocalDateTime.parse(this.fechaInicioText.getText(), Main.formatterConHoras);
             if (this.noHayRepeticion()) {
                 int ID = Main.calendario.crearEvento(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected());
                 this.agregarAlarmas(ID);
@@ -75,7 +75,7 @@ public class eventoVentana extends Application implements Initializable {
                 Main.guardarEstado();
                 return;
             }
-            fechaFinal = LocalDateTime.parse(this.fechaFinalText.getText(), Main.formatter);
+            fechaFinal = LocalDateTime.parse(this.fechaFinalText.getText(), Main.formatterConHoras);
         } catch (DateTimeParseException e4) {
             Main.lanzarVentanaError();
             return;
