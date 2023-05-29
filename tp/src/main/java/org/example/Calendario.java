@@ -201,14 +201,24 @@ public class Calendario implements Serializable {
     }
 
     protected void serializar(PrintStream salida, OutputStream os) {
-        try { // Hacerlo con un finally el close.
-            ObjectOutputStream o = new ObjectOutputStream(os);
+        ObjectOutputStream o = null;
+        try {
+            o = new ObjectOutputStream(os);
             o.writeObject(this.elementosCalendario);
             o.writeObject(this.indiceElementoCalendario);
             o.flush();
-            o.close();
         } catch (IOException e) {
             salida.println("El flujo de salida no existe.");
+        }
+        finally {
+            if (o != null) {
+                try {
+                    o.close();
+                } catch (IOException e) {
+                    //
+                }
+            }
+
         }
     }
 
