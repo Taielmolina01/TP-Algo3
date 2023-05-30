@@ -15,7 +15,7 @@ Molina, Taiel. Padrón: 109458
         - calendario protected y agrego el elemento desde la segunda ventana y el mensaje es guardate? (parte de la logica en la ventana de crear)
         - calendario private y el mensaje es pasar las componentes del elemento a agregar y luego guardo? (toda la logica en main)
 -[] Agregar disparado de alarmas.
-
+-[] Modificar lo de que cuando se atrapa una excepcion solo se muestra algo en la salida, y no se deja propagar la excepcion.
 -[] Ver si todo tiene que ser Application/Initializable.
 -[] Hacer un archivo css con todo (agregar hover de los textfield)
 -[] Separar en dos paquetes grandes: Logica de negocio y GUI.
