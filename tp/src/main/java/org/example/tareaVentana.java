@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.Alarma.Alarma;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -50,7 +51,7 @@ public class tareaVentana extends Application implements Initializable {
     }
 
     @FXML
-    public void ingresarDatosTarea() { // Revisar el orden de to-do esto.
+    public void ingresarDatosTarea() throws IOException { // Revisar el orden de to-do esto.
         String nombre = this.nombreTarea.getText();
         String descripcion = this.descripcionTarea.getText();
         LocalDateTime fechaInicio;

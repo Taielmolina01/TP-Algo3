@@ -188,11 +188,11 @@ public class Calendario implements Serializable {
 
 
 
-    public void guardarEstado(ManejadorGuardado manejador) {
+    public void guardarEstado(ManejadorGuardado manejador) throws IOException {
         manejador.guardarEstado(this);
     }
 
-    public Calendario recuperarEstado(ManejadorGuardado manejador) {
+    public Calendario recuperarEstado(ManejadorGuardado manejador) throws IOException, ClassNotFoundException {
         return manejador.recuperarEstado();
     }
 
@@ -200,7 +200,7 @@ public class Calendario implements Serializable {
         manejador.borrarEstadoGuardado();
     }
 
-    protected void serializar(PrintStream salida, OutputStream os) {
+    protected void serializar(PrintStream salida, OutputStream os) throws IOException {
         ObjectOutputStream o = null;
         try {
             o = new ObjectOutputStream(os);
@@ -209,6 +209,7 @@ public class Calendario implements Serializable {
             o.flush();
         } catch (IOException e) {
             salida.println("El flujo de salida no existe.");
+            throw new IOException("El flujo de salida no existe");
         }
         finally {
             if (o != null) {
@@ -222,7 +223,7 @@ public class Calendario implements Serializable {
         }
     }
 
-    protected Calendario deserializar(PrintStream salida, InputStream is) {
+    protected Calendario deserializar(PrintStream salida, InputStream is) throws IOException, ClassNotFoundException {
         try {
             ObjectInputStream objectInStream = new ObjectInputStream(is);
             HashMap<Integer, ElementoCalendario> elementos = (HashMap<Integer, ElementoCalendario>) objectInStream.readObject();
@@ -235,9 +236,10 @@ public class Calendario implements Serializable {
             return calendarioNuevo;
         } catch (IOException e) {
             salida.println("El flujo de entrada no existe o está vacío.");
+            throw new IOException("El flujo de entrada no existe o está vacío.");
         } catch (ClassNotFoundException e) {
             salida.println("La clase Calendario no se encuentra en este paquete.");
+            throw new ClassNotFoundException("La clase Calendario no se encuentra en este paquete.");
         }
-        return this;
     }
 }

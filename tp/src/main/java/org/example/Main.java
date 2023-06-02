@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import org.example.ElementosCalendario.ElementoCalendario;
 import org.example.Visitadores.visitadorElementosCalendario;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -211,8 +212,7 @@ public class Main extends Application implements Initializable {
         String texto;
         if (valorRango.equals(this.valoresRango[0])) {
             texto = this.textoDiario;
-        }
-        if (valorRango.equals(this.valoresRango[1])) {
+        } else if (valorRango.equals(this.valoresRango[1])) {
             texto = this.textoSemanal;
         } else {
             texto = this.textoMensual;
@@ -273,8 +273,8 @@ public class Main extends Application implements Initializable {
         this.finSemana = this.fechaActual.plusDays(aSumar).with(LocalTime.MAX);
     }
 
-    public static void guardarEstado() {
-        calendario.guardarEstado(manejador);
+    public static void guardarEstado() throws IOException  {
+            calendario.guardarEstado(manejador);
     }
 
     private void cambioSeleccion(Observable Observable) {

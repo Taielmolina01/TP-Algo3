@@ -16,22 +16,23 @@ public class ManejadorGuardado {
         this.crearArchivoGuardado();
     }
 
-    protected void guardarEstado(Calendario calendario) {
+    protected void guardarEstado(Calendario calendario) throws IOException {
         try {
             FileOutputStream archivoDestino = new FileOutputStream(this.rutaArchivoGuardado);
             calendario.serializar(this.salida, archivoDestino);
         } catch (FileNotFoundException e) {
             this.salida.println("El archivo de guardado no existe.");
         }
+        throw new FileNotFoundException("El archivo de guardado no existe.");
     }
 
-    protected Calendario recuperarEstado() {
+    protected Calendario recuperarEstado() throws FileNotFoundException, IOException, ClassNotFoundException {
         try {
             FileInputStream archivo = new FileInputStream(this.rutaArchivoGuardado);
             return (new Calendario()).deserializar(this.salida, archivo);
-        } catch (FileNotFoundException e ) {
+        } catch (FileNotFoundException e) {
             this.salida.println("El archivo de recuperado no existe.");
-            return null;
+            throw new FileNotFoundException("El archivo de recuperado no existe.");
         }
     }
 

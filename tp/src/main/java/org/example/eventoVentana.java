@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import org.example.Alarma.Alarma;
 import org.example.Frecuencia.FrecuenciaDiaria;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -55,7 +56,7 @@ public class eventoVentana extends Application implements Initializable {
     }
 
     @FXML
-    public void ingresarDatosEvento() { // Revisar si se me esta escapando algun caso borde mas
+    public void ingresarDatosEvento() throws IOException { // Revisar si se me esta escapando algun caso borde mas
         String nombre = this.nombreEventoText.getText();
         String descripcion = this.descripcionEventoText.getText();
         LocalDateTime fechaInicio;
