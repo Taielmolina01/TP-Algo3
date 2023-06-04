@@ -12,14 +12,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.Alarma.Alarma;
+import org.example.Frecuencia.Frecuencia;
 import org.example.Frecuencia.FrecuenciaDiaria;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 public class eventoVentana extends Application implements Initializable {
 
@@ -44,6 +48,23 @@ public class eventoVentana extends Application implements Initializable {
     private intervaloAlarmaVentana ventanaAlarma;
     private repeticionVentana repeticionVentana;
     private String[] valoresPosibles = new String[]{"Sí", "No"};
+    private interfazGuardado i;
+
+    /*
+    Opc1: Deberia devolver el evento con las alarmas agregadas y despues directamente lo agrego al calendario.
+    Me estoy cagando en la fachada y deberia agregar esa forma de agregar un evento al modelo
+    (Calendario.java), tampoco lo veo taaan mal, es una ventana para agregar un evento.
+    Opc2: paso toda la info necesaria para agregar el evento y sus alarmas y lo hago desde el main(creo q
+    estaria mejor aunque en cuanto a codigo es + largo).
+
+     Esto se haria al ejecutarse ingresarDatosEvento() y en caso de haber exito, deberia usar el observer con una
+     callback function.
+
+     */
+
+    public eventoVentana(interfazGuardado i) {
+        this.i = i;
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -56,7 +77,7 @@ public class eventoVentana extends Application implements Initializable {
     }
 
     @FXML
-    public void ingresarDatosEvento() throws IOException { // Revisar si se me esta escapando algun caso borde mas
+    public void ingresarDatosEvento(){ // Revisar si se me esta escapando algun caso borde mas
         String nombre = this.nombreEventoText.getText();
         String descripcion = this.descripcionEventoText.getText();
         LocalDateTime fechaInicio;
@@ -69,11 +90,14 @@ public class eventoVentana extends Application implements Initializable {
         try {
             fechaInicio = LocalDateTime.parse(this.fechaInicioText.getText(), Main.formatterConHoras);
             if (this.noHayRepeticion()) {
-                int ID = Main.calendario.crearEvento(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected());
-                this.agregarAlarmas(ID);
+                ArrayList<Duration> alarmas = this.obtenerAlarmas();
                 Stage stage = (Stage) scenePane.getScene().getWindow();
                 stage.close();
-                Main.guardarEstado();
+                try {
+                    this.i.guardarEventoTipo1(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(), alarmas);
+                } catch (IOException e) {
+                    //
+                }
                 return;
             }
             fechaFinal = LocalDateTime.parse(this.fechaFinalText.getText(), Main.formatterConHoras);
@@ -81,10 +105,13 @@ public class eventoVentana extends Application implements Initializable {
             Main.lanzarVentanaError();
             return;
         }
-        int ID = Main.calendario.crearEvento(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(),
-                fechaFinal, new FrecuenciaDiaria(this.repeticionVentana.obtenerRepeticiones()));
-        this.agregarAlarmas(ID);
-        Main.guardarEstado();
+        ArrayList<Duration> alarmas = this.obtenerAlarmas();
+        try {
+            this.i.guardarEventoTipo2(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(),
+                    fechaFinal, new FrecuenciaDiaria(this.repeticionVentana.obtenerRepeticiones()), alarmas);
+        } catch (IOException e) {
+            //
+        }
         Stage stage = (Stage) scenePane.getScene().getWindow();
         stage.close();
     }
@@ -128,11 +155,10 @@ public class eventoVentana extends Application implements Initializable {
                 this.repeticion.getValue().equals(valoresPosibles[1]);
     }
 
-    private void agregarAlarmas(int ID) {
+    private ArrayList<Duration> obtenerAlarmas() {
         if (this.alarmas.getValue() != null && this.alarmas.getValue().equals(valoresPosibles[0])) {
-            for (Duration duracion : this.ventanaAlarma.obtenerDuraciones()) {
-                Main.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
-            }
+            return this.ventanaAlarma.obtenerDuraciones();
         }
+        return null;
     }
 }

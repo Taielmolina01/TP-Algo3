@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 public class tareaVentana extends Application implements Initializable {
     private Button botonCrear;
@@ -39,6 +40,23 @@ public class tareaVentana extends Application implements Initializable {
     private String[] valoresPosibles = new String[]{"Sí", "No"};
     private intervaloAlarmaVentana ventanaAlarma;
     private ArrayList<Duration> duraciones;
+    private interfazGuardado i;
+
+
+    /*
+     Opc1: Deberia devolver el tarea con las alarmas agregadas y despues directamente lo agrego al calendario.
+     Me estoy cagando en la fachada y deberia agregar esa forma de agregar un tarea al modelo
+     (Calendario.java), tampoco lo veo taaan mal, es una ventana para agregar una tarea.
+     Opc2: paso toda la info necesaria para agregar la tarea y sus alarmas y lo hago desde el main(creo q
+     estaria mejor aunque en cuanto a codigo es + largo).
+
+     Esto se haria al ejecutarse ingresarDatosTarea() y en caso de haber exito, deberia usar el observer con una
+     callback function.
+    */
+
+    public tareaVentana(interfazGuardado i) {
+        this.i = i;
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -65,13 +83,7 @@ public class tareaVentana extends Application implements Initializable {
             Main.lanzarVentanaError();
             return;
         }
-        int ID = Main.calendario.crearTarea(nombre, descripcion, fechaInicio, this.diaCompleto.isSelected());
-        if (this.ventanaAlarma != null) {
-            for (Duration duracion : this.ventanaAlarma.obtenerDuraciones()) {
-                Main.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
-            }
-        }
-        Main.guardarEstado();
+        this.i.guardarTarea(nombre, descripcion, fechaInicio, this.diaCompleto.isSelected(), this.obtenerAlarmas());
         Stage stage = (Stage) scenePane.getScene().getWindow();
         stage.close();
     }
@@ -91,5 +103,12 @@ public class tareaVentana extends Application implements Initializable {
                 Main.lanzarVentanaError();
             }
         }
+    }
+
+    private ArrayList<Duration> obtenerAlarmas() {
+        if (this.ventanaAlarma != null) {
+            return this.ventanaAlarma.obtenerDuraciones();
+        }
+        return null;
     }
 }

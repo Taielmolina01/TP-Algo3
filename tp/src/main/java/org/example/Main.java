@@ -14,6 +14,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.Actividades.Actividad;
+import org.example.Alarma.Alarma;
+import org.example.Frecuencia.FrecuenciaDiaria;
 import org.example.Visitadores.visitadorElementosCalendario;
 
 import java.io.IOException;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class Main extends Application implements Initializable {
+public class Main extends Application implements Initializable, interfazGuardado {
 
     @FXML
     private Text lapsoTiempoActual;
@@ -43,8 +45,8 @@ public class Main extends Application implements Initializable {
     private HashMap<String, String> meses;
     private ArrayList<ArrayList<String>> infoElementosCalendarioActuales;
     private coloreadorCeldas coloreador;
-    protected static ManejadorGuardado manejador = new ManejadorGuardado(System.out);
-    protected static Calendario calendario = new Calendario();
+    protected ManejadorGuardado manejador = new ManejadorGuardado(System.out);
+    protected Calendario calendario = new Calendario();
     private String textoDiario;
     private String textoSemanal;
     private String textoMensual;
@@ -53,7 +55,6 @@ public class Main extends Application implements Initializable {
     private final visitadorElementosCalendario visitador = new visitadorElementosCalendario();
     public static DateTimeFormatter formatterConHoras = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     public static DateTimeFormatter formatterSinHoras = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -221,17 +222,23 @@ public class Main extends Application implements Initializable {
         String tipoElemento = this.cajaCrear.getValue();
         if (tipoElemento.equals(this.valoresCrear[1])) {
             try {
-                new eventoVentana().start(new Stage());
+                eventoVentana ventana = new eventoVentana(this);
+                ventana.start(new Stage());
             } catch (Exception e) {
                 //
             }
         } else if (tipoElemento.equals(this.valoresCrear[2])) {
             try {
-                new tareaVentana().start(new Stage());
+                new tareaVentana(this).start(new Stage());
             } catch (Exception e) {
+                System.out.println("hola2");
                 //
             }
         }
+    }
+
+    public void guardar() throws IOException {
+        this.calendario.guardarEstado(this.manejador);
     }
 
     public static void lanzarVentanaError() {
@@ -269,10 +276,6 @@ public class Main extends Application implements Initializable {
         this.finSemana = this.fechaActual.plusDays(aSumar).with(LocalTime.MAX);
     }
 
-    public static void guardarEstado() throws IOException  {
-        calendario.guardarEstado(manejador);
-    }
-
     private void cambioSeleccion(Observable Observable) {
         int indice = this.listaEventosTareas.getSelectionModel().getSelectedIndex();
         String infoCompletaSeleccionado = this.infoElementosCalendarioActuales.get(1).get(indice);
@@ -282,6 +285,50 @@ public class Main extends Application implements Initializable {
             ventana.setText(infoCompletaSeleccionado); // No se setea el text
         } catch (Exception e) {
             //
+        }
+    }
+
+    @Override
+    public void guardarEventoTipo1(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
+                                   ArrayList<Duration> duracionesAlarmas) throws IOException {
+        int ID = this.calendario.crearEvento(nombre, descripcion, fechaInicio, duracion, diaCompleto);
+        this.agregarAlarmas(ID, duracionesAlarmas);
+        try {
+            this.guardar();
+        } catch (IOException e) {
+            throw new IOException("Algo salió mal con el guardado");
+        }
+    }
+
+    @Override
+    public void guardarEventoTipo2(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
+                                   LocalDateTime fechaFinal, FrecuenciaDiaria frecuencia, ArrayList<Duration> duracionesAlarmas) throws  IOException {
+        int ID = this.calendario.crearEvento(nombre, descripcion, fechaInicio, duracion, diaCompleto, fechaFinal, frecuencia);
+        this.agregarAlarmas(ID, duracionesAlarmas);
+        try {
+            this.guardar();
+        } catch (IOException e) {
+            throw new IOException("Algo salió mal con el guardado");
+        }
+    }
+
+    @Override
+    public void guardarTarea(String nombre, String descripcion, LocalDateTime fechaInicio, boolean diaCompleto,
+                             ArrayList<Duration> duracionesAlarmas) throws IOException {
+        int ID = this.calendario.crearTarea(nombre, descripcion, fechaInicio, diaCompleto);
+        this.agregarAlarmas(ID, duracionesAlarmas);
+        try {
+            this.guardar();
+        } catch (IOException e) {
+            throw new IOException("Algo salió mal con el guardado");
+        }
+    }
+
+    private void agregarAlarmas(int ID, ArrayList<Duration> duraciones) {
+        if (duraciones != null) {
+            for (Duration duracion : duraciones) {
+                this.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
+            }
         }
     }
 }
