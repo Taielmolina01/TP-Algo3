@@ -2,21 +2,18 @@ package org.example;
 
 import javafx.application.Application;
 import javafx.beans.Observable;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.example.ElementosCalendario.ElementoCalendario;
+import org.example.Actividades.Actividad;
 import org.example.Visitadores.visitadorElementosCalendario;
 
 import java.io.IOException;
@@ -24,7 +21,6 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
@@ -132,7 +128,7 @@ public class Main extends Application implements Initializable {
     }
 
     private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
-        ArrayList<ElementoCalendario> elementos = calendario.obtenerElementosCalendarioEntreFechas(fechaInicio, fechaFin);
+        ArrayList<Actividad> elementos = calendario.obtenerElementosCalendarioEntreFechas(fechaInicio, fechaFin);
         this.infoElementosCalendarioActuales = this.visitador.visitarElementos(elementos);
         this.listaEventosTareas.getItems().addAll(this.infoElementosCalendarioActuales.get(0));
         // la info completa la tengo que guardar en algun lado
@@ -274,23 +270,18 @@ public class Main extends Application implements Initializable {
     }
 
     public static void guardarEstado() throws IOException  {
-            calendario.guardarEstado(manejador);
+        calendario.guardarEstado(manejador);
     }
 
     private void cambioSeleccion(Observable Observable) {
         int indice = this.listaEventosTareas.getSelectionModel().getSelectedIndex();
-        System.out.println(this.infoElementosCalendarioActuales);
-        /*
         String infoCompletaSeleccionado = this.infoElementosCalendarioActuales.get(1).get(indice);
         try {
             infoCompletaVentana ventana = new infoCompletaVentana();
             ventana.start(new Stage());
-            ventana.pasarInformacion(infoCompletaSeleccionado);
+            ventana.setText(infoCompletaSeleccionado); // No se setea el text
         } catch (Exception e) {
             //
-        } finally {
-            this.listaEventosTareas.getSelectionModel().clearSelection();
         }
-        */
     }
 }

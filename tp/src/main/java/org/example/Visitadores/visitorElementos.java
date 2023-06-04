@@ -1,7 +1,7 @@
 package org.example.Visitadores;
 
-import org.example.ElementosCalendario.Evento;
-import org.example.ElementosCalendario.Tarea;
+import org.example.Actividades.Evento;
+import org.example.Actividades.Tarea;
 
 public interface visitorElementos {
 

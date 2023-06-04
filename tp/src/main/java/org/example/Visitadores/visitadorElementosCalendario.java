@@ -1,9 +1,9 @@
 package org.example.Visitadores;
 
 import org.example.Alarma.Alarma;
-import org.example.ElementosCalendario.ElementoCalendario;
-import org.example.ElementosCalendario.Evento;
-import org.example.ElementosCalendario.Tarea;
+import org.example.Actividades.Actividad;
+import org.example.Actividades.Evento;
+import org.example.Actividades.Tarea;
 import org.example.Main;
 
 import java.util.ArrayList;
@@ -19,12 +19,12 @@ public class visitadorElementosCalendario implements visitorElementos {
 
     private visitorFrecuencia visitanteFrecuencia = new visitadorEventosFrecuencia();
 
-    public ArrayList<ArrayList<String>> visitarElementos(List<ElementoCalendario> elementos) { // ver bien como imprimir la info
+    public ArrayList<ArrayList<String>> visitarElementos(List<Actividad> elementos) { // ver bien como imprimir la info
         ArrayList<ArrayList<String>> infoElementosActuales = new ArrayList<>();
         ArrayList<String> infoResumida = new ArrayList<>();
         ArrayList<String> infoCompleta = new ArrayList<>();
         ArrayList<String> colores = new ArrayList<>();
-        for (ElementoCalendario elemento : elementos) {
+        for (Actividad elemento : elementos) {
             String resumida = elemento.obtenerInfoResumida(this);
             String completa = elemento.obtenerInfoCompleta(this);
             String color = elemento.obtenerColor(this).toString();

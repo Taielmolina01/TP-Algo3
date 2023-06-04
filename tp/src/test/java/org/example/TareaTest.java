@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.ElementosCalendario.Tarea;
+import org.example.Actividades.Tarea;
 import org.junit.Test;
 
 import java.time.LocalDateTime;

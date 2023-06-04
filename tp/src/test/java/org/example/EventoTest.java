@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.ElementosCalendario.Evento;
+import org.example.Actividades.Evento;
 import org.example.Frecuencia.*;
 import org.junit.Test;
 

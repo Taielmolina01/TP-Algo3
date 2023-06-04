@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 public class ManejadorGuardado {
-
     private final PrintStream salida;
     private final String rutaArchivoGuardado = "MiCalendario.txt";
     private final File archivoGuardado = new File(this.rutaArchivoGuardado);
@@ -22,11 +21,11 @@ public class ManejadorGuardado {
             calendario.serializar(this.salida, archivoDestino);
         } catch (FileNotFoundException e) {
             this.salida.println("El archivo de guardado no existe.");
+            throw new FileNotFoundException("El archivo de guardado no existe.");
         }
-        throw new FileNotFoundException("El archivo de guardado no existe.");
     }
 
-    protected Calendario recuperarEstado() throws FileNotFoundException, IOException, ClassNotFoundException {
+    protected Calendario recuperarEstado() throws IOException, ClassNotFoundException {
         try {
             FileInputStream archivo = new FileInputStream(this.rutaArchivoGuardado);
             return (new Calendario()).deserializar(this.salida, archivo);

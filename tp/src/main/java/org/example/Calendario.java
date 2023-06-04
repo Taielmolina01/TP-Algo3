@@ -1,9 +1,9 @@
 package org.example;
 
 import org.example.Alarma.Alarma;
-import org.example.ElementosCalendario.ElementoCalendario;
-import org.example.ElementosCalendario.Evento;
-import org.example.ElementosCalendario.Tarea;
+import org.example.Actividades.Actividad;
+import org.example.Actividades.Evento;
+import org.example.Actividades.Tarea;
 import org.example.Frecuencia.Frecuencia;
 
 import java.io.*;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class Calendario implements Serializable {
 
-    public final HashMap<Integer, ElementoCalendario> elementosCalendario;
+    public final HashMap<Integer, Actividad> elementosCalendario;
     public int indiceElementoCalendario;
     private final ArrayList<Alarma> alarmas;
 
@@ -95,7 +95,7 @@ public class Calendario implements Serializable {
     }
 
     public void eliminarElementoCalendario(int id) {
-        ElementoCalendario elementoEliminado = this.elementosCalendario.remove(id);
+        Actividad elementoEliminado = this.elementosCalendario.remove(id);
         if (elementoEliminado != null) {
             for (Alarma alarma : elementoEliminado.obtenerAlarmas().values()) {
                 this.alarmas.remove(alarma);
@@ -103,10 +103,10 @@ public class Calendario implements Serializable {
         }
     }
 
-    public ArrayList<ElementoCalendario> obtenerElementosCalendarioEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
-        ArrayList<ElementoCalendario> elementos = new ArrayList<>();
-        for (ElementoCalendario elemento : this.elementosCalendario.values()) {
-            if (ElementoCalendario.estaEntreFechas(elemento.obtenerFechaInicio(), fechaInicio, fechaFinal)) {
+    public ArrayList<Actividad> obtenerElementosCalendarioEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
+        ArrayList<Actividad> elementos = new ArrayList<>();
+        for (Actividad elemento : this.elementosCalendario.values()) {
+            if (Actividad.estaEntreFechas(elemento.obtenerFechaInicio(), fechaInicio, fechaFinal)) {
                 elementos.add(elemento);
             }
         }
@@ -115,12 +115,12 @@ public class Calendario implements Serializable {
 
 
     public void agregarAlarma(int id, Alarma.Efecto efecto, LocalDateTime fechaActivacion) {
-        ElementoCalendario elemento = this.elementosCalendario.get(id);
+        Actividad elemento = this.elementosCalendario.get(id);
         this.alarmas.add(elemento.agregarAlarma(efecto, fechaActivacion));
     }
 
     public void agregarAlarma(int id, Alarma.Efecto efecto, Duration intervaloTiempo) {
-        ElementoCalendario elemento = this.elementosCalendario.get(id);
+        Actividad elemento = this.elementosCalendario.get(id);
         this.alarmas.add(elemento.agregarAlarma(efecto, intervaloTiempo));
     }
 
@@ -226,10 +226,10 @@ public class Calendario implements Serializable {
     protected Calendario deserializar(PrintStream salida, InputStream is) throws IOException, ClassNotFoundException {
         try {
             ObjectInputStream objectInStream = new ObjectInputStream(is);
-            HashMap<Integer, ElementoCalendario> elementos = (HashMap<Integer, ElementoCalendario>) objectInStream.readObject();
+            HashMap<Integer, Actividad> elementos = (HashMap<Integer, Actividad>) objectInStream.readObject();
             Calendario calendarioNuevo = new Calendario();
             calendarioNuevo.elementosCalendario.putAll(elementos);
-            for (ElementoCalendario elemento : calendarioNuevo.elementosCalendario.values()) {
+            for (Actividad elemento : calendarioNuevo.elementosCalendario.values()) {
                 calendarioNuevo.alarmas.addAll(elemento.obtenerAlarmas().values());
             }
             calendarioNuevo.indiceElementoCalendario = (Integer) objectInStream.readObject();

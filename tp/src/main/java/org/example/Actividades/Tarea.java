@@ -1,4 +1,4 @@
-package org.example.ElementosCalendario;
+package org.example.Actividades;
 
 import org.example.Visitadores.visitadorElementosCalendario;
 import org.example.Visitadores.visitorElementos;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Tarea extends ElementoCalendario implements Serializable {
+public class Tarea extends Actividad implements Serializable {
 
     private boolean completada;
 
@@ -27,7 +27,6 @@ public class Tarea extends ElementoCalendario implements Serializable {
     public ArrayList<LocalDateTime> elementosEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
         return new ArrayList<>(Arrays.asList(this.fechaInicio));
     }
-
     public String obtenerInfoResumida(visitorElementos visitante) {
         return visitante.obtenerInfoResumida(this);
     }

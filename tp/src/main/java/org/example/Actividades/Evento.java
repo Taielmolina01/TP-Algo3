@@ -1,4 +1,4 @@
-package org.example.ElementosCalendario;
+package org.example.Actividades;
 
 import org.example.Frecuencia.Frecuencia;
 import org.example.Visitadores.visitadorElementosCalendario;
@@ -9,7 +9,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Evento extends ElementoCalendario implements Serializable {
+public class Evento extends Actividad implements Serializable {
 
     private LocalDateTime fechaFin; // Fin del evento sin contar sus repeticiones, NO es la fecha en donde terminan las repeticiones.
     private LocalDateTime fechaFinalRepeticion; // Fecha en la que terminan las repeticiones del evento.
@@ -114,7 +114,7 @@ public class Evento extends ElementoCalendario implements Serializable {
         return estaEntreFechas(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
     }
 
-     @Override
+    @Override
     public String obtenerInfoResumida(visitorElementos visitante) {
         return visitante.obtenerInfoResumida(this);
     }
@@ -128,4 +128,5 @@ public class Evento extends ElementoCalendario implements Serializable {
     public visitadorElementosCalendario.colorFondo obtenerColor(visitorElementos visitante) {
         return visitante.obtenerColor(this);
     }
+
 }

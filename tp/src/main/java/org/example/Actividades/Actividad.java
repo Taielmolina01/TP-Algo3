@@ -1,4 +1,4 @@
-package org.example.ElementosCalendario;
+package org.example.Actividades;
 
 import org.example.Alarma.Alarma;
 import org.example.Visitadores.visitadorElementosCalendario;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class ElementoCalendario implements Serializable {
+public abstract class Actividad implements Serializable {
     protected String nombre;
     protected String descripcion;
     protected boolean todoElDia;
@@ -18,7 +18,7 @@ public abstract class ElementoCalendario implements Serializable {
     private final HashMap<Integer, Alarma> alarmas;
     private int indiceAlarmas;
 
-    public ElementoCalendario(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {
+    public Actividad(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.todoElDia = todoElDia;
