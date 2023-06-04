@@ -27,6 +27,7 @@ public class Tarea extends Actividad implements Serializable {
     public ArrayList<LocalDateTime> elementosEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
         return new ArrayList<>(Arrays.asList(this.fechaInicio));
     }
+
     public String obtenerInfoResumida(visitorElementos visitante) {
         return visitante.obtenerInfoResumida(this);
     }

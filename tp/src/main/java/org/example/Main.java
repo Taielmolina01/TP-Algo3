@@ -23,7 +23,6 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,7 +70,7 @@ public class Main extends Application implements Initializable, interfazGuardado
         } else if (rangoActual.equals(this.valoresRango[1])) {
             this.fechaActual = this.fechaActual.minusWeeks(1);
         } else {
-                this.fechaActual = this.fechaActual.minusMonths(1);
+            this.fechaActual = this.fechaActual.minusMonths(1);
         }
         this.establecerInicioYFinSemana();
         this.establecerText();
@@ -248,8 +247,6 @@ public class Main extends Application implements Initializable, interfazGuardado
             //
         }
     }
-
-
 
     private void establecerInicioYFinSemana() {
         int diaSemanaActual = this.fechaActual.getDayOfWeek().getValue();

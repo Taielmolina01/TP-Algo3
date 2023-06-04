@@ -6,12 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
@@ -22,7 +22,6 @@ import java.util.ResourceBundle;
 
 
 public class tareaVentana extends Application implements Initializable {
-    private Button botonCrear;
     @FXML
     private TextField nombreTarea;
     @FXML
@@ -71,7 +70,7 @@ public class tareaVentana extends Application implements Initializable {
         String nombre = this.nombreTarea.getText();
         String descripcion = this.descripcionTarea.getText();
         LocalDateTime fechaInicio;
-        if (nombre.equals("") || descripcion.equals("")) {
+        if (datosInicialesNoSonValidos(nombre, descripcion)) {
             Main.lanzarVentanaError();
             return;
         }
@@ -89,6 +88,10 @@ public class tareaVentana extends Application implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.alarmas.getItems().addAll(this.valoresPosibles);
+    }
+
+    private boolean datosInicialesNoSonValidos(String nombre, String descripcion) {
+        return nombre.equals("") || descripcion.equals("");
     }
 
     @FXML

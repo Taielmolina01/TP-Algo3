@@ -1,9 +1,9 @@
 package org.example;
 
-import org.example.Alarma.Alarma;
 import org.example.Actividades.Actividad;
 import org.example.Actividades.Evento;
 import org.example.Actividades.Tarea;
+import org.example.Alarma.Alarma;
 import org.example.Frecuencia.Frecuencia;
 
 import java.io.*;
@@ -24,21 +24,21 @@ public class Calendario implements Serializable {
     }
 
     public int crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
-                            boolean todoElDia) {
+                           boolean todoElDia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia);
         this.elementosCalendario.put(this.indiceElementoCalendario++, evento);
         return this.indiceElementoCalendario - 1;
     }
 
     public int crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
-                            boolean todoElDia, LocalDateTime fechaFinalRepeticion, Frecuencia frecuencia) {
+                           boolean todoElDia, LocalDateTime fechaFinalRepeticion, Frecuencia frecuencia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia, fechaFinalRepeticion, frecuencia);
         this.elementosCalendario.put(this.indiceElementoCalendario++, evento);
         return this.indiceElementoCalendario - 1;
     }
 
     public int crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
-                            boolean todoElDia, Integer ocurrencias, Frecuencia frecuencia) {
+                           boolean todoElDia, Integer ocurrencias, Frecuencia frecuencia) {
         Evento evento = new Evento(nombre, descripcion, fechaInicio, duracion, todoElDia, ocurrencias, frecuencia);
         this.elementosCalendario.put(this.indiceElementoCalendario++, evento);
         return this.indiceElementoCalendario - 1;
@@ -187,7 +187,6 @@ public class Calendario implements Serializable {
     }
 
 
-
     public void guardarEstado(ManejadorGuardado manejador) throws IOException {
         manejador.guardarEstado(this);
     }
@@ -210,8 +209,7 @@ public class Calendario implements Serializable {
         } catch (IOException e) {
             salida.println("El flujo de salida no existe.");
             throw new IOException("El flujo de salida no existe");
-        }
-        finally {
+        } finally {
             if (o != null) {
                 try {
                     o.close();

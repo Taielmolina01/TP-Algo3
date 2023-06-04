@@ -23,7 +23,7 @@ public class infoCompletaVentana extends Application {
         stageCrearEvento.show();
     }
 
-    public void setText(String info){
+    public void setText(String info) {
         this.infoCompleta.setText(info);
     }
 }

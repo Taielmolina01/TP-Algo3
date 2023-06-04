@@ -88,18 +88,26 @@ public class Evento extends Actividad implements Serializable {
         this.calcularFechaFin();
     }
 
-    public Duration obtenerDuracion() { return this.duracion; }
+    public Duration obtenerDuracion() {
+        return this.duracion;
+    }
 
-    public LocalDateTime obtenerFechaFinalDefinitivo() { return this.fechaFinalRepeticion; }
+    public LocalDateTime obtenerFechaFinalDefinitivo() {
+        return this.fechaFinalRepeticion;
+    }
 
-    public Frecuencia obtenerFrecuencia() { return this.frecuencia; }
+    public Frecuencia obtenerFrecuencia() {
+        return this.frecuencia;
+    }
 
 
     @Override
     public ArrayList<LocalDateTime> elementosEntreFechas(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
         LocalDateTime dia = fechaInicial.isBefore(this.fechaInicio) ? this.fechaInicio : fechaInicial;
         ArrayList<LocalDateTime> eventos = new ArrayList<>();
-        if (fechaInicial.isAfter(this.fechaFinalRepeticion)) { return eventos; }
+        if (fechaInicial.isAfter(this.fechaFinalRepeticion)) {
+            return eventos;
+        }
         while (estaEntreFechas(dia, fechaInicial, this.fechaFinalRepeticion) && estaEntreFechas(dia, fechaInicial, fechaFinal)) {
             eventos.add(dia);
             dia = this.frecuencia.obtenerProximaFecha(dia);
@@ -109,7 +117,7 @@ public class Evento extends Actividad implements Serializable {
 
     public boolean hayEvento(LocalDateTime diaAAnalizar) {
         ArrayList<LocalDateTime> eventos = elementosEntreFechas(this.fechaInicio, diaAAnalizar);
-        LocalDateTime ultimoDiaInicio = eventos.get(eventos.size()-1);
+        LocalDateTime ultimoDiaInicio = eventos.get(eventos.size() - 1);
         LocalDateTime ultimoDiaFin = ultimoDiaInicio.plus(this.duracion);
         return estaEntreFechas(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
     }

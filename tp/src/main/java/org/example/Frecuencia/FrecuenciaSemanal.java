@@ -21,7 +21,7 @@ public class FrecuenciaSemanal extends Frecuencia {
         DayOfWeek fechaDia = fechaInicial.getDayOfWeek();
         DayOfWeek proximoDia = this.diasSemana.first();
 
-        for (DayOfWeek dia: DayOfWeek.values()) {
+        for (DayOfWeek dia : DayOfWeek.values()) {
             if (this.diasSemana.contains(dia) && dia.getValue() > fechaDia.getValue()) {
                 proximoDia = dia;
                 break;

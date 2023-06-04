@@ -11,19 +11,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.example.Alarma.Alarma;
-import org.example.Frecuencia.Frecuencia;
 import org.example.Frecuencia.FrecuenciaDiaria;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.function.Function;
 
 public class eventoVentana extends Application implements Initializable {
 
@@ -122,18 +118,6 @@ public class eventoVentana extends Application implements Initializable {
     }
 
     @FXML
-    public void crearAlarmas() {
-        if (this.alarmas.getValue().equals(this.valoresPosibles[0])) {
-            try {
-                this.ventanaAlarma = new intervaloAlarmaVentana();
-                this.ventanaAlarma.start(new Stage());
-            } catch (Exception e) {
-                Main.lanzarVentanaError();
-            }
-        }
-    }
-
-    @FXML
     public void establecerRepeticionDiaria() {
         if (this.repeticion.getValue().equals(this.valoresPosibles[0])) {
             try {
@@ -152,6 +136,18 @@ public class eventoVentana extends Application implements Initializable {
     private boolean noHayRepeticion() {
         return this.repeticionVentana == null || this.repeticionVentana.obtenerRepeticiones() == null ||
                 this.repeticion.getValue().equals(valoresPosibles[1]);
+    }
+
+    @FXML
+    public void crearAlarmas() {
+        if (this.alarmas.getValue().equals(this.valoresPosibles[0])) {
+            try {
+                this.ventanaAlarma = new intervaloAlarmaVentana();
+                this.ventanaAlarma.start(new Stage());
+            } catch (Exception e) {
+                Main.lanzarVentanaError();
+            }
+        }
     }
 
     private ArrayList<Duration> obtenerAlarmas() {

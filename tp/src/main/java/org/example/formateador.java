@@ -23,7 +23,7 @@ public class formateador {
         }
         if (formateado.length != 3) {
             return null;
-        }  else {
+        } else {
             return Duration.ofHours(horas).plusMinutes(minutos).plusSeconds(segundos);
         }
     }

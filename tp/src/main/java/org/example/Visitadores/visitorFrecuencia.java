@@ -8,7 +8,10 @@ import org.example.Frecuencia.FrecuenciaSemanal;
 public interface visitorFrecuencia {
 
     String obtenerFrecuencia(FrecuenciaDiaria frecuencia);
+
     String obtenerFrecuencia(FrecuenciaSemanal frecuencia);
+
     String obtenerFrecuencia(FrecuenciaMensual frecuencia);
+
     String obtenerFrecuencia(FrecuenciaAnual frecuencia);
 }

@@ -1,10 +1,9 @@
 package org.example.Visitadores;
 
-import org.example.Alarma.Alarma;
 import org.example.Actividades.Actividad;
 import org.example.Actividades.Evento;
 import org.example.Actividades.Tarea;
-import org.example.Main;
+import org.example.Alarma.Alarma;
 import org.example.formateador;
 
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class visitadorElementosCalendario implements visitorElementos {
                 evento.obtenerFechaInicio().format(formateador.formatterConHoras);
         String esDeDiaCompleto = evento.obtenerTodoElDia() ? " Es de dia completo." : "";
         resultado = "Nombre: " + evento.obtenerNombre() + "." + "\nDescripción: " + evento.obtenerDescripcion() + "." + "\nFecha de inicio: "
-        + fechaInicio + "." + esDeDiaCompleto + "\nFecha fin: " + evento.obtenerFechaFinalDefinitivo().format(formateador.formatterConHoras) + ".";
+                + fechaInicio + "." + esDeDiaCompleto + "\nFecha fin: " + evento.obtenerFechaFinalDefinitivo().format(formateador.formatterConHoras) + ".";
         HashMap<Integer, Alarma> alarmas = evento.obtenerAlarmas();
         String stringAlarmas = "";
         if (alarmas.size() == 0) {
@@ -77,7 +76,7 @@ public class visitadorElementosCalendario implements visitorElementos {
         estado = tarea.estaCompletada() ? "Completada." : "No completada.";
         if (tarea.obtenerTodoElDia()) {
             return "Nombre: " + tarea.obtenerNombre() + ". Fecha de inicio: " + tarea.obtenerFechaInicio().toLocalDate().
-            format(formateador.formatterSinHoras) + ". Es de dia completo" + ". Estado: " + estado;
+                    format(formateador.formatterSinHoras) + ". Es de dia completo" + ". Estado: " + estado;
         }
         return "Nombre: " + tarea.obtenerNombre() + ". Fecha de inicio: " + tarea.obtenerFechaInicio().format(formateador.formatterConHoras) +
                 ". Estado: " + estado;
