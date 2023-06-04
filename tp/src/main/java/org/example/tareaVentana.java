@@ -12,8 +12,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.example.Alarma.Alarma;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
@@ -21,7 +19,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.function.Function;
+
 
 public class tareaVentana extends Application implements Initializable {
     private Button botonCrear;
@@ -78,7 +76,7 @@ public class tareaVentana extends Application implements Initializable {
             return;
         }
         try {
-            fechaInicio = LocalDateTime.parse(this.fechaInicio.getText(), Main.formatterConHoras);
+            fechaInicio = LocalDateTime.parse(this.fechaInicio.getText(), formateador.formatterConHoras);
         } catch (DateTimeParseException e4) {
             Main.lanzarVentanaError();
             return;
@@ -95,7 +93,7 @@ public class tareaVentana extends Application implements Initializable {
 
     @FXML
     public void crearAlarmas() {
-        if (this.alarmas.getValue().equals("Sí")) {
+        if (this.alarmas.getValue().equals(valoresPosibles[0])) {
             try {
                 this.ventanaAlarma = new intervaloAlarmaVentana();
                 this.ventanaAlarma.start(new Stage());
@@ -106,7 +104,7 @@ public class tareaVentana extends Application implements Initializable {
     }
 
     private ArrayList<Duration> obtenerAlarmas() {
-        if (this.ventanaAlarma != null) {
+        if (this.alarmas.getValue() != null && this.alarmas.getValue().equals(valoresPosibles[0])) {
             return this.ventanaAlarma.obtenerDuraciones();
         }
         return null;

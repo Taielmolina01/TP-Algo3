@@ -59,7 +59,6 @@ public class eventoVentana extends Application implements Initializable {
 
      Esto se haria al ejecutarse ingresarDatosEvento() y en caso de haber exito, deberia usar el observer con una
      callback function.
-
      */
 
     public eventoVentana(interfazGuardado i) {
@@ -77,18 +76,18 @@ public class eventoVentana extends Application implements Initializable {
     }
 
     @FXML
-    public void ingresarDatosEvento(){ // Revisar si se me esta escapando algun caso borde mas
+    public void ingresarDatosEvento() {
         String nombre = this.nombreEventoText.getText();
         String descripcion = this.descripcionEventoText.getText();
         LocalDateTime fechaInicio;
         LocalDateTime fechaFinal;
-        Duration duracionEvento = Main.formatearDuracion(this.duracionEventoText.getText());
+        Duration duracionEvento = formateador.formatearDuracion(this.duracionEventoText.getText());
         if (this.datosInicialesNoSonValidos(nombre, descripcion, duracionEvento)) {
             Main.lanzarVentanaError();
             return;
         }
         try {
-            fechaInicio = LocalDateTime.parse(this.fechaInicioText.getText(), Main.formatterConHoras);
+            fechaInicio = LocalDateTime.parse(this.fechaInicioText.getText(), formateador.formatterConHoras);
             if (this.noHayRepeticion()) {
                 ArrayList<Duration> alarmas = this.obtenerAlarmas();
                 Stage stage = (Stage) scenePane.getScene().getWindow();
@@ -100,7 +99,7 @@ public class eventoVentana extends Application implements Initializable {
                 }
                 return;
             }
-            fechaFinal = LocalDateTime.parse(this.fechaFinalText.getText(), Main.formatterConHoras);
+            fechaFinal = LocalDateTime.parse(this.fechaFinalText.getText(), formateador.formatterConHoras);
         } catch (DateTimeParseException e4) {
             Main.lanzarVentanaError();
             return;

@@ -35,7 +35,7 @@ public class intervaloAlarmaVentana extends Application {
     @FXML
     public void clickOk() {
         String intervalo = this.intervalo.getText();
-        Duration intervaloFormateado = Main.formatearDuracion(intervalo);
+        Duration intervaloFormateado = formateador.formatearDuracion(intervalo);
         if (intervaloFormateado != null) {
             this.mensaje.setText("✓ Alarma agregada");
             this.duracionAlarmas.add(intervaloFormateado);
