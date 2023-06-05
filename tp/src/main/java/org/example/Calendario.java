@@ -222,10 +222,18 @@ public class Calendario implements Serializable {
     }
 
     protected Calendario deserializar(PrintStream salida, InputStream is) throws IOException, ClassNotFoundException {
+        Calendario calendarioNuevo = new Calendario();
+        try {
+            if (is.read() == -1) {
+                salida.println("El flujo de entrada está vacío.");
+                return calendarioNuevo;
+            }
+        } catch (IOException e) {
+            //
+        }
         try {
             ObjectInputStream objectInStream = new ObjectInputStream(is);
             HashMap<Integer, Actividad> elementos = (HashMap<Integer, Actividad>) objectInStream.readObject();
-            Calendario calendarioNuevo = new Calendario();
             calendarioNuevo.elementosCalendario.putAll(elementos);
             for (Actividad elemento : calendarioNuevo.elementosCalendario.values()) {
                 calendarioNuevo.alarmas.addAll(elemento.obtenerAlarmas().values());
@@ -233,8 +241,8 @@ public class Calendario implements Serializable {
             calendarioNuevo.indiceElementoCalendario = (Integer) objectInStream.readObject();
             return calendarioNuevo;
         } catch (IOException e) {
-            salida.println("El flujo de entrada no existe o está vacío.");
-            throw new IOException("El flujo de entrada no existe o está vacío.");
+            salida.println("El flujo de entrada no existe.");
+            throw new IOException("El flujo de entrada no existe.");
         } catch (ClassNotFoundException e) {
             salida.println("La clase Calendario no se encuentra en este paquete.");
             throw new ClassNotFoundException("La clase Calendario no se encuentra en este paquete.");

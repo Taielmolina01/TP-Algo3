@@ -26,8 +26,12 @@ public class PersistenciaTest {
     public void testDeserializarEntradaVacía() {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         PrintStreamMock salida = new PrintStreamMock(System.out);
-        assertThrows(IOException.class, () -> new Calendario().deserializar(salida, new ByteArrayInputStream(bytes.toByteArray())));
-        assertEquals("El flujo de entrada no existe o está vacío.", salida.obtenerLoQueSeImprimio());
+        try {
+            new Calendario().deserializar(salida, new ByteArrayInputStream(bytes.toByteArray()));
+        } catch (Exception e) {
+            //
+        }
+        assertEquals("El flujo de entrada está vacío.", salida.obtenerLoQueSeImprimio());
     }
 
     @Test

@@ -43,8 +43,8 @@ public class Main extends Application implements interfazGuardado, Initializable
     private HashMap<String, String> meses;
     private ArrayList<ArrayList<String>> infoElementosCalendarioActuales;
     private coloreadorCeldas coloreador;
-    protected ManejadorGuardado manejador = new ManejadorGuardado(System.out);
-    protected Calendario calendario = new Calendario();
+    protected ManejadorGuardado manejador;
+    protected Calendario calendario;
     private String textoDiario;
     private String textoSemanal;
     private String textoMensual;
@@ -151,6 +151,12 @@ public class Main extends Application implements interfazGuardado, Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.fechaActual = LocalDateTime.now();
+        this.manejador = new ManejadorGuardado(System.out);
+        try {
+            this.calendario = new Calendario().recuperarEstado(this.manejador);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         this.establecerMeses();
         this.establecerInicioYFinSemana();
         this.establecerText();
@@ -218,17 +224,15 @@ public class Main extends Application implements interfazGuardado, Initializable
         String tipoElemento = this.cajaCrear.getValue();
         if (tipoElemento.equals(this.valoresCrear[1])) {
             try {
-                new eventoVentana(this).start(new Stage());
-                //new eventoVentana().start(new Stage());
+                new eventoVentana(this).start();
             } catch (Exception e) {
-                //
+                throw new RuntimeException(e);
             }
         } else if (tipoElemento.equals(this.valoresCrear[2])) {
             try {
-                new tareaVentana(this).start(new Stage());
-                //new tareaVentana().start(new Stage());
+                new tareaVentana(this).start();
             } catch (Exception e) {
-                //
+                throw new RuntimeException(e);
             }
         }
     }

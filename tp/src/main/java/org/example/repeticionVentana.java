@@ -1,25 +1,34 @@
 package org.example;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class repeticionVentana extends Application {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class repeticionVentana implements Initializable {
+
+    @FXML
+    private Button botonOk;
     @FXML
     private TextField repeticion;
     @FXML
     private Text mensaje;
-
     private Integer repeticiones;
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/escenaRepeticion.fxml"));
+    public void start() throws Exception {
+        var loader = new FXMLLoader(getClass().getResource("/escenaRepeticion.fxml"));
+        loader.setController(this);
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stageIntervalo = new Stage();
         stageIntervalo.setTitle("Definir repeticiones");
@@ -28,7 +37,7 @@ public class repeticionVentana extends Application {
     }
 
     @FXML
-    public void clickOk() {
+    public void clickOk(ActionEvent event) {
         String repeticion = this.repeticion.getText();
         try {
             this.repeticiones = Integer.parseInt(repeticion);
@@ -43,4 +52,8 @@ public class repeticionVentana extends Application {
     }
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.botonOk.setOnAction(this::clickOk);
+    }
 }

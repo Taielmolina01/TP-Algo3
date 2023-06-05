@@ -1,11 +1,13 @@
 package org.example;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -21,8 +23,10 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class eventoVentana extends Application implements Initializable {
+public class eventoVentana implements Initializable {
 
+    @FXML
+    private Button botonCrear;
     @FXML
     private TextField nombreEventoText;
     @FXML
@@ -62,9 +66,10 @@ public class eventoVentana extends Application implements Initializable {
         this.i = i;
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/escenaCrearEvento.fxml"));
+    public void start() throws Exception {
+        var loader = new FXMLLoader(getClass().getResource("/escenaCrearEvento.fxml"));
+        loader.setController(this);
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stageCrearEvento = new Stage();
         stageCrearEvento.setTitle("Creando evento");
@@ -73,7 +78,7 @@ public class eventoVentana extends Application implements Initializable {
     }
 
     @FXML
-    public void ingresarDatosEvento() {
+    public void ingresarDatosEvento(ActionEvent action) {
         String nombre = this.nombreEventoText.getText();
         String descripcion = this.descripcionEventoText.getText();
         LocalDateTime fechaInicio;
@@ -116,14 +121,17 @@ public class eventoVentana extends Application implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.alarmas.getItems().addAll(this.valoresPosibles);
         this.repeticion.getItems().addAll(this.valoresPosibles);
+        this.botonCrear.setOnAction(this::ingresarDatosEvento);
+        this.repeticion.setOnAction(this::establecerRepeticionDiaria);
+        this.alarmas.setOnAction(this::crearAlarmas);
     }
 
     @FXML
-    public void establecerRepeticionDiaria() {
+    public void establecerRepeticionDiaria(ActionEvent event) {
         if (this.repeticion.getValue().equals(this.valoresPosibles[0])) {
             try {
                 this.repeticionVentana = new repeticionVentana();
-                this.repeticionVentana.start(new Stage());
+                this.repeticionVentana.start();
             } catch (Exception e) {
                 Main.lanzarVentanaError();
             }
@@ -140,7 +148,7 @@ public class eventoVentana extends Application implements Initializable {
     }
 
     @FXML
-    public void crearAlarmas() {
+    public void crearAlarmas(ActionEvent event) {
         if (this.alarmas.getValue().equals(this.valoresPosibles[0])) {
             try {
                 this.ventanaAlarma = new intervaloAlarmaVentana();
