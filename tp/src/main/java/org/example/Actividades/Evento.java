@@ -1,8 +1,8 @@
 package org.example.Actividades;
 
 import org.example.Frecuencia.Frecuencia;
-import org.example.Visitadores.visitadorElementosCalendario;
-import org.example.Visitadores.visitorElementos;
+import org.example.Visitadores.visitadorActividades;
+import org.example.Visitadores.visitorActividades;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -68,7 +68,7 @@ public class Evento extends Actividad implements Serializable {
     }
 
     private void calcularFechaFinDefinitivo() {
-        LocalDateTime fecha = this.fechaInicio;
+        LocalDateTime fecha = this.obtenerFechaInicio();
         for (int i = 1; i < this.ocurrencias; i++) {
             fecha = this.frecuencia.obtenerProximaFecha(fecha);
         }
@@ -76,11 +76,11 @@ public class Evento extends Actividad implements Serializable {
     }
 
     private void calcularFechaFin() {
-        this.fechaFin = this.fechaInicio.plus(this.duracion);
+        this.fechaFin = this.obtenerFechaInicio().plus(this.duracion);
     }
 
     private void definirDuracion(Duration duracion) {
-        if (this.todoElDia) {
+        if (this.obtenerTodoElDia()) {
             this.duracion = Duration.ofHours(23).plusMinutes(59).plusSeconds(59);
         } else {
             this.duracion = duracion;
@@ -100,10 +100,9 @@ public class Evento extends Actividad implements Serializable {
         return this.frecuencia;
     }
 
-
     @Override
-    public ArrayList<LocalDateTime> elementosEntreFechas(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
-        LocalDateTime dia = fechaInicial.isBefore(this.fechaInicio) ? this.fechaInicio : fechaInicial;
+    public ArrayList<LocalDateTime> actividadesEntreFechas(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
+        LocalDateTime dia = fechaInicial.isBefore(this.obtenerFechaInicio()) ? this.obtenerFechaInicio() : fechaInicial;
         ArrayList<LocalDateTime> eventos = new ArrayList<>();
         if (fechaInicial.isAfter(this.fechaFinalRepeticion)) {
             return eventos;
@@ -116,24 +115,24 @@ public class Evento extends Actividad implements Serializable {
     }
 
     public boolean hayEvento(LocalDateTime diaAAnalizar) {
-        ArrayList<LocalDateTime> eventos = elementosEntreFechas(this.fechaInicio, diaAAnalizar);
+        ArrayList<LocalDateTime> eventos = actividadesEntreFechas(this.obtenerFechaInicio(), diaAAnalizar);
         LocalDateTime ultimoDiaInicio = eventos.get(eventos.size() - 1);
         LocalDateTime ultimoDiaFin = ultimoDiaInicio.plus(this.duracion);
         return estaEntreFechas(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
     }
 
     @Override
-    public String obtenerInfoResumida(visitorElementos visitante) {
+    public String obtenerInfoResumida(visitorActividades visitante) {
         return visitante.obtenerInfoResumida(this);
     }
 
     @Override
-    public String obtenerInfoCompleta(visitorElementos visitante) {
+    public String obtenerInfoCompleta(visitorActividades visitante) {
         return visitante.obtenerInfoCompleta(this);
     }
 
     @Override
-    public visitadorElementosCalendario.colorFondo obtenerColor(visitorElementos visitante) {
+    public visitadorActividades.colorFondo obtenerColor(visitorActividades visitante) {
         return visitante.obtenerColor(this);
     }
 

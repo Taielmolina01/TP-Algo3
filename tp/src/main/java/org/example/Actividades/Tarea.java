@@ -1,7 +1,7 @@
 package org.example.Actividades;
 
-import org.example.Visitadores.visitadorElementosCalendario;
-import org.example.Visitadores.visitorElementos;
+import org.example.Visitadores.visitadorActividades;
+import org.example.Visitadores.visitorActividades;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -24,20 +24,20 @@ public class Tarea extends Actividad implements Serializable {
         return this.completada;
     }
 
-    public ArrayList<LocalDateTime> elementosEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
-        return new ArrayList<>(Arrays.asList(this.fechaInicio));
+    public ArrayList<LocalDateTime> actividadesEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
+        return new ArrayList<>(Arrays.asList(this.obtenerFechaInicio()));
     }
 
-    public String obtenerInfoResumida(visitorElementos visitante) {
+    public String obtenerInfoResumida(visitorActividades visitante) {
         return visitante.obtenerInfoResumida(this);
     }
 
-    public String obtenerInfoCompleta(visitorElementos visitante) {
+    public String obtenerInfoCompleta(visitorActividades visitante) {
         return visitante.obtenerInfoCompleta(this);
     }
 
     @Override
-    public visitadorElementosCalendario.colorFondo obtenerColor(visitorElementos visitante) {
+    public visitadorActividades.colorFondo obtenerColor(visitorActividades visitante) {
         return visitante.obtenerColor(this);
     }
 }

@@ -1,8 +1,8 @@
 package org.example.Actividades;
 
 import org.example.Alarma.Alarma;
-import org.example.Visitadores.visitadorElementosCalendario;
-import org.example.Visitadores.visitorElementos;
+import org.example.Visitadores.visitadorActividades;
+import org.example.Visitadores.visitorActividades;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Actividad implements Serializable {
-    protected String nombre;
-    protected String descripcion;
-    protected boolean todoElDia;
-    protected LocalDateTime fechaInicio;
+    private String nombre;
+    private String descripcion;
+    private boolean todoElDia;
+    private LocalDateTime fechaInicio;
     private final HashMap<Integer, Alarma> alarmas;
     private int indiceAlarmas;
 
@@ -99,11 +99,11 @@ public abstract class Actividad implements Serializable {
         return diaAAnalizar.equals(diaInicio) || diaAAnalizar.equals(diaFin) || (diaAAnalizar.isAfter(diaInicio) && diaAAnalizar.isBefore(diaFin));
     }
 
-    public abstract ArrayList<LocalDateTime> elementosEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    public abstract ArrayList<LocalDateTime> actividadesEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
-    public abstract String obtenerInfoResumida(visitorElementos visitante);
+    public abstract String obtenerInfoResumida(visitorActividades visitante);
 
-    public abstract String obtenerInfoCompleta(visitorElementos visitante);
+    public abstract String obtenerInfoCompleta(visitorActividades visitante);
 
-    public abstract visitadorElementosCalendario.colorFondo obtenerColor(visitorElementos visitante);
+    public abstract visitadorActividades.colorFondo obtenerColor(visitorActividades visitante);
 }

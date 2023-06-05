@@ -11,7 +11,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
@@ -19,7 +18,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 
 public class tareaVentana extends Application implements Initializable {
     @FXML
@@ -51,6 +49,7 @@ public class tareaVentana extends Application implements Initializable {
      callback function.
     */
 
+
     public tareaVentana(interfazGuardado i) {
         this.i = i;
     }
@@ -66,7 +65,7 @@ public class tareaVentana extends Application implements Initializable {
     }
 
     @FXML
-    public void ingresarDatosTarea() throws IOException { // Revisar el orden de to-do esto.
+    public void ingresarDatosTarea() throws IOException {
         String nombre = this.nombreTarea.getText();
         String descripcion = this.descripcionTarea.getText();
         LocalDateTime fechaInicio;

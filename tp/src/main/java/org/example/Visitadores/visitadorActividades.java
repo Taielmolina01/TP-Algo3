@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class visitadorElementosCalendario implements visitorElementos {
+public class visitadorActividades implements visitorActividades {
 
     public enum colorFondo {
         AZUL,

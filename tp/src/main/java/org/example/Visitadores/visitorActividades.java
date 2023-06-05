@@ -3,7 +3,7 @@ package org.example.Visitadores;
 import org.example.Actividades.Evento;
 import org.example.Actividades.Tarea;
 
-public interface visitorElementos {
+public interface visitorActividades {
 
     String obtenerInfoResumida(Evento evento);
 
@@ -13,9 +13,7 @@ public interface visitorElementos {
 
     String obtenerInfoCompleta(Tarea tarea);
 
-    visitadorElementosCalendario.colorFondo obtenerColor(Evento evento);
+    visitadorActividades.colorFondo obtenerColor(Evento evento);
 
-    visitadorElementosCalendario.colorFondo obtenerColor(Tarea tarea);
-
-
+    visitadorActividades.colorFondo obtenerColor(Tarea tarea);
 }

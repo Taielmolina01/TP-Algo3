@@ -84,7 +84,7 @@ public class Calendario implements Serializable {
         evento.modificarFechaFinal(nuevaFechaFinal);
     }
 
-    public void moficiarFrecuencia(int id, Frecuencia nuevaFrecuencia) {
+    public void modificarFrecuencia(int id, Frecuencia nuevaFrecuencia) {
         Evento evento = (Evento) this.elementosCalendario.get(id);
         evento.modificarFrecuencia(nuevaFrecuencia);
     }
@@ -103,7 +103,7 @@ public class Calendario implements Serializable {
         }
     }
 
-    public ArrayList<Actividad> obtenerElementosCalendarioEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
+    public ArrayList<Actividad> obtenerActividadesEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
         ArrayList<Actividad> elementos = new ArrayList<>();
         for (Actividad elemento : this.elementosCalendario.values()) {
             if (Actividad.estaEntreFechas(elemento.obtenerFechaInicio(), fechaInicio, fechaFinal)) {

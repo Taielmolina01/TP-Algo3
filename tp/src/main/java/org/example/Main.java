@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import org.example.Actividades.Actividad;
 import org.example.Alarma.Alarma;
 import org.example.Frecuencia.FrecuenciaDiaria;
-import org.example.Visitadores.visitadorElementosCalendario;
+import org.example.Visitadores.visitadorActividades;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,8 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class Main extends Application implements Initializable, interfazGuardado {
-
+public class Main extends Application implements interfazGuardado, Initializable {
     @FXML
     private Text lapsoTiempoActual;
     @FXML
@@ -37,7 +36,7 @@ public class Main extends Application implements Initializable, interfazGuardado
     @FXML
     private ComboBox<String> cajaCrear;
     @FXML
-    private ListView<String> listaEventosTareas;
+    private ListView<String> listaActividades;
     private LocalDateTime fechaActual;
     private LocalDateTime inicioSemana;
     private LocalDateTime finSemana;
@@ -51,7 +50,7 @@ public class Main extends Application implements Initializable, interfazGuardado
     private String textoMensual;
     private String[] valoresRango;
     private String[] valoresCrear;
-    private final visitadorElementosCalendario visitador = new visitadorElementosCalendario();
+    private final visitadorActividades visitador = new visitadorActividades();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -83,7 +82,7 @@ public class Main extends Application implements Initializable, interfazGuardado
             texto = this.textoMensual;
         }
         this.lapsoTiempoActual.setText(texto);
-        this.actualizarListaEventosTareas();
+        this.actualizarListaActividades();
     }
 
     @FXML
@@ -107,11 +106,11 @@ public class Main extends Application implements Initializable, interfazGuardado
             texto = this.textoMensual;
         }
         this.lapsoTiempoActual.setText(texto);
-        this.actualizarListaEventosTareas();
+        this.actualizarListaActividades();
     }
 
-    private void actualizarListaEventosTareas() {
-        this.listaEventosTareas.getItems().clear();
+    private void actualizarListaActividades() {
+        this.listaActividades.getItems().clear();
         if (this.rangoTiempo.getValue().equals(this.valoresRango[0])) {
             LocalDateTime fechaInicio = this.fechaActual.with(LocalTime.MIN);
             LocalDateTime fechaLimite = this.fechaActual.with(LocalTime.MAX);
@@ -126,9 +125,9 @@ public class Main extends Application implements Initializable, interfazGuardado
     }
 
     private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
-        ArrayList<Actividad> elementos = calendario.obtenerElementosCalendarioEntreFechas(fechaInicio, fechaFin);
+        ArrayList<Actividad> elementos = calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin);
         this.infoElementosCalendarioActuales = this.visitador.visitarElementos(elementos);
-        this.listaEventosTareas.getItems().addAll(this.infoElementosCalendarioActuales.get(0));
+        this.listaActividades.getItems().addAll(this.infoElementosCalendarioActuales.get(0));
         // la info completa la tengo que guardar en algun lado
         //this.coloreador.actualizarInfo(this.info);
     }
@@ -162,9 +161,9 @@ public class Main extends Application implements Initializable, interfazGuardado
         this.lapsoTiempoActual.setText(this.textoMensual);
         this.rangoTiempo.setOnAction(this::actualizarRango);
         this.cajaCrear.setOnAction(this::crearElementoCalendario);
-        this.listaEventosTareas.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
-        this.actualizarListaEventosTareas();
-        this.listaEventosTareas.setCellFactory(param -> new coloreadorCeldas(this.infoElementosCalendarioActuales));
+        this.listaActividades.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
+        this.actualizarListaActividades();
+        this.listaActividades.setCellFactory(param -> new coloreadorCeldas(this.infoElementosCalendarioActuales));
     }
 
     private void establecerText() {
@@ -212,7 +211,7 @@ public class Main extends Application implements Initializable, interfazGuardado
             texto = this.textoMensual;
         }
         this.lapsoTiempoActual.setText(texto);
-        this.actualizarListaEventosTareas();
+        this.actualizarListaActividades();
     }
 
     private void crearElementoCalendario(ActionEvent event) {
@@ -220,12 +219,14 @@ public class Main extends Application implements Initializable, interfazGuardado
         if (tipoElemento.equals(this.valoresCrear[1])) {
             try {
                 new eventoVentana(this).start(new Stage());
+                //new eventoVentana().start(new Stage());
             } catch (Exception e) {
                 //
             }
         } else if (tipoElemento.equals(this.valoresCrear[2])) {
             try {
                 new tareaVentana(this).start(new Stage());
+                //new tareaVentana().start(new Stage());
             } catch (Exception e) {
                 //
             }
@@ -257,7 +258,7 @@ public class Main extends Application implements Initializable, interfazGuardado
     }
 
     private void cambioSeleccion(Observable Observable) {
-        int indice = this.listaEventosTareas.getSelectionModel().getSelectedIndex();
+        int indice = this.listaActividades.getSelectionModel().getSelectedIndex();
         String infoCompletaSeleccionado = this.infoElementosCalendarioActuales.get(1).get(indice);
         try {
             infoCompletaVentana ventana = new infoCompletaVentana();
@@ -272,24 +273,27 @@ public class Main extends Application implements Initializable, interfazGuardado
     public void guardarEventoTipo1(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
                                    ArrayList<Duration> duracionesAlarmas) {
         int ID = this.calendario.crearEvento(nombre, descripcion, fechaInicio, duracion, diaCompleto);
-        this.agregarAlarmas(ID, duracionesAlarmas);
-        this.guardar();
+        this.guardarNuevaActividad(ID, duracionesAlarmas);
     }
 
-    @Override
+        @Override
     public void guardarEventoTipo2(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
                                    LocalDateTime fechaFinal, FrecuenciaDiaria frecuencia, ArrayList<Duration> duracionesAlarmas) {
         int ID = this.calendario.crearEvento(nombre, descripcion, fechaInicio, duracion, diaCompleto, fechaFinal, frecuencia);
-        this.agregarAlarmas(ID, duracionesAlarmas);
-        this.guardar();
+        this.guardarNuevaActividad(ID, duracionesAlarmas);
     }
 
     @Override
     public void guardarTarea(String nombre, String descripcion, LocalDateTime fechaInicio, boolean diaCompleto,
                              ArrayList<Duration> duracionesAlarmas) {
         int ID = this.calendario.crearTarea(nombre, descripcion, fechaInicio, diaCompleto);
+        this.guardarNuevaActividad(ID, duracionesAlarmas);
+    }
+
+    private void guardarNuevaActividad(int ID, ArrayList<Duration> duracionesAlarmas) {
         this.agregarAlarmas(ID, duracionesAlarmas);
         this.guardar();
+        this.actualizarListaActividades();
     }
 
     private void agregarAlarmas(int ID, ArrayList<Duration> duracionesAlarmas) {

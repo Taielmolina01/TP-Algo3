@@ -4,7 +4,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
-import org.example.Visitadores.visitadorElementosCalendario;
+import org.example.Visitadores.visitadorActividades;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ public class coloreadorCeldas extends ListCell<String> {
         if (item != null && !empty) {
             setText(item);
             int i = getIndex();
-            if (this.info.get(2).get(i).equals(visitadorElementosCalendario.colorFondo.AZUL.toString())) {
+            if (this.info.get(2).get(i).equals(visitadorActividades.colorFondo.AZUL.toString())) {
                 setBackground(new Background(new BackgroundFill(Color.web(this.colorAzul), null, null)));
             } else {
                 setBackground(new Background(new BackgroundFill(Color.web(this.colorVerde), null, null)));

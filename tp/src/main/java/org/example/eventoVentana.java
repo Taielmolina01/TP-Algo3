@@ -57,6 +57,7 @@ public class eventoVentana extends Application implements Initializable {
      callback function.
      */
 
+
     public eventoVentana(interfazGuardado i) {
         this.i = i;
     }
