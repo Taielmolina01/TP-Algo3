@@ -41,7 +41,7 @@ public class Main extends Application implements interfazGuardado, Initializable
     private LocalDateTime inicioSemana;
     private LocalDateTime finSemana;
     private HashMap<String, String> meses;
-    private ArrayList<ArrayList<String>> infoElementosCalendarioActuales;
+    private ArrayList<ArrayList<String>> infoActividadesActuales;
     private coloreadorCeldas coloreador;
     protected ManejadorGuardado manejador;
     protected Calendario calendario;
@@ -125,9 +125,10 @@ public class Main extends Application implements interfazGuardado, Initializable
     }
 
     private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
-        ArrayList<Actividad> elementos = calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin);
-        this.infoElementosCalendarioActuales = this.visitador.visitarElementos(elementos);
-        this.listaActividades.getItems().addAll(this.infoElementosCalendarioActuales.get(0));
+        ArrayList<Actividad> actividadesActuales = calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin); // esto deberia ordenarlo
+        // y guardarlo para cuando quiero agregar una alarma o lo que sea, pero en especifico para lo del completado no completado de las tareas.
+        this.infoActividadesActuales = this.visitador.visitarElementos(actividadesActuales);
+        this.listaActividades.getItems().addAll(this.infoActividadesActuales.get(0));
         // la info completa la tengo que guardar en algun lado
         //this.coloreador.actualizarInfo(this.info);
     }
@@ -169,7 +170,7 @@ public class Main extends Application implements interfazGuardado, Initializable
         this.cajaCrear.setOnAction(this::crearVentanaActividad);
         this.listaActividades.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
         this.actualizarListaActividades();
-        this.listaActividades.setCellFactory(param -> new coloreadorCeldas(this.infoElementosCalendarioActuales));
+        this.listaActividades.setCellFactory(param -> new coloreadorCeldas(this.infoActividadesActuales));
     }
 
     private void establecerText() {
@@ -263,7 +264,7 @@ public class Main extends Application implements interfazGuardado, Initializable
 
     private void cambioSeleccion(Observable Observable) {
         int indice = this.listaActividades.getSelectionModel().getSelectedIndex();
-        String infoCompletaSeleccionado = this.infoElementosCalendarioActuales.get(1).get(indice);
+        String infoCompletaSeleccionado = this.infoActividadesActuales.get(1).get(indice);
         try {
             infoCompletaVentana ventana = new infoCompletaVentana();
             ventana.start(new Stage());

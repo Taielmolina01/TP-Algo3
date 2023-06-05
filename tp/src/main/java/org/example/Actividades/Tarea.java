@@ -12,8 +12,8 @@ public class Tarea extends Actividad implements Serializable {
 
     private boolean completada;
 
-    public Tarea(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {
-        super(nombre, descripcion, fechaInicio, todoElDia);
+    public Tarea(int ID, String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {
+        super(ID, nombre, descripcion, fechaInicio, todoElDia);
     }
 
     public void cambiarEstadoTarea() {

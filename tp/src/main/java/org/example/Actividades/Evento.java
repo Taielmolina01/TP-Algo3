@@ -20,26 +20,26 @@ public class Evento extends Actividad implements Serializable {
     // Constructores.
 
     // Constructor si no se repite el evento nunca.
-    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
+    public Evento(int ID, String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                   boolean todoElDia) {
-        super(nombre, descripcion, fechaInicio, todoElDia);
+        super(ID, nombre, descripcion, fechaInicio, todoElDia);
         this.definirDuracion(duracion);
         this.fechaFinalRepeticion = this.fechaFin;
     }
 
     // Constructor si se repite el evento dada la fecha de fin.
-    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
+    public Evento(int ID, String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                   boolean todoElDia, LocalDateTime fechaFinalRepeticion, Frecuencia frecuencia) {
-        super(nombre, descripcion, fechaInicio, todoElDia);
+        super(ID, nombre, descripcion, fechaInicio, todoElDia);
         this.definirDuracion(duracion);
         this.fechaFinalRepeticion = fechaFinalRepeticion;
         this.frecuencia = frecuencia;
     }
 
     // Constructor si se repite el evento dada las veces que se va a repetir el evento.
-    public Evento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
+    public Evento(int ID, String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
                   boolean todoElDia, Integer ocurrencias, Frecuencia frecuencia) {
-        super(nombre, descripcion, fechaInicio, todoElDia);
+        super(ID, nombre, descripcion, fechaInicio, todoElDia);
         this.definirDuracion(duracion);
         this.frecuencia = frecuencia;
         this.ocurrencias = ocurrencias;

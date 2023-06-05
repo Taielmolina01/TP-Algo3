@@ -22,7 +22,7 @@ public class EventoTest {
         Duration duracion = Duration.ofHours(3);
         String nombreEvento = "Juntada";
         String descripcionEvento = "con los chicos del secundario";
-        Evento evento = new Evento(nombreEvento, descripcionEvento, fechaEvento, duracion, false);
+        Evento evento = new Evento(0, nombreEvento, descripcionEvento, fechaEvento, duracion, false);
 
         assertEquals(nombreEvento, evento.obtenerNombre());
         assertEquals(descripcionEvento, evento.obtenerDescripcion());
@@ -54,7 +54,7 @@ public class EventoTest {
         LocalDateTime fechaFinal = LocalDateTime.MAX;
         Duration duracion = Duration.ofHours(12);
         Frecuencia frecuencia = new FrecuenciaAnual(1);
-        Evento evento = new Evento("Cumpleaños", "de Fede Esteban", fechaInicio, duracion, true, fechaFinal, frecuencia);
+        Evento evento = new Evento(0, "Cumpleaños", "de Fede Esteban", fechaInicio, duracion, true, fechaFinal, frecuencia);
 
         assertEquals(frecuencia, evento.obtenerFrecuencia());
         for (int i = 2019; i < 2091; i++) {
@@ -87,7 +87,7 @@ public class EventoTest {
         LocalDateTime fechaFinal = LocalDateTime.MAX;
         Duration duracion = Duration.ofHours(12);
         Frecuencia frecuencia = new FrecuenciaAnual(1);
-        Evento evento = new Evento("Cumpleaños", "de Diego Essaya", fechaInicio, duracion, true, fechaFinal, frecuencia);
+        Evento evento = new Evento(0, "Cumpleaños", "de Diego Essaya", fechaInicio, duracion, true, fechaFinal, frecuencia);
 
         for (int i = 2001; i < 2091; i++) {
             assertTrue(evento.hayEvento(LocalDateTime.of(i, 12, 22, 0, 0, 0)));
@@ -101,7 +101,7 @@ public class EventoTest {
         LocalDateTime fechaFinal = LocalDateTime.of(2023, 7, 1, 0, 0, 0);
         Duration duracion = Duration.ofHours(3);
         Frecuencia frecuencia = new FrecuenciaMensual(1);
-        Evento evento = new Evento("Reunión", "de FIUBA", fechaInicio, duracion, false, fechaFinal, frecuencia);
+        Evento evento = new Evento(0, "Reunión", "de FIUBA", fechaInicio, duracion, false, fechaFinal, frecuencia);
 
         for (int i = 3; i < 7; i++) {
             assertTrue(evento.hayEvento(LocalDateTime.of(2023, i, 15, 14, 0, 0)));
@@ -117,7 +117,7 @@ public class EventoTest {
         DayOfWeek[] dias = new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY};
         SortedSet<DayOfWeek> diasSemana = new TreeSet<>(Arrays.asList(dias));
         FrecuenciaSemanal frecuencia = new FrecuenciaSemanal(diasSemana, 1);
-        Evento evento = new Evento("Clases", "en FIUBA", fechaInicio, null, true, fechaFinal, frecuencia);
+        Evento evento = new Evento(0, "Clases", "en FIUBA", fechaInicio, null, true, fechaFinal, frecuencia);
 
         for (int i = 0; i < frecuencia.obtenerDiasSemana().size() ; i++) {
             assertEquals(dias[i], frecuencia.obtenerDiasSemana().toArray()[i]);
@@ -162,7 +162,7 @@ public class EventoTest {
         DayOfWeek[] dias = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY};
         TreeSet<DayOfWeek> diasSemana = new TreeSet<>(Arrays.asList(dias));
         FrecuenciaSemanal frecuencia = new FrecuenciaSemanal(diasSemana, 2);
-        Evento evento = new Evento("Clases", "en FIUBA", fechaInicio, null, true, 6, frecuencia);
+        Evento evento = new Evento(0, "Clases", "en FIUBA", fechaInicio, null, true, 6, frecuencia);
 
         int[] diasTrue = {16, 17, 19, 20, 30, 31};
         int[] diasFalse = {18, 21, 22, 23, 24, 25, 26, 27, 28, 29};
@@ -198,7 +198,7 @@ public class EventoTest {
         LocalDateTime fechaFinal = LocalDateTime.of(2023, 4, 16, 0, 0, 0);
         Frecuencia frecuencia = new FrecuenciaDiaria(2);
         Duration duracion = Duration.ofHours(2).plusMinutes(20);
-        Evento evento = new Evento("Almuerzo", "con mi abuela", fechaInicio, duracion, false, fechaFinal, frecuencia);
+        Evento evento = new Evento(0, "Almuerzo", "con mi abuela", fechaInicio, duracion, false, fechaFinal, frecuencia);
 
 
         for (int i = 16; i < 31; i = i + 2) {
@@ -234,7 +234,7 @@ public class EventoTest {
         LocalDateTime fechaFinal = LocalDateTime.of(2021, 7, 11, 21, 0, 0);
         Frecuencia frecuencia = new FrecuenciaDiaria(1);
         Duration duracion = Duration.ofHours(2).plusMinutes(20);
-        Evento evento = new Evento("Cena", "con decano FIUBA", fechaInicio, duracion, false, 20, frecuencia);
+        Evento evento = new Evento(0, "Cena", "con decano FIUBA", fechaInicio, duracion, false, 20, frecuencia);
 
         for (int i = 10; i < 30; i++) {
             assertTrue(evento.hayEvento(LocalDateTime.of(2021,5, i, 21, 0, 0)));
@@ -258,7 +258,7 @@ public class EventoTest {
         TreeSet<DayOfWeek> diasSemana = new TreeSet<>(Arrays.asList(dias));
         Frecuencia frecuencia = new FrecuenciaSemanal(diasSemana,1);
         Duration duracion = Duration.ofHours(2);
-        Evento evento = new Evento("Ir al gimnasio", "de a la vuelta de casa", fechaInicio, duracion, false, 11, frecuencia);
+        Evento evento = new Evento(0, "Ir al gimnasio", "de a la vuelta de casa", fechaInicio, duracion, false, 11, frecuencia);
 
         int[] diasTrue = {6, 7, 9, 10, 13, 14, 16, 17, 20, 21, 23};
 
@@ -300,7 +300,7 @@ public class EventoTest {
         LocalDateTime fechaFinal = LocalDateTime.of(2023, 4, 16, 0, 0, 0);
         Frecuencia frecuencia = new FrecuenciaDiaria(2);
         Duration duracion = Duration.ofHours(2).plusMinutes(20);
-        Evento evento = new Evento("Almuerzo", "con mi abuela", fechaInicio, duracion, false, fechaFinal, frecuencia);
+        Evento evento = new Evento(0, "Almuerzo", "con mi abuela", fechaInicio, duracion, false, fechaFinal, frecuencia);
 
         for (int i = 16; i < 31; i = i + 2) {
             assertTrue(evento.hayEvento(LocalDateTime.of(2023, 3, i, 12, 30, 0)));
@@ -345,7 +345,7 @@ public class EventoTest {
         TreeSet<DayOfWeek> diasSemana = new TreeSet<>(Arrays.asList(dias));
 
         Frecuencia frecuenciaSemanal = new FrecuenciaSemanal(diasSemana, 1);
-        Evento evento = new Evento("Conciertos", "de Mora", fechaInicio, duracion, false, fechaFinal, frecuenciaSemanal);
+        Evento evento = new Evento(0, "Conciertos", "de Mora", fechaInicio, duracion, false, fechaFinal, frecuenciaSemanal);
 
         int[] diasTrue = {11, 12, 14, 15, 18, 19, 21, 22, 25};
         ArrayList<LocalDateTime> fechasTrue = new ArrayList<>();

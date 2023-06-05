@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Actividad implements Serializable {
+    private int ID;
     private String nombre;
     private String descripcion;
     private boolean todoElDia;
@@ -18,7 +19,8 @@ public abstract class Actividad implements Serializable {
     private final HashMap<Integer, Alarma> alarmas;
     private int indiceAlarmas;
 
-    public Actividad(String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {
+    public Actividad(int ID, String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {
+        this.ID = ID;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.todoElDia = todoElDia;
@@ -44,6 +46,10 @@ public abstract class Actividad implements Serializable {
 
     public Alarma obtenerAlarma(int id) {
         return this.alarmas.get(id);
+    }
+
+    public int obtenerID() {
+        return this.ID;
     }
 
     public String obtenerNombre() {
