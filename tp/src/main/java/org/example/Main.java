@@ -160,7 +160,7 @@ public class Main extends Application implements interfazGuardado, Initializable
         this.cajaCrear.getItems().addAll(this.valoresCrear);
         this.lapsoTiempoActual.setText(this.textoMensual);
         this.rangoTiempo.setOnAction(this::actualizarRango);
-        this.cajaCrear.setOnAction(this::crearElementoCalendario);
+        this.cajaCrear.setOnAction(this::crearVentanaActividad);
         this.listaActividades.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
         this.actualizarListaActividades();
         this.listaActividades.setCellFactory(param -> new coloreadorCeldas(this.infoElementosCalendarioActuales));
@@ -214,7 +214,7 @@ public class Main extends Application implements interfazGuardado, Initializable
         this.actualizarListaActividades();
     }
 
-    private void crearElementoCalendario(ActionEvent event) {
+    private void crearVentanaActividad(ActionEvent event) {
         String tipoElemento = this.cajaCrear.getValue();
         if (tipoElemento.equals(this.valoresCrear[1])) {
             try {
