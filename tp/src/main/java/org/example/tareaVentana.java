@@ -1,6 +1,5 @@
 package org.example;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
@@ -110,7 +110,7 @@ public class tareaVentana implements Initializable {
         if (this.alarmas.getValue().equals(valoresPosibles[0])) {
             try {
                 this.ventanaAlarma = new intervaloAlarmaVentana();
-                this.ventanaAlarma.start(new Stage());
+                this.ventanaAlarma.start();
             } catch (Exception e) {
                 Main.lanzarVentanaError();
             }

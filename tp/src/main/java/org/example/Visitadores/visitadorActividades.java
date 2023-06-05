@@ -19,7 +19,7 @@ public class visitadorActividades implements visitorActividades {
 
     private visitorFrecuencia visitanteFrecuencia = new visitadorEventosFrecuencia();
 
-    public ArrayList<ArrayList<String>> visitarElementos(List<Actividad> elementos) { // ver bien como imprimir la info
+    public ArrayList<ArrayList<String>> visitarActividades(List<Actividad> elementos) { // ver bien como imprimir la info
         ArrayList<ArrayList<String>> infoElementosActuales = new ArrayList<>();
         ArrayList<String> infoResumida = new ArrayList<>();
         ArrayList<String> infoCompleta = new ArrayList<>();

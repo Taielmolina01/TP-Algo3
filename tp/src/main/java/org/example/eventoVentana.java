@@ -1,6 +1,5 @@
 package org.example;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -152,7 +151,7 @@ public class eventoVentana implements Initializable {
         if (this.alarmas.getValue().equals(this.valoresPosibles[0])) {
             try {
                 this.ventanaAlarma = new intervaloAlarmaVentana();
-                this.ventanaAlarma.start(new Stage());
+                this.ventanaAlarma.start();
             } catch (Exception e) {
                 Main.lanzarVentanaError();
             }

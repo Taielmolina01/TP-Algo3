@@ -125,9 +125,9 @@ public class Main extends Application implements interfazGuardado, Initializable
     }
 
     private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
-        ArrayList<Actividad> actividadesActuales = calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin); // esto deberia ordenarlo
+        ArrayList<Actividad> actividadesActuales = this.calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin); // esto deberia ordenarlo
         // y guardarlo para cuando quiero agregar una alarma o lo que sea, pero en especifico para lo del completado no completado de las tareas.
-        this.infoActividadesActuales = this.visitador.visitarElementos(actividadesActuales);
+        this.infoActividadesActuales = this.visitador.visitarActividades(actividadesActuales);
         this.listaActividades.getItems().addAll(this.infoActividadesActuales.get(0));
         // la info completa la tengo que guardar en algun lado
         //this.coloreador.actualizarInfo(this.info);
@@ -248,9 +248,9 @@ public class Main extends Application implements interfazGuardado, Initializable
 
     public static void lanzarVentanaError() {
         try {
-            new errorVentana().start(new Stage());
+            new errorVentana().start();
         } catch (Exception e5) {
-            //
+            System.out.println("hola");
         }
     }
 
@@ -267,8 +267,7 @@ public class Main extends Application implements interfazGuardado, Initializable
         String infoCompletaSeleccionado = this.infoActividadesActuales.get(1).get(indice);
         try {
             infoCompletaVentana ventana = new infoCompletaVentana();
-            ventana.start(new Stage());
-            ventana.setText(infoCompletaSeleccionado); // No se setea el text
+            ventana.start(infoCompletaSeleccionado);
         } catch (Exception e) {
             //
         }

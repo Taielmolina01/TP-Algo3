@@ -1,6 +1,5 @@
 package org.example;
 
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +12,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 
 
-public class intervaloAlarmaVentana extends Application {
+public class intervaloAlarmaVentana {
 
     @FXML
     private TextField intervalo;
@@ -22,9 +21,10 @@ public class intervaloAlarmaVentana extends Application {
 
     private ArrayList<Duration> duracionAlarmas = new ArrayList<>();
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/escenaIntervalo.fxml"));
+    public void start() throws Exception {
+        var loader = new FXMLLoader(getClass().getResource("/escenaIntervalo.fxml"));
+        loader.setController(this);
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stageIntervalo = new Stage();
         stageIntervalo.setTitle("Definir intervalo alarma");

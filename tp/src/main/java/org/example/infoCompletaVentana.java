@@ -1,6 +1,5 @@
 package org.example;
 
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,22 +7,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class infoCompletaVentana extends Application {
+public class infoCompletaVentana {
 
     @FXML
     private TextField infoCompleta;
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/escenaInfoCompleta.fxml"));
+    public void start(String info) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/escenaInfoCompleta.fxml"));
+        loader.setController(this);
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stageCrearEvento = new Stage();
         stageCrearEvento.setTitle("Información completa");
         stageCrearEvento.setScene(scene);
         stageCrearEvento.show();
-    }
-
-    public void setText(String info) {
         this.infoCompleta.setText(info);
     }
 }
