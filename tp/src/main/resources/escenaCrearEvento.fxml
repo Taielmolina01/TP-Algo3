@@ -6,7 +6,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="327.0" prefWidth="330.0" style="-fx-background-color: #EAEDED; -fx-border-radius: 50;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">   <children>
+<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="327.0" prefWidth="330.0" style="-fx-background-color: #EAEDED; -fx-border-radius: 50;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+      <children>
       <TextField fx:id="nombreEventoText" layoutX="30.0" layoutY="20.0" prefHeight="25.0" prefWidth="240.0" promptText="Nombre" style="-fx-background-color: #EAEDED;" />
       <TextField fx:id="descripcionEventoText" layoutX="30.0" layoutY="60.0" prefHeight="25.0" prefWidth="240.0" promptText="Descripción" style="-fx-background-color: #EAEDED;" />
       <TextField fx:id="fechaInicioText" layoutX="30.0" layoutY="100.0" prefHeight="25.0" prefWidth="240.0" promptText="FechaInicio (dd/MM/yyyy HH:mm:ss)" style="-fx-background-color: #EAEDED;" />

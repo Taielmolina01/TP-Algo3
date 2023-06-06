@@ -8,7 +8,6 @@ import java.nio.file.StandardOpenOption;
 public class ManejadorGuardado {
     private final PrintStream salida;
     private final String rutaArchivoGuardado = "MiCalendario.txt";
-    private final File archivoGuardado = new File(this.rutaArchivoGuardado);
 
     public ManejadorGuardado(PrintStream salida) {
         this.salida = salida;
@@ -45,7 +44,7 @@ public class ManejadorGuardado {
 
     private void crearArchivoGuardado() {
         try {
-            this.archivoGuardado.createNewFile();
+            new File(this.rutaArchivoGuardado).createNewFile();
         } catch (IOException e) {
             //
         }

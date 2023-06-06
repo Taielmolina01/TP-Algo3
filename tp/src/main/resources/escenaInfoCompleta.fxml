@@ -3,7 +3,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="347.0" style="-fx-background-color: #EAEDED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.infoCompletaVentana">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="347.0" style="-fx-background-color: #EAEDED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="infoCompleta" alignment="TOP_LEFT" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="185.0" prefWidth="321.0" style="-fx-background-color: #EAEDED; -fx-border-color: #EAEDED;" />
    </children>
