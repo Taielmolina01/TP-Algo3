@@ -2,8 +2,7 @@ package org.example.Actividades;
 
 import org.example.Alarma.Alarma;
 import org.example.Visitadores.visitadorActividades;
-import org.example.Visitadores.visitorActividades;
-import org.example.vistaActividad;
+import org.example.VistaActividades.vistaActividad;
 
 import java.io.Serializable;
 import java.time.Duration;

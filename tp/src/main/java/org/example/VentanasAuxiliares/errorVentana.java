@@ -1,4 +1,4 @@
-package org.example;
+package org.example.VentanasAuxiliares;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

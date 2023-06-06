@@ -1,4 +1,4 @@
-package org.example;
+package org.example.VentanasAuxiliares;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.Frecuencia.FrecuenciaDiaria;
+import org.example.formateador;
+import org.example.interfazGuardado;
 
 import java.io.IOException;
 import java.net.URL;

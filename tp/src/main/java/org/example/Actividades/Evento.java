@@ -1,11 +1,9 @@
 package org.example.Actividades;
 
 import org.example.Frecuencia.Frecuencia;
-import org.example.Frecuencia.FrecuenciaDiaria;
 import org.example.Visitadores.visitadorActividades;
 import org.example.Visitadores.visitadorEventosFrecuencia;
-import org.example.Visitadores.visitorActividades;
-import org.example.vistaActividad;
+import org.example.VistaActividades.vistaActividad;
 
 import java.io.Serializable;
 import java.time.Duration;

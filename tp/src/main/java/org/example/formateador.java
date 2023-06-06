@@ -7,7 +7,6 @@ public class formateador {
 
     public static DateTimeFormatter formatterConHoras = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     public static DateTimeFormatter formatterSinHoras = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
     public static Duration formatearDuracion(String intervalo) {
         String[] formateado = intervalo.split(":");
         int horas;

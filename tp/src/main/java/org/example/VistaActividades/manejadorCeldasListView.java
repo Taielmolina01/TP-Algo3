@@ -1,19 +1,17 @@
-package org.example;
+package org.example.VistaActividades;
 
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
-public class coloreadorCeldas extends ListCell<String> {
+public class manejadorCeldasListView extends ListCell<String> {
 
     ArrayList<vistaActividad> vistaActividades;
 
-    public coloreadorCeldas(ArrayList<vistaActividad> vistaActividades) {
+    public manejadorCeldasListView(ArrayList<vistaActividad> vistaActividades) {
         this.vistaActividades = vistaActividades;
     }
 

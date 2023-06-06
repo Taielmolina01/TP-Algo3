@@ -1,4 +1,4 @@
-package org.example;
+package org.example.VentanasAuxiliares;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.example.formateador;
 
 import java.time.Duration;
 import java.util.ArrayList;

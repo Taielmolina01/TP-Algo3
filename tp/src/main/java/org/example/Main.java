@@ -16,7 +16,12 @@ import javafx.stage.Stage;
 import org.example.Actividades.Actividad;
 import org.example.Alarma.Alarma;
 import org.example.Frecuencia.FrecuenciaDiaria;
+import org.example.VentanasAuxiliares.eventoVentana;
+import org.example.VentanasAuxiliares.infoCompletaVentana;
+import org.example.VentanasAuxiliares.tareaVentana;
 import org.example.Visitadores.visitadorActividades;
+import org.example.VistaActividades.manejadorCeldasListView;
+import org.example.VistaActividades.vistaActividad;
 
 import java.io.IOException;
 import java.net.URL;
@@ -173,7 +178,7 @@ public class Main extends Application implements interfazGuardado, Initializable
         this.cajaCrear.setOnAction(this::crearVentanaActividad);
         this.listaActividades.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
         this.actualizarListaActividades();
-        this.listaActividades.setCellFactory(param -> new coloreadorCeldas(this.vistaActividadesActuales));
+        this.listaActividades.setCellFactory(param -> new manejadorCeldasListView(this.vistaActividadesActuales));
     }
 
     private void establecerText() {

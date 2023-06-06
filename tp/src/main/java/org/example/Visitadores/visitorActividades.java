@@ -2,9 +2,7 @@ package org.example.Visitadores;
 
 import org.example.Actividades.Evento;
 import org.example.Actividades.Tarea;
-import org.example.vistaActividad;
-
-import java.util.ArrayList;
+import org.example.VistaActividades.vistaActividad;
 
 public interface visitorActividades {
 
