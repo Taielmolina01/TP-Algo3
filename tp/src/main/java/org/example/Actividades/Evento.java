@@ -1,8 +1,11 @@
 package org.example.Actividades;
 
 import org.example.Frecuencia.Frecuencia;
+import org.example.Frecuencia.FrecuenciaDiaria;
 import org.example.Visitadores.visitadorActividades;
+import org.example.Visitadores.visitadorEventosFrecuencia;
 import org.example.Visitadores.visitorActividades;
+import org.example.vistaActividad;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -122,18 +125,15 @@ public class Evento extends Actividad implements Serializable {
     }
 
     @Override
-    public String obtenerInfoResumida(visitorActividades visitante) {
-        return visitante.obtenerInfoResumida(this);
+    public vistaActividad visitarActividad(visitadorActividades v) {
+        return v.visitarActividad(this);
     }
 
-    @Override
-    public String obtenerInfoCompleta(visitorActividades visitante) {
-        return visitante.obtenerInfoCompleta(this);
+    public String visitarFrecuencia(visitadorEventosFrecuencia v) {
+        if (this.frecuencia != null) {
+            return this.frecuencia.obtenerTipoFrecuencia(v);
+        } else {
+            return "";
+        }
     }
-
-    @Override
-    public visitadorActividades.colorFondo obtenerColor(visitorActividades visitante) {
-        return visitante.obtenerColor(this);
-    }
-
 }

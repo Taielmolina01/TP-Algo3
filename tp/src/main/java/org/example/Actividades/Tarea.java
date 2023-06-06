@@ -1,12 +1,12 @@
 package org.example.Actividades;
 
 import org.example.Visitadores.visitadorActividades;
-import org.example.Visitadores.visitorActividades;
+import org.example.vistaActividad;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 
 public class Tarea extends Actividad implements Serializable {
 
@@ -25,19 +25,11 @@ public class Tarea extends Actividad implements Serializable {
     }
 
     public ArrayList<LocalDateTime> actividadesEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
-        return new ArrayList<>(Arrays.asList(this.obtenerFechaInicio()));
-    }
-
-    public String obtenerInfoResumida(visitorActividades visitante) {
-        return visitante.obtenerInfoResumida(this);
-    }
-
-    public String obtenerInfoCompleta(visitorActividades visitante) {
-        return visitante.obtenerInfoCompleta(this);
+        return new ArrayList<>(Collections.singletonList(this.obtenerFechaInicio()));
     }
 
     @Override
-    public visitadorActividades.colorFondo obtenerColor(visitorActividades visitante) {
-        return visitante.obtenerColor(this);
+    public vistaActividad visitarActividad(visitadorActividades v) {
+        return v.visitarActividad(this);
     }
 }

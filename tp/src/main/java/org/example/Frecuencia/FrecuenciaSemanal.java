@@ -40,7 +40,7 @@ public class FrecuenciaSemanal extends Frecuencia {
         this.diasSemana = diasSemana;
     }
 
-    public String obtenerTipoFrecuencia(visitorFrecuencia visitante) {
-        return visitante.obtenerFrecuencia(this);
+    public String obtenerTipoFrecuencia(visitorFrecuencia v) {
+        return v.obtenerTipoFrecuencia(this);
     }
 }

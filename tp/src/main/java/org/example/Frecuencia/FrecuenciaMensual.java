@@ -15,7 +15,7 @@ public class FrecuenciaMensual extends Frecuencia {
         return fechaInicial.plusMonths(this.obtenerValorRepeticion());
     }
 
-    public String obtenerTipoFrecuencia(visitorFrecuencia visitante) {
-        return visitante.obtenerFrecuencia(this);
+    public String obtenerTipoFrecuencia(visitorFrecuencia v) {
+        return v.obtenerTipoFrecuencia(this);
     }
 }

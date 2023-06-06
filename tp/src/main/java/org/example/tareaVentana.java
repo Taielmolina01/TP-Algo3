@@ -37,10 +37,10 @@ public class tareaVentana implements Initializable {
     private CheckBox diaCompleto;
     @FXML
     private AnchorPane scenePane;
-    private String[] valoresPosibles = new String[]{"Sí", "No"};
+    private final String[] valoresPosibles = new String[]{"Sí", "No"};
     private intervaloAlarmaVentana ventanaAlarma;
     private ArrayList<Duration> duraciones;
-    private interfazGuardado i;
+    private final interfazGuardado i;
 
 
     /*
@@ -76,13 +76,13 @@ public class tareaVentana implements Initializable {
         String descripcion = this.descripcionTarea.getText();
         LocalDateTime fechaInicio;
         if (datosInicialesNoSonValidos(nombre, descripcion)) {
-            Main.lanzarVentanaError();
+            errorVentana.lanzarVentanaError();
             return;
         }
         try {
             fechaInicio = LocalDateTime.parse(this.fechaInicio.getText(), formateador.formatterConHoras);
         } catch (DateTimeParseException e4) {
-            Main.lanzarVentanaError();
+            errorVentana.lanzarVentanaError();
             return;
         }
         try {
@@ -112,7 +112,7 @@ public class tareaVentana implements Initializable {
                 this.ventanaAlarma = new intervaloAlarmaVentana();
                 this.ventanaAlarma.start();
             } catch (Exception e) {
-                Main.lanzarVentanaError();
+                errorVentana.lanzarVentanaError();
             }
         }
     }

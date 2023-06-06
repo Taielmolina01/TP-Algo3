@@ -15,8 +15,8 @@ import java.util.HashMap;
 public class Calendario implements Serializable {
 
     public final HashMap<Integer, Actividad> actividadesCalendario;
-    public int indiceActividad;
     private final ArrayList<Alarma> alarmas;
+    public int indiceActividad;
 
     public Calendario() {
         this.actividadesCalendario = new HashMap<>();
@@ -222,16 +222,17 @@ public class Calendario implements Serializable {
         }
     }
 
-    protected Calendario deserializar(PrintStream salida, InputStream is) throws IOException, ClassNotFoundException {
+    protected Calendario deserializar(PrintStream salida, InputStream is) throws ClassNotFoundException {
         Calendario calendarioNuevo = new Calendario();
+        /* Hace que rompa to do a la mierda
         try {
             if (is.read() == -1) {
-                salida.println("El flujo de entrada está vacío.");
                 return calendarioNuevo;
             }
         } catch (IOException e) {
             //
         }
+         */
         try {
             ObjectInputStream objectInStream = new ObjectInputStream(is);
             HashMap<Integer, Actividad> actividades = (HashMap<Integer, Actividad>) objectInStream.readObject();
@@ -242,8 +243,10 @@ public class Calendario implements Serializable {
             calendarioNuevo.indiceActividad = (Integer) objectInStream.readObject();
             return calendarioNuevo;
         } catch (IOException e) {
-            salida.println("El flujo de entrada no existe.");
-            throw new IOException("El flujo de entrada no existe.");
+            salida.println("El flujo de entrada está vacío.");
+            // por que lanzaria una excepcion aca? esta excepcion se va a dar solo cuando el inputStream
+            // esté vacío, lo cual es algo valido, no tengo nada que leer? bueno te devuelvo un calendario vacio
+            return calendarioNuevo;
         } catch (ClassNotFoundException e) {
             salida.println("La clase Calendario no se encuentra en este paquete.");
             throw new ClassNotFoundException("La clase Calendario no se encuentra en este paquete.");

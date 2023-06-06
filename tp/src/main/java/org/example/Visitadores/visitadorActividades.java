@@ -5,6 +5,9 @@ import org.example.Actividades.Evento;
 import org.example.Actividades.Tarea;
 import org.example.Alarma.Alarma;
 import org.example.formateador;
+import org.example.vistaActividad;
+import org.example.vistaEvento;
+import org.example.vistaTarea;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,102 +15,78 @@ import java.util.List;
 
 public class visitadorActividades implements visitorActividades {
 
-    public enum colorFondo {
-        AZUL,
-        VERDE;
-    }
+    private static final String colorAzul = "#85C1E9";
+    private static final String colorVerde = "#58D68D";
 
-    private visitorFrecuencia visitanteFrecuencia = new visitadorEventosFrecuencia();
-
-    public ArrayList<ArrayList<String>> visitarActividades(List<Actividad> elementos) { // ver bien como imprimir la info
-        ArrayList<ArrayList<String>> infoElementosActuales = new ArrayList<>();
-        ArrayList<String> infoResumida = new ArrayList<>();
-        ArrayList<String> infoCompleta = new ArrayList<>();
-        ArrayList<String> colores = new ArrayList<>();
-        for (Actividad elemento : elementos) {
-            String resumida = elemento.obtenerInfoResumida(this);
-            String completa = elemento.obtenerInfoCompleta(this);
-            String color = elemento.obtenerColor(this).toString();
-            infoResumida.add(resumida);
-            infoCompleta.add(completa);
-            colores.add(color);
+    public ArrayList<vistaActividad> visitarActividades(List<Actividad> actividades) {
+        ArrayList<vistaActividad> vistaActividades = new ArrayList<>();
+        for (Actividad a : actividades) {
+            vistaActividades.add(a.visitarActividad(this));
         }
-        infoElementosActuales.add(infoResumida);
-        infoElementosActuales.add(infoCompleta);
-        infoElementosActuales.add(colores);
-        return infoElementosActuales;
+        return vistaActividades;
     }
 
-    public String obtenerInfoResumida(Evento evento) {
-        if (evento.obtenerTodoElDia()) {
-            return "Nombre: " + evento.obtenerNombre() + ". Fecha de inicio: " + evento.obtenerFechaInicio().toLocalDate().
-                    format(formateador.formatterSinHoras) + ". Es de dia completo.";
-        }
-        return "Nombre: " + evento.obtenerNombre() + ". Fecha de inicio: " + evento.obtenerFechaInicio().format(formateador.formatterConHoras) +
-                ". Fecha fin: " + evento.obtenerFechaFinalDefinitivo().format(formateador.formatterConHoras) + ".";
+    public vistaActividad visitarActividad(Evento e) {
+        ArrayList<String> infoEvento = new ArrayList<>();
+        infoEvento.add(obtenerColor(e));
+        this.crearListaDatosComunes(infoEvento, e);
+        infoEvento.add(e.obtenerFechaFinalDefinitivo().format(formateador.formatterConHoras));
+        infoEvento.add(e.visitarFrecuencia(new visitadorEventosFrecuencia()));
+        return new vistaEvento(infoEvento);
     }
 
-    public String obtenerInfoCompleta(Evento evento) {
-        String resultado;
-        String fechaInicio = evento.obtenerTodoElDia() ? evento.obtenerFechaInicio().toLocalDate().format(formateador.formatterSinHoras) :
-                evento.obtenerFechaInicio().format(formateador.formatterConHoras);
-        String esDeDiaCompleto = evento.obtenerTodoElDia() ? " Es de dia completo." : "";
-        resultado = "Nombre: " + evento.obtenerNombre() + "." + "\nDescripción: " + evento.obtenerDescripcion() + "." + "\nFecha de inicio: "
-                + fechaInicio + "." + esDeDiaCompleto + "\nFecha fin: " + evento.obtenerFechaFinalDefinitivo().format(formateador.formatterConHoras) + ".";
-        HashMap<Integer, Alarma> alarmas = evento.obtenerAlarmas();
+    public vistaActividad visitarActividad(Tarea t) {
+        ArrayList<String> infoTarea = new ArrayList<>();
+        infoTarea.add(obtenerColor(t));
+        this.crearListaDatosComunes(infoTarea, t);
+        infoTarea.add(String.valueOf(t.estaCompletada()));
+        return new vistaTarea(infoTarea);
+    }
+
+    private void crearListaDatosComunes(ArrayList<String> infoActividad, Actividad a) {
+        infoActividad.add(String.valueOf(a.obtenerID()));
+        infoActividad.add(a.obtenerNombre());
+        infoActividad.add(a.obtenerDescripcion());
+        infoActividad.add(a.obtenerFechaInicio().format(formateador.formatterConHoras));
+        infoActividad.add(a.obtenerTodoElDia().toString());
+        HashMap<Integer, Alarma> alarmas = a.obtenerAlarmas();
         String stringAlarmas = "";
         if (alarmas.size() == 0) {
-            resultado += "\nEste evento no tiene alarmas configuradas.";
+            stringAlarmas += "Esta actividad no tiene alarmas configuradas.";
         } else {
-            for (Alarma alarma : alarmas.values()) {
-                stringAlarmas += alarma.obtenerFechaActivacion().format(formateador.formatterConHoras) + ", ";
-            }
-            resultado += "\nFechas alarmas: " + stringAlarmas;
-        }
-        if (evento.obtenerFrecuencia() != null) { // si no tiene frecuencia es que no se repite nunca
-            resultado += "\n" + evento.obtenerFrecuencia().obtenerTipoFrecuencia(this.visitanteFrecuencia);
-        }
-        return resultado;
-    }
-
-
-    public String obtenerInfoResumida(Tarea tarea) {
-        String estado;
-        estado = tarea.estaCompletada() ? "Completada." : "No completada.";
-        if (tarea.obtenerTodoElDia()) {
-            return "Nombre: " + tarea.obtenerNombre() + ". Fecha de inicio: " + tarea.obtenerFechaInicio().toLocalDate().
-                    format(formateador.formatterSinHoras) + ". Es de dia completo" + ". Estado: " + estado;
-        }
-        return "Nombre: " + tarea.obtenerNombre() + ". Fecha de inicio: " + tarea.obtenerFechaInicio().format(formateador.formatterConHoras) +
-                ". Estado: " + estado;
-    }
-
-    public String obtenerInfoCompleta(Tarea tarea) {
-        String resultado;
-        String fechaInicio = tarea.obtenerTodoElDia() ? tarea.obtenerFechaInicio().toLocalDate().format(formateador.formatterSinHoras) :
-                tarea.obtenerFechaInicio().format(formateador.formatterConHoras);
-        String esDeDiaCompleto = tarea.obtenerTodoElDia() ? " Es de dia completo." : "";
-        resultado = "Nombre: " + tarea.obtenerNombre() + "." + "\nDescripción: " + tarea.obtenerDescripcion() + "." + "\nFecha de inicio: "
-                + fechaInicio + "." + esDeDiaCompleto;
-        HashMap<Integer, Alarma> alarmas = tarea.obtenerAlarmas();
-        String stringAlarmas = "";
-        if (alarmas.size() == 0) {
-            resultado += "\nEsta tarea no tiene alarmas configuradas.";
-        } else {
+            stringAlarmas += "Fechas alarmas: ";
             for (Alarma alarma : alarmas.values()) {
                 stringAlarmas += alarma.obtenerFechaActivacion().format(formateador.formatterConHoras);
             }
-            resultado += "\nFechas alarmas: " + stringAlarmas;
+            stringAlarmas += ".";
         }
-        return resultado;
+        infoActividad.add(stringAlarmas);
     }
 
-    public colorFondo obtenerColor(Evento evento) {
-        return colorFondo.AZUL;
+
+    public String obtenerColor(Evento evento) {
+        return colorActividad.EVENTO.getClaveColor();
     }
 
-    public colorFondo obtenerColor(Tarea tarea) {
-        return colorFondo.VERDE;
+    public String obtenerColor(Tarea tarea) {
+        return colorActividad.TAREA.getClaveColor();
+    }
+
+    public enum colorActividad {
+
+        EVENTO(colorAzul),
+
+        TAREA(colorVerde);
+
+        private final String claveColor;
+
+        colorActividad(String claveColor) {
+            this.claveColor = claveColor;
+        }
+
+        public String getClaveColor() {
+            return this.claveColor;
+        }
     }
 
 }

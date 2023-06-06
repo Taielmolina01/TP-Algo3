@@ -6,11 +6,21 @@ import java.time.DayOfWeek;
 
 public class visitadorEventosFrecuencia implements visitorFrecuencia {
 
-    public String obtenerFrecuencia(FrecuenciaDiaria frecuencia) {
+    private boolean noHayFrecuencia(Frecuencia frecuencia) {
+        return frecuencia == null;
+    }
+
+    public String obtenerTipoFrecuencia(FrecuenciaDiaria frecuencia) {
+        if (noHayFrecuencia(frecuencia)) {
+            return "";
+        }
         return "Se repite cada " + frecuencia.obtenerValorRepeticion() + " día" + esPlural(frecuencia) + ".";
     }
 
-    public String obtenerFrecuencia(FrecuenciaSemanal frecuencia) { // ver hacerlo por cada semana seria sin s
+    public String obtenerTipoFrecuencia(FrecuenciaSemanal frecuencia) { // ver hacerlo por cada semana seria sin s
+        if (noHayFrecuencia(frecuencia)) {
+            return "";
+        }
         if (frecuencia.obtenerDiasSemana().size() == 7) {
             return "Se repite todos los días cada " + frecuencia.obtenerValorRepeticion() + " semana" + esPlural(frecuencia) + ".";
         }
@@ -21,11 +31,17 @@ public class visitadorEventosFrecuencia implements visitorFrecuencia {
         return resultado + "cada " + frecuencia.obtenerValorRepeticion() + " semana" + esPlural(frecuencia) + ".";
     }
 
-    public String obtenerFrecuencia(FrecuenciaMensual frecuencia) {
+    public String obtenerTipoFrecuencia(FrecuenciaMensual frecuencia) {
+        if (noHayFrecuencia(frecuencia)) {
+            return "";
+        }
         return "Se repite cada " + frecuencia.obtenerValorRepeticion() + " mes" + esPluralMeses(frecuencia) + ".";
     }
 
-    public String obtenerFrecuencia(FrecuenciaAnual frecuencia) {
+    public String obtenerTipoFrecuencia(FrecuenciaAnual frecuencia) {
+        if (noHayFrecuencia(frecuencia)) {
+            return "";
+        }
         return "Se repite cada " + frecuencia.obtenerValorRepeticion() + " año" + esPlural(frecuencia) + ".";
     }
 

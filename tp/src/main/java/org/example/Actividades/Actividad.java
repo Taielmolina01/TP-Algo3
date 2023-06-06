@@ -3,6 +3,7 @@ package org.example.Actividades;
 import org.example.Alarma.Alarma;
 import org.example.Visitadores.visitadorActividades;
 import org.example.Visitadores.visitorActividades;
+import org.example.vistaActividad;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -11,12 +12,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Actividad implements Serializable {
-    private int ID;
+    private final HashMap<Integer, Alarma> alarmas;
+    private final int ID;
     private String nombre;
     private String descripcion;
     private boolean todoElDia;
     private LocalDateTime fechaInicio;
-    private final HashMap<Integer, Alarma> alarmas;
     private int indiceAlarmas;
 
     public Actividad(int ID, String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {
@@ -26,6 +27,10 @@ public abstract class Actividad implements Serializable {
         this.todoElDia = todoElDia;
         this.modificarFechaInicio(fechaInicio);
         this.alarmas = new HashMap<>();
+    }
+
+    public static boolean estaEntreFechas(LocalDateTime diaAAnalizar, LocalDateTime diaInicio, LocalDateTime diaFin) {
+        return diaAAnalizar.equals(diaInicio) || diaAAnalizar.equals(diaFin) || (diaAAnalizar.isAfter(diaInicio) && diaAAnalizar.isBefore(diaFin));
     }
 
     public Alarma agregarAlarma(Alarma.Efecto efecto, LocalDateTime fechaActivacion) {
@@ -101,15 +106,7 @@ public abstract class Actividad implements Serializable {
         return this.alarmas.remove(idAlarma);
     }
 
-    public static boolean estaEntreFechas(LocalDateTime diaAAnalizar, LocalDateTime diaInicio, LocalDateTime diaFin) {
-        return diaAAnalizar.equals(diaInicio) || diaAAnalizar.equals(diaFin) || (diaAAnalizar.isAfter(diaInicio) && diaAAnalizar.isBefore(diaFin));
-    }
-
     public abstract ArrayList<LocalDateTime> actividadesEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
-    public abstract String obtenerInfoResumida(visitorActividades visitante);
-
-    public abstract String obtenerInfoCompleta(visitorActividades visitante);
-
-    public abstract visitadorActividades.colorFondo obtenerColor(visitorActividades visitante);
+    public abstract vistaActividad visitarActividad(visitadorActividades v);
 }

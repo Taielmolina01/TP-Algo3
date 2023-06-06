@@ -7,11 +7,11 @@ import org.example.Frecuencia.FrecuenciaSemanal;
 
 public interface visitorFrecuencia {
 
-    String obtenerFrecuencia(FrecuenciaDiaria frecuencia);
+    String obtenerTipoFrecuencia(FrecuenciaDiaria frecuencia);
 
-    String obtenerFrecuencia(FrecuenciaSemanal frecuencia);
+    String obtenerTipoFrecuencia(FrecuenciaSemanal frecuencia);
 
-    String obtenerFrecuencia(FrecuenciaMensual frecuencia);
+    String obtenerTipoFrecuencia(FrecuenciaMensual frecuencia);
 
-    String obtenerFrecuencia(FrecuenciaAnual frecuencia);
+    String obtenerTipoFrecuencia(FrecuenciaAnual frecuencia);
 }

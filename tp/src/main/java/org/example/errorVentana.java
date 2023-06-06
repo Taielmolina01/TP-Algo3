@@ -16,4 +16,12 @@ public class errorVentana {
         stageCrearEvento.setScene(scene);
         stageCrearEvento.show();
     }
+
+    public static void lanzarVentanaError() {
+        try {
+            new errorVentana().start();
+        } catch (Exception e5) {
+            //
+        }
+    }
 }

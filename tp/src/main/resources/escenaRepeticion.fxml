@@ -4,11 +4,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="152.0" prefWidth="297.0" style="-fx-background-color: #EAEDED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <TextField fx:id="repeticion" layoutX="20.0" layoutY="48.0" prefHeight="37.0" prefWidth="258.0" promptText="Ingrese cada cuantos dias se repite" />
-      <Button fx:id="botonOk" layoutX="129.0" layoutY="104.0" mnemonicParsing="false" style="-fx-background-color: #EAEDED; -fx-border-color: #BFC9CA; -fx-border-radius: 30;" text="OK" />
-      <Text fx:id="mensaje" layoutX="48.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="201.0" />
-   </children>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="152.0" prefWidth="297.0" style="-fx-background-color: #EAEDED;"
+            xmlns="http://javafx.com/javafx/19">
+    <children>
+        <TextField fx:id="repeticion" layoutX="20.0" layoutY="48.0" prefHeight="37.0" prefWidth="258.0"
+                   promptText="Ingrese cada cuantos dias se repite"/>
+        <Button fx:id="botonOk" layoutX="129.0" layoutY="104.0" mnemonicParsing="false"
+                style="-fx-background-color: #EAEDED; -fx-border-color: #BFC9CA; -fx-border-radius: 30;" text="OK"/>
+        <Text fx:id="mensaje" layoutX="48.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              textAlignment="CENTER" wrappingWidth="201.0"/>
+    </children>
 </AnchorPane>

@@ -46,8 +46,8 @@ public class eventoVentana implements Initializable {
     private AnchorPane scenePane;
     private intervaloAlarmaVentana ventanaAlarma;
     private repeticionVentana repeticionVentana;
-    private String[] valoresPosibles = new String[]{"Sí", "No"};
-    private interfazGuardado i;
+    private final String[] valoresPosibles = new String[]{"Sí", "No"};
+    private final interfazGuardado i;
 
     /*
     Opc1: Deberia devolver el evento con las alarmas agregadas y despues directamente lo agrego al calendario.
@@ -84,7 +84,7 @@ public class eventoVentana implements Initializable {
         LocalDateTime fechaFinal;
         Duration duracionEvento = formateador.formatearDuracion(this.duracionEventoText.getText());
         if (this.datosInicialesNoSonValidos(nombre, descripcion, duracionEvento)) {
-            Main.lanzarVentanaError();
+            errorVentana.lanzarVentanaError();
             return;
         }
         try {
@@ -102,7 +102,7 @@ public class eventoVentana implements Initializable {
             }
             fechaFinal = LocalDateTime.parse(this.fechaFinalText.getText(), formateador.formatterConHoras);
         } catch (DateTimeParseException e4) {
-            Main.lanzarVentanaError();
+            errorVentana.lanzarVentanaError();
             return;
         }
         ArrayList<Duration> alarmas = this.obtenerAlarmas();
@@ -132,7 +132,7 @@ public class eventoVentana implements Initializable {
                 this.repeticionVentana = new repeticionVentana();
                 this.repeticionVentana.start();
             } catch (Exception e) {
-                Main.lanzarVentanaError();
+                errorVentana.lanzarVentanaError();
             }
         }
     }
@@ -153,7 +153,7 @@ public class eventoVentana implements Initializable {
                 this.ventanaAlarma = new intervaloAlarmaVentana();
                 this.ventanaAlarma.start();
             } catch (Exception e) {
-                Main.lanzarVentanaError();
+                errorVentana.lanzarVentanaError();
             }
         }
     }

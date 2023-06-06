@@ -25,10 +25,14 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class Main extends Application implements interfazGuardado, Initializable {
+    private final visitadorActividades visitador = new visitadorActividades();
+    protected ManejadorGuardado manejador;
+    protected Calendario calendario;
     @FXML
     private Text lapsoTiempoActual;
     @FXML
@@ -41,16 +45,12 @@ public class Main extends Application implements interfazGuardado, Initializable
     private LocalDateTime inicioSemana;
     private LocalDateTime finSemana;
     private HashMap<String, String> meses;
-    private ArrayList<ArrayList<String>> infoActividadesActuales;
-    private coloreadorCeldas coloreador;
-    protected ManejadorGuardado manejador;
-    protected Calendario calendario;
+    private ArrayList<vistaActividad> vistaActividadesActuales;
     private String textoDiario;
     private String textoSemanal;
     private String textoMensual;
     private String[] valoresRango;
     private String[] valoresCrear;
-    private final visitadorActividades visitador = new visitadorActividades();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -59,6 +59,7 @@ public class Main extends Application implements interfazGuardado, Initializable
         stage.setTitle("Calendario Molina-Kriger");
         stage.setScene(scene);
         stage.show();
+        stage.setResizable(false);
     }
 
     @FXML
@@ -125,10 +126,12 @@ public class Main extends Application implements interfazGuardado, Initializable
     }
 
     private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
-        ArrayList<Actividad> actividadesActuales = this.calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin); // esto deberia ordenarlo
-        // y guardarlo para cuando quiero agregar una alarma o lo que sea, pero en especifico para lo del completado no completado de las tareas.
-        this.infoActividadesActuales = this.visitador.visitarActividades(actividadesActuales);
-        this.listaActividades.getItems().addAll(this.infoActividadesActuales.get(0));
+        ArrayList<Actividad> actividadesActuales = this.calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin);
+        actividadesActuales.sort(Comparator.comparing(Actividad::obtenerFechaInicio));
+        this.vistaActividadesActuales = this.visitador.visitarActividades(actividadesActuales);
+        for (int i = 0; i < actividadesActuales.size(); i++) {
+            this.listaActividades.getItems().add(this.vistaActividadesActuales.get(i).obtenerInfoResumida());
+        }
         // la info completa la tengo que guardar en algun lado
         //this.coloreador.actualizarInfo(this.info);
     }
@@ -170,7 +173,7 @@ public class Main extends Application implements interfazGuardado, Initializable
         this.cajaCrear.setOnAction(this::crearVentanaActividad);
         this.listaActividades.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
         this.actualizarListaActividades();
-        this.listaActividades.setCellFactory(param -> new coloreadorCeldas(this.infoActividadesActuales));
+        this.listaActividades.setCellFactory(param -> new coloreadorCeldas(this.vistaActividadesActuales));
     }
 
     private void establecerText() {
@@ -246,14 +249,6 @@ public class Main extends Application implements interfazGuardado, Initializable
         }
     }
 
-    public static void lanzarVentanaError() {
-        try {
-            new errorVentana().start();
-        } catch (Exception e5) {
-            System.out.println("hola");
-        }
-    }
-
     private void establecerInicioYFinSemana() {
         int diaSemanaActual = this.fechaActual.getDayOfWeek().getValue();
         int aRestar = diaSemanaActual - 1;
@@ -264,7 +259,7 @@ public class Main extends Application implements interfazGuardado, Initializable
 
     private void cambioSeleccion(Observable Observable) {
         int indice = this.listaActividades.getSelectionModel().getSelectedIndex();
-        String infoCompletaSeleccionado = this.infoActividadesActuales.get(1).get(indice);
+        String infoCompletaSeleccionado = this.vistaActividadesActuales.get(indice).obtenerInfoCompleta();
         try {
             infoCompletaVentana ventana = new infoCompletaVentana();
             ventana.start(infoCompletaSeleccionado);
@@ -280,7 +275,7 @@ public class Main extends Application implements interfazGuardado, Initializable
         this.guardarNuevaActividad(ID, duracionesAlarmas);
     }
 
-        @Override
+    @Override
     public void guardarEventoTipo2(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
                                    LocalDateTime fechaFinal, FrecuenciaDiaria frecuencia, ArrayList<Duration> duracionesAlarmas) {
         int ID = this.calendario.crearEvento(nombre, descripcion, fechaInicio, duracion, diaCompleto, fechaFinal, frecuencia);

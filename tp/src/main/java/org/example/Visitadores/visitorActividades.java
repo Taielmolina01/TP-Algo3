@@ -2,18 +2,14 @@ package org.example.Visitadores;
 
 import org.example.Actividades.Evento;
 import org.example.Actividades.Tarea;
+import org.example.vistaActividad;
+
+import java.util.ArrayList;
 
 public interface visitorActividades {
 
-    String obtenerInfoResumida(Evento evento);
-
-    String obtenerInfoResumida(Tarea tarea);
-
-    String obtenerInfoCompleta(Evento evento);
-
-    String obtenerInfoCompleta(Tarea tarea);
-
-    visitadorActividades.colorFondo obtenerColor(Evento evento);
-
-    visitadorActividades.colorFondo obtenerColor(Tarea tarea);
+    vistaActividad visitarActividad(Evento e);
+    vistaActividad visitarActividad(Tarea t);
+    String obtenerColor(Evento evento);
+    String obtenerColor(Tarea tarea);
 }

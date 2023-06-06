@@ -9,12 +9,6 @@ public class Alarma implements Serializable {
     private Efecto efectoProducido;
     private LocalDateTime fechaActivacion;
 
-    public enum Efecto {
-        NOTIFICACION,
-        SONIDO,
-        EMAIL,
-    }
-
     public Alarma(Efecto efectoProducido, LocalDateTime fechaArbitraria, Duration intervaloTiempo) {
         this.efectoProducido = efectoProducido;
         this.establecerFechas(fechaArbitraria, intervaloTiempo);
@@ -23,18 +17,6 @@ public class Alarma implements Serializable {
     public Alarma(Efecto efectoProducido, LocalDateTime fechaAbsoluta) {
         this.efectoProducido = efectoProducido;
         this.establecerFechas(fechaAbsoluta);
-    }
-
-    public Duration cuantoFaltaParaDisparar(LocalDateTime fechaActual) {
-        return Duration.between(fechaActual, this.fechaActivacion);
-    }
-
-    public Efecto dispararAlarma() {
-        return this.efectoProducido;
-    }
-
-    public LocalDateTime obtenerFechaActivacion() {
-        return this.fechaActivacion;
     }
 
     public static int compararAlarmas(Alarma alarma1, Alarma alarma2) {
@@ -47,6 +29,18 @@ public class Alarma implements Serializable {
         } else {
             return -1;
         }
+    }
+
+    public Duration cuantoFaltaParaDisparar(LocalDateTime fechaActual) {
+        return Duration.between(fechaActual, this.fechaActivacion);
+    }
+
+    public Efecto dispararAlarma() {
+        return this.efectoProducido;
+    }
+
+    public LocalDateTime obtenerFechaActivacion() {
+        return this.fechaActivacion;
     }
 
     public void modificarEfecto(Efecto nuevoEfecto) {
@@ -67,5 +61,11 @@ public class Alarma implements Serializable {
 
     private void establecerFechas(LocalDateTime fechaAbsoluta) {
         this.fechaActivacion = fechaAbsoluta;
+    }
+
+    public enum Efecto {
+        NOTIFICACION,
+        SONIDO,
+        EMAIL,
     }
 }

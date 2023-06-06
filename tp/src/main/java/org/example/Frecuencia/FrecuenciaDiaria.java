@@ -15,7 +15,7 @@ public class FrecuenciaDiaria extends Frecuencia {
         return fechaInicial.plusDays(this.obtenerValorRepeticion());
     }
 
-    public String obtenerTipoFrecuencia(visitorFrecuencia visitante) {
-        return visitante.obtenerFrecuencia(this);
+    public String obtenerTipoFrecuencia(visitorFrecuencia v) {
+        return v.obtenerTipoFrecuencia(this);
     }
 }

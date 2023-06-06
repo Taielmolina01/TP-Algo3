@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 
 public class intervaloAlarmaVentana {
@@ -20,7 +19,7 @@ public class intervaloAlarmaVentana {
     @FXML
     private Text mensaje;
 
-    private ArrayList<Duration> duracionAlarmas = new ArrayList<>();
+    private final ArrayList<Duration> duracionAlarmas = new ArrayList<>();
 
     public void start() throws Exception {
         var loader = new FXMLLoader(getClass().getResource("/escenaIntervalo.fxml"));
