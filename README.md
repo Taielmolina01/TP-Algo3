@@ -8,6 +8,9 @@ Molina, Taiel. Padrón: 109458
 
 ## Notas
 
+- Definitivamente toqué algo que rompí la persistencia del todo :). En principio cuando corro Main me tira el runtimeException porque el deserializar esta tirando error, al hacer readObject, por que ? ni idea.
+Los tests fallan tambien buenardoooooo
+
 - En Main.java tengo el crearLista en el cual tengo el ArrayList de las actividades actuales, con eso deberia manejarme para lo del seleccionado/no seleccionado.
 
 ## TODO
