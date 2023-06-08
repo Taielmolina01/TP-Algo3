@@ -15,7 +15,7 @@
     <children>
         <HBox layoutX="-3.0" prefHeight="100.0" prefWidth="686.0">
             <children>
-                <ComboBox fx:id="cajaCrear" prefHeight="28.0" prefWidth="115.0" promptText="+      Crear" style="-fx-background-color: #EAEDED; -fx-border-color: #BFC9CA; -fx-border-radius: 30;">
+                <ComboBox fx:id="cajaCrear" prefHeight="28.0" prefWidth="115.0" promptText="+       Crear" style="-fx-background-color: #EAEDED; -fx-border-color: #BFC9CA; -fx-border-radius: 30;">
                     <HBox.margin>
                         <Insets left="50.0" top="20.0" />
                     </HBox.margin>

@@ -29,10 +29,10 @@ public class repeticionVentana implements Initializable {
         loader.setController(this);
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        Stage stageIntervalo = new Stage();
-        stageIntervalo.setTitle("Definir repeticiones");
-        stageIntervalo.setScene(scene);
-        stageIntervalo.show();
+        Stage s = new Stage();
+        s.setTitle("Definir repeticiones");
+        s.setScene(scene);
+        s.show();
     }
 
     @FXML

@@ -17,11 +17,11 @@ public class infoCompletaVentana {
         loader.setController(this);
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        Stage stageInfoCompleta = new Stage();
-        stageInfoCompleta.setTitle("Información completa");
-        stageInfoCompleta.setScene(scene);
-        stageInfoCompleta.show();
-        stageInfoCompleta.setResizable(false);
+        Stage s = new Stage();
+        s.setTitle("Información completa");
+        s.setScene(scene);
+        s.show();
+        s.setResizable(false);
         this.infoCompleta.setText(info);
     }
 }

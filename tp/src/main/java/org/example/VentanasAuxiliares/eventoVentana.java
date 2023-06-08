@@ -72,10 +72,10 @@ public class eventoVentana implements Initializable {
         loader.setController(this);
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        Stage stageCrearEvento = new Stage();
-        stageCrearEvento.setTitle("Creando evento");
-        stageCrearEvento.setScene(scene);
-        stageCrearEvento.show();
+        Stage s = new Stage();
+        s.setTitle("Creando evento");
+        s.setScene(scene);
+        s.show();
     }
 
     @FXML

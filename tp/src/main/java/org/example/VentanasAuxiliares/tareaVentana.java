@@ -66,10 +66,10 @@ public class tareaVentana implements Initializable {
         loader.setController(this);
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        Stage stageCrearTarea = new Stage();
-        stageCrearTarea.setTitle("Creando tarea");
-        stageCrearTarea.setScene(scene);
-        stageCrearTarea.show();
+        Stage s = new Stage();
+        s.setTitle("Creando tarea");
+        s.setScene(scene);
+        s.show();
     }
 
     @FXML

@@ -28,7 +28,7 @@ public abstract class Actividad implements Serializable {
         this.alarmas = new HashMap<>();
     }
 
-    public static boolean estaEntreFechas(LocalDateTime diaAAnalizar, LocalDateTime diaInicio, LocalDateTime diaFin) {
+    public boolean estaEntreFechas(LocalDateTime diaAAnalizar, LocalDateTime diaInicio, LocalDateTime diaFin) {
         return diaAAnalizar.equals(diaInicio) || diaAAnalizar.equals(diaFin) || (diaAAnalizar.isAfter(diaInicio) && diaAAnalizar.isBefore(diaFin));
     }
 

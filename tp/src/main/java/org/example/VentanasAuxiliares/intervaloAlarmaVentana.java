@@ -27,10 +27,10 @@ public class intervaloAlarmaVentana {
         loader.setController(this);
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        Stage stageIntervalo = new Stage();
-        stageIntervalo.setTitle("Definir intervalo alarma");
-        stageIntervalo.setScene(scene);
-        stageIntervalo.show();
+        Stage s = new Stage();
+        s.setTitle("Definir intervalo alarma");
+        s.setScene(scene);
+        s.show();
     }
 
     @FXML

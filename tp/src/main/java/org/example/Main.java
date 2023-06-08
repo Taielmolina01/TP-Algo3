@@ -124,14 +124,14 @@ public class Main extends Application implements interfazGuardado, Initializable
 
     private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) { // esta funcion de mierda es la que funciona mal
         this.listViewActividades.getItems().clear();
+        System.out.println(fechaInicio);
+        System.out.println(fechaFin);
         ArrayList<Actividad> actividadesActuales = this.calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin);
         System.out.println(actividadesActuales);
         actividadesActuales.sort(Comparator.comparing(Actividad::obtenerFechaInicio).thenComparing(Actividad::obtenerNombre));
         this.vistaActividadesActuales = this.visitador.visitarActividades(actividadesActuales);
-        System.out.println(this.vistaActividadesActuales.size());
         this.listViewActividades.setCellFactory(param -> new manejadorCeldasListView(this.vistaActividadesActuales));
         // deberia actualizar la lista del manejador de celdas, pero por alguna razon me lanza un excepcion cuando lo intento hacer
-        System.out.println(vistaActividadesActuales.size());
         for (int i = 0; i < vistaActividadesActuales.size(); i++) {
             this.listViewActividades.getItems().add(this.vistaActividadesActuales.get(i).obtenerInfoResumida());
         }
@@ -175,6 +175,18 @@ public class Main extends Application implements interfazGuardado, Initializable
         this.listViewActividades.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
         this.visitador = new visitadorActividades();
         this.actualizarListaActividades();
+        /*
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Alarma a = this.calendario.obtenerSiguienteAlarma(LocalDateTime.now());
+                if (a != null && a.cuantoFaltaParaDisparar(LocalDateTime.now).compareTo(Duration.ofMinutes(3)) < 0) {
+                    notificacionVentana.lanzarVentanaNotificacion();
+                }
+            }
+        }, 0, 30000);
+         */
     }
 
     private void establecerText() {

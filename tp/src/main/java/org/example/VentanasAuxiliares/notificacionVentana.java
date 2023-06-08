@@ -1,27 +1,36 @@
 package org.example.VentanasAuxiliares;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class errorVentana {
+public class notificacionVentana {
+
+    @FXML
+    private Text textoNotificacion;
+
     public void start() throws Exception {
-        var loader = new FXMLLoader(getClass().getResource("/escenaError.fxml"));
+        var loader = new FXMLLoader(getClass().getResource("/escenaNotificacion.fxml"));
         loader.setController(this);
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage s = new Stage();
-        s.setTitle("Error");
+        s.setTitle("ALARMA");
         s.setScene(scene);
         s.show();
+        textoNotificacion.setText("NOTIFICACIÓN DE ALARMA");
     }
 
-    public static void lanzarVentanaError() {
+    public static void lanzarVentanaNotificacion() {
         try {
-            new errorVentana().start();
+            new notificacionVentana().start();
         } catch (Exception e5) {
             //
         }
     }
+
+
 }
