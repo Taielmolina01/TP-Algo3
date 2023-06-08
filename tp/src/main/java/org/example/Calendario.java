@@ -1,5 +1,6 @@
 package org.example;
 
+import com.sun.prism.impl.ps.CachingEllipseRep;
 import org.example.Actividades.Actividad;
 import org.example.Actividades.Evento;
 import org.example.Actividades.Tarea;
@@ -202,8 +203,7 @@ public class Calendario implements Serializable {
         ObjectOutputStream o = null;
         try {
             o = new ObjectOutputStream(os);
-            o.writeObject(this.actividadesCalendario);
-            o.writeObject(this.indiceActividad);
+            o.writeObject(this);
             o.flush();
         } catch (IOException e) {
             salida.println("El flujo de salida no existe.");
@@ -222,23 +222,9 @@ public class Calendario implements Serializable {
 
     protected Calendario deserializar(PrintStream salida, InputStream is) throws ClassNotFoundException {
         Calendario calendarioNuevo = new Calendario();
-        /* Hace que rompa to do a la mierda
-        try {
-            if (is.read() == -1) {
-                return calendarioNuevo;
-            }
-        } catch (IOException e) {
-            //
-        }
-         */
         try {
             ObjectInputStream objectInStream = new ObjectInputStream(is);
-            HashMap<Integer, Actividad> actividades = (HashMap<Integer, Actividad>) objectInStream.readObject();
-            calendarioNuevo.actividadesCalendario.putAll(actividades);
-            for (Actividad actividad : calendarioNuevo.actividadesCalendario.values()) {
-                calendarioNuevo.alarmas.addAll(actividad.obtenerAlarmas().values());
-            }
-            calendarioNuevo.indiceActividad = (Integer) objectInStream.readObject();
+            calendarioNuevo = (Calendario) objectInStream.readObject();
             return calendarioNuevo;
         } catch (IOException e) {
             salida.println("El flujo de entrada está vacío.");
