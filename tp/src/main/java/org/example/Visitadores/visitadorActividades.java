@@ -15,8 +15,8 @@ import java.util.List;
 
 public class visitadorActividades implements visitorActividades {
 
-    private static final String colorAzul = "#85C1E9";
-    private static final String colorVerde = "#58D68D";
+    protected static final String colorAzul = "#85C1E9";
+    protected static final String colorVerde = "#58D68D";
 
     public ArrayList<vistaActividad> visitarActividades(List<Actividad> actividades) {
         ArrayList<vistaActividad> vistaActividades = new ArrayList<>();

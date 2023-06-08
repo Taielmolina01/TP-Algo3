@@ -105,7 +105,7 @@ public abstract class Actividad implements Serializable {
         return this.alarmas.remove(idAlarma);
     }
 
-    public abstract ArrayList<LocalDateTime> actividadesEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    public abstract ArrayList<Actividad> actividadesEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
     public abstract vistaActividad visitarActividad(visitadorActividades v);
 }

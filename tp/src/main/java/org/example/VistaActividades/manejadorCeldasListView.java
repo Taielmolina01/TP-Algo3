@@ -1,9 +1,12 @@
 package org.example.VistaActividades;
 
+import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
+import org.example.Visitadores.visitadorActividades;
 
 import java.util.ArrayList;
 
@@ -21,20 +24,23 @@ public class manejadorCeldasListView extends ListCell<String> {
         if (item != null && !empty) {
             setText(item);
             int i = getIndex();
+            // este get falla, dice que se accede a la posicion nueva (18 por ej) cuando vistaActividades es de largo 18 (cuando debería ser 19 porque justo
+            // se agrego un elemento)
             setBackground(new Background(new BackgroundFill(Color.web(this.vistaActividades.get(i).obtenerCodigoColorFondo()), null, null)));
-            /*if (this.vistaActividades.get(i).obtenerCodigoColorFondo().equals("#58D68D")) {
+            var vistaActual = this.vistaActividades.get(i);
+            if (vistaActual.obtenerCodigoColorFondo().equals(visitadorActividades.colorActividad.TAREA.getClaveColor())) {
                 var check = new CheckBox();
-                check.setLayoutX(572);
-                check.setLayoutY(123);
-                this.getChildren().add(check);
+                if (vistaActual.infoActividad.get(vistaActual.infoActividad.size()-1).equals("false")) {
+
+                }
+                setGraphic(new CheckBox());
             }
-             */
         } else {
             setText(null);
         }
     }
 
-    public void setVistaActividades(ArrayList<vistaActividad> vistaActividades) {
+    public void modificarListaVistaActividades(ArrayList<vistaActividad> vistaActividades) {
         this.vistaActividades = vistaActividades;
     }
 }

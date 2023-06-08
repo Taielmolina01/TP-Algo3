@@ -105,13 +105,11 @@ public class Calendario implements Serializable {
     }
 
     public ArrayList<Actividad> obtenerActividadesEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
-        ArrayList<Actividad> elementos = new ArrayList<>();
-        for (Actividad elemento : this.actividadesCalendario.values()) {
-            if (Actividad.estaEntreFechas(elemento.obtenerFechaInicio(), fechaInicio, fechaFinal)) {
-                elementos.add(elemento);
-            }
+        ArrayList<Actividad> actividades = new ArrayList<>();
+        for (Actividad actividad : this.actividadesCalendario.values()) {
+            actividades.addAll(actividad.actividadesEntreFechas(fechaInicio, fechaFinal));
         }
-        return elementos;
+        return actividades;
     }
 
 

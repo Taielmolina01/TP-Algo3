@@ -10,7 +10,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Evento extends Actividad implements Serializable {
+public class Evento extends Actividad implements Serializable, eventoClonable {
 
     private LocalDateTime fechaFin; // Fin del evento sin contar sus repeticiones, NO es la fecha en donde terminan las repeticiones.
     private LocalDateTime fechaFinalRepeticion; // Fecha en la que terminan las repeticiones del evento.
@@ -102,22 +102,35 @@ public class Evento extends Actividad implements Serializable {
     }
 
     @Override
-    public ArrayList<LocalDateTime> actividadesEntreFechas(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
+    public ArrayList<Actividad> actividadesEntreFechas(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
         LocalDateTime dia = fechaInicial.isBefore(this.obtenerFechaInicio()) ? this.obtenerFechaInicio() : fechaInicial;
-        ArrayList<LocalDateTime> eventos = new ArrayList<>();
+        ArrayList<Actividad> eventos = new ArrayList<>();
         if (fechaInicial.isAfter(this.fechaFinalRepeticion)) {
             return eventos;
         }
         while (estaEntreFechas(dia, fechaInicial, this.fechaFinalRepeticion) && estaEntreFechas(dia, fechaInicial, fechaFinal)) {
-            eventos.add(dia);
+            Evento clonEvento = (Evento) this.clonar();
+            clonEvento.modificarFechaInicio(dia);
+            // deberia modificar las fechas de activacion de alarmas tambien
+            eventos.add(clonEvento);
             dia = this.frecuencia.obtenerProximaFecha(dia);
         }
         return eventos;
     }
 
+    public eventoClonable clonar() {
+        Evento clonEvento = null;
+        try {
+            clonEvento = (Evento) clone();
+        } catch (CloneNotSupportedException e) {
+            //
+        }
+        return clonEvento;
+    }
+
     public boolean hayEvento(LocalDateTime diaAAnalizar) {
-        ArrayList<LocalDateTime> eventos = actividadesEntreFechas(this.obtenerFechaInicio(), diaAAnalizar);
-        LocalDateTime ultimoDiaInicio = eventos.get(eventos.size() - 1);
+        ArrayList<Actividad> eventos = actividadesEntreFechas(this.obtenerFechaInicio(), diaAAnalizar);
+        LocalDateTime ultimoDiaInicio = eventos.get(eventos.size() - 1).obtenerFechaInicio();
         LocalDateTime ultimoDiaFin = ultimoDiaInicio.plus(this.duracion);
         return estaEntreFechas(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
     }

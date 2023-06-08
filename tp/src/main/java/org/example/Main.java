@@ -35,7 +35,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class Main extends Application implements interfazGuardado, Initializable {
-    private final visitadorActividades visitador = new visitadorActividades();
+    private visitadorActividades visitador;
     protected ManejadorGuardado manejador;
     protected Calendario calendario;
     @FXML
@@ -45,7 +45,7 @@ public class Main extends Application implements interfazGuardado, Initializable
     @FXML
     private ComboBox<String> cajaCrear;
     @FXML
-    private ListView<String> listaActividades;
+    private ListView<String> listViewActividades; // cambiar a listview de vistaActividad xd
     private LocalDateTime fechaActual;
     private LocalDateTime inicioSemana;
     private LocalDateTime finSemana;
@@ -77,18 +77,7 @@ public class Main extends Application implements interfazGuardado, Initializable
         } else {
             this.fechaActual = this.fechaActual.minusMonths(1);
         }
-        this.establecerInicioYFinSemana();
-        this.establecerText();
-        String texto;
-        if (rangoActual.equals(this.valoresRango[0])) {
-            texto = this.textoDiario;
-        } else if (rangoActual.equals(this.valoresRango[1])) {
-            texto = this.textoSemanal;
-        } else {
-            texto = this.textoMensual;
-        }
-        this.lapsoTiempoActual.setText(texto);
-        this.actualizarListaActividades();
+        this.actualizarTextoYDemas(rangoActual);
     }
 
     @FXML
@@ -101,6 +90,10 @@ public class Main extends Application implements interfazGuardado, Initializable
         } else {
             this.fechaActual = this.fechaActual.plusMonths(1);
         }
+        this.actualizarTextoYDemas(rangoActual);
+    }
+
+    private void actualizarTextoYDemas(String rangoActual) {
         this.establecerInicioYFinSemana();
         this.establecerText();
         String texto;
@@ -116,7 +109,6 @@ public class Main extends Application implements interfazGuardado, Initializable
     }
 
     private void actualizarListaActividades() {
-        this.listaActividades.getItems().clear();
         if (this.rangoTiempo.getValue().equals(this.valoresRango[0])) {
             LocalDateTime fechaInicio = this.fechaActual.with(LocalTime.MIN);
             LocalDateTime fechaLimite = this.fechaActual.with(LocalTime.MAX);
@@ -130,15 +122,19 @@ public class Main extends Application implements interfazGuardado, Initializable
         }
     }
 
-    private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+    private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) { // esta funcion de mierda es la que funciona mal
+        this.listViewActividades.getItems().clear();
         ArrayList<Actividad> actividadesActuales = this.calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin);
-        actividadesActuales.sort(Comparator.comparing(Actividad::obtenerFechaInicio));
+        System.out.println(actividadesActuales);
+        actividadesActuales.sort(Comparator.comparing(Actividad::obtenerFechaInicio).thenComparing(Actividad::obtenerNombre));
         this.vistaActividadesActuales = this.visitador.visitarActividades(actividadesActuales);
-        for (int i = 0; i < actividadesActuales.size(); i++) {
-            this.listaActividades.getItems().add(this.vistaActividadesActuales.get(i).obtenerInfoResumida());
+        System.out.println(this.vistaActividadesActuales.size());
+        this.listViewActividades.setCellFactory(param -> new manejadorCeldasListView(this.vistaActividadesActuales));
+        // deberia actualizar la lista del manejador de celdas, pero por alguna razon me lanza un excepcion cuando lo intento hacer
+        System.out.println(vistaActividadesActuales.size());
+        for (int i = 0; i < vistaActividadesActuales.size(); i++) {
+            this.listViewActividades.getItems().add(this.vistaActividadesActuales.get(i).obtenerInfoResumida());
         }
-        // la info completa la tengo que guardar en algun lado
-        //this.coloreador.actualizarInfo(this.info);
     }
 
     private void establecerMeses() {
@@ -176,9 +172,9 @@ public class Main extends Application implements interfazGuardado, Initializable
         this.lapsoTiempoActual.setText(this.textoMensual);
         this.rangoTiempo.setOnAction(this::actualizarRango);
         this.cajaCrear.setOnAction(this::crearVentanaActividad);
-        this.listaActividades.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
+        this.listViewActividades.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
+        this.visitador = new visitadorActividades();
         this.actualizarListaActividades();
-        this.listaActividades.setCellFactory(param -> new manejadorCeldasListView(this.vistaActividadesActuales));
     }
 
     private void establecerText() {
@@ -263,11 +259,11 @@ public class Main extends Application implements interfazGuardado, Initializable
     }
 
     private void cambioSeleccion(Observable Observable) {
-        int indice = this.listaActividades.getSelectionModel().getSelectedIndex();
+        int indice = this.listViewActividades.getSelectionModel().getSelectedIndex();
         String infoCompletaSeleccionado = this.vistaActividadesActuales.get(indice).obtenerInfoCompleta();
         try {
-            infoCompletaVentana ventana = new infoCompletaVentana();
-            ventana.start(infoCompletaSeleccionado);
+            infoCompletaVentana v = new infoCompletaVentana();
+            v.start(infoCompletaSeleccionado);
         } catch (Exception e) {
             //
         }

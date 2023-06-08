@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public abstract class vistaActividad {
 
     ArrayList<String> infoActividad;
-
     String infoResumida;
     String infoCompleta;
     boolean todoElDia;

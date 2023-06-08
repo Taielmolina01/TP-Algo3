@@ -15,8 +15,10 @@ Molina, Taiel. Padrón: 109458
 - [X] Agregar lo de ver eventos/tareas del lapso pertinente.
 - [X] Agregar lo del guardado y recuperado.
 - [X] Ninguna ventana extra debe extender Application.
-- [ ] Arreglar que cuando se crea una tarea nueva se rompe el programa porque hay un problema con la actualizacion de vistaActividades.
-- [ ] Arreglar cuando se crea un evento nuevo, no se si es lo mismo que lo anterior (puede serlo tranquilamente).
+- [X] Actividades entre fechas estaba mal (hacer prototype?).
+- [ ] Falta lo de crear las alarmas para los eventos que se repiten. (Si un evento tiene una alarma configurada dos horas antes de un evento habria que ponerla dos 
+horas antes de cada repeticion?).
+- [ ] Arreglar que cuando se crea una tarea/evento nueva se rompe el programa porque hay un problema con la actualizacion de vistaActividades.
 - [ ] Cambiar que cuando es dia completo el texto muestra la fecha con formmater sin horas y diga "de dia completo"
 - [X] Cambiar lo del Visitor, ver clase diego 29/5 (en Slack tambien) (completado tiene que estar como box para seleccionar/deseleccionar).
 - [ ] Agregar disparado de alarmas.

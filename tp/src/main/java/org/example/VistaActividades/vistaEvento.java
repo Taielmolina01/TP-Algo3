@@ -10,6 +10,8 @@ public class vistaEvento extends vistaActividad {
 
     public vistaEvento(ArrayList<String> infoEvento) {
         super(infoEvento);
+        this.setInfoCompleta();
+        this.setInfoResumida();
     }
     public void setInfoCompleta() {
         String todoElDia = this.setearTextoDiaCompleto();

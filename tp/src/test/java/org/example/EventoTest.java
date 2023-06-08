@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Actividades.Actividad;
 import org.example.Actividades.Evento;
 import org.example.Frecuencia.*;
 import org.junit.Test;
@@ -7,10 +8,7 @@ import org.junit.Test;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -353,9 +351,30 @@ public class EventoTest {
             fechasTrue.add(LocalDateTime.of(2023, 9, dia, 21, 0, 0));
         }
 
-        assertEquals(evento.actividadesEntreFechas(fechaInicio.minusMonths(2), fechaFinal), fechasTrue);
-        assertEquals(evento.actividadesEntreFechas(fechaInicio, fechaFinal), fechasTrue);
-        assertEquals(evento.actividadesEntreFechas(fechaInicio.plusWeeks(1), fechaFinal), fechasTrue.subList(4, diasTrue.length));
-        assertEquals(evento.actividadesEntreFechas(fechaInicio.plusWeeks(4), fechaFinal), new ArrayList<>());
+        ArrayList<LocalDateTime> fechasActividades1 = new ArrayList<>();
+        ArrayList<Actividad> actividades1 = evento.actividadesEntreFechas(fechaInicio.minusMonths(2), fechaFinal);
+        for (int i = 0; i < actividades1.size(); i++) {
+            fechasActividades1.add(actividades1.get(i).obtenerFechaInicio());
+        }
+        ArrayList<LocalDateTime> fechasActividades2 = new ArrayList<>();
+        ArrayList<Actividad> actividades2 = evento.actividadesEntreFechas(fechaInicio, fechaFinal);
+        for (int i = 0; i < actividades2.size(); i++) {
+            fechasActividades2.add(actividades2.get(i).obtenerFechaInicio());
+        }
+        ArrayList<LocalDateTime> fechasActividades3 = new ArrayList<>();
+        ArrayList<Actividad> actividades3 = evento.actividadesEntreFechas(fechaInicio.plusWeeks(1), fechaFinal);
+        for (int i = 0; i < actividades3.size(); i++) {
+            fechasActividades3.add(actividades3.get(i).obtenerFechaInicio());
+        }
+        ArrayList<LocalDateTime> fechasActividades4 = new ArrayList<>();
+        ArrayList<Actividad> actividades4 = evento.actividadesEntreFechas(fechaInicio.plusWeeks(4), fechaFinal);
+        for (int i = 0; i < actividades4.size(); i++) {
+            fechasActividades4.add(actividades4.get(i).obtenerFechaInicio());
+        }
+
+        assertEquals(fechasActividades1, fechasTrue);
+        assertEquals(fechasActividades2, fechasTrue);
+        assertEquals(fechasActividades3, fechasTrue.subList(4, diasTrue.length));
+        assertEquals(fechasActividades4, new ArrayList<>());
     }
 }
