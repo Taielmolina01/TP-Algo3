@@ -18,6 +18,7 @@ import org.example.Alarma.Alarma;
 import org.example.Frecuencia.FrecuenciaDiaria;
 import org.example.VentanasAuxiliares.eventoVentana;
 import org.example.VentanasAuxiliares.infoCompletaVentana;
+import org.example.VentanasAuxiliares.notificacionVentana;
 import org.example.VentanasAuxiliares.tareaVentana;
 import org.example.Visitadores.visitadorActividades;
 import org.example.VistaActividades.manejadorCeldasListView;
@@ -29,10 +30,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Main extends Application implements interfazGuardado, Initializable {
     private visitadorActividades visitador;
@@ -176,12 +174,12 @@ public class Main extends Application implements interfazGuardado, Initializable
         this.visitador = new visitadorActividades();
         this.actualizarListaActividades();
         /*
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 Alarma a = this.calendario.obtenerSiguienteAlarma(LocalDateTime.now());
-                if (a != null && a.cuantoFaltaParaDisparar(LocalDateTime.now).compareTo(Duration.ofMinutes(3)) < 0) {
+                if (a != null && a.cuantoFaltaParaDisparar(LocalDateTime.now()).compareTo(Duration.ofMinutes(3)) < 0) {
                     notificacionVentana.lanzarVentanaNotificacion();
                 }
             }

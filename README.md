@@ -21,7 +21,7 @@ horas antes de cada repeticion?).
 - [ ] Arreglar que cuando se crea una tarea/evento nueva se rompe el programa porque hay un problema con la actualizacion de vistaActividades.
 - [ ] Cambiar que cuando es dia completo el texto muestra la fecha con formmater sin horas y diga "de dia completo"
 - [X] Cambiar lo del Visitor, ver clase diego 29/5 (en Slack tambien) (completado tiene que estar como box para seleccionar/deseleccionar).
-- [ ] Agregar disparado de alarmas. (Hecho pero sin probar jeje)
+- [ ] Agregar disparado de alarmas. (la verga esa de timetasker no sirve, tengo que usar otra cosa)
 - [ ] Hacer un archivo css con todo (agregar hover de los textfield)
 - [ ] Separar en dos paquetes grandes: Logica de negocio y GUI.
 - [ ] Modo claro/oscuro.
