@@ -15,12 +15,10 @@ import java.util.HashMap;
 public class Calendario implements Serializable {
 
     public final HashMap<Integer, Actividad> actividadesCalendario;
-    private final ArrayList<Alarma> alarmas;
     public int indiceActividad;
 
     public Calendario() {
         this.actividadesCalendario = new HashMap<>();
-        this.alarmas = new ArrayList<>();
     }
 
     public int crearEvento(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion,
@@ -96,12 +94,7 @@ public class Calendario implements Serializable {
     }
 
     public void eliminarElementoCalendario(int id) {
-        Actividad elementoEliminado = this.actividadesCalendario.remove(id);
-        if (elementoEliminado != null) {
-            for (Alarma alarma : elementoEliminado.obtenerAlarmas().values()) {
-                this.alarmas.remove(alarma);
-            }
-        }
+        this.actividadesCalendario.remove(id);
     }
 
     public ArrayList<Actividad> obtenerActividadesEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
@@ -115,74 +108,61 @@ public class Calendario implements Serializable {
 
     public void agregarAlarma(int id, Alarma.Efecto efecto, LocalDateTime fechaActivacion) {
         Actividad elemento = this.actividadesCalendario.get(id);
-        this.alarmas.add(elemento.agregarAlarma(efecto, fechaActivacion));
+        elemento.agregarAlarma(efecto, fechaActivacion);
     }
 
     public void agregarAlarma(int id, Alarma.Efecto efecto, Duration intervaloTiempo) {
         Actividad elemento = this.actividadesCalendario.get(id);
-        this.alarmas.add(elemento.agregarAlarma(efecto, intervaloTiempo));
+        elemento.agregarAlarma(efecto, intervaloTiempo);
     }
 
     public void modificarEfectoAlarma(int idElemento, int idAlarma, Alarma.Efecto nuevoEfecto) {
         this.actividadesCalendario.get(idElemento).modificarNotificacionAlarma(idAlarma, nuevoEfecto);
-        Alarma alarma = this.actividadesCalendario.get(idElemento).obtenerAlarma(idAlarma);
-        int posicionAlarma = this.obtenerPosicionAlarma(alarma);
-        if (posicionAlarma != -1) {
-            this.alarmas.get(posicionAlarma).modificarEfecto(nuevoEfecto);
-        }
     }
 
     public void modificarFechaActivacionAlarma(int idElemento, int idAlarma, LocalDateTime fechaAbsoluta) {
         this.actividadesCalendario.get(idElemento).modificarFechaActivacionAlarma(idAlarma, fechaAbsoluta);
-        Alarma alarma = this.actividadesCalendario.get(idElemento).obtenerAlarma(idAlarma);
-        int posicionAlarma = this.obtenerPosicionAlarma(alarma);
-        if (posicionAlarma != -1) {
-            this.alarmas.get(posicionAlarma).modificarFechaActivacion(fechaAbsoluta);
-        }
     }
 
     public void modificarFechaActivacionAlarma(int idElemento, int idAlarma, LocalDateTime fechaArbitraria, Duration intervaloTiempoNuevo) {
         this.actividadesCalendario.get(idElemento).modificarFechaActivacionAlarma(idAlarma, fechaArbitraria, intervaloTiempoNuevo);
-        Alarma alarma = this.actividadesCalendario.get(idElemento).obtenerAlarma(idAlarma);
-        int posicionAlarma = this.obtenerPosicionAlarma(alarma);
-        if (posicionAlarma != -1) {
-            this.alarmas.get(posicionAlarma).modificarFechaActivacion(fechaArbitraria, intervaloTiempoNuevo);
-        }
     }
 
-    public Alarma obtenerSiguienteAlarma(LocalDateTime fechaActual) {
-        if (this.alarmas.isEmpty()) {
+    public Alarma obtenerSiguienteAlarma(LocalDateTime fechaActual, LocalDateTime fechaFinal) {
+        ArrayList<Alarma> alarmas = this.obtenerAlarmasLapso(fechaActual, fechaFinal);
+        if (alarmas.size() == 0) {
             return null;
         }
         int posMaxima = 0;
         for (int i = 0; i < alarmas.size(); i++) {
-            if (Alarma.compararAlarmas(this.alarmas.get(posMaxima), this.alarmas.get(i)) > 0) {
-                if (this.alarmas.get(i).obtenerFechaActivacion().isBefore(fechaActual)) { // La hora de la última alarma ya pasó.
+            if (Alarma.compararAlarmas(alarmas.get(posMaxima), alarmas.get(i)) > 0) {
+                if (alarmas.get(i).obtenerFechaActivacion().isBefore(fechaActual)) { // La hora de la última alarma ya pasó.
                     continue;
                 }
                 posMaxima = i;
             }
         }
-        if (this.alarmas.get(posMaxima).obtenerFechaActivacion().isBefore(fechaActual)) { // La hora de la última alarma ya pasó.
+        if (alarmas.get(posMaxima).obtenerFechaActivacion().isBefore(fechaActual)) { // La hora de la última alarma ya pasó.
             return null;
         }
-        return this.alarmas.get(posMaxima);
+        return alarmas.get(posMaxima);
     }
 
-    private int obtenerPosicionAlarma(Alarma alarmaBuscada) {
-        for (int i = 0; i < this.alarmas.size(); i++) {
-            if (this.alarmas.get(i).equals(alarmaBuscada)) {
-                return i;
-            }
+    public ArrayList<Alarma> obtenerAlarmasLapso(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
+        ArrayList<Actividad> actividades = this.obtenerActividadesEntreFechas(fechaInicial, fechaFinal);
+        ArrayList<Alarma> alarmas = new ArrayList<>();
+        for (Actividad a : actividades) {
+            alarmas.addAll(a.obtenerAlarmas().values());
         }
-        return -1;
+        return alarmas;
+    }
+
+    public HashMap<Integer, Alarma> obtenerAlarmasActividad(int ID) {
+        return this.actividadesCalendario.get(ID).obtenerAlarmas();
     }
 
     public void eliminarAlarma(int idElemento, int idAlarma) {
-        Alarma alarmaEliminada = this.actividadesCalendario.get(idElemento).eliminarAlarma(idAlarma);
-        if (alarmaEliminada != null) {
-            this.alarmas.remove(alarmaEliminada);
-        }
+        this.actividadesCalendario.get(idElemento).eliminarAlarma(idAlarma);
     }
 
 

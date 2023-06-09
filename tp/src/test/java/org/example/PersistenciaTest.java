@@ -90,22 +90,35 @@ public class PersistenciaTest {
             LocalDateTime fechaPosteriorAPrimeraAlarma = LocalDateTime.of(2023, 3, 29, 22, 0, 0);
             LocalDateTime fechaPosteriorAAmbasAlarmas = LocalDateTime.of(2023, 4, 1, 0, 0, 0);
 
-            assertNotNull(calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas));
-            assertNotNull(calendario2.obtenerSiguienteAlarma(fechaAnteriorAAlarmas));
-            assertEquals(LocalDateTime.of(2023, 3, 29, 12, 0, 0), calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas).obtenerFechaActivacion());
-            assertEquals(calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas).obtenerFechaActivacion(), calendario2.obtenerSiguienteAlarma(fechaAnteriorAAlarmas).obtenerFechaActivacion());
-            assertEquals(Alarma.Efecto.EMAIL, calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas).dispararAlarma());
-            assertEquals(calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas).dispararAlarma(), calendario2.obtenerSiguienteAlarma(fechaAnteriorAAlarmas).dispararAlarma());
 
-            assertNotNull(calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas));
-            assertNotNull(calendario2.obtenerSiguienteAlarma(fechaAnteriorAAlarmas));
-            assertEquals(LocalDateTime.of(2023, 3, 31, 23, 30, 0), calendario1.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma).obtenerFechaActivacion());
-            assertEquals(calendario1.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma).obtenerFechaActivacion(), calendario2.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma).obtenerFechaActivacion());
-            assertEquals(Alarma.Efecto.NOTIFICACION, calendario1.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma).dispararAlarma());
-            assertEquals(calendario1.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma).dispararAlarma(), calendario2.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma).dispararAlarma());
+            LocalDateTime fechaLimite = LocalDateTime.of(2024, 12, 31, 0, 0, 0);
 
-            assertNull(calendario1.obtenerSiguienteAlarma(fechaPosteriorAAmbasAlarmas));
-            assertNull(calendario2.obtenerSiguienteAlarma(fechaPosteriorAAmbasAlarmas));
+
+            assertNotNull(calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas, fechaAnteriorAAlarmas.plusWeeks(2)));
+            assertNotNull(calendario2.obtenerSiguienteAlarma(fechaAnteriorAAlarmas, fechaAnteriorAAlarmas.plusWeeks(2)));
+            assertEquals(LocalDateTime.of(2023, 3, 29, 12, 0, 0),
+                    calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas, fechaLimite).obtenerFechaActivacion());
+            assertEquals(calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas, fechaLimite).obtenerFechaActivacion(),
+                    calendario2.obtenerSiguienteAlarma(fechaAnteriorAAlarmas, fechaLimite).obtenerFechaActivacion());
+            assertEquals(Alarma.Efecto.EMAIL, calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas,fechaLimite).dispararAlarma());
+            assertEquals(calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas, fechaAnteriorAAlarmas.plusWeeks(2)).dispararAlarma(),
+                    calendario2.obtenerSiguienteAlarma(fechaAnteriorAAlarmas, fechaAnteriorAAlarmas.plusWeeks(2)).dispararAlarma());
+
+            assertNotNull(calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas, fechaAnteriorAAlarmas.plusWeeks(2)));
+            assertNotNull(calendario2.obtenerSiguienteAlarma(fechaAnteriorAAlarmas, fechaAnteriorAAlarmas.plusWeeks(2)));
+            assertEquals(LocalDateTime.of(2023, 3, 31, 23, 30, 0),
+                    calendario1.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma,
+                            fechaPosteriorAPrimeraAlarma.plusWeeks(2)).obtenerFechaActivacion());
+            assertEquals(calendario1.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma,
+                            fechaPosteriorAPrimeraAlarma.plusWeeks(2)).obtenerFechaActivacion(),
+                    calendario2.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma,
+                            fechaPosteriorAPrimeraAlarma.plusWeeks(2)).obtenerFechaActivacion());
+            assertEquals(Alarma.Efecto.NOTIFICACION, calendario1.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma, fechaLimite).dispararAlarma());
+            assertEquals(calendario1.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma, fechaLimite).dispararAlarma(),
+                    calendario2.obtenerSiguienteAlarma(fechaPosteriorAPrimeraAlarma, fechaLimite).dispararAlarma());
+
+            assertNull(calendario1.obtenerSiguienteAlarma(fechaPosteriorAAmbasAlarmas, fechaPosteriorAAmbasAlarmas.plusWeeks(2)));
+            assertNull(calendario2.obtenerSiguienteAlarma(fechaPosteriorAAmbasAlarmas, fechaPosteriorAAmbasAlarmas));
         } catch (Exception e) {
             System.out.println("El test salio mal.");
         }

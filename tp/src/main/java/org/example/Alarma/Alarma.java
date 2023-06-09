@@ -1,5 +1,7 @@
 package org.example.Alarma;
 
+import org.example.Actividades.Actividad;
+
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;

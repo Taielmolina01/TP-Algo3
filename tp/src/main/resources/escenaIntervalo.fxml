@@ -4,15 +4,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="152.0" prefWidth="297.0" style="-fx-background-color: #EAEDED;"
-            xmlns="http://javafx.com/javafx/19">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="152.0" prefWidth="297.0" style="-fx-background-color: #EAEDED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <TextField fx:id="intervalo" layoutX="20.0" layoutY="48.0" prefHeight="37.0" prefWidth="258.0"
-                   promptText="Ingrese intervalo relativo (HH:mm:ss)"/>
-        <Button fx:id="botonOk" layoutX="129.0" layoutY="104.0" mnemonicParsing="false" onAction="#clickOk"
-                style="-fx-background-color: #EAEDED; -fx-border-color: #BFC9CA; -fx-border-radius: 30;" text="OK"/>
-        <Text fx:id="mensaje" layoutX="13.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0"
-              textAlignment="CENTER" wrappingWidth="271.0"/>
+        <TextField fx:id="intervalo" layoutX="26.0" layoutY="49.0" prefHeight="37.0" prefWidth="246.0" promptText="Ingrese intervalo relativo (HH:mm:ss)" />
+        <Button fx:id="botonOk" layoutX="129.0" layoutY="104.0" mnemonicParsing="false" onAction="#clickOk" style="-fx-background-color: #EAEDED; -fx-border-color: #BFC9CA; -fx-border-radius: 30;" text="OK" />
+        <Text fx:id="mensaje" layoutX="13.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="271.0" />
     </children>
 </AnchorPane>

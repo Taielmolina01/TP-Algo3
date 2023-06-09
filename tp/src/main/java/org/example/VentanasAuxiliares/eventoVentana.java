@@ -85,7 +85,7 @@ public class eventoVentana implements Initializable {
         LocalDateTime fechaInicio;
         LocalDateTime fechaFinal;
         Duration duracionEvento = formateador.formatearDuracion(this.duracionEventoText.getText());
-        if (this.datosInicialesNoSonValidos(nombre, descripcion, duracionEvento)) {
+        if (this.datosInicialesNoSonValidos(nombre, duracionEvento)) {
             errorVentana.lanzarVentanaError();
             return;
         }
@@ -139,8 +139,8 @@ public class eventoVentana implements Initializable {
         }
     }
 
-    private boolean datosInicialesNoSonValidos(String nombre, String descripcion, Duration duracionEvento) {
-        return nombre.equals("") || descripcion.equals("") || (!this.diaCompleto.isSelected() && duracionEvento == null);
+    private boolean datosInicialesNoSonValidos(String nombre, Duration duracionEvento) {
+        return nombre.equals("") || (!this.diaCompleto.isSelected() && duracionEvento == null);
     }
 
     private boolean noHayRepeticion() {
