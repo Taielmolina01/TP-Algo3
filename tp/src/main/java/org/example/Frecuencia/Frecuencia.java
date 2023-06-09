@@ -24,4 +24,5 @@ public abstract class Frecuencia {
     public abstract LocalDateTime obtenerProximaFecha(LocalDateTime fechaInicial);
 
     public abstract String obtenerTipoFrecuencia(visitorFrecuencia visitante);
+
 }

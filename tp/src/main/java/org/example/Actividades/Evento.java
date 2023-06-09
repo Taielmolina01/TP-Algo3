@@ -113,25 +113,22 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
         if (!this.esFechaRepeticion(dia, fechaFinal)) {
             dia = this.pasarASiguienteFechaRepeticion(dia, fechaFinal);
         }
+        var duraciones = this.calcularDuracionesRespectoAAlarmas();
         while (estaEntreFechas(dia, fechaInicial, this.fechaFinalRepeticion) && estaEntreFechas(dia, fechaInicial, fechaFinal)) {
             Evento clonEvento = (Evento) this.clonar();
             clonEvento.modificarFechaInicio(dia);
-           // HashMap<Integer, Alarma> alarmas = this.obtenerAlarmas();
-            //if (clonEvento.obtenerFechaInicio() != this.obtenerFechaInicio()) {
-                //for (var i : alarmas.keySet()) {
-                 //   Alarma a = alarmas.get(i);
-                 //   Duration d = a.cuantoFaltaParaDisparar(this.obtenerFechaInicio());
-                 //   Alarma aNueva = new Alarma(a.dispararAlarma(), clonEvento.obtenerFechaInicio(), d);
-                    //clonEvento.obtenerAlarmas().replace(i, aNueva);
-                    //}
-            //}
+            clonEvento.alarmas = clonEvento.clonarAlarmas();
+            for (var i : clonEvento.alarmas.keySet()) {
+                var alarmaVieja = this.alarmas.get(i);
+                var nuevaAlarma = new Alarma(alarmaVieja.dispararAlarma(), clonEvento.fechaInicio, duraciones.get(i));
+                clonEvento.obtenerAlarmas().replace(i, nuevaAlarma);
+            }
             eventos.add(clonEvento);
             dia = this.frecuencia.obtenerProximaFecha(dia);
-
         }
         return eventos;
     }
-    
+
     public eventoClonable clonar() {
         Evento clonEvento = null;
         try {
@@ -170,6 +167,16 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
             }
         }
         return dia;
+    }
+
+    private HashMap<Integer, Duration> calcularDuracionesRespectoAAlarmas() {
+        HashMap<Integer, Duration> duraciones = new HashMap<>();
+        for (var i : this.obtenerAlarmas().keySet()) {
+            var alarma = this.obtenerAlarma(i);
+            Duration d = alarma.cuantoFaltaParaDisparar(this.obtenerFechaInicio()).abs();
+            duraciones.put(i, d);
+        }
+        return duraciones;
     }
 
     public boolean hayEvento(LocalDateTime diaAAnalizar) {

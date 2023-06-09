@@ -22,8 +22,9 @@ nota2: no entiendo por que mierda rompe cuando se agrega un evento, me estoy gua
 - [X] Ninguna ventana extra debe extender Application.
 - [X] Actividades entre fechas estaba mal (hacer prototype?).
 - [X] Agregar bien la funcionalidad de actividades entre fechas (rompe cuando se ingresa un dia inicial en el que no hay actividad).
-- [ ] Falta lo de crear las alarmas para los eventos que se repiten. (Si un evento tiene una alarma configurada dos horas antes de un evento habria que ponerla dos 
+- [X] Falta lo de crear las alarmas para los eventos que se repiten. (Si un evento tiene una alarma configurada dos horas antes de un evento habria que ponerla dos 
 horas antes de cada repeticion?). (En progreso pero es una poronga y no funciona).
+- [ ] Modificar lo de proxima alarma en Calendario.
 - [ ] Cuando se agrega un evento dsp no se puede cargar el programa cuando se vuelve abrir (cuando se agregan tareas no rompe) (QUE MIERDA PASA)
 - [ ] Arreglar que cuando se crea una tarea/evento nueva se rompe el programa porque hay un problema con la actualizacion de vistaActividades.
 - [ ] Cambiar que cuando es dia completo el texto muestra la fecha con formmater sin horas y diga "de dia completo"

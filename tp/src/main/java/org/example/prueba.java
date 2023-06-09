@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Actividades.Actividad;
 import org.example.Actividades.Evento;
 import org.example.Alarma.Alarma;
 import org.example.Frecuencia.Frecuencia;
@@ -7,6 +8,7 @@ import org.example.Frecuencia.FrecuenciaDiaria;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 
 public class prueba {
@@ -19,17 +21,10 @@ public class prueba {
         Evento evento = new Evento(0, "Almuerzo", "con mi abuela",
                 fechaInicio, duracion, false, fechaFinal, frecuencia);
         evento.agregarAlarma(Alarma.Efecto.NOTIFICACION, Duration.ofHours(2));
-        var eventos = evento.actividadesEntreFechas(fechaInicio, fechaFinal);
-        for (var e : eventos) {
-            System.out.println(e.obtenerFechaInicio());
+        evento.agregarAlarma(Alarma.Efecto.NOTIFICACION, evento.obtenerAlarma(0).cuantoFaltaParaDisparar(evento.obtenerFechaInicio()));
+        ArrayList<Actividad> actividades = evento.actividadesEntreFechas(fechaInicio, fechaFinal);
+        for (var e : actividades) {
+            System.out.println(e.obtenerAlarma(0).obtenerFechaActivacion());
         }
-        System.out.println();
-        var fechaInicio2 = LocalDateTime.of(2023, 7, 1, 0, 0, 0);
-        var fechaFin2 = LocalDateTime.of(2023, 7, 31, 23, 59, 59);
-        var eventos2 = evento.actividadesEntreFechas(fechaInicio2, fechaFin2);
-        for (var e : eventos2) {
-            System.out.println(e.obtenerFechaInicio());
-        }
-
     }
 }

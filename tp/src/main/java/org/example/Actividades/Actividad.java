@@ -9,15 +9,16 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Actividad implements Serializable {
-    private final HashMap<Integer, Alarma> alarmas;
-    private final int ID;
-    private String nombre;
-    private String descripcion;
-    private boolean todoElDia;
-    private LocalDateTime fechaInicio;
-    private int indiceAlarmas;
+    protected HashMap<Integer, Alarma> alarmas;
+    protected final int ID;
+    protected String nombre;
+    protected String descripcion;
+    protected boolean todoElDia;
+    protected LocalDateTime fechaInicio;
+    protected int indiceAlarmas;
 
     public Actividad(int ID, String nombre, String descripcion, LocalDateTime fechaInicio, boolean todoElDia) {
         this.ID = ID;
@@ -103,6 +104,14 @@ public abstract class Actividad implements Serializable {
 
     public Alarma eliminarAlarma(int idAlarma) {
         return this.alarmas.remove(idAlarma);
+    }
+
+    public HashMap<Integer, Alarma> clonarAlarmas() {
+        HashMap<Integer, Alarma> nuevasAlarmas = new HashMap<>();
+        for (Map.Entry<Integer, Alarma> entry : this.alarmas.entrySet()) {
+            nuevasAlarmas.put(entry.getKey(), (Alarma) entry.getValue().clonar());
+        }
+        return nuevasAlarmas;
     }
 
     public abstract ArrayList<Actividad> actividadesEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin);

@@ -1,11 +1,14 @@
 package org.example.Alarma;
 
+import org.example.Actividades.Evento;
+import org.example.Actividades.eventoClonable;
+
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
-public class Alarma implements Serializable {
+public class Alarma implements Serializable, alarmaClonable {
 
     private Efecto efectoProducido;
     private LocalDateTime fechaActivacion;
@@ -57,11 +60,21 @@ public class Alarma implements Serializable {
     }
 
     private void establecerFechas(LocalDateTime fechaArbitraria, Duration intervaloTiempo) {
-        this.fechaActivacion = fechaArbitraria.minus(intervaloTiempo.abs());
+        this.fechaActivacion = fechaArbitraria.minus(intervaloTiempo);
     }
 
     private void establecerFechas(LocalDateTime fechaAbsoluta) {
         this.fechaActivacion = fechaAbsoluta;
+    }
+
+    public alarmaClonable clonar() {
+        Alarma clonAlarma = null;
+        try {
+            clonAlarma = (Alarma) clone();
+        } catch (CloneNotSupportedException e) {
+            //
+        }
+        return clonAlarma;
     }
 
     public enum Efecto {
