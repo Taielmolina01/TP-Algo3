@@ -122,10 +122,7 @@ public class Main extends Application implements interfazGuardado, Initializable
 
     private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) { // esta funcion de mierda es la que funciona mal
         this.listViewActividades.getItems().clear();
-        System.out.println(fechaInicio);
-        System.out.println(fechaFin);
         ArrayList<Actividad> actividadesActuales = this.calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin);
-        System.out.println(actividadesActuales);
         actividadesActuales.sort(Comparator.comparing(Actividad::obtenerFechaInicio).thenComparing(Actividad::obtenerNombre));
         this.vistaActividadesActuales = this.visitador.visitarActividades(actividadesActuales);
         this.listViewActividades.setCellFactory(param -> new manejadorCeldasListView(this.vistaActividadesActuales));

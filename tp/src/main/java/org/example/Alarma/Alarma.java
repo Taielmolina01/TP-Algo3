@@ -57,7 +57,7 @@ public class Alarma implements Serializable {
     }
 
     private void establecerFechas(LocalDateTime fechaArbitraria, Duration intervaloTiempo) {
-        this.fechaActivacion = fechaArbitraria.minus(intervaloTiempo);
+        this.fechaActivacion = fechaArbitraria.minus(intervaloTiempo.abs());
     }
 
     private void establecerFechas(LocalDateTime fechaAbsoluta) {
