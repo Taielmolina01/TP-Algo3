@@ -124,6 +124,9 @@ public class Main extends Application implements interfazGuardado, Initializable
         this.listViewActividades.getItems().clear();
         ArrayList<Actividad> actividadesActuales = this.calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin);
         actividadesActuales.sort(Comparator.comparing(Actividad::obtenerFechaInicio).thenComparing(Actividad::obtenerNombre));
+        for (var a : actividadesActuales) {
+            System.out.println(a.obtenerFechaInicio());
+        }
         this.vistaActividadesActuales = this.visitador.visitarActividades(actividadesActuales);
         this.listViewActividades.setCellFactory(param -> new manejadorCeldasListView(this.vistaActividadesActuales));
         // deberia actualizar la lista del manejador de celdas, pero por alguna razon me lanza un excepcion cuando lo intento hacer

@@ -110,31 +110,24 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
         if (fechaInicial.isAfter(this.fechaFinalRepeticion)) {
             return eventos;
         }
+        if (!this.esFechaRepeticion(dia, fechaFinal)) {
+            dia = this.pasarASiguienteFechaRepeticion(dia, fechaFinal);
+        }
         while (estaEntreFechas(dia, fechaInicial, this.fechaFinalRepeticion) && estaEntreFechas(dia, fechaInicial, fechaFinal)) {
-            System.out.println("Inicio");
             Evento clonEvento = (Evento) this.clonar();
             clonEvento.modificarFechaInicio(dia);
-            System.out.println(dia);
-            HashMap<Integer, Alarma> alarmas = this.obtenerAlarmas();
-            if (clonEvento.obtenerFechaInicio() != this.obtenerFechaInicio()) {
-                System.out.println("Entra al if");
-                for (var i : alarmas.keySet()) {
-                    Alarma a = alarmas.get(i);
-                    System.out.println(a.obtenerFechaActivacion());
-                    Duration d = a.cuantoFaltaParaDisparar(this.obtenerFechaInicio());
-                    System.out.println("Duracion en horas: " + d.toHours());
-                    Alarma aNueva = new Alarma(a.dispararAlarma(), clonEvento.obtenerFechaInicio(), d);
-                    System.out.println("Hora que se activa antes de reemplazar en el clon: " + aNueva.obtenerFechaActivacion());
-                    System.out.println("Tamaño alarmas del clon antes de ingresar: " + clonEvento.obtenerAlarmas().size());
-                    clonEvento.obtenerAlarmas().replace(i, aNueva);
-                    System.out.println("Tamaño alarmas del clon post de ingresar: " + clonEvento.obtenerAlarmas().size());
-                    System.out.println("Hora que se activa post de reemplazar en el clon: " + clonEvento.obtenerAlarma(0).obtenerFechaActivacion());
-                }
-            }
+           // HashMap<Integer, Alarma> alarmas = this.obtenerAlarmas();
+            //if (clonEvento.obtenerFechaInicio() != this.obtenerFechaInicio()) {
+                //for (var i : alarmas.keySet()) {
+                 //   Alarma a = alarmas.get(i);
+                 //   Duration d = a.cuantoFaltaParaDisparar(this.obtenerFechaInicio());
+                 //   Alarma aNueva = new Alarma(a.dispararAlarma(), clonEvento.obtenerFechaInicio(), d);
+                    //clonEvento.obtenerAlarmas().replace(i, aNueva);
+                    //}
+            //}
             eventos.add(clonEvento);
             dia = this.frecuencia.obtenerProximaFecha(dia);
-            System.out.println("Pasa al siguiente");
-            System.out.println("");
+
         }
         return eventos;
     }
@@ -147,6 +140,36 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
             //
         }
         return clonEvento;
+    }
+
+    private ArrayList<LocalDateTime> fechasRepeticiones(LocalDateTime fechaFinal) {
+        var dia = this.obtenerFechaInicio();
+        ArrayList<LocalDateTime> repeticiones = new ArrayList<>();
+        while (estaEntreFechas(dia, this.obtenerFechaInicio(), fechaFinal)) {
+            repeticiones.add(dia);
+            dia = this.frecuencia.obtenerProximaFecha(dia);
+        }
+        return repeticiones;
+    }
+
+    private boolean esFechaRepeticion(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
+        var fechas = this.fechasRepeticiones(fechaFinal);
+        for (var fecha : fechas) {
+            if (fecha.isEqual(fechaInicial)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private LocalDateTime pasarASiguienteFechaRepeticion(LocalDateTime dia, LocalDateTime fechaFinal) {
+        var fechas = this.fechasRepeticiones(fechaFinal);
+        for (int i = 0; i < fechas.size() - 1; i++) {
+            if (dia.isAfter(fechas.get(i)) && dia.isBefore(fechas.get(i+1))) {
+                dia = fechas.get(i+1);
+            }
+        }
+        return dia;
     }
 
     public boolean hayEvento(LocalDateTime diaAAnalizar) {

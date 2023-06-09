@@ -46,10 +46,10 @@ public class visitadorEventosFrecuencia implements visitorFrecuencia {
     }
 
     private String esPlural(Frecuencia frecuencia) {
-        return frecuencia.obtenerValorRepeticion() == 1 ? "s" : "";
+        return frecuencia.obtenerValorRepeticion() > 1 ? "s" : "";
     }
 
     private String esPluralMeses(FrecuenciaMensual frecuencia) {
-        return frecuencia.obtenerValorRepeticion() == 1 ? "es" : "";
+        return frecuencia.obtenerValorRepeticion() > 1 ? "es" : "";
     }
 }
