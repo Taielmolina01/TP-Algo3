@@ -1,5 +1,6 @@
 package org.example;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
@@ -29,10 +30,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Main extends Application implements interfazGuardado, Initializable {
     private visitadorActividades visitador;
@@ -56,6 +54,7 @@ public class Main extends Application implements interfazGuardado, Initializable
     private String textoMensual;
     private String[] valoresRango;
     private String[] valoresCrear;
+    private AnimationTimer timer;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -172,18 +171,16 @@ public class Main extends Application implements interfazGuardado, Initializable
         this.listViewActividades.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
         this.visitador = new visitadorActividades();
         this.actualizarListaActividades();
+
         /*
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Alarma a = this.calendario.obtenerSiguienteAlarma(LocalDateTime.now());
+        this.timer = (AnimationTimer) (l) -> {
+                Alarma a = this.calendario.obtenerSiguienteAlarma(LocalDateTime.now(), LocalDateTime.now().plusDays(1));
                 if (a != null && a.cuantoFaltaParaDisparar(LocalDateTime.now()).compareTo(Duration.ofMinutes(3)) < 0) {
                     notificacionVentana.lanzarVentanaNotificacion();
                 }
-            }
-        }, 0, 30000);
+        };
          */
+        timer.start();
     }
 
     private void establecerText() {

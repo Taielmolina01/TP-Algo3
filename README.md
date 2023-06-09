@@ -22,6 +22,7 @@ nota2: no entiendo por que mierda rompe cuando se agrega un evento CON REPETICIO
 - [X] Falta lo de crear las alarmas para los eventos que se repiten. 
 - [ ] Modificar lo de proxima alarma en Calendario. Deberia o bien guardarme la actividad en la alarma (mas no que si), o cuando devuelvo la proxima alarma, devolver
 un Map<IDActividad, Alarma> cosa de poder mostrar un mensaje diciendo ALARMA NOTIFICACION de calendario.obtenerNombre(IDActividad) o algo así.
+NOTA: utilizar **AbstractMap.SimpleEntry**.
 - [ ] Cuando se agrega un evento que se repite dsp no se puede cargar el programa cuando se vuelve abrir (cuando se agregan tareas no rompe) (QUE MIERDA PASA)
 - [ ] Arreglar que cuando se crea una tarea/evento nueva se rompe el programa porque hay un problema con la actualizacion de vistaActividades.
 - [X] Cambiar que cuando es dia completo el texto muestra la fecha con formmater sin horas y diga "de dia completo"
