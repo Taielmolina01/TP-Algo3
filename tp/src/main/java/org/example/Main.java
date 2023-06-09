@@ -18,7 +18,6 @@ import org.example.Alarma.Alarma;
 import org.example.Frecuencia.FrecuenciaDiaria;
 import org.example.VentanasAuxiliares.eventoVentana;
 import org.example.VentanasAuxiliares.infoCompletaVentana;
-import org.example.VentanasAuxiliares.notificacionVentana;
 import org.example.VentanasAuxiliares.tareaVentana;
 import org.example.Visitadores.visitadorActividades;
 import org.example.VistaActividades.manejadorCeldasListView;
@@ -30,7 +29,10 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.ResourceBundle;
 
 public class Main extends Application implements interfazGuardado, Initializable {
     private visitadorActividades visitador;
@@ -124,6 +126,7 @@ public class Main extends Application implements interfazGuardado, Initializable
         this.listViewActividades.getItems().clear();
         ArrayList<Actividad> actividadesActuales = this.calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin);
         actividadesActuales.sort(Comparator.comparing(Actividad::obtenerFechaInicio).thenComparing(Actividad::obtenerNombre));
+        System.out.println(actividadesActuales);
         for (var a : actividadesActuales) {
             System.out.println(a.obtenerFechaInicio());
         }

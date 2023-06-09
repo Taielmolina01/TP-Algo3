@@ -4,10 +4,10 @@ import org.example.Actividades.Actividad;
 import org.example.Actividades.Evento;
 import org.example.Actividades.Tarea;
 import org.example.Alarma.Alarma;
-import org.example.formateador;
 import org.example.VistaActividades.vistaActividad;
 import org.example.VistaActividades.vistaEvento;
 import org.example.VistaActividades.vistaTarea;
+import org.example.formateador;
 
 import java.util.ArrayList;
 import java.util.HashMap;

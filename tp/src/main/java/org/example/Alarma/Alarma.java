@@ -1,12 +1,8 @@
 package org.example.Alarma;
 
-import org.example.Actividades.Evento;
-import org.example.Actividades.eventoClonable;
-
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.concurrent.TimeUnit;
 
 public class Alarma implements Serializable, alarmaClonable {
 

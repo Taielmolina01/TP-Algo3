@@ -110,6 +110,13 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
         if (fechaInicial.isAfter(this.fechaFinalRepeticion)) {
             return eventos;
         }
+        if (frecuencia == null){
+            if (estaEntreFechas(this.fechaInicio, fechaInicial, fechaFinal)) {
+                eventos.add(this);
+                return eventos;
+            }
+            return eventos;
+        }
         if (!this.esFechaRepeticion(dia, fechaFinal)) {
             dia = this.pasarASiguienteFechaRepeticion(dia, fechaFinal);
         }
@@ -198,4 +205,5 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
             return "";
         }
     }
+
 }

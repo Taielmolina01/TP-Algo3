@@ -1,6 +1,5 @@
 package org.example.VistaActividades;
 
-import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.Background;

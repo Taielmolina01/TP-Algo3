@@ -8,7 +8,7 @@ Molina, Taiel. Padrón: 109458
 
 ## Notas
 
-nota2: no entiendo por que mierda rompe cuando se agrega un evento, me estoy guardando el hash entero, no tiene sentido.
+nota2: no entiendo por que mierda rompe cuando se agrega un evento CON REPETICION, me estoy guardando el hash entero, no tiene sentido.
 
 ## TODO
 
