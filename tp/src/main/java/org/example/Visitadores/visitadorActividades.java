@@ -47,7 +47,11 @@ public class visitadorActividades implements visitorActividades {
         infoActividad.add(String.valueOf(a.obtenerID()));
         infoActividad.add(a.obtenerNombre());
         infoActividad.add(a.obtenerDescripcion());
-        infoActividad.add(a.obtenerFechaInicio().format(formateador.formatterConHoras));
+        if (a.obtenerTodoElDia()) {
+            infoActividad.add(a.obtenerFechaInicio().format(formateador.formatterSinHoras));
+        } else {
+            infoActividad.add(a.obtenerFechaInicio().format(formateador.formatterConHoras));
+        }
         infoActividad.add(a.obtenerTodoElDia().toString());
         HashMap<Integer, Alarma> alarmas = a.obtenerAlarmas();
         String stringAlarmas = "";

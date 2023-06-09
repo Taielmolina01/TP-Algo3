@@ -27,7 +27,7 @@ horas antes de cada repeticion?). (En progreso pero es una poronga y no funciona
 - [ ] Modificar lo de proxima alarma en Calendario.
 - [ ] Cuando se agrega un evento dsp no se puede cargar el programa cuando se vuelve abrir (cuando se agregan tareas no rompe) (QUE MIERDA PASA)
 - [ ] Arreglar que cuando se crea una tarea/evento nueva se rompe el programa porque hay un problema con la actualizacion de vistaActividades.
-- [ ] Cambiar que cuando es dia completo el texto muestra la fecha con formmater sin horas y diga "de dia completo"
+- [X] Cambiar que cuando es dia completo el texto muestra la fecha con formmater sin horas y diga "de dia completo"
 - [X] Cambiar lo del Visitor, ver clase diego 29/5 (en Slack tambien) (completado tiene que estar como box para seleccionar/deseleccionar).
 - [ ] Agregar disparado de alarmas. (la verga esa de timetasker no sirve, tengo que usar otra cosa)
 - [ ] Hacer un archivo css con todo (agregar hover de los textfield)
