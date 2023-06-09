@@ -8,9 +8,6 @@ Molina, Taiel. Padrón: 109458
 
 ## Notas
 
-nota1: lo de agregar las alarmas esta funcionando mal, deberia por cada alarma A del evento E original, calcular su duracion (la dif entre la hora que suena
-y la hora del evento) y luego agregar en las repeticiones de E las alarmas (con el mismo ID) con la misma dif de horas.
-
 nota2: no entiendo por que mierda rompe cuando se agrega un evento, me estoy guardando el hash entero, no tiene sentido.
 
 ## TODO
