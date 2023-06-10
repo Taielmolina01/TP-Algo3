@@ -27,6 +27,7 @@ NOTA: utilizar **AbstractMap.SimpleEntry**.
 PD: Que retraso como no iba a fallar:))
 - [ ] Arreglar que cuando se crea una tarea/evento nueva se rompe el programa porque hay un problema con la actualizacion de vistaActividades.
 - [ ] Hacer que la vista reciba el objeto Tarea/el objeto Evento, lo del arrayList es una garcha
+- [X] Cambiar los ifs a switchCase
 - [X] Cambiar que cuando es dia completo el texto muestra la fecha con formmater sin horas y diga "de dia completo"
 - [X] Cambiar lo del Visitor, ver clase diego 29/5 (en Slack tambien) (completado tiene que estar como box para seleccionar/deseleccionar).
 - [ ] Asociar el checkbox de cada celda de una tarea a la tarea, para que cuando esté seleccionada el checkbox la tarea esté completada, si no no.

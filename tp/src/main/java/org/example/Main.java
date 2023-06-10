@@ -52,8 +52,6 @@ public class Main extends Application implements interfazGuardado, Initializable
     private String textoDiario;
     private String textoSemanal;
     private String textoMensual;
-    private String[] valoresRango;
-    private String[] valoresCrear;
     private AnimationTimer timer;
 
     @Override
@@ -68,57 +66,54 @@ public class Main extends Application implements interfazGuardado, Initializable
 
     @FXML
     public void clickEnBotonIzquierda() {
-        String rangoActual = this.rangoTiempo.getValue();
-        if (rangoActual.equals(this.valoresRango[0])) {
-            this.fechaActual = this.fechaActual.minusDays(1);
-        } else if (rangoActual.equals(this.valoresRango[1])) {
-            this.fechaActual = this.fechaActual.minusWeeks(1);
-        } else {
-            this.fechaActual = this.fechaActual.minusMonths(1);
+        switch (this.rangoTiempo.getValue()) {
+            case "Dia" -> this.fechaActual = this.fechaActual.minusDays(1);
+            case "Semana" -> this.fechaActual = this.fechaActual.minusWeeks(1);
+            default -> this.fechaActual = this.fechaActual.minusMonths(1);
         }
-        this.actualizarTextoYDemas(rangoActual);
+        this.actualizarTextoYDemas();
     }
 
     @FXML
     public void clickEnBotonDerecha() {
-        String rangoActual = this.rangoTiempo.getValue();
-        if (rangoActual.equals(this.valoresRango[0])) {
-            this.fechaActual = this.fechaActual.plusDays(1);
-        } else if (rangoActual.equals(this.valoresRango[1])) {
-            this.fechaActual = this.fechaActual.plusWeeks(1);
-        } else {
-            this.fechaActual = this.fechaActual.plusMonths(1);
+        switch (this.rangoTiempo.getValue()) {
+            case "Dia" -> this.fechaActual = this.fechaActual.plusDays(1);
+            case "Semana" -> this.fechaActual = this.fechaActual.plusWeeks(1);
+            default -> this.fechaActual = this.fechaActual.plusMonths(1);
         }
-        this.actualizarTextoYDemas(rangoActual);
+        this.actualizarTextoYDemas();
     }
 
-    private void actualizarTextoYDemas(String rangoActual) {
+    private void actualizarTextoYDemas() {
         this.establecerInicioYFinSemana();
         this.establecerText();
         String texto;
-        if (rangoActual.equals(this.valoresRango[0])) {
-            texto = this.textoDiario;
-        } else if (rangoActual.equals(this.valoresRango[1])) {
-            texto = this.textoSemanal;
-        } else {
-            texto = this.textoMensual;
+        switch (this.rangoTiempo.getValue()) {
+            case "Dia" -> texto = this.textoDiario;
+            case "Semana" -> texto = this.textoSemanal;
+            default -> texto = this.textoMensual;
         }
         this.lapsoTiempoActual.setText(texto);
         this.actualizarListaActividades();
     }
 
     private void actualizarListaActividades() {
-        if (this.rangoTiempo.getValue().equals(this.valoresRango[0])) {
-            LocalDateTime fechaInicio = this.fechaActual.with(LocalTime.MIN);
-            LocalDateTime fechaLimite = this.fechaActual.with(LocalTime.MAX);
-            this.crearLista(fechaInicio, fechaLimite);
-        } else if (this.rangoTiempo.getValue().equals(this.valoresRango[1])) {
-            this.crearLista(this.inicioSemana, this.finSemana);
-        } else {
-            LocalDateTime fechaInicio = this.fechaActual.with(TemporalAdjusters.firstDayOfMonth()).with(LocalTime.MIN);
-            LocalDateTime fechaLimite = this.fechaActual.with(TemporalAdjusters.lastDayOfMonth()).with(LocalTime.MAX);
-            this.crearLista(fechaInicio, fechaLimite);
-        }
+        LocalDateTime fechaInicio;
+        LocalDateTime fechaLimite;
+        switch (this.rangoTiempo.getValue()) {
+            case "Dia":
+                fechaInicio = this.fechaActual.with(LocalTime.MIN);
+                fechaLimite = this.fechaActual.with(LocalTime.MAX);
+                this.crearLista(fechaInicio, fechaLimite);
+                break;
+            case "Semana":
+                this.crearLista(this.inicioSemana, this.finSemana);
+                break;
+            default:
+                fechaInicio = this.fechaActual.with(TemporalAdjusters.firstDayOfMonth()).with(LocalTime.MIN);
+                fechaLimite = this.fechaActual.with(TemporalAdjusters.lastDayOfMonth()).with(LocalTime.MAX);
+                this.crearLista(fechaInicio, fechaLimite);
+                break;        }
     }
 
     private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) { // esta funcion de mierda es la que funciona mal
@@ -161,10 +156,8 @@ public class Main extends Application implements interfazGuardado, Initializable
         this.establecerMeses();
         this.establecerInicioYFinSemana();
         this.establecerText();
-        this.valoresRango = new String[]{"Dia", "Semana", "Mes"};
-        this.valoresCrear = new String[]{"", "Evento", "Tarea"};
-        this.rangoTiempo.getItems().addAll(this.valoresRango);
-        this.cajaCrear.getItems().addAll(this.valoresCrear);
+        this.rangoTiempo.getItems().addAll("Dia", "Semana", "Mes");
+        this.cajaCrear.getItems().addAll("", "Evento", "Tarea");
         this.lapsoTiempoActual.setText(this.textoMensual);
         this.rangoTiempo.setOnAction(this::actualizarRango);
         this.cajaCrear.setOnAction(this::crearVentanaActividad);
@@ -217,15 +210,13 @@ public class Main extends Application implements interfazGuardado, Initializable
     }
 
     private void actualizarRango(ActionEvent event) {
-        String valorRango = this.rangoTiempo.getValue();
+        // podria simplemente llamar actualizarTextoYDemas
         this.establecerText();
         String texto;
-        if (valorRango.equals(this.valoresRango[0])) {
-            texto = this.textoDiario;
-        } else if (valorRango.equals(this.valoresRango[1])) {
-            texto = this.textoSemanal;
-        } else {
-            texto = this.textoMensual;
+        switch (this.rangoTiempo.getValue()) {
+            case "Dia" -> texto = this.textoDiario;
+            case "Semana" -> texto = this.textoSemanal;
+            default -> texto = this.textoMensual;
         }
         this.lapsoTiempoActual.setText(texto);
         this.actualizarListaActividades();
