@@ -1,0 +1,7 @@
+.fondos {
+    -fx-background-color: "#212F3D";
+    }
+
+.titulos {
+    -fx-text-fill: "#FDFEFE";
+    }

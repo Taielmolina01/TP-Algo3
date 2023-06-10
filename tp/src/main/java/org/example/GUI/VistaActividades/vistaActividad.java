@@ -8,15 +8,16 @@ public abstract class vistaActividad {
     String infoResumida;
     String infoCompleta;
     boolean todoElDia;
+    int ID;
 
     public vistaActividad(ArrayList<String> infoActividad) {
         this.infoActividad = infoActividad;
         this.todoElDia = Boolean.parseBoolean(this.infoActividad.get(4));
+        this.ID = Integer.parseInt(this.infoActividad.get(0));
     }
 
     public void setInfoResumida() {
-        this.infoResumida = "ID: " + this.infoActividad.get(0) +
-                ". Nombre: " +  this.infoActividad.get(1);
+        this.infoResumida = "Nombre: " +  this.infoActividad.get(1);
         String todoElDia = this.setearTextoDiaCompleto();
         this.infoResumida += ". Fecha de inicio: " + this.infoActividad.get(3) + "." + todoElDia;
     }

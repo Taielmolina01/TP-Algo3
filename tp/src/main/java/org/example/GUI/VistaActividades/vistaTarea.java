@@ -23,8 +23,7 @@ public class vistaTarea extends vistaActividad {
 
     public void setInfoCompleta() {
         String todoElDia = this.setearTextoDiaCompleto();
-        this.infoCompleta = "ID: " + this.infoActividad.get(0) + ".\n\n"
-                + "Nombre: " + this.infoActividad.get(1) + ".\n\n"
+        this.infoCompleta = "Nombre: " + this.infoActividad.get(1) + ".\n\n"
                 + "Descripción: " + this.infoActividad.get(2) + ".\n\n"
                 + "Fecha de inicio: " + this.infoActividad.get(3) + "." + todoElDia + "\n\n"
                 + this.infoActividad.get(5) + "\n\n";
