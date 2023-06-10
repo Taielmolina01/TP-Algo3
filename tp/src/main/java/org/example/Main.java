@@ -52,6 +52,7 @@ public class Main extends Application implements interfazGuardado, Initializable
     private String textoDiario;
     private String textoSemanal;
     private String textoMensual;
+    private final String[] valoresCrear = new String[]{"", "Evento", "Tarea"};
     private AnimationTimer timer;
 
     @Override
@@ -101,19 +102,18 @@ public class Main extends Application implements interfazGuardado, Initializable
         LocalDateTime fechaInicio;
         LocalDateTime fechaLimite;
         switch (this.rangoTiempo.getValue()) {
-            case "Dia":
+            case "Dia" -> {
                 fechaInicio = this.fechaActual.with(LocalTime.MIN);
                 fechaLimite = this.fechaActual.with(LocalTime.MAX);
                 this.crearLista(fechaInicio, fechaLimite);
-                break;
-            case "Semana":
-                this.crearLista(this.inicioSemana, this.finSemana);
-                break;
-            default:
+            }
+            case "Semana" -> this.crearLista(this.inicioSemana, this.finSemana);
+            default -> {
                 fechaInicio = this.fechaActual.with(TemporalAdjusters.firstDayOfMonth()).with(LocalTime.MIN);
                 fechaLimite = this.fechaActual.with(TemporalAdjusters.lastDayOfMonth()).with(LocalTime.MAX);
                 this.crearLista(fechaInicio, fechaLimite);
-                break;        }
+            }
+        }
     }
 
     private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) { // esta funcion de mierda es la que funciona mal
@@ -157,7 +157,7 @@ public class Main extends Application implements interfazGuardado, Initializable
         this.establecerInicioYFinSemana();
         this.establecerText();
         this.rangoTiempo.getItems().addAll("Dia", "Semana", "Mes");
-        this.cajaCrear.getItems().addAll("", "Evento", "Tarea");
+        this.cajaCrear.getItems().addAll(this.valoresCrear);
         this.lapsoTiempoActual.setText(this.textoMensual);
         this.rangoTiempo.setOnAction(this::actualizarRango);
         this.cajaCrear.setOnAction(this::crearVentanaActividad);

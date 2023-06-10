@@ -11,14 +11,14 @@ public abstract class vistaActividad {
 
     public vistaActividad(ArrayList<String> infoActividad) {
         this.infoActividad = infoActividad;
-        this.todoElDia = Boolean.parseBoolean(this.infoActividad.get(5));
+        this.todoElDia = Boolean.parseBoolean(this.infoActividad.get(4));
     }
 
     public void setInfoResumida() {
-        this.infoResumida = "ID: " + this.infoActividad.get(1) +
-                ". Nombre: " +  this.infoActividad.get(2);
+        this.infoResumida = "ID: " + this.infoActividad.get(0) +
+                ". Nombre: " +  this.infoActividad.get(1);
         String todoElDia = this.setearTextoDiaCompleto();
-        this.infoResumida += ". Fecha de inicio: " + this.infoActividad.get(4) + "." + todoElDia;
+        this.infoResumida += ". Fecha de inicio: " + this.infoActividad.get(3) + "." + todoElDia;
     }
 
     public abstract void setInfoCompleta();
@@ -31,9 +31,7 @@ public abstract class vistaActividad {
         return todoElDia;
     }
 
-    public String obtenerCodigoColorFondo() {
-        return this.infoActividad.get(0);
-    }
+    public abstract String obtenerCodigoColorFondo();
 
     public String obtenerInfoResumida() {
         return this.infoResumida;
@@ -41,6 +39,23 @@ public abstract class vistaActividad {
 
     public String obtenerInfoCompleta() {
         return this.infoCompleta;
+    }
+
+    public enum colorActividad {
+
+        EVENTO("#85C1E9"),
+
+        TAREA("#58D68D");
+
+        private final String claveColor;
+
+        colorActividad(String claveColor) {
+            this.claveColor = claveColor;
+        }
+
+        public String getClaveColor() {
+            return this.claveColor;
+        }
     }
 
 }

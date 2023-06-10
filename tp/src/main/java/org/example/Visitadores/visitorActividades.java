@@ -8,6 +8,4 @@ public interface visitorActividades {
 
     vistaActividad visitarActividad(Evento e);
     vistaActividad visitarActividad(Tarea t);
-    String obtenerColor(Evento evento);
-    String obtenerColor(Tarea tarea);
 }

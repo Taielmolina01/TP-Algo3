@@ -27,7 +27,7 @@ public class manejadorCeldasListView extends ListCell<String> {
             // se agrego un elemento)
             setBackground(new Background(new BackgroundFill(Color.web(this.vistaActividades.get(i).obtenerCodigoColorFondo()), null, null)));
             var vistaActual = this.vistaActividades.get(i);
-            if (vistaActual.obtenerCodigoColorFondo().equals(visitadorActividades.colorActividad.TAREA.getClaveColor())) {
+            if (vistaActual.obtenerCodigoColorFondo().equals(vistaActividad.colorActividad.TAREA.getClaveColor())) {
                 var check = new CheckBox();
                 if (vistaActual.infoActividad.get(vistaActual.infoActividad.size()-1).equals("false")) {
 

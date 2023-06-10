@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class vistaTarea extends vistaActividad {
 
     /*
-        Info tarea [color, ID, nombre, descripcion, fechaInicio, todoElDia, alarmas, estaCompletada]
+        Info tarea [ID, nombre, descripcion, fechaInicio, todoElDia, alarmas, estaCompletada]
      */
 
     private boolean estaCompletada;
@@ -23,16 +23,21 @@ public class vistaTarea extends vistaActividad {
 
     public void setInfoCompleta() {
         String todoElDia = this.setearTextoDiaCompleto();
-        this.infoCompleta = "ID: " + this.infoActividad.get(1) + ".\n\n"
-                + "Nombre: " + this.infoActividad.get(2) + ".\n\n"
-                + "Descripción: " + this.infoActividad.get(3) + ".\n\n"
-                + "Fecha de inicio: " + this.infoActividad.get(4) + "." + todoElDia + "\n\n"
-                + this.infoActividad.get(6) + "\n\n";
+        this.infoCompleta = "ID: " + this.infoActividad.get(0) + ".\n\n"
+                + "Nombre: " + this.infoActividad.get(1) + ".\n\n"
+                + "Descripción: " + this.infoActividad.get(2) + ".\n\n"
+                + "Fecha de inicio: " + this.infoActividad.get(3) + "." + todoElDia + "\n\n"
+                + this.infoActividad.get(5) + "\n\n";
         if (this.estaCompletada) {
             this.infoCompleta += "La tarea está completada.";
         } else {
             this.infoCompleta += "La tarea no está completada.";
         }
+    }
+
+    @Override
+    public String obtenerCodigoColorFondo() {
+        return colorActividad.TAREA.getClaveColor();
     }
 
 

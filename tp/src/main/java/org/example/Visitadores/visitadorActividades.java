@@ -15,9 +15,6 @@ import java.util.List;
 
 public class visitadorActividades implements visitorActividades {
 
-    protected static final String colorAzul = "#85C1E9";
-    protected static final String colorVerde = "#58D68D";
-
     public ArrayList<vistaActividad> visitarActividades(List<Actividad> actividades) {
         ArrayList<vistaActividad> vistaActividades = new ArrayList<>();
         for (Actividad a : actividades) {
@@ -28,7 +25,6 @@ public class visitadorActividades implements visitorActividades {
 
     public vistaActividad visitarActividad(Evento e) {
         ArrayList<String> infoEvento = new ArrayList<>();
-        infoEvento.add(obtenerColor(e));
         this.crearListaDatosComunes(infoEvento, e);
         infoEvento.add(e.obtenerFechaFinalDefinitivo().format(formateador.formatterConHoras));
         infoEvento.add(e.visitarFrecuencia(new visitadorEventosFrecuencia()));
@@ -37,7 +33,6 @@ public class visitadorActividades implements visitorActividades {
 
     public vistaActividad visitarActividad(Tarea t) {
         ArrayList<String> infoTarea = new ArrayList<>();
-        infoTarea.add(obtenerColor(t));
         this.crearListaDatosComunes(infoTarea, t);
         infoTarea.add(String.valueOf(t.estaCompletada()));
         return new vistaTarea(infoTarea);
@@ -65,31 +60,4 @@ public class visitadorActividades implements visitorActividades {
         }
         infoActividad.add(stringAlarmas);
     }
-
-
-    public String obtenerColor(Evento evento) {
-        return colorActividad.EVENTO.getClaveColor();
-    }
-
-    public String obtenerColor(Tarea tarea) {
-        return colorActividad.TAREA.getClaveColor();
-    }
-
-    public enum colorActividad {
-
-        EVENTO(colorAzul),
-
-        TAREA(colorVerde);
-
-        private final String claveColor;
-
-        colorActividad(String claveColor) {
-            this.claveColor = claveColor;
-        }
-
-        public String getClaveColor() {
-            return this.claveColor;
-        }
-    }
-
 }
