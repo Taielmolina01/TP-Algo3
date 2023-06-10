@@ -60,9 +60,8 @@ public class visitadorActividades implements visitorActividades {
         } else {
             stringAlarmas += "Fechas alarmas: ";
             for (Alarma alarma : alarmas.values()) {
-                stringAlarmas += alarma.obtenerFechaActivacion().format(formateador.formatterConHoras);
+                stringAlarmas += alarma.obtenerFechaActivacion().format(formateador.formatterConHoras) + ", ";
             }
-            stringAlarmas += ".";
         }
         infoActividad.add(stringAlarmas);
     }

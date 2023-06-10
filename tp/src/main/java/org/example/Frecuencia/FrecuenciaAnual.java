@@ -2,9 +2,10 @@ package org.example.Frecuencia;
 
 import org.example.Visitadores.visitorFrecuencia;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class FrecuenciaAnual extends Frecuencia {
+public class FrecuenciaAnual extends Frecuencia implements Serializable {
 
     public FrecuenciaAnual(int frecuenciaAnual) {
         super(frecuenciaAnual);

@@ -3,9 +3,10 @@ package org.example.Frecuencia;
 
 import org.example.Visitadores.visitorFrecuencia;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public abstract class Frecuencia {
+public abstract class Frecuencia implements Serializable {
 
     private int valorRepeticion;
 

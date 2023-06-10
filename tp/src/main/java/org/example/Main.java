@@ -180,7 +180,7 @@ public class Main extends Application implements interfazGuardado, Initializable
                 }
         };
          */
-        timer.start();
+        //timer.start();
     }
 
     private void establecerText() {

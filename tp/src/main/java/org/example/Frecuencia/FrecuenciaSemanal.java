@@ -2,12 +2,13 @@ package org.example.Frecuencia;
 
 import org.example.Visitadores.visitorFrecuencia;
 
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.SortedSet;
 
-public class FrecuenciaSemanal extends Frecuencia {
+public class FrecuenciaSemanal extends Frecuencia implements Serializable {
 
     private SortedSet<DayOfWeek> diasSemana;
 
