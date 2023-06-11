@@ -36,7 +36,8 @@ PD: Que retraso como no iba a fallar:))
 - [ ] Asociar el checkbox de cada celda de una tarea a la tarea, para que cuando esté seleccionada el checkbox la tarea esté completada, si no no.
 - [ ] Cuando cargo todo deberían aparecer ya seleccionadas aquellas tareas que ya estén completadas.
 - [ ] Agregar disparado de alarmas. (la verga esa de timetasker no sirve, tengo que usar otra cosa)
-- [ ] Hacer un archivo css con todo (agregar hover de los textfield)
+- [X] Hacer un archivo css con todo (agregar hover de los textfield)
+- [ ] Hacer archivo css con modo oscuro
+- [ ] Agregar logica para switchear los modos.
 - [ ] Separar en dos paquetes grandes: Logica de negocio y GUI.
-- [ ] Modo claro/oscuro.
  
