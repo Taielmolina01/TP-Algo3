@@ -1,30 +1,40 @@
+.root {
+    -color-fondo: #EAEDED;
+    -color-fondo-hover: #D5DBDB;
+    -color-opcion-hover: #E9967A;
+    -color-flechas: #D6EAF8;
+    -color-flechas-hover: #AED6F1;
+    -color-bordes: #BFC9CA;
+    -color-opcion-focused: #FA8072;
+}
+
 .fondos {
-    -fx-background-color: #EAEDED;
+    -fx-background-color: -color-fondo;
 }
 
 .cajas {
-    -fx-background-color: #EAEDED;
-    -fx-border-color: #BFC9CA;
+    -fx-background-color: -color-fondo;
+    -fx-border-color: -color-bordes;
     -fx-border-radius: 30;
     -fx-background-radius: 30;
 }
 
 .cajas:hover {
-    -fx-background-color: #D5DBDB;
-    -fx-border-color: #BFC9CA;
+    -fx-background-color: -color-fondo-hover;
+    -fx-border-color: -color-bordes;
     -fx-border-radius: 30;
     -fx-background-radius: 30;
 }
 
 .cajas .context-menu {
-    -fx-background-color: #EAEDED;
-    -fx-border-color: #BFC9CA;
+    -fx-background-color: -color-fondo;
+    -fx-border-color: -color-bordes;
     -fx-border-radius: 15;
     -fx-background-radius: 15;
 }
 
 .choice-box .menu-item:focused {
-    -fx-background-color: #E9967A;
+    -fx-background-color: -color-opcion-hover;
     -fx-background-radius: 15;
 }
 
@@ -39,48 +49,48 @@
 }
 
 .combo-box-popup .list-view .list-cell:hover {
-    -fx-background-color: #E9967A;
+    -fx-background-color: -color-opcion-hover;
     -fx-background-radius: 15;
 }
 
 .combo-box-popup .list-view .list-cell:focused {
-    -fx-background-color: #FA8072;
+    -fx-background-color: -color-opcion-focused;
     -fx-background-radius: 15;
 }
 
 .check-box .box {
-    -fx-background-color: #EAEDED;
-    -fx-border-color: #BFC9CA;
+    -fx-background-color: -color-fondo;
+    -fx-border-color: -color-bordes;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
 }
 
 .flechas {
-    -fx-background-color: #D6EAF8;
+    -fx-background-color: -color-flechas;
 }
 
 .flechas:hover {
-    -fx-background-color: #AED6F1;
+    -fx-background-color: -color-flechas-hover;
 }
 
 .text-field {
-    -fx-background-color: #EAEDED;
+    -fx-background-color: -color-fondo;
 }
 
 .text-field:hover {
-    -fx-background-color: #D5DBDB;
+    -fx-background-color: -color-fondo-hover;
 }
 
 .botones {
-    -fx-background-color: #EAEDED;
-    -fx-border-color: #BFC9CA;
+    -fx-background-color: -color-fondo;
+    -fx-border-color: -color-bordes;
     -fx-border-radius: 30;
     -fx-background-radius: 30;
 }
 
 .botones:hover {
-     -fx-background-color: #D5DBDB;
-     -fx-border-color: #BFC9CA;
+     -fx-background-color: -color-fondo-hover;
+     -fx-border-color: -color-bordes;
      -fx-border-radius: 30;
      -fx-background-radius: 30;
 }
