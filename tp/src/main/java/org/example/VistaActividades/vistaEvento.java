@@ -25,7 +25,7 @@ public class vistaEvento extends vistaActividad {
 
     @Override
     public String obtenerCodigoColorFondo() {
-        return colorActividad.EVENTO.getClaveColor();
+        return colorActividad.EVENTO.obtenerCodigoColor();
     }
 
 }

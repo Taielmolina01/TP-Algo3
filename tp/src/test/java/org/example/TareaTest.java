@@ -81,9 +81,9 @@ public class TareaTest {
         var fecha = LocalDateTime.of(2020, 1, 1, 0, 0);
         var tarea = new Tarea(0, "nombre", "descripcion", fecha, true);
         assertFalse(tarea.estaCompletada());
-        tarea.cambiarEstadoTarea();
+        tarea.cambiarEstadoCompletado();
         assertTrue(tarea.estaCompletada());
-        tarea.cambiarEstadoTarea();
+        tarea.cambiarEstadoCompletado();
         assertFalse(tarea.estaCompletada());
     }
 }

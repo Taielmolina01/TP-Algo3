@@ -9,6 +9,9 @@ Molina, Taiel. Padrón: 109458
 ## Notas
 
 nota1: tiene sentido mostrar el ID?
+nota2: avance un poco con lo de el esta completada y demas, pero por alguna razon cuando cargo de nuevo el programa o cuando cambio de mes actual, se vuelve a setear
+que no esta completada cuando en un inicio me lo detecta bien.
+nota3: deberia hacer que las vistas reciban el objeto entero? y despues en cada uno casteo a Evento o a Tarea segun corresponda.
 
 ## TODO
 

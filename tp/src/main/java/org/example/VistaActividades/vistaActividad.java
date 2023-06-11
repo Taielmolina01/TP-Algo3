@@ -42,6 +42,10 @@ public abstract class vistaActividad {
         return this.infoCompleta;
     }
 
+    public int obtenerIDActividad() {
+        return this.ID;
+    }
+
     public enum colorActividad {
 
         EVENTO("#85C1E9"),
@@ -54,7 +58,7 @@ public abstract class vistaActividad {
             this.claveColor = claveColor;
         }
 
-        public String getClaveColor() {
+        public String obtenerCodigoColor() {
             return this.claveColor;
         }
     }

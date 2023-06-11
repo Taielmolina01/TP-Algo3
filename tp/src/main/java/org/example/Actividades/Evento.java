@@ -193,6 +193,8 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
         return estaEntreFechas(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
     }
 
+
+   // Pasar esto a void
     @Override
     public vistaActividad visitarActividad(visitadorActividades v) {
         return v.visitarActividad(this);

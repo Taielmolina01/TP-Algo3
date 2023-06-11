@@ -12,9 +12,10 @@ public class vistaTarea extends vistaActividad {
 
     public vistaTarea(ArrayList<String> infoTarea) {
         super(infoTarea);
+        this.estaCompletada = Boolean.parseBoolean(infoActividad.get(this.infoActividad.size()-1));
         this.setInfoResumida();
         this.setInfoCompleta();
-        this.estaCompletada = Boolean.parseBoolean(infoActividad.get(this.infoActividad.size()-1));
+        System.out.println("Estoy aca 1 y el estado es: " + this.estaCompletada);
     }
 
     /*
@@ -36,7 +37,17 @@ public class vistaTarea extends vistaActividad {
 
     @Override
     public String obtenerCodigoColorFondo() {
-        return colorActividad.TAREA.getClaveColor();
+        return colorActividad.TAREA.obtenerCodigoColor();
+    }
+
+    public boolean obtenerEstaCompletada() {
+        return this.estaCompletada;
+    }
+
+    public void cambiarEstadoTarea(){
+        this.estaCompletada = !this.estaCompletada;
+        this.setInfoCompleta();
+        this.setInfoResumida();
     }
 
 

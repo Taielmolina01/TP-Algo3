@@ -14,7 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.Frecuencia.FrecuenciaDiaria;
 import org.example.formateador;
-import org.example.interfazGuardado;
+import org.example.interfazGuardarActividadNueva;
 
 import java.io.IOException;
 import java.net.URL;
@@ -49,7 +49,7 @@ public class eventoVentana implements Initializable {
     private intervaloAlarmaVentana ventanaAlarma;
     private repeticionVentana repeticionVentana;
     private final String[] valoresPosibles = new String[]{"Sí", "No"};
-    private final interfazGuardado i;
+    private final interfazGuardarActividadNueva i;
 
     /*
     Opc1: Deberia devolver el evento con las alarmas agregadas y despues directamente lo agrego al calendario.
@@ -63,7 +63,7 @@ public class eventoVentana implements Initializable {
      */
 
 
-    public eventoVentana(interfazGuardado i) {
+    public eventoVentana(interfazGuardarActividadNueva i) {
         this.i = i;
     }
 

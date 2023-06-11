@@ -30,9 +30,12 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.ResourceBundle;
 
-public class Main extends Application implements interfazGuardado, Initializable {
+public class Main extends Application implements interfazGuardarActividadNueva, Initializable, interfazCambioEstado {
     private visitadorActividades visitador;
     protected ManejadorGuardado manejador;
     protected Calendario calendario;
@@ -43,7 +46,7 @@ public class Main extends Application implements interfazGuardado, Initializable
     @FXML
     private ComboBox<String> cajaCrear;
     @FXML
-    private ListView<String> listViewActividades; // cambiar a listview de vistaActividad xd
+    private ListView<vistaActividad> listViewActividades; // cambiar a listview de vistaActividad xd
     private LocalDateTime fechaActual;
     private LocalDateTime inicioSemana;
     private LocalDateTime finSemana;
@@ -121,11 +124,8 @@ public class Main extends Application implements interfazGuardado, Initializable
         ArrayList<Actividad> actividadesActuales = this.calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin);
         actividadesActuales.sort(Comparator.comparing(Actividad::obtenerFechaInicio).thenComparing(Actividad::obtenerNombre));
         this.vistaActividadesActuales = this.visitador.visitarActividades(actividadesActuales);
-        this.listViewActividades.setCellFactory(param -> new manejadorCeldasListView(this.vistaActividadesActuales));
-        // deberia actualizar la lista del manejador de celdas, pero por alguna razon me lanza un excepcion cuando lo intento hacer
-        for (int i = 0; i < vistaActividadesActuales.size(); i++) {
-            this.listViewActividades.getItems().add(this.vistaActividadesActuales.get(i).obtenerInfoResumida());
-        }
+        this.listViewActividades.setCellFactory(param -> new manejadorCeldasListView(this.vistaActividadesActuales, this));
+        this.listViewActividades.getItems().addAll(this.vistaActividadesActuales);
     }
 
     private void establecerMeses() {
@@ -164,7 +164,6 @@ public class Main extends Application implements interfazGuardado, Initializable
         this.listViewActividades.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
         this.visitador = new visitadorActividades();
         this.actualizarListaActividades();
-
         /*
         this.timer = (AnimationTimer) (l) -> {
                 Alarma a = this.calendario.obtenerSiguienteAlarma(LocalDateTime.now(), LocalDateTime.now().plusDays(1));
@@ -239,7 +238,7 @@ public class Main extends Application implements interfazGuardado, Initializable
         }
     }
 
-    public void guardar() {
+    public void guardarEstadoActual() {
         try {
             this.calendario.guardarEstado(this.manejador);
         } catch (IOException e) {
@@ -289,7 +288,7 @@ public class Main extends Application implements interfazGuardado, Initializable
 
     private void guardarNuevaActividad(int ID, ArrayList<Duration> duracionesAlarmas) {
         this.agregarAlarmas(ID, duracionesAlarmas);
-        this.guardar();
+        this.guardarEstadoActual();
         this.actualizarListaActividades();
     }
 
@@ -299,5 +298,11 @@ public class Main extends Application implements interfazGuardado, Initializable
                 this.calendario.agregarAlarma(ID, Alarma.Efecto.NOTIFICACION, duracion);
             }
         }
+    }
+
+    @Override
+    public void huboCambioEstadoTarea(int i) {
+        this.calendario.cambiarEstadoTarea(this.vistaActividadesActuales.get(i).obtenerIDActividad());
+        this.guardarEstadoActual();
     }
 }

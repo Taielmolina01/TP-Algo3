@@ -16,7 +16,7 @@ public class Tarea extends Actividad implements Serializable {
         super(ID, nombre, descripcion, fechaInicio, todoElDia);
     }
 
-    public void cambiarEstadoTarea() {
+    public void cambiarEstadoCompletado() {
         this.completada = !this.completada;
     }
 
