@@ -1,8 +1,86 @@
 .fondos {
-    -fx-background-color: "#EAEDED";
-    }
-
-.textos {
-    -fx-text-fill: "#17202A;
+    -fx-background-color: #EAEDED;
 }
 
+.cajas {
+    -fx-background-color: #EAEDED;
+    -fx-border-color: #BFC9CA;
+    -fx-border-radius: 30;
+    -fx-background-radius: 30;
+}
+
+.cajas:hover {
+    -fx-background-color: #D5DBDB;
+    -fx-border-color: #BFC9CA;
+    -fx-border-radius: 30;
+    -fx-background-radius: 30;
+}
+
+.cajas .context-menu {
+    -fx-background-color: #EAEDED;
+    -fx-border-color: #BFC9CA;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #E9967A;
+    -fx-background-radius: 15;
+}
+
+.combo-box .list-cell {
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+}
+
+.combo-box .list-view {
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #E9967A;
+    -fx-background-radius: 15;
+}
+
+.combo-box-popup .list-view .list-cell:focused {
+    -fx-background-color: #FA8072;
+    -fx-background-radius: 15;
+}
+
+.check-box .box {
+    -fx-background-color: #EAEDED;
+    -fx-border-color: #BFC9CA;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.flechas {
+    -fx-background-color: #D6EAF8;
+}
+
+.flechas:hover {
+    -fx-background-color: #AED6F1;
+}
+
+.text-field {
+    -fx-background-color: #EAEDED;
+}
+
+.text-field:hover {
+    -fx-background-color: #D5DBDB;
+}
+
+.botones {
+    -fx-background-color: #EAEDED;
+    -fx-border-color: #BFC9CA;
+    -fx-border-radius: 30;
+    -fx-background-radius: 30;
+}
+
+.botones:hover {
+     -fx-background-color: #D5DBDB;
+     -fx-border-color: #BFC9CA;
+     -fx-border-radius: 30;
+     -fx-background-radius: 30;
+}

@@ -1,7 +1,13 @@
 .fondos {
     -fx-background-color: "#212F3D";
-    }
+}
 
-.titulos {
+.textos {
     -fx-text-fill: "#FDFEFE";
-    }
+}
+
+.cajas {
+    -fx-background-color: "#212F3D";
+    -fx-border-color: "#BFC9CA";
+    -fx-border-radius: 30;
+}
