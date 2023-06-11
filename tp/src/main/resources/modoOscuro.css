@@ -1,13 +1,90 @@
-.fondos {
-    -fx-background-color: "#212F3D";
+:root {
+    --color-fondo: #EAEDED;
+    --color-fondo-hover: #D5DBDB;
+    --color-opcion-hover: #E9967A;
+    --color-flechas: #D6EAF8;
+    --color-flechas-hover: #AED6F1;
+    --color-bordes: #BFC9CA;
 }
 
-.textos {
-    -fx-text-fill: "#FDFEFE";
+.fondos {
+    -fx-background-color: var(--color-fondo);
 }
 
 .cajas {
-    -fx-background-color: "#212F3D";
-    -fx-border-color: "#BFC9CA";
+    -fx-background-color: var(--color-fondo);
+    -fx-border-color: var(--color-bordes);
     -fx-border-radius: 30;
+    -fx-background-radius: 30;
+}
+
+.cajas:hover {
+    -fx-background-color: var(--color-fondo-hover);
+    -fx-border-color: var(--color-bordes);
+    -fx-border-radius: 30;
+    -fx-background-radius: 30;
+}
+
+.cajas .context-menu {
+    -fx-background-color: var(--color-fondo);
+    -fx-border-color: var(--color-bordes);
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: var(--color-opcion-hover);
+    -fx-background-radius: 15;
+}
+
+.combo-box .list-cell {
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+}
+
+.combo-box .list-view {
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: var(--color-opcion-hover);
+    -fx-background-radius: 15;
+}
+
+.check-box .box {
+    -fx-background-color: var(--color-fondo);
+    -fx-border-color: var(--color-bordes);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.flechas {
+    -fx-background-color: var(--color-flechas);
+}
+
+.flechas:hover {
+    -fx-background-color: var(--color-flechas-hover);
+}
+
+.text-field {
+    -fx-background-color: var(--color-fondo);
+}
+
+.text-field:hover {
+    -fx-background-color: var(--color-fondo-hover);
+}
+
+.botones {
+    -fx-background-color: var(--color-fondo);
+    -fx-border-color: var(--color-bordes);
+    -fx-border-radius: 30;
+    -fx-background-radius: 30;
+}
+
+.botones:hover {
+     -fx-background-color: var(--color-fondo-hover);
+     -fx-border-color: var(--color-bordes);
+     -fx-border-radius: 30;
+     -fx-background-radius: 30;
 }
