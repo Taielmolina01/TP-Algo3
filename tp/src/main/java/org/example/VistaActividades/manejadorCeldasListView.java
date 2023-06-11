@@ -1,5 +1,6 @@
 package org.example.VistaActividades;
 
+import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.Background;
@@ -11,11 +12,11 @@ import java.util.ArrayList;
 
 public class manejadorCeldasListView extends ListCell<vistaActividad> {
 
-    ArrayList<vistaActividad> vistaActividades;
+    ObservableList<vistaActividad> vistaActividades;
     private CheckBox checkBox;
     private interfazCambioEstado i;
 
-    public manejadorCeldasListView(ArrayList<vistaActividad> vistaActividades, interfazCambioEstado i) {
+    public manejadorCeldasListView(ObservableList<vistaActividad> vistaActividades, interfazCambioEstado i) {
         this.vistaActividades = vistaActividades;
         this.i = i;
     }
@@ -30,6 +31,7 @@ public class manejadorCeldasListView extends ListCell<vistaActividad> {
                     null, null)));
             if (item.obtenerCodigoColorFondo().equals(vistaActividad.colorActividad.TAREA.obtenerCodigoColor())) {
                 var checkbox = getCheckBox(i);
+                System.out.println(((vistaTarea) item).obtenerEstaCompletada());
                 checkbox.setSelected(((vistaTarea) item).obtenerEstaCompletada());
                 setGraphic(checkbox);
             }

@@ -3,6 +3,8 @@ package org.example;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,7 +53,7 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
     private LocalDateTime inicioSemana;
     private LocalDateTime finSemana;
     private HashMap<String, String> meses;
-    private ArrayList<vistaActividad> vistaActividadesActuales;
+    private ObservableList<vistaActividad> vistaActividadesActuales;
     private String textoDiario;
     private String textoSemanal;
     private String textoMensual;
@@ -123,8 +125,7 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
         this.listViewActividades.getItems().clear();
         ArrayList<Actividad> actividadesActuales = this.calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin);
         actividadesActuales.sort(Comparator.comparing(Actividad::obtenerFechaInicio).thenComparing(Actividad::obtenerNombre));
-        this.vistaActividadesActuales = this.visitador.visitarActividades(actividadesActuales);
-        this.listViewActividades.setCellFactory(param -> new manejadorCeldasListView(this.vistaActividadesActuales, this));
+        this.vistaActividadesActuales = FXCollections.observableArrayList(this.visitador.visitarActividades(actividadesActuales));
         this.listViewActividades.getItems().addAll(this.vistaActividadesActuales);
     }
 
@@ -163,6 +164,8 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
         this.cajaCrear.setOnAction(this::crearVentanaActividad);
         this.listViewActividades.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
         this.visitador = new visitadorActividades();
+        this.listViewActividades.setCellFactory(param -> new manejadorCeldasListView(FXCollections.observableArrayList(this.vistaActividadesActuales),
+                        this));
         this.actualizarListaActividades();
         /*
         this.timer = (AnimationTimer) (l) -> {
