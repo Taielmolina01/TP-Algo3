@@ -9,8 +9,10 @@ import org.example.Frecuencia.Frecuencia;
 import java.io.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Calendario implements Serializable {
 
@@ -128,6 +130,30 @@ public class Calendario implements Serializable {
         this.actividadesCalendario.get(idElemento).modificarFechaActivacionAlarma(idAlarma, fechaArbitraria, intervaloTiempoNuevo);
     }
 
+    public AbstractMap.SimpleEntry<Integer, Alarma> obtenerSiguienteAlarma(LocalDateTime fechaActual, LocalDateTime fechaFinal) {
+        ArrayList<Actividad> actividades = this.obtenerActividadesEntreFechas(fechaActual, fechaFinal);
+        for (Actividad actividad : actividades) {
+            int IDMaximo = actividad.obtenerID();
+            HashMap<Integer, Alarma> alarmasActual = actividad.obtenerAlarmas();
+            for (Map.Entry<Integer, Alarma> entry : alarmasActual.entrySet()) {
+                int posMaxima = entry.getKey();
+                Alarma alarmaMaxima = entry.getValue();
+                if (Alarma.compararAlarmas(alarmas.get(posMaxima), alarmas.get(i)) > 0) {
+                    if (alarmas.get(i).obtenerFechaActivacion().isBefore(fechaActual)) { // La hora de la última alarma ya pasó.
+                        continue;
+                    }
+                    posMaxima = i;
+                }
+            }
+
+        }
+        if (alarmas.get(posMaxima).obtenerFechaActivacion().isBefore(fechaActual)) { // La hora de la última alarma ya pasó.
+            return null;
+        }
+        return new AbstractMap.SimpleEntry<>(IDMaximo, this.obtenerAlarmasActividad(IDMaximo).get(posMaxima));
+    }
+
+    /*
     public Alarma obtenerSiguienteAlarma(LocalDateTime fechaActual, LocalDateTime fechaFinal) {
         ArrayList<Alarma> alarmas = this.obtenerAlarmasLapso(fechaActual, fechaFinal);
         if (alarmas.size() == 0) {
@@ -147,6 +173,8 @@ public class Calendario implements Serializable {
         }
         return alarmas.get(posMaxima);
     }
+
+     */
 
     public ArrayList<Alarma> obtenerAlarmasLapso(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
         ArrayList<Actividad> actividades = this.obtenerActividadesEntreFechas(fechaInicial, fechaFinal);
