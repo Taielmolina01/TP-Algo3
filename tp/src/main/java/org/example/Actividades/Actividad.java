@@ -116,5 +116,5 @@ public abstract class Actividad implements Serializable {
 
     public abstract ArrayList<Actividad> actividadesEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
-    public abstract vistaActividad visitarActividad(visitadorActividades v);
+    public abstract void visitarActividad(visitadorActividades v);
 }

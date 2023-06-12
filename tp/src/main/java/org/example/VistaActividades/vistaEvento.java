@@ -17,10 +17,13 @@ public class vistaEvento extends vistaActividad {
         String todoElDia = this.setearTextoDiaCompleto();
         this.infoCompleta = "Nombre: " + this.infoActividad.get(1) + ".\n\n"
                 + "Descripción: " + this.infoActividad.get(2) + ".\n\n"
-                + "Fecha de inicio: " + this.infoActividad.get(3) + "." + todoElDia + "\n\n"
+                + "Fecha: " + this.infoActividad.get(3) + "." + todoElDia + "\n\n"
                 + this.infoActividad.get(5) + "\n\n"
-                + "Fecha final: " + this.infoActividad.get(6) + ".\n\n"
-                + this.infoActividad.get(7);
+                + "Fecha final: " + this.infoActividad.get(6) + ".\n\n";
+        if (this.infoActividad.get(7) != null) {
+            this.infoCompleta += this.infoActividad.get(7);
+        }
+
     }
 
     @Override

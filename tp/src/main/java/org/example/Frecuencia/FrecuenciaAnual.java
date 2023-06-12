@@ -15,8 +15,8 @@ public class FrecuenciaAnual extends Frecuencia implements Serializable {
     public LocalDateTime obtenerProximaFecha(LocalDateTime fechaInicial) {
         return fechaInicial.plusYears(this.obtenerValorRepeticion());
     }
-
-    public String obtenerTipoFrecuencia(visitorFrecuencia v) {
-        return v.obtenerTipoFrecuencia(this);
+    @Override
+    public void obtenerTipoFrecuencia(visitorFrecuencia v) {
+        v.obtenerTipoFrecuencia(this);
     }
 }

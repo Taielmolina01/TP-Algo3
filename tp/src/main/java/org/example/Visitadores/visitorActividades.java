@@ -6,6 +6,6 @@ import org.example.VistaActividades.vistaActividad;
 
 public interface visitorActividades {
 
-    vistaActividad visitarActividad(Evento e);
-    vistaActividad visitarActividad(Tarea t);
+    void visitarActividad(Evento e);
+    void visitarActividad(Tarea t);
 }

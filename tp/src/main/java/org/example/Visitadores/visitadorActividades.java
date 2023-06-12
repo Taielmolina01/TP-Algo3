@@ -15,27 +15,33 @@ import java.util.List;
 
 public class visitadorActividades implements visitorActividades {
 
+    private vistaActividad vistaActual;
+
     public ArrayList<vistaActividad> visitarActividades(List<Actividad> actividades) {
         ArrayList<vistaActividad> vistaActividades = new ArrayList<>();
         for (Actividad a : actividades) {
-            vistaActividades.add(a.visitarActividad(this));
+            a.visitarActividad(this);
+            vistaActividades.add(this.vistaActual);
         }
         return vistaActividades;
     }
 
-    public vistaActividad visitarActividad(Evento e) {
+    public void visitarActividad(Evento e) {
         ArrayList<String> infoEvento = new ArrayList<>();
         this.crearListaDatosComunes(infoEvento, e);
         infoEvento.add(e.obtenerFechaFinalDefinitivo().format(formateador.formatterConHoras));
-        infoEvento.add(e.visitarFrecuencia(new visitadorEventosFrecuencia()));
-        return new vistaEvento(infoEvento);
+        var v = new visitadorEventosFrecuencia();
+        e.visitarFrecuencia(v);
+        System.out.println(v.obtenerMensajeFrecuencia());
+        infoEvento.add(v.obtenerMensajeFrecuencia());
+        this.vistaActual = new vistaEvento(infoEvento);
     }
 
-    public vistaActividad visitarActividad(Tarea t) {
+    public void visitarActividad(Tarea t) {
         ArrayList<String> infoTarea = new ArrayList<>();
         this.crearListaDatosComunes(infoTarea, t);
         infoTarea.add(String.valueOf(t.estaCompletada()));
-        return new vistaTarea(infoTarea);
+        this.vistaActual = new vistaTarea(infoTarea);
     }
 
     private void crearListaDatosComunes(ArrayList<String> infoActividad, Actividad a) {

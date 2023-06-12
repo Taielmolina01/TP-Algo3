@@ -1,14 +1,11 @@
 package org.example.VistaActividades;
 
-import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import org.example.interfazCambioEstado;
-
-import java.util.ArrayList;
 
 public class manejadorCeldasListView extends ListCell<vistaActividad> {
 

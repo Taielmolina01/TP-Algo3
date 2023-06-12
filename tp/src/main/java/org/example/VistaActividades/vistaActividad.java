@@ -19,7 +19,7 @@ public abstract class vistaActividad {
     public void setInfoResumida() {
         this.infoResumida = "Nombre: " +  this.infoActividad.get(1);
         String todoElDia = this.setearTextoDiaCompleto();
-        this.infoResumida += ". Fecha de inicio: " + this.infoActividad.get(3) + "." + todoElDia;
+        this.infoResumida += ". Fecha: " + this.infoActividad.get(3) + "." + todoElDia;
     }
 
     public abstract void setInfoCompleta();

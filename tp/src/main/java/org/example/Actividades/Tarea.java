@@ -32,7 +32,7 @@ public class Tarea extends Actividad implements Serializable {
     }
 
     @Override
-    public vistaActividad visitarActividad(visitadorActividades v) {
-        return v.visitarActividad(this);
+    public void visitarActividad(visitadorActividades v) {
+        v.visitarActividad(this);
     }
 }

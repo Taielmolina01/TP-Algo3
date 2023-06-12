@@ -208,15 +208,13 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
 
    // Pasar esto a void
     @Override
-    public vistaActividad visitarActividad(visitadorActividades v) {
-        return v.visitarActividad(this);
+    public void visitarActividad(visitadorActividades v) {
+        v.visitarActividad(this);
     }
 
-    public String visitarFrecuencia(visitadorEventosFrecuencia v) {
+    public void visitarFrecuencia(visitadorEventosFrecuencia v) {
         if (this.frecuencia != null) {
-            return this.frecuencia.obtenerTipoFrecuencia(v);
-        } else {
-            return "";
+            this.frecuencia.obtenerTipoFrecuencia(v);
         }
     }
 

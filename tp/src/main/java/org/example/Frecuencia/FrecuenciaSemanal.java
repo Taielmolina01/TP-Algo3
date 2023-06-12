@@ -41,7 +41,8 @@ public class FrecuenciaSemanal extends Frecuencia implements Serializable {
         this.diasSemana = diasSemana;
     }
 
-    public String obtenerTipoFrecuencia(visitorFrecuencia v) {
-        return v.obtenerTipoFrecuencia(this);
+    @Override
+    public void obtenerTipoFrecuencia(visitorFrecuencia v) {
+        v.obtenerTipoFrecuencia(this);
     }
 }

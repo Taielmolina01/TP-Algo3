@@ -5,7 +5,6 @@ import org.example.Actividades.Evento;
 import org.example.Actividades.Tarea;
 import org.example.Alarma.Alarma;
 import org.example.Frecuencia.Frecuencia;
-import org.example.ManejadorGuardado;
 
 import java.io.*;
 import java.time.Duration;
@@ -13,7 +12,6 @@ import java.time.LocalDateTime;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Calendario implements Serializable {
 

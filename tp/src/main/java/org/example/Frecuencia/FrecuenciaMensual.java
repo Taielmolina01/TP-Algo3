@@ -16,7 +16,7 @@ public class FrecuenciaMensual extends Frecuencia implements Serializable {
         return fechaInicial.plusMonths(this.obtenerValorRepeticion());
     }
 
-    public String obtenerTipoFrecuencia(visitorFrecuencia v) {
-        return v.obtenerTipoFrecuencia(this);
+    @Override
+    public void obtenerTipoFrecuencia(visitorFrecuencia v) { v.obtenerTipoFrecuencia(this);
     }
 }
