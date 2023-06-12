@@ -119,6 +119,9 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
         }
         if (!this.esFechaRepeticion(dia, fechaFinal)) {
             dia = this.pasarASiguienteFechaRepeticion(dia, fechaFinal);
+            if (dia == null) {
+                return eventos;
+            }
         }
         var duraciones = this.calcularDuracionesRespectoAAlarmas();
         while (estaEntreFechas(dia, fechaInicial, this.fechaFinalRepeticion) && estaEntreFechas(dia, fechaInicial, fechaFinal)) {
@@ -168,12 +171,21 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
 
     private LocalDateTime pasarASiguienteFechaRepeticion(LocalDateTime dia, LocalDateTime fechaFinal) {
         var fechas = this.fechasRepeticiones(fechaFinal);
+        LocalDateTime diaADevolver = dia;
         for (int i = 0; i < fechas.size() - 1; i++) {
+            System.out.println();
+            System.out.println(dia);
+            System.out.println(fechas.get(i));
+            System.out.println(fechas.get(i+1));
+            System.out.println();
             if (dia.isAfter(fechas.get(i)) && dia.isBefore(fechas.get(i+1))) {
-                dia = fechas.get(i+1);
+                diaADevolver = fechas.get(i+1);
             }
         }
-        return dia;
+        if (diaADevolver.isEqual(dia)) {
+            return null;
+        }
+        return diaADevolver;
     }
 
     private HashMap<Integer, Duration> calcularDuracionesRespectoAAlarmas() {
