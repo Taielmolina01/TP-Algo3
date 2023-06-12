@@ -51,18 +51,6 @@ public class eventoVentana implements Initializable {
     private final String[] valoresPosibles = new String[]{"Sí", "No"};
     private final interfazGuardarActividadNueva i;
 
-    /*
-    Opc1: Deberia devolver el evento con las alarmas agregadas y despues directamente lo agrego al calendario.
-    Me estoy cagando en la fachada y deberia agregar esa forma de agregar un evento al modelo
-    (Calendario.java), tampoco lo veo taaan mal, es una ventana para agregar un evento.
-    Opc2: paso toda la info necesaria para agregar el evento y sus alarmas y lo hago desde el main(creo q
-    estaria mejor aunque en cuanto a codigo es + largo).
-
-     Esto se haria al ejecutarse ingresarDatosEvento() y en caso de haber exito, deberia usar el observer con una
-     callback function.
-     */
-
-
     public eventoVentana(interfazGuardarActividadNueva i) {
         this.i = i;
     }
@@ -96,7 +84,7 @@ public class eventoVentana implements Initializable {
                 Stage stage = (Stage) scenePane.getScene().getWindow();
                 stage.close();
                 try {
-                    this.i.guardarEventoTipo1(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(), alarmas);
+                    this.i.guardarEventoSinRepeticion(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(), alarmas);
                 } catch (IOException e) {
                     //
                 }
@@ -109,7 +97,7 @@ public class eventoVentana implements Initializable {
         }
         ArrayList<Duration> alarmas = this.obtenerAlarmas();
         try {
-            this.i.guardarEventoTipo2(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(),
+            this.i.guardarEventoRepeticionDiaria(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(),
                     fechaFinal, new FrecuenciaDiaria(this.repeticionVentana.obtenerRepeticiones()), alarmas);
         } catch (IOException e) {
             //

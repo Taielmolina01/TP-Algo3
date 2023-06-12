@@ -173,11 +173,6 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
         var fechas = this.fechasRepeticiones(fechaFinal);
         LocalDateTime diaADevolver = dia;
         for (int i = 0; i < fechas.size() - 1; i++) {
-            System.out.println();
-            System.out.println(dia);
-            System.out.println(fechas.get(i));
-            System.out.println(fechas.get(i+1));
-            System.out.println();
             if (dia.isAfter(fechas.get(i)) && dia.isBefore(fechas.get(i+1))) {
                 diaADevolver = fechas.get(i+1);
             }

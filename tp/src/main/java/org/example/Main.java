@@ -35,6 +35,8 @@ import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
+import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
+
 public class Main extends Application implements interfazGuardarActividadNueva, Initializable, interfazCambioEstado {
     private visitadorActividades visitador;
     protected ManejadorGuardado manejador;
@@ -74,7 +76,7 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
             case "Semana" -> this.fechaActual = this.fechaActual.minusWeeks(1);
             default -> this.fechaActual = this.fechaActual.minusMonths(1);
         }
-        this.actualizarTextoYDemas();
+        this.actualizarTextoYLista();
     }
 
     @FXML
@@ -84,10 +86,10 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
             case "Semana" -> this.fechaActual = this.fechaActual.plusWeeks(1);
             default -> this.fechaActual = this.fechaActual.plusMonths(1);
         }
-        this.actualizarTextoYDemas();
+        this.actualizarTextoYLista();
     }
 
-    private void actualizarTextoYDemas() {
+    private void actualizarTextoYLista() {
         this.establecerInicioYFinSemana();
         this.establecerText();
         String texto;
@@ -119,6 +121,7 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
     }
 
     private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) { // esta funcion de mierda es la que funciona mal
+        this.listViewActividades.getSelectionModel().clearSelection();
         this.listViewActividades.getItems().clear();
         ArrayList<Actividad> actividadesActuales = this.calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin);
         actividadesActuales.sort(Comparator.comparing(Actividad::obtenerFechaInicio).thenComparing(Actividad::obtenerNombre));
@@ -272,14 +275,14 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
     }
 
     @Override
-    public void guardarEventoTipo1(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
+    public void guardarEventoSinRepeticion(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
                                    ArrayList<Duration> duracionesAlarmas) {
         int ID = this.calendario.crearEvento(nombre, descripcion, fechaInicio, duracion, diaCompleto);
         this.guardarNuevaActividad(ID, duracionesAlarmas);
     }
 
     @Override
-    public void guardarEventoTipo2(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
+    public void guardarEventoRepeticionDiaria(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
                                    LocalDateTime fechaFinal, FrecuenciaDiaria frecuencia, ArrayList<Duration> duracionesAlarmas) {
         int ID = this.calendario.crearEvento(nombre, descripcion, fechaInicio, duracion, diaCompleto, fechaFinal, frecuencia);
         this.guardarNuevaActividad(ID, duracionesAlarmas);

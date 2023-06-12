@@ -15,7 +15,6 @@ public class vistaTarea extends vistaActividad {
         this.estaCompletada = Boolean.parseBoolean(infoActividad.get(this.infoActividad.size()-1));
         this.setInfoResumida();
         this.setInfoCompleta();
-        System.out.println("Estoy aca 1 y el estado es: " + this.estaCompletada);
     }
 
     /*

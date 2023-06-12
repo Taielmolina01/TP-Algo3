@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public interface interfazGuardarActividadNueva {
 
-    void guardarEventoTipo1(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
+    void guardarEventoSinRepeticion(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
                             ArrayList<Duration> duracionesAlarmas) throws IOException;
 
-    void guardarEventoTipo2(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
+    void guardarEventoRepeticionDiaria(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
                             LocalDateTime fechaFinal, FrecuenciaDiaria frecuencia, ArrayList<Duration> duracionesAlarmas) throws IOException;
 
     void guardarTarea(String nombre, String descripcion, LocalDateTime fechaInicio, boolean diaCompleto, ArrayList<Duration> duracionesAlarmas)

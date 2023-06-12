@@ -32,7 +32,6 @@ public class visitadorActividades implements visitorActividades {
         infoEvento.add(e.obtenerFechaFinalDefinitivo().format(formateador.formatterConHoras));
         var v = new visitadorEventosFrecuencia();
         e.visitarFrecuencia(v);
-        System.out.println(v.obtenerMensajeFrecuencia());
         infoEvento.add(v.obtenerMensajeFrecuencia());
         this.vistaActual = new vistaEvento(infoEvento);
     }
