@@ -30,7 +30,8 @@ un Map<IDActividad, Alarma> cosa de poder mostrar un mensaje diciendo ALARMA NOT
 NOTA: utilizar **AbstractMap.SimpleEntry**.
 - [X] Cuando se agrega un evento que se repite dsp no se puede cargar el programa cuando se vuelve abrir (cuando se agregan tareas no rompe) (QUE MIERDA PASA)
 PD: Que retraso como no iba a fallar:))
-- [ ] Arreglar que cuando se crea una tarea/evento nueva se rompe el programa porque hay un problema con la actualizacion de vistaActividades.
+- [X] Arreglar que cuando se crea una tarea/evento nueva se rompe el programa porque hay un problema con la actualizacion de vistaActividades.
+- [ ] Arreglar que funciona mal la logica de ver los días cuando un evento se repite.
 - [X] Hacer que la vista reciba el objeto Tarea/el objeto Evento, lo del arrayList es una garcha (no se puede xd)
 - [X] Cambiar los ifs a switchCase
 - [X] Cambiar que cuando es dia completo el texto muestra la fecha con formmater sin horas y diga "de dia completo"

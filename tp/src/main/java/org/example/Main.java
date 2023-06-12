@@ -13,9 +13,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.example.Actividades.Actividad;
 import org.example.Alarma.Alarma;
 import org.example.Frecuencia.FrecuenciaDiaria;
@@ -56,8 +58,6 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
     private String textoSemanal;
     private String textoMensual;
     private final String[] valoresCrear = new String[]{"", "Evento", "Tarea"};
-    private AnimationTimer timer;
-    private boolean darkMode;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -164,22 +164,23 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
         this.listViewActividades.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
         this.visitador = new visitadorActividades();
         this.vistaActividadesActuales = FXCollections.observableArrayList();
-        this.listViewActividades.setCellFactory(param -> new manejadorCeldasListView(this.vistaActividadesActuales, this));
+        this.listViewActividades.setCellFactory(listViewActividades -> new manejadorCeldasListView(this));
         this.actualizarListaActividades();
-        this.timer = new AnimationTimer() {
+        AnimationTimer timer = new AnimationTimer() {
             AbstractMap.SimpleEntry<Integer, Alarma> parActividadAlarma;
+
             @Override
             public void handle(long l) {
                 LocalDateTime horaActual = LocalDateTime.now();
                 AbstractMap.SimpleEntry<Integer, Alarma> parActividadAlarma = calendario.obtenerSiguienteAlarmaPorActividad
-                        (horaActual, horaActual.plusDays(1));
+                        (horaActual, horaActual.plusDays(3));
                 if (parActividadAlarma != null && parActividadAlarma.getValue().
                         cuantoFaltaParaDisparar(horaActual).compareTo(Duration.ofMillis(10)) < 0) {
                     notificacionVentana.lanzarVentanaNotificacion(calendario.obtenerNombre(parActividadAlarma.getKey()));
                 }
             }
         };
-        this.timer.start();
+        timer.start();
     }
 
     private void establecerText() {

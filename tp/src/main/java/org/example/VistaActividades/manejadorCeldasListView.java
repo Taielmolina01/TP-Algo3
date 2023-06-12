@@ -12,12 +12,10 @@ import java.util.ArrayList;
 
 public class manejadorCeldasListView extends ListCell<vistaActividad> {
 
-    ObservableList<vistaActividad> vistaActividades;
     private CheckBox checkBox;
     private interfazCambioEstado i;
 
-    public manejadorCeldasListView(ObservableList<vistaActividad> vistaActividades, interfazCambioEstado i) {
-        this.vistaActividades = vistaActividades;
+    public manejadorCeldasListView(interfazCambioEstado i) {
         this.i = i;
     }
 
@@ -31,12 +29,13 @@ public class manejadorCeldasListView extends ListCell<vistaActividad> {
                     null, null)));
             if (item.obtenerCodigoColorFondo().equals(vistaActividad.colorActividad.TAREA.obtenerCodigoColor())) {
                 var checkbox = getCheckBox(i);
-                System.out.println(((vistaTarea) item).obtenerEstaCompletada());
                 checkbox.setSelected(((vistaTarea) item).obtenerEstaCompletada());
                 setGraphic(checkbox);
             }
         } else {
             setText(null);
+            setGraphic(null);
+            setBackground(null);
         }
     }
 
