@@ -12,7 +12,7 @@ public class notificacionVentana {
     @FXML
     private Text textoNotificacion;
 
-    public void start() throws Exception {
+    public void start(String nombreActividad) throws Exception {
         var loader = new FXMLLoader(getClass().getResource("/escenaNotificacion.fxml"));
         loader.setController(this);
         Parent root = loader.load();
@@ -21,12 +21,12 @@ public class notificacionVentana {
         s.setTitle("ALARMA");
         s.setScene(scene);
         s.show();
-        textoNotificacion.setText("NOTIFICACIÓN DE ALARMA");
+        textoNotificacion.setText("Alarma de la actividad " + nombreActividad);
     }
 
-    public static void lanzarVentanaNotificacion() {
+    public static void lanzarVentanaNotificacion(String nombreActividad) {
         try {
-            new notificacionVentana().start();
+            new notificacionVentana().start(nombreActividad);
         } catch (Exception e5) {
             //
         }

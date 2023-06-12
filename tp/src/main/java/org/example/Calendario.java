@@ -10,8 +10,10 @@ import org.example.ManejadorGuardado;
 import java.io.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Calendario implements Serializable {
 
@@ -139,57 +141,52 @@ public class Calendario implements Serializable {
         this.actividadesCalendario.get(idElemento).modificarFechaActivacionAlarma(idAlarma, fechaArbitraria, intervaloTiempoNuevo);
     }
 
-    /*
-    public AbstractMap.SimpleEntry<Integer, Alarma> obtenerSiguienteAlarma(LocalDateTime fechaActual, LocalDateTime fechaFinal) {
-        ArrayList<Actividad> actividades = this.obtenerActividadesEntreFechas(fechaActual, fechaFinal);
-        for (Actividad actividad : actividades) {
-            int IDMaximo = actividad.obtenerID();
-            HashMap<Integer, Alarma> alarmasActual = actividad.obtenerAlarmas();
-            for (Map.Entry<Integer, Alarma> entry : alarmasActual.entrySet()) {
-                int posMaxima = entry.getKey();
-                Alarma alarmaMaxima = entry.getValue();
-                if (Alarma.compararAlarmas(alarmas.get(posMaxima), alarmas.get(i)) > 0) {
-                    if (alarmas.get(i).obtenerFechaActivacion().isBefore(fechaActual)) { // La hora de la última alarma ya pasó.
+
+    public Alarma obtenerSiguienteAlarma(LocalDateTime fechaActual, LocalDateTime fechaFinal) {
+        AbstractMap.SimpleEntry<Integer, Alarma> parActividadAlarma = this.obtenerSiguienteAlarmaPorActividad(fechaActual, fechaFinal);
+        if (parActividadAlarma != null) {
+            return parActividadAlarma.getValue();
+        }
+        return null;
+    }
+
+    public AbstractMap.SimpleEntry<Integer, Alarma> obtenerSiguienteAlarmaPorActividad(LocalDateTime fechaActual, LocalDateTime fechaFinal) {
+        HashMap<Integer, ArrayList<Alarma>> alarmasActividades = this.obtenerAlarmasLapso(fechaActual, fechaFinal);
+        if (alarmasActividades.size() == 0) {
+            return null;
+        }
+        Integer IDMaximo = null;
+        Integer posMaxima = null;
+        for (var entry : alarmasActividades.entrySet()) {
+            var clave = entry.getKey();
+            var valor = entry.getValue();
+            if (IDMaximo == null && valor.size() > 0) {
+                IDMaximo = clave;
+                posMaxima = 0;
+            }
+            for (int j = 0; j < valor.size(); j++) {
+                if (Alarma.compararAlarmas(alarmasActividades.get(IDMaximo).get(posMaxima), alarmasActividades.get(clave).get(j)) > 0) {
+                    if (alarmasActividades.get(clave).get(j).obtenerFechaActivacion().isBefore(fechaActual)) {
                         continue;
                     }
-                    posMaxima = i;
+                    IDMaximo = clave;
+                    posMaxima = j;
                 }
             }
-
         }
-        if (alarmas.get(posMaxima).obtenerFechaActivacion().isBefore(fechaActual)) { // La hora de la última alarma ya pasó.
+        if (IDMaximo == null || posMaxima == null || alarmasActividades.get(IDMaximo).get(posMaxima).obtenerFechaActivacion().isBefore(fechaActual)) {
             return null;
         }
         return new AbstractMap.SimpleEntry<>(IDMaximo, this.obtenerAlarmasActividad(IDMaximo).get(posMaxima));
     }
 
-     */
-
-    public Alarma obtenerSiguienteAlarma(LocalDateTime fechaActual, LocalDateTime fechaFinal) {
-        ArrayList<Alarma> alarmas = this.obtenerAlarmasLapso(fechaActual, fechaFinal);
-        if (alarmas.size() == 0) {
-            return null;
-        }
-        int posMaxima = 0;
-        for (int i = 0; i < alarmas.size(); i++) {
-            if (Alarma.compararAlarmas(alarmas.get(posMaxima), alarmas.get(i)) > 0) {
-                if (alarmas.get(i).obtenerFechaActivacion().isBefore(fechaActual)) { // La hora de la última alarma ya pasó.
-                    continue;
-                }
-                posMaxima = i;
-            }
-        }
-        if (alarmas.get(posMaxima).obtenerFechaActivacion().isBefore(fechaActual)) { // La hora de la última alarma ya pasó.
-            return null;
-        }
-        return alarmas.get(posMaxima);
-    }
-
-    public ArrayList<Alarma> obtenerAlarmasLapso(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
+    public HashMap<Integer, ArrayList<Alarma>> obtenerAlarmasLapso(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
         ArrayList<Actividad> actividades = this.obtenerActividadesEntreFechas(fechaInicial, fechaFinal);
-        ArrayList<Alarma> alarmas = new ArrayList<>();
+        HashMap<Integer, ArrayList<Alarma>> alarmas = new HashMap<>();
         for (Actividad a : actividades) {
-            alarmas.addAll(a.obtenerAlarmas().values());
+            ArrayList<Alarma> alarmasActuales = new ArrayList<>();
+            alarmasActuales.addAll(a.obtenerAlarmas().values());
+            alarmas.put(a.obtenerID(), alarmasActuales);
         }
         return alarmas;
     }

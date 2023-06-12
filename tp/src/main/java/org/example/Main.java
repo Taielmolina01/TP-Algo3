@@ -21,6 +21,7 @@ import org.example.Alarma.Alarma;
 import org.example.Frecuencia.FrecuenciaDiaria;
 import org.example.VentanasAuxiliares.eventoVentana;
 import org.example.VentanasAuxiliares.infoCompletaVentana;
+import org.example.VentanasAuxiliares.notificacionVentana;
 import org.example.VentanasAuxiliares.tareaVentana;
 import org.example.Visitadores.visitadorActividades;
 import org.example.VistaActividades.manejadorCeldasListView;
@@ -32,10 +33,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Main extends Application implements interfazGuardarActividadNueva, Initializable, interfazCambioEstado {
     private visitadorActividades visitador;
@@ -59,6 +57,7 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
     private String textoMensual;
     private final String[] valoresCrear = new String[]{"", "Evento", "Tarea"};
     private AnimationTimer timer;
+    private boolean darkMode;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -164,18 +163,23 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
         this.cajaCrear.setOnAction(this::crearVentanaActividad);
         this.listViewActividades.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
         this.visitador = new visitadorActividades();
-        this.listViewActividades.setCellFactory(param -> new manejadorCeldasListView(FXCollections.observableArrayList(this.vistaActividadesActuales),
-                        this));
+        this.vistaActividadesActuales = FXCollections.observableArrayList();
+        this.listViewActividades.setCellFactory(param -> new manejadorCeldasListView(this.vistaActividadesActuales, this));
         this.actualizarListaActividades();
-        /*
-        this.timer = (AnimationTimer) (l) -> {
-                Alarma a = this.calendario.obtenerSiguienteAlarma(LocalDateTime.now(), LocalDateTime.now().plusDays(1));
-                if (a != null && a.cuantoFaltaParaDisparar(LocalDateTime.now()).compareTo(Duration.ofMinutes(3)) < 0) {
-                    notificacionVentana.lanzarVentanaNotificacion();
+        this.timer = new AnimationTimer() {
+            AbstractMap.SimpleEntry<Integer, Alarma> parActividadAlarma;
+            @Override
+            public void handle(long l) {
+                LocalDateTime horaActual = LocalDateTime.now();
+                AbstractMap.SimpleEntry<Integer, Alarma> parActividadAlarma = calendario.obtenerSiguienteAlarmaPorActividad
+                        (horaActual, horaActual.plusDays(1));
+                if (parActividadAlarma != null && parActividadAlarma.getValue().
+                        cuantoFaltaParaDisparar(horaActual).compareTo(Duration.ofMillis(10)) < 0) {
+                    notificacionVentana.lanzarVentanaNotificacion(calendario.obtenerNombre(parActividadAlarma.getKey()));
                 }
+            }
         };
-         */
-        //timer.start();
+        this.timer.start();
     }
 
     private void establecerText() {

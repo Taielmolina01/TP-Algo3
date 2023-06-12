@@ -25,7 +25,7 @@ nota3: deberia hacer que las vistas reciban el objeto entero? y despues en cada 
 - [X] Actividades entre fechas estaba mal (hacer prototype?).
 - [X] Agregar bien la funcionalidad de actividades entre fechas (rompe cuando se ingresa un dia inicial en el que no hay actividad).
 - [X] Falta lo de crear las alarmas para los eventos que se repiten. 
-- [ ] Modificar lo de proxima alarma en Calendario. Deberia o bien guardarme la actividad en la alarma (mas no que si), o cuando devuelvo la proxima alarma, devolver
+- [X] Modificar lo de proxima alarma en Calendario. Deberia o bien guardarme la actividad en la alarma (mas no que si), o cuando devuelvo la proxima alarma, devolver
 un Map<IDActividad, Alarma> cosa de poder mostrar un mensaje diciendo ALARMA NOTIFICACION de calendario.obtenerNombre(IDActividad) o algo así.
 NOTA: utilizar **AbstractMap.SimpleEntry**.
 - [X] Cuando se agrega un evento que se repite dsp no se puede cargar el programa cuando se vuelve abrir (cuando se agregan tareas no rompe) (QUE MIERDA PASA)
@@ -37,7 +37,7 @@ PD: Que retraso como no iba a fallar:))
 - [X] Cambiar lo del Visitor, ver clase diego 29/5 (en Slack tambien) (completado tiene que estar como box para seleccionar/deseleccionar).
 - [ ] Asociar el checkbox de cada celda de una tarea a la tarea, para que cuando esté seleccionada el checkbox la tarea esté completada, si no no.
 - [ ] Cuando cargo todo deberían aparecer ya seleccionadas aquellas tareas que ya estén completadas.
-- [ ] Agregar disparado de alarmas. (la verga esa de timetasker no sirve, tengo que usar otra cosa)
+- [X] Agregar disparado de alarmas. (la verga esa de timetasker no sirve, tengo que usar otra cosa)
 - [X] Hacer un archivo css con todo (agregar hover de los textfield)
 - [ ] Hacer archivo css con modo oscuro
 - [ ] Agregar logica para switchear los modos.

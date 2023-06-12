@@ -17,6 +17,7 @@
     -fx-border-color: -color-bordes;
     -fx-border-radius: 30;
     -fx-background-radius: 30;
+    -fx-text-fill: black;
 }
 
 .cajas:hover {
@@ -60,6 +61,13 @@
 
 .check-box .box {
     -fx-background-color: -color-fondo;
+    -fx-border-color: -color-bordes;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.check-box .box:hover {
+    -fx-background-color: -color-fondo-hover;
     -fx-border-color: -color-bordes;
     -fx-border-radius: 10;
     -fx-background-radius: 10;

@@ -11,16 +11,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="678.0" styleClass="fondos" stylesheets="@modoClaro.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Main">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="678.0" styleClass="fondos" stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Main">
     <children>
         <HBox layoutX="-3.0" prefHeight="100.0" prefWidth="686.0">
             <children>
-                <ComboBox fx:id="cajaCrear" prefHeight="28.0" prefWidth="115.0" promptText="+       Crear" styleClass="cajas" stylesheets="@modoClaro.css">
+                <ComboBox fx:id="cajaCrear" prefHeight="28.0" prefWidth="115.0" promptText="+       Crear" styleClass="cajas" stylesheets="@lightMode.css">
                     <HBox.margin>
                         <Insets left="50.0" top="20.0" />
                     </HBox.margin>
                 </ComboBox>
-                <Button fx:id="botonIzquierda" mnemonicParsing="false" onAction="#clickEnBotonIzquierda" styleClass="flechas" stylesheets="@modoClaro.css" text="&lt;">
+                <Button fx:id="botonIzquierda" mnemonicParsing="false" onAction="#clickEnBotonIzquierda" styleClass="flechas" stylesheets="@lightMode.css" text="&lt;">
                     <HBox.margin>
                         <Insets left="30.0" top="20.0" />
                     </HBox.margin>
@@ -33,12 +33,12 @@
                         <Font size="15.0" />
                     </font>
                 </Text>
-                <Button fx:id="botonDerecha" mnemonicParsing="false" onAction="#clickEnBotonDerecha" styleClass="flechas" stylesheets="@modoClaro.css" text="&gt;">
+                <Button fx:id="botonDerecha" mnemonicParsing="false" onAction="#clickEnBotonDerecha" styleClass="flechas" stylesheets="@lightMode.css" text="&gt;">
                     <HBox.margin>
                         <Insets left="10.0" top="20.0" />
                     </HBox.margin>
                 </Button>
-                <ChoiceBox fx:id="rangoTiempo" prefHeight="28.0" prefWidth="115.0" styleClass="cajas" stylesheets="@modoClaro.css" value="Mes">
+                <ChoiceBox fx:id="rangoTiempo" prefHeight="28.0" prefWidth="115.0" styleClass="cajas" stylesheets="@lightMode.css" value="Mes">
                     <HBox.margin>
                         <Insets left="30.0" top="20.0" />
                     </HBox.margin>
@@ -46,7 +46,7 @@
             </children>
         </HBox>
         <Text layoutX="14.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Eventos y tareas próximos" />
-        <ListView fx:id="listViewActividades" layoutX="4.0" layoutY="118.0" prefHeight="390.0" prefWidth="670.0" styleClass="fondos" stylesheets="@modoClaro.css" />
+        <ListView fx:id="listViewActividades" layoutX="4.0" layoutY="118.0" prefHeight="390.0" prefWidth="670.0" styleClass="fondos" stylesheets="@lightMode.css" />
         <Circle fx:id="circuloEvento" fill="#85c1e9" layoutX="208.0" layoutY="102.0" radius="7.0" stroke="#85c1e9" strokeType="INSIDE" />
         <Circle fx:id="circuloTarea" fill="#58d68d" layoutX="298.0" layoutY="102.0" radius="7.0" stroke="#58d68d" strokeType="INSIDE" />
         <Text layoutX="221.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Eventos" textAlignment="CENTER" />

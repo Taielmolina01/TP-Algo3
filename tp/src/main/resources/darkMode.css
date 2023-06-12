@@ -1,6 +1,6 @@
 .root {
-    -color-fondo: #EAEDED;
-    -color-fondo-hover: #D5DBDB;
+    -color-fondo: #1C2833;
+    -color-fondo-hover: #17202A;
     -color-opcion-hover: #E9967A;
     -color-flechas: #D6EAF8;
     -color-flechas-hover: #AED6F1;
@@ -17,6 +17,7 @@
     -fx-border-color: -color-bordes;
     -fx-border-radius: 30;
     -fx-background-radius: 30;
+    -fx-text-fill: black;
 }
 
 .cajas:hover {
