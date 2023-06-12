@@ -102,3 +102,7 @@
      -fx-border-radius: 30;
      -fx-background-radius: 30;
 }
+
+.list-view .list-cell:hover {
+    -fx-text-fill: -color-fondo-hover;
+}

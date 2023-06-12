@@ -27,6 +27,7 @@ public class manejadorCeldasListView extends ListCell<vistaActividad> {
             if (item.obtenerCodigoColorFondo().equals(vistaActividad.colorActividad.TAREA.obtenerCodigoColor())) {
                 var checkbox = getCheckBox(i);
                 checkbox.setSelected(((vistaTarea) item).obtenerEstaCompletada());
+                checkbox.setPrefSize(10, 10);
                 setGraphic(checkbox);
             }
         } else {
