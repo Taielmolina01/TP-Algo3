@@ -80,6 +80,9 @@ public class PersistenciaTest {
             assertThrows(NullPointerException.class, () -> calendario1.obtenerNombre(4));
             assertThrows(NullPointerException.class, () -> calendario1.obtenerDescripcion(4));
 
+            assertTrue(calendario2.obtenerEstadoTarea(3));
+            assertEquals(calendario1.obtenerEstadoTarea(3), calendario2.obtenerEstadoTarea(3));
+
         /*
             Dos alarmas en el calendario:
             1. Suena el 29/3/2023 a las 12:00 (Efecto: EMAIL)
@@ -188,6 +191,8 @@ public class PersistenciaTest {
         nuevoCalendario.crearTarea(nombreTarea, descripcionTarea, fechaInicioTarea, false);
         nuevoCalendario.crearEvento(nombreEvento2, descripcionEvento2, fechaInicioEvento, duracion, false);
         nuevoCalendario.crearTarea(nombreTarea2, descripcionTarea2, fechaInicioTarea, false);
+
+        nuevoCalendario.cambiarEstadoTarea(3);
 
         nuevoCalendario.agregarAlarma(0, Alarma.Efecto.NOTIFICACION, Duration.ofMinutes(30));
         nuevoCalendario.agregarAlarma(1, Alarma.Efecto.EMAIL, LocalDateTime.of(2023, 3, 29, 12, 0, 0));

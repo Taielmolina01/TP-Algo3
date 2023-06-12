@@ -8,12 +8,7 @@ Molina, Taiel. Padrón: 109458
 
 ## Notas
 
-nota1: tiene sentido mostrar el ID?
-
-nota2: avance un poco con lo de el esta completada y demas, pero por alguna razon cuando cargo de nuevo el programa o cuando cambio de mes actual, se vuelve a setear
-que no esta completada cuando en un inicio me lo detecta bien.
-
-nota3: deberia hacer que las vistas reciban el objeto entero? y despues en cada uno casteo a Evento o a Tarea segun corresponda.
+nota1: creo que lo de esta completada el error está en que cuando se carga de nuevo la lista (cuando se carga el programa nuevamente) se fija si el getItem() != null y ahi se llama automaticamente al this.i.huboCambioEstadoTarea() ? Algo de ese estilo es el problema
 
 ## TODO
 
@@ -39,10 +34,11 @@ PD: Que retraso como no iba a fallar:))
 - [X] Cambiar retorno de los visitadores a tipo void.
 - [X] Arreglar lo del exception por no deseleccionar la celda antes de cambiar de rango.
 - [ ] Arreglar lo del combobox del + Crear. (no tener que elegir la opcion nula para que se vuelva a elegir)
-- [ ] Asociar el checkbox de cada celda de una tarea a la tarea, para que cuando esté seleccionada el checkbox la tarea esté completada, si no no.
+- [X] Asociar el checkbox de cada celda de una tarea a la tarea, para que cuando esté seleccionada el checkbox la tarea esté completada, si no no.
 - [ ] Cuando cargo todo deberían aparecer ya seleccionadas aquellas tareas que ya estén completadas.
 - [X] Agregar disparado de alarmas. (la verga esa de timetasker no sirve, tengo que usar otra cosa)
 - [X] Hacer un archivo css con todo (agregar hover de los textfield)
+- [ ] Agregar las otras frecuencias, haria un combobox que tenga por default marcado sin repeticion y que despues si se elije otra distinta entre las opciones de {repeticionDiaria, repeticionSemanal, repeticionMensual, repeticionAnual}. Todas lanzarian la misma ventana que la que ya esta, menos la de la repeticion semanal que tendria que hacer DayWeekPicker o algo así (por ahora lo mejor que se me ocurre es utilizar 7 checkbox que tengan arriba/abajo las letras L/M/M/J/V/S/D (o en ingles)), y dsp los checkbox reviso si estan seleccionados o no e utilizo los ordinal de DayOfWeek.
 - [ ] Hacer archivo css con modo oscuro
 - [ ] Agregar logica para switchear los modos.
 - [ ] Separar en dos paquetes grandes: Logica de negocio y GUI.

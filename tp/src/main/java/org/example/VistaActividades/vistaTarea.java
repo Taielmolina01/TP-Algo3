@@ -25,7 +25,7 @@ public class vistaTarea extends vistaActividad {
         String todoElDia = this.setearTextoDiaCompleto();
         this.infoCompleta = "Nombre: " + this.infoActividad.get(1) + ".\n\n"
                 + "Descripción: " + this.infoActividad.get(2) + ".\n\n"
-                + "Fecha: " + this.infoActividad.get(3) + "." + todoElDia + "\n\n"
+                + "Fecha: " + this.infoActividad.get(3) + "hs" + "." + todoElDia + "\n\n"
                 + this.infoActividad.get(5) + "\n\n";
         if (this.estaCompletada) {
             this.infoCompleta += "La tarea está completada.";
@@ -43,11 +43,9 @@ public class vistaTarea extends vistaActividad {
         return this.estaCompletada;
     }
 
-    public void cambiarEstadoTarea(){
+    public void cambiarEstadoTarea() {
         this.estaCompletada = !this.estaCompletada;
         this.setInfoCompleta();
         this.setInfoResumida();
     }
-
-
 }

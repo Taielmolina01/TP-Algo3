@@ -38,7 +38,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>org.example.Main</mainClass>
+                    <mainClass>org.example.AppCalendario</mainClass>
                 </configuration>
             </plugin>
         </plugins>

@@ -14,9 +14,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.Actividades.Actividad;
+import org.example.Actividades.Tarea;
 import org.example.Alarma.Alarma;
 import org.example.Frecuencia.FrecuenciaDiaria;
 import org.example.VentanasAuxiliares.eventoVentana;
@@ -35,9 +37,7 @@ import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
-import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
-
-public class Main extends Application implements interfazGuardarActividadNueva, Initializable, interfazCambioEstado {
+public class AppCalendario extends Application implements interfazGuardarActividadNueva, Initializable, interfazCambioEstado {
     private visitadorActividades visitador;
     protected ManejadorGuardado manejador;
     protected Calendario calendario;
@@ -64,9 +64,10 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
         Parent root = FXMLLoader.load(getClass().getResource("/escenaCalendario.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Calendario Molina-Kriger");
+        stage.getIcons().add(new Image(AppCalendario.class.getClassLoader().getResource("logo.png").toExternalForm()));
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
-        stage.setResizable(false);
     }
 
     @FXML
@@ -123,7 +124,9 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
     private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) { // esta funcion de mierda es la que funciona mal
         this.listViewActividades.getSelectionModel().clearSelection();
         this.listViewActividades.getItems().clear();
+        System.out.println("Dentro de crearLista y viendo el estado del calendario: " + this.calendario.obtenerEstadoTarea(0));
         ArrayList<Actividad> actividadesActuales = this.calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin);
+        System.out.println("Estoy dentro del crearLista y el array actividades: " + ((Tarea)actividadesActuales.get(0)).estaCompletada());
         actividadesActuales.sort(Comparator.comparing(Actividad::obtenerFechaInicio).thenComparing(Actividad::obtenerNombre));
         this.vistaActividadesActuales = FXCollections.observableArrayList(this.visitador.visitarActividades(actividadesActuales));
         this.listViewActividades.getItems().addAll(this.vistaActividadesActuales);
@@ -166,6 +169,7 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
         this.visitador = new visitadorActividades();
         this.vistaActividadesActuales = FXCollections.observableArrayList();
         this.listViewActividades.setCellFactory(listViewActividades -> new manejadorCeldasListView(this));
+        System.out.println(this.calendario.obtenerEstadoTarea(0));
         this.actualizarListaActividades();
         AnimationTimer timer = new AnimationTimer() {
             AbstractMap.SimpleEntry<Integer, Alarma> parActividadAlarma;
@@ -218,16 +222,7 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
     }
 
     private void actualizarRango(ActionEvent event) {
-        // podria simplemente llamar actualizarTextoYDemas
-        this.establecerText();
-        String texto;
-        switch (this.rangoTiempo.getValue()) {
-            case "Dia" -> texto = this.textoDiario;
-            case "Semana" -> texto = this.textoSemanal;
-            default -> texto = this.textoMensual;
-        }
-        this.lapsoTiempoActual.setText(texto);
-        this.actualizarListaActividades();
+        this.actualizarTextoYLista();
     }
 
     private void crearVentanaActividad(ActionEvent event) {
@@ -313,5 +308,6 @@ public class Main extends Application implements interfazGuardarActividadNueva, 
     public void huboCambioEstadoTarea(int i) {
         this.calendario.cambiarEstadoTarea(this.vistaActividadesActuales.get(i).obtenerIDActividad());
         this.guardarEstadoActual();
+        System.out.println("Se guarda que la tarea esta completada: " + this.calendario.obtenerEstadoTarea(this.vistaActividadesActuales.get(i).obtenerIDActividad()));
     }
 }

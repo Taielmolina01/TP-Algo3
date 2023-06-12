@@ -37,11 +37,11 @@ public class manejadorCeldasListView extends ListCell<vistaActividad> {
         }
     }
 
-    private CheckBox getCheckBox(int i){
-        if(checkBox==null){
+    private CheckBox getCheckBox(int i) {
+        if (checkBox == null) {
             checkBox = new CheckBox();
-            checkBox.selectedProperty().addListener((obs,old,val)->{
-                if(getItem() != null){
+            checkBox.selectedProperty().addListener((obs, old, val) -> {
+                if (getItem() != null) {
                     ((vistaTarea) getItem()).cambiarEstadoTarea();
                     this.i.huboCambioEstadoTarea(i);
                 }

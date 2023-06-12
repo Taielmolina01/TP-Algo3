@@ -29,6 +29,7 @@ public class visitadorActividades implements visitorActividades {
     public void visitarActividad(Evento e) {
         ArrayList<String> infoEvento = new ArrayList<>();
         this.crearListaDatosComunes(infoEvento, e);
+        infoEvento.add(formateador.formatearDuracion(e.obtenerDuracion()));
         infoEvento.add(e.obtenerFechaFinalDefinitivo().format(formateador.formatterConHoras));
         var v = new visitadorEventosFrecuencia();
         e.visitarFrecuencia(v);
