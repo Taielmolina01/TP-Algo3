@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class repeticionVentana implements Initializable {
+public class repeticionSemanalVentana implements Initializable {
 
     @FXML
     private Button botonOk;
@@ -24,14 +24,13 @@ public class repeticionVentana implements Initializable {
     private Text mensaje;
     private Integer repeticiones;
 
-    public void start(String titulo, String promptText) throws Exception {
-        var loader = new FXMLLoader(getClass().getResource("/escenaRepeticion.fxml"));
+    public void start() throws Exception {
+        var loader = new FXMLLoader(getClass().getResource("/escenaRepeticionSemanal.fxml"));
         loader.setController(this);
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage s = new Stage();
-        s.setTitle(titulo);
-        this.repeticion.setPromptText(promptText);
+        s.setTitle("Definir frecuencia semanal");
         s.setScene(scene);
         s.show();
     }
@@ -50,7 +49,6 @@ public class repeticionVentana implements Initializable {
     public Integer obtenerRepeticiones() {
         return this.repeticiones;
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

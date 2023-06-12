@@ -47,7 +47,9 @@ public class eventoVentana implements Initializable {
     @FXML
     private AnchorPane scenePane;
     private intervaloAlarmaVentana ventanaAlarma;
-    private repeticionVentana repeticionVentana;
+    private org.example.VentanasAuxiliares.repeticionVentana repeticionVentana;
+    private org.example.VentanasAuxiliares.repeticionSemanalVentana repeticionSemanalVentana;
+    private final String[] valoresPosiblesRepeticion = new String[]{"Sin repetición", "Diaria", "Semanal", "Mensual", "Anual"};
     private final String[] valoresPosibles = new String[]{"Sí", "No"};
     private final interfazGuardarActividadNueva i;
 
@@ -109,7 +111,7 @@ public class eventoVentana implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.alarmas.getItems().addAll(this.valoresPosibles);
-        this.repeticion.getItems().addAll(this.valoresPosibles);
+        this.repeticion.getItems().addAll(this.valoresPosiblesRepeticion);
         this.botonCrear.setOnAction(this::ingresarDatosEvento);
         this.repeticion.setOnAction(this::establecerRepeticionDiaria);
         this.alarmas.setOnAction(this::crearAlarmas);
@@ -117,12 +119,44 @@ public class eventoVentana implements Initializable {
 
     @FXML
     public void establecerRepeticionDiaria(ActionEvent event) {
-        if (this.repeticion.getValue().equals(this.valoresPosibles[0])) {
-            try {
-                this.repeticionVentana = new repeticionVentana();
-                this.repeticionVentana.start();
-            } catch (Exception e) {
-                errorVentana.lanzarVentanaError();
+        switch (this.repeticion.getValue()) {
+            case "Sin repetición" -> {
+                //
+            }
+            case "Diaria" -> {
+                try {
+                    this.repeticionVentana = new repeticionVentana();
+                    this.repeticionVentana.start("Definir frecuencia diaria",
+                            "Ingrese cada cuántos días se repite");
+                } catch (Exception e) {
+                    errorVentana.lanzarVentanaError();
+                }
+            }
+            case "Semanal" -> {
+                try {
+                    this.repeticionSemanalVentana = new repeticionSemanalVentana();
+                    this.repeticionSemanalVentana.start();
+                } catch (Exception e) {
+                    errorVentana.lanzarVentanaError();
+                }
+            }
+            case "Mensual" -> {
+                try {
+                    this.repeticionVentana = new repeticionVentana();
+                    this.repeticionVentana.start("Definir frecuencia mensual",
+                            "Ingrese cada cuántos meses se repite");
+                } catch (Exception e) {
+                    errorVentana.lanzarVentanaError();
+                }
+            }
+            default -> {
+                try {
+                    this.repeticionVentana = new repeticionVentana();
+                    this.repeticionVentana.start("Definir frecuencia anual",
+                            "Ingrese cada cuántos años se repite");
+                } catch (Exception e) {
+                    errorVentana.lanzarVentanaError();
+                }
             }
         }
     }
