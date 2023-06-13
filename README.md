@@ -70,7 +70,8 @@ Representa cada cuanto tiempo se repite un evento, existiendo 4 subclases que la
 
 - Calendario
 
-    - Almacena una colección de actividades. 
+Almacena una colección de actividades. 
+
     - Dada dos fechas puede indicar cual es la siguiente alarma existente en ese lapso de tiempo. 
     - Puede guardar y recuperar su estado.
     - Proporciona una fachada para los getters y setters de todas las actividades pertenecientes al mismo.
