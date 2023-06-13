@@ -107,3 +107,5 @@ Se utiliza en la GUI para desde stages distintos al stage principal mandar mensa
 
 
 ### Diagrama de clases
+
+![Diagrama UML de la logica](diagramLogica.png)
