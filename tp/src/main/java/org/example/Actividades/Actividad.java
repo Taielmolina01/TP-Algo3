@@ -2,7 +2,6 @@ package org.example.Actividades;
 
 import org.example.Alarma.Alarma;
 import org.example.Visitadores.visitadorActividades;
-import org.example.VistaActividades.vistaActividad;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -12,8 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Actividad implements Serializable {
-    protected HashMap<Integer, Alarma> alarmas;
     protected final int ID;
+    protected HashMap<Integer, Alarma> alarmas;
     protected String nombre;
     protected String descripcion;
     protected boolean todoElDia;

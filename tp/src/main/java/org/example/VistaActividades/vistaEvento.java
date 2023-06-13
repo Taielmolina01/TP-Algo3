@@ -13,6 +13,7 @@ public class vistaEvento extends vistaActividad {
         this.setInfoCompleta();
         this.setInfoResumida();
     }
+
     public void setInfoCompleta() {
         String todoElDia = this.setearTextoDiaCompleto();
         this.infoCompleta = "Nombre: " + this.infoActividad.get(1) + ".\n\n"

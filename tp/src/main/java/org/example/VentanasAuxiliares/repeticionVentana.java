@@ -32,6 +32,7 @@ public class repeticionVentana implements Initializable {
         Stage s = new Stage();
         s.setTitle(titulo);
         this.repeticion.setPromptText(promptText);
+        s.setResizable(false);
         s.setScene(scene);
         s.show();
     }

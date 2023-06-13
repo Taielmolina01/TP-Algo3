@@ -25,6 +25,8 @@ import java.util.ResourceBundle;
 
 public class tareaVentana implements Initializable {
 
+    private final String[] valoresPosibles = new String[]{"Sí", "No"};
+    private final interfazGuardarActividadNueva i;
     @FXML
     private Button botonCrear;
     @FXML
@@ -39,10 +41,8 @@ public class tareaVentana implements Initializable {
     private CheckBox diaCompleto;
     @FXML
     private AnchorPane scenePane;
-    private final String[] valoresPosibles = new String[]{"Sí", "No"};
     private intervaloAlarmaVentana ventanaAlarma;
     private ArrayList<Duration> duraciones;
-    private final interfazGuardarActividadNueva i;
 
     public tareaVentana(interfazGuardarActividadNueva i) {
         this.i = i;
@@ -55,6 +55,7 @@ public class tareaVentana implements Initializable {
         Scene scene = new Scene(root);
         Stage s = new Stage();
         s.setTitle("Creando tarea");
+        s.setResizable(false);
         s.setScene(scene);
         s.show();
     }

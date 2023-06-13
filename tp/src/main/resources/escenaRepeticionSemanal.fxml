@@ -6,24 +6,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="270.0" stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="177.0" prefWidth="270.0" stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <CheckBox fx:id="lunes" layoutX="30.0" layoutY="35.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@lightMode.css" />
-      <CheckBox fx:id="martes" layoutX="60.0" layoutY="35.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@lightMode.css" />
-      <CheckBox fx:id="miercoles" layoutX="90.0" layoutY="35.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@lightMode.css" />
-      <CheckBox fx:id="jueves" layoutX="120.0" layoutY="35.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@lightMode.css" />
-      <CheckBox fx:id="viernes" layoutX="150.0" layoutY="35.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@lightMode.css" />
-      <CheckBox fx:id="sabado" layoutX="180.0" layoutY="35.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@lightMode.css" />
-      <CheckBox fx:id="domingo" layoutX="210.0" layoutY="35.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@lightMode.css" />
-      <Text layoutX="37.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L" />
-      <Text layoutX="64.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="M" />
-      <Text layoutX="94.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="M" />
-      <Text layoutX="128.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="J" />
-      <Text layoutX="156.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="V" />
-      <Text layoutX="186.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="S" />
-      <Text layoutX="215.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D" />
-      <TextField layoutX="5.0" layoutY="75.0" prefHeight="26.0" prefWidth="261.0" promptText="Ingrese cada cuántas semanas se repite" />
-      <Button layoutX="116.0" layoutY="115.0" mnemonicParsing="false" styleClass="botones" stylesheets="@lightMode.css" text="OK" />
+      <CheckBox fx:id="lunes" layoutX="30.0" layoutY="70.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@lightMode.css" />
+      <CheckBox fx:id="martes" layoutX="60.0" layoutY="70.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@lightMode.css" />
+      <CheckBox fx:id="miercoles" layoutX="90.0" layoutY="70.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@lightMode.css" />
+      <CheckBox fx:id="jueves" layoutX="120.0" layoutY="70.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@lightMode.css" />
+      <CheckBox fx:id="viernes" layoutX="150.0" layoutY="70.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@lightMode.css" />
+      <CheckBox fx:id="sabado" layoutX="180.0" layoutY="70.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@lightMode.css" />
+      <CheckBox fx:id="domingo" layoutX="210.0" layoutY="70.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@lightMode.css" />
+      <Text layoutX="37.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L" />
+      <Text layoutX="64.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="M" />
+      <Text layoutX="94.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="M" />
+      <Text layoutX="128.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="J" />
+      <Text layoutX="156.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="V" />
+      <Text layoutX="186.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="S" />
+      <Text layoutX="215.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D" />
+      <TextField fx:id="semanas" layoutX="7.0" layoutY="101.0" prefHeight="26.0" prefWidth="257.0" promptText="Ingrese cada cuántas semanas se repite" />
+      <Button fx:id="botonOk" layoutX="116.0" layoutY="135.0" mnemonicParsing="false" styleClass="botones" stylesheets="@lightMode.css" text="OK" />
+      <Text fx:id="mensaje" layoutX="29.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="212.0" />
    </children>
 </AnchorPane>

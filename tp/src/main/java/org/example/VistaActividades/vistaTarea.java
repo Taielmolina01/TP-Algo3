@@ -12,7 +12,7 @@ public class vistaTarea extends vistaActividad {
 
     public vistaTarea(ArrayList<String> infoTarea) {
         super(infoTarea);
-        this.estaCompletada = Boolean.parseBoolean(infoActividad.get(this.infoActividad.size()-1));
+        this.estaCompletada = Boolean.parseBoolean(infoActividad.get(this.infoActividad.size() - 1));
         this.setInfoResumida();
         this.setInfoCompleta();
     }

@@ -1,7 +1,6 @@
 package org.example.Actividades;
 
 import org.example.Visitadores.visitadorActividades;
-import org.example.VistaActividades.vistaActividad;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

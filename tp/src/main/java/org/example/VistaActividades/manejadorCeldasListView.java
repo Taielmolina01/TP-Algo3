@@ -10,7 +10,7 @@ import org.example.interfazCambioEstado;
 public class manejadorCeldasListView extends ListCell<vistaActividad> {
 
     private CheckBox checkBox;
-    private interfazCambioEstado i;
+    private final interfazCambioEstado i;
 
     public manejadorCeldasListView(interfazCambioEstado i) {
         this.i = i;
@@ -41,10 +41,8 @@ public class manejadorCeldasListView extends ListCell<vistaActividad> {
         if (checkBox == null) {
             checkBox = new CheckBox();
             checkBox.selectedProperty().addListener((obs, old, val) -> {
-                if (getItem() != null) {
-                    ((vistaTarea) getItem()).cambiarEstadoTarea();
-                    this.i.huboCambioEstadoTarea(i);
-                }
+                ((vistaTarea) getItem()).cambiarEstadoTarea();
+                this.i.huboCambioEstadoTarea(i);
             });
         }
         return checkBox;

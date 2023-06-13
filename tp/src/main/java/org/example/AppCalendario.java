@@ -18,9 +18,8 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.Actividades.Actividad;
-import org.example.Actividades.Tarea;
 import org.example.Alarma.Alarma;
-import org.example.Frecuencia.FrecuenciaDiaria;
+import org.example.Frecuencia.Frecuencia;
 import org.example.VentanasAuxiliares.eventoVentana;
 import org.example.VentanasAuxiliares.infoCompletaVentana;
 import org.example.VentanasAuxiliares.notificacionVentana;
@@ -38,9 +37,10 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
 public class AppCalendario extends Application implements interfazGuardarActividadNueva, Initializable, interfazCambioEstado {
-    private visitadorActividades visitador;
+    private final String[] valoresCrear = new String[]{"", "Evento", "Tarea"};
     protected ManejadorGuardado manejador;
     protected Calendario calendario;
+    private visitadorActividades visitador;
     @FXML
     private Text lapsoTiempoActual;
     @FXML
@@ -57,7 +57,6 @@ public class AppCalendario extends Application implements interfazGuardarActivid
     private String textoDiario;
     private String textoSemanal;
     private String textoMensual;
-    private final String[] valoresCrear = new String[]{"", "Evento", "Tarea"};
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -124,9 +123,7 @@ public class AppCalendario extends Application implements interfazGuardarActivid
     private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) { // esta funcion de mierda es la que funciona mal
         this.listViewActividades.getSelectionModel().clearSelection();
         this.listViewActividades.getItems().clear();
-        System.out.println("Dentro de crearLista y viendo el estado del calendario: " + this.calendario.obtenerEstadoTarea(0));
         ArrayList<Actividad> actividadesActuales = this.calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin);
-        System.out.println("Estoy dentro del crearLista y el array actividades: " + ((Tarea)actividadesActuales.get(0)).estaCompletada());
         actividadesActuales.sort(Comparator.comparing(Actividad::obtenerFechaInicio).thenComparing(Actividad::obtenerNombre));
         this.vistaActividadesActuales = FXCollections.observableArrayList(this.visitador.visitarActividades(actividadesActuales));
         this.listViewActividades.getItems().addAll(this.vistaActividadesActuales);
@@ -169,7 +166,6 @@ public class AppCalendario extends Application implements interfazGuardarActivid
         this.visitador = new visitadorActividades();
         this.vistaActividadesActuales = FXCollections.observableArrayList();
         this.listViewActividades.setCellFactory(listViewActividades -> new manejadorCeldasListView(this));
-        System.out.println(this.calendario.obtenerEstadoTarea(0));
         this.actualizarListaActividades();
         AnimationTimer timer = new AnimationTimer() {
             AbstractMap.SimpleEntry<Integer, Alarma> parActividadAlarma;
@@ -271,14 +267,14 @@ public class AppCalendario extends Application implements interfazGuardarActivid
 
     @Override
     public void guardarEventoSinRepeticion(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
-                                   ArrayList<Duration> duracionesAlarmas) {
+                                           ArrayList<Duration> duracionesAlarmas) {
         int ID = this.calendario.crearEvento(nombre, descripcion, fechaInicio, duracion, diaCompleto);
         this.guardarNuevaActividad(ID, duracionesAlarmas);
     }
 
     @Override
-    public void guardarEventoRepeticionDiaria(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
-                                   LocalDateTime fechaFinal, FrecuenciaDiaria frecuencia, ArrayList<Duration> duracionesAlarmas) {
+    public void guardarEventoConRepeticion(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
+                                           LocalDateTime fechaFinal, Frecuencia frecuencia, ArrayList<Duration> duracionesAlarmas) {
         int ID = this.calendario.crearEvento(nombre, descripcion, fechaInicio, duracion, diaCompleto, fechaFinal, frecuencia);
         this.guardarNuevaActividad(ID, duracionesAlarmas);
     }
@@ -308,6 +304,5 @@ public class AppCalendario extends Application implements interfazGuardarActivid
     public void huboCambioEstadoTarea(int i) {
         this.calendario.cambiarEstadoTarea(this.vistaActividadesActuales.get(i).obtenerIDActividad());
         this.guardarEstadoActual();
-        System.out.println("Se guarda que la tarea esta completada: " + this.calendario.obtenerEstadoTarea(this.vistaActividadesActuales.get(i).obtenerIDActividad()));
     }
 }

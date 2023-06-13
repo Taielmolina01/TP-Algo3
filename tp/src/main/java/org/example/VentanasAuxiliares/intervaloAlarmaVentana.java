@@ -15,12 +15,11 @@ import java.util.ArrayList;
 
 public class intervaloAlarmaVentana {
 
+    private final ArrayList<Duration> duracionAlarmas = new ArrayList<>();
     @FXML
     private TextField intervalo;
     @FXML
     private Text mensaje;
-
-    private final ArrayList<Duration> duracionAlarmas = new ArrayList<>();
 
     public void start() throws Exception {
         var loader = new FXMLLoader(getClass().getResource("/escenaIntervalo.fxml"));
@@ -28,7 +27,8 @@ public class intervaloAlarmaVentana {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage s = new Stage();
-        s.setTitle("Definir intervalo alarma");
+        s.setTitle("Definir intervalos alarmas");
+        s.setResizable(false);
         s.setScene(scene);
         s.show();
     }

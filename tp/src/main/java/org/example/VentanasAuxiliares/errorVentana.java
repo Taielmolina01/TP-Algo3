@@ -6,6 +6,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class errorVentana {
+    public static void lanzarVentanaError() {
+        try {
+            new errorVentana().start();
+        } catch (Exception e5) {
+            //
+        }
+    }
+
     public void start() throws Exception {
         var loader = new FXMLLoader(getClass().getResource("/escenaError.fxml"));
         loader.setController(this);
@@ -13,15 +21,8 @@ public class errorVentana {
         Scene scene = new Scene(root);
         Stage s = new Stage();
         s.setTitle("Error");
+        s.setResizable(false);
         s.setScene(scene);
         s.show();
-    }
-
-    public static void lanzarVentanaError() {
-        try {
-            new errorVentana().start();
-        } catch (Exception e5) {
-            //
-        }
     }
 }

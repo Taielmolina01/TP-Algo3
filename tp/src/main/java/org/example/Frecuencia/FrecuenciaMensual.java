@@ -17,6 +17,7 @@ public class FrecuenciaMensual extends Frecuencia implements Serializable {
     }
 
     @Override
-    public void obtenerTipoFrecuencia(visitorFrecuencia v) { v.obtenerTipoFrecuencia(this);
+    public void obtenerTipoFrecuencia(visitorFrecuencia v) {
+        v.obtenerTipoFrecuencia(this);
     }
 }

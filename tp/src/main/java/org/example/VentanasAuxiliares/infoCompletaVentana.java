@@ -19,9 +19,9 @@ public class infoCompletaVentana {
         Scene scene = new Scene(root);
         Stage s = new Stage();
         s.setTitle("Información completa");
+        s.setResizable(false);
         s.setScene(scene);
         s.show();
-        s.setResizable(false);
         this.infoCompleta.setText(info);
     }
 }

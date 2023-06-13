@@ -4,7 +4,6 @@ import org.example.Alarma.Alarma;
 import org.example.Frecuencia.Frecuencia;
 import org.example.Visitadores.visitadorActividades;
 import org.example.Visitadores.visitadorEventosFrecuencia;
-import org.example.VistaActividades.vistaActividad;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -110,7 +109,7 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
         if (fechaInicial.isAfter(this.fechaFinalRepeticion)) {
             return eventos;
         }
-        if (frecuencia == null){
+        if (frecuencia == null) {
             if (estaEntreFechas(this.fechaInicio, fechaInicial, fechaFinal)) {
                 eventos.add(this);
                 return eventos;
@@ -123,14 +122,14 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
                 return eventos;
             }
         }
-        var duraciones = this.calcularDuracionesRespectoAAlarmas();
+        HashMap<Integer, Duration> duraciones = this.calcularDuracionesRespectoAAlarmas();
         while (estaEntreFechas(dia, fechaInicial, this.fechaFinalRepeticion) && estaEntreFechas(dia, fechaInicial, fechaFinal)) {
             Evento clonEvento = (Evento) this.clonar();
             clonEvento.modificarFechaInicio(dia);
             clonEvento.alarmas = clonEvento.clonarAlarmas();
             for (var i : clonEvento.alarmas.keySet()) {
-                var alarmaVieja = this.alarmas.get(i);
-                var nuevaAlarma = new Alarma(alarmaVieja.dispararAlarma(), clonEvento.fechaInicio, duraciones.get(i));
+                Alarma alarmaVieja = this.alarmas.get(i);
+                Alarma nuevaAlarma = new Alarma(alarmaVieja.dispararAlarma(), clonEvento.fechaInicio, duraciones.get(i));
                 clonEvento.obtenerAlarmas().replace(i, nuevaAlarma);
             }
             eventos.add(clonEvento);
@@ -149,8 +148,8 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
         return clonEvento;
     }
 
-    private ArrayList<LocalDateTime> fechasRepeticiones(LocalDateTime fechaFinal) {
-        var dia = this.obtenerFechaInicio();
+    private ArrayList<LocalDateTime> obtenerFechasRepeticiones(LocalDateTime fechaFinal) {
+        LocalDateTime dia = this.obtenerFechaInicio();
         ArrayList<LocalDateTime> repeticiones = new ArrayList<>();
         while (estaEntreFechas(dia, this.obtenerFechaInicio(), fechaFinal)) {
             repeticiones.add(dia);
@@ -160,7 +159,7 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
     }
 
     private boolean esFechaRepeticion(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
-        var fechas = this.fechasRepeticiones(fechaFinal);
+        ArrayList<LocalDateTime> fechas = this.obtenerFechasRepeticiones(fechaFinal);
         for (var fecha : fechas) {
             if (fecha.isEqual(fechaInicial)) {
                 return true;
@@ -170,11 +169,11 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
     }
 
     private LocalDateTime pasarASiguienteFechaRepeticion(LocalDateTime dia, LocalDateTime fechaFinal) {
-        var fechas = this.fechasRepeticiones(fechaFinal);
+        ArrayList<LocalDateTime> fechas = this.obtenerFechasRepeticiones(fechaFinal);
         LocalDateTime diaADevolver = dia;
         for (int i = 0; i < fechas.size() - 1; i++) {
-            if (dia.isAfter(fechas.get(i)) && dia.isBefore(fechas.get(i+1))) {
-                diaADevolver = fechas.get(i+1);
+            if (dia.isAfter(fechas.get(i)) && dia.isBefore(fechas.get(i + 1))) {
+                diaADevolver = fechas.get(i + 1);
             }
         }
         if (diaADevolver.isEqual(dia)) {
@@ -201,7 +200,7 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
     }
 
 
-   // Pasar esto a void
+    // Pasar esto a void
     @Override
     public void visitarActividad(visitadorActividades v) {
         v.visitarActividad(this);
