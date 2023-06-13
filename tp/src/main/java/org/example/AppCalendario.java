@@ -209,17 +209,17 @@ public class AppCalendario extends Application implements interfazGuardarActivid
 
     private String establecerTextoSemanal() {
         return this.inicioSemana.getDayOfMonth() + " - " + this.finSemana.getDayOfMonth() + " " +
-                this.meses.get(this.fechaActual.getMonth().toString()) + " " + this.inicioSemana.getYear();
+                this.meses.get(this.fechaActual.getMonth().toString()).toLowerCase() + " " + this.inicioSemana.getYear();
     }
 
     private String establecerTextoSemanalDistintosAnios() {
-        return this.inicioSemana.getDayOfMonth() + " " + this.meses.get(this.inicioSemana.getMonth().toString()) + " " +
+        return this.inicioSemana.getDayOfMonth() + " " + this.meses.get(this.inicioSemana.getMonth().toString()).toLowerCase() + " " +
                 this.inicioSemana.getYear() + " - " + this.finSemana.getDayOfMonth() + " " +
                 this.meses.get(this.finSemana.getMonth().toString()).toLowerCase() + " " + this.finSemana.getYear();
     }
 
     private String establecerTextoSemanalDistintosMeses() {
-        return this.inicioSemana.getDayOfMonth() + " " + this.meses.get(this.inicioSemana.getMonth().toString()) + " - " +
+        return this.inicioSemana.getDayOfMonth() + " " + this.meses.get(this.inicioSemana.getMonth().toString()).toLowerCase() + " - " +
                 + this.finSemana.getDayOfMonth() + " " +
                 this.meses.get(this.finSemana.getMonth().toString()).toLowerCase() + " " + this.finSemana.getYear();
     }
