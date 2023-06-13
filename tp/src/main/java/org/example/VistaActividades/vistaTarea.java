@@ -1,33 +1,29 @@
 package org.example.VistaActividades;
 
+import org.example.Actividades.Tarea;
+
 import java.util.ArrayList;
 
 public class vistaTarea extends vistaActividad {
 
-    /*
-        Info tarea [ID, nombre, descripcion, fechaInicio, todoElDia, alarmas, estaCompletada]
-     */
+    Tarea tarea;
 
-    private boolean estaCompletada;
-
-    public vistaTarea(ArrayList<String> infoTarea) {
-        super(infoTarea);
-        this.estaCompletada = Boolean.parseBoolean(infoActividad.get(this.infoActividad.size() - 1));
+    public vistaTarea(Tarea t) {
+        super(t);
+        this.tarea = t;
         this.setInfoResumida();
         this.setInfoCompleta();
     }
 
-    /*
-    En la celda deberia agregar el checkbox para
-     */
-
     public void setInfoCompleta() {
         String todoElDia = this.setearTextoDiaCompleto();
-        this.infoCompleta = "Nombre: " + this.infoActividad.get(1) + ".\n\n"
-                + "Descripción: " + this.infoActividad.get(2) + ".\n\n"
-                + "Fecha: " + this.infoActividad.get(3) + "hs" + "." + todoElDia + "\n\n"
-                + this.infoActividad.get(5) + "\n\n";
-        if (this.estaCompletada) {
+        this.infoCompleta = "Nombre: " + this.actividad.obtenerNombre() + ".\n\n";
+        if (!this.actividad.obtenerDescripcion().equals("")) {
+            this.infoCompleta += "Descripción: " + this.actividad.obtenerDescripcion() + ".\n\n";
+        }
+        this.infoCompleta += "Fecha: " + this.obtenerStringFechaInicio()  + "." + todoElDia + "\n\n"
+                + this.obtenerStringAlarmas() + "\n\n";
+        if (this.tarea.estaCompletada()) {
             this.infoCompleta += "La tarea está completada.";
         } else {
             this.infoCompleta += "La tarea no está completada.";
@@ -37,15 +33,5 @@ public class vistaTarea extends vistaActividad {
     @Override
     public String obtenerCodigoColorFondo() {
         return colorActividad.TAREA.obtenerCodigoColor();
-    }
-
-    public boolean obtenerEstaCompletada() {
-        return this.estaCompletada;
-    }
-
-    public void cambiarEstadoTarea() {
-        this.estaCompletada = !this.estaCompletada;
-        this.setInfoCompleta();
-        this.setInfoResumida();
     }
 }

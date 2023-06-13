@@ -1,35 +1,39 @@
 package org.example.VistaActividades;
 
-import java.util.ArrayList;
+import org.example.Actividades.Evento;
+import org.example.Visitadores.visitadorEventosFrecuencia;
+import org.example.formateador;
 
 public class vistaEvento extends vistaActividad {
 
-    /*
-        infoEvento : [ID, nombre, descripcion, fechaInicio, todoElDia, alarmas, duracion, fechaFinal, frecuencia]
-    */
+    Evento evento;
 
-    public vistaEvento(ArrayList<String> infoEvento) {
-        super(infoEvento);
-        this.setInfoCompleta();
+    public vistaEvento(Evento e) {
+        super(e);
+        this.evento = e;
         this.setInfoResumida();
+        this.setInfoCompleta();
     }
 
     public void setInfoCompleta() {
         String todoElDia = this.setearTextoDiaCompleto();
-        this.infoCompleta = "Nombre: " + this.infoActividad.get(1) + ".\n\n"
-                + "Descripción: " + this.infoActividad.get(2) + ".\n\n"
-                + "Fecha: " + this.infoActividad.get(3) + "hs" + ".";
-        if (this.todoElDia) {
+        this.infoCompleta = "Nombre: " + this.actividad.obtenerNombre() + ".\n\n";
+        if (!this.actividad.obtenerDescripcion().equals("")) {
+            this.infoCompleta += "Descripción: " + this.actividad.obtenerDescripcion() + ".\n\n";
+        }
+        this.infoCompleta += "Fecha: " + this.obtenerStringFechaInicio() + ".";
+        if (this.actividad.obtenerTodoElDia()) {
             this.infoCompleta += todoElDia + "\n\n";
         } else {
-            this.infoCompleta += " Duración: " + this.infoActividad.get(6) + "hs" + "\n\n";
+            this.infoCompleta += " Duración: " + formateador.formatearDuracion(this.evento.obtenerDuracion()) + "hs" + "\n\n";
         }
-        this.infoCompleta += this.infoActividad.get(5) + "\n\n"
-                + "Fecha final: " + this.infoActividad.get(7) + "hs" + ".\n\n";
-        if (this.infoActividad.get(8) != null) {
-            this.infoCompleta += this.infoActividad.get(8);
+        this.infoCompleta += this.obtenerStringAlarmas() + "\n\n"
+                + "Fecha final: " + this.evento.obtenerFechaFinalDefinitivo().format(formateador.formatterConHoras) + "hs" + ".\n\n";
+        var v = new visitadorEventosFrecuencia();
+        this.evento.visitarFrecuencia(v);
+        if (this.evento.obtenerFrecuencia() != null) {
+            this.infoCompleta += v.obtenerMensajeFrecuencia();
         }
-
     }
 
     @Override

@@ -5,6 +5,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
+import org.example.Actividades.Tarea;
 import org.example.interfazCambioEstado;
 
 public class manejadorCeldasListView extends ListCell<vistaActividad> {
@@ -26,7 +27,7 @@ public class manejadorCeldasListView extends ListCell<vistaActividad> {
                     null, null)));
             if (item.obtenerCodigoColorFondo().equals(vistaActividad.colorActividad.TAREA.obtenerCodigoColor())) {
                 var checkbox = getCheckBox(i);
-                checkbox.setSelected(((vistaTarea) item).obtenerEstaCompletada());
+                checkbox.setSelected(((Tarea) item.obtenerActividad()).estaCompletada());
                 checkbox.setPrefSize(10, 10);
                 setGraphic(checkbox);
             }
@@ -40,8 +41,9 @@ public class manejadorCeldasListView extends ListCell<vistaActividad> {
     private CheckBox getCheckBox(int i) {
         if (checkBox == null) {
             checkBox = new CheckBox();
-            checkBox.selectedProperty().addListener((obs, old, val) -> {
-                ((vistaTarea) getItem()).cambiarEstadoTarea();
+            checkBox.setOnAction(e -> {
+                ((Tarea) getItem().obtenerActividad()).cambiarEstadoCompletado();
+                getItem().actualizarInfo();
                 this.i.huboCambioEstadoTarea(i);
             });
         }

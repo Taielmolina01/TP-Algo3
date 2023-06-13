@@ -194,7 +194,7 @@ public class AppCalendario extends Application implements interfazGuardarActivid
                 this.textoSemanal = this.establecerTextoSemanalDistintosAnios();
             }
         } else {
-            this.textoSemanal = this.establecerTextoMensual();
+            this.textoSemanal = this.establecerTextoSemanal();
         }
     }
 
@@ -207,13 +207,20 @@ public class AppCalendario extends Application implements interfazGuardarActivid
         return this.meses.get(this.fechaActual.getMonth().toString()) + " " + this.fechaActual.getYear();
     }
 
+    private String establecerTextoSemanal() {
+        return this.inicioSemana.getDayOfMonth() + " - " + this.finSemana.getDayOfMonth() + " " +
+                this.meses.get(this.fechaActual.getMonth().toString()) + " " + this.inicioSemana.getYear();
+    }
+
     private String establecerTextoSemanalDistintosAnios() {
-        return this.meses.get(this.inicioSemana.getMonth().toString()) + " " + this.inicioSemana.getYear() + " - " +
+        return this.inicioSemana.getDayOfMonth() + " " + this.meses.get(this.inicioSemana.getMonth().toString()) + " " +
+                this.inicioSemana.getYear() + " - " + this.finSemana.getDayOfMonth() + " " +
                 this.meses.get(this.finSemana.getMonth().toString()).toLowerCase() + " " + this.finSemana.getYear();
     }
 
     private String establecerTextoSemanalDistintosMeses() {
-        return this.meses.get(this.inicioSemana.getMonth().toString()) + " - " +
+        return this.inicioSemana.getDayOfMonth() + " " + this.meses.get(this.inicioSemana.getMonth().toString()) + " - " +
+                + this.finSemana.getDayOfMonth() + " " +
                 this.meses.get(this.finSemana.getMonth().toString()).toLowerCase() + " " + this.finSemana.getYear();
     }
 
@@ -302,7 +309,6 @@ public class AppCalendario extends Application implements interfazGuardarActivid
 
     @Override
     public void huboCambioEstadoTarea(int i) {
-        this.calendario.cambiarEstadoTarea(this.vistaActividadesActuales.get(i).obtenerIDActividad());
         this.guardarEstadoActual();
     }
 }

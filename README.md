@@ -12,7 +12,6 @@ nota1: creo que lo de esta completada el error está en que cuando se carga de n
 
 ## TODO
 
-
 - [X] Agregar lo de la visualizacion semanal (manejarse con enums).
 - [X] Agregar lo de ver eventos/tareas del lapso pertinente.
 - [X] Agregar lo del guardado y recuperado.
@@ -35,7 +34,7 @@ PD: Que retraso como no iba a fallar:))
 - [X] Arreglar lo del exception por no deseleccionar la celda antes de cambiar de rango.
 - [ ] Arreglar lo del combobox del + Crear. (no tener que elegir la opcion nula para que se vuelva a elegir)
 - [X] Asociar el checkbox de cada celda de una tarea a la tarea, para que cuando esté seleccionada el checkbox la tarea esté completada, si no no.
-- [ ] Cuando cargo todo deberían aparecer ya seleccionadas aquellas tareas que ya estén completadas.
+- [X] Cuando cargo todo deberían aparecer ya seleccionadas aquellas tareas que ya estén completadas.
 - [X] Agregar disparado de alarmas. (la verga esa de timetasker no sirve, tengo que usar otra cosa)
 - [X] Hacer un archivo css con todo (agregar hover de los textfield)
 - [X] Agregar las otras frecuencias, haria un combobox que tenga por default marcado sin repeticion y que despues si se elije otra distinta entre las opciones de {repeticionDiaria, repeticionSemanal, repeticionMensual, repeticionAnual}. Todas lanzarian la misma ventana que la que ya esta, menos la de la repeticion semanal que tendria que hacer DayWeekPicker o algo así (por ahora lo mejor que se me ocurre es utilizar 7 checkbox que tengan arriba/abajo las letras L/M/M/J/V/S/D (o en ingles)), y dsp los checkbox reviso si estan seleccionados o no e utilizo los ordinal de DayOfWeek.
@@ -44,3 +43,20 @@ PD: Que retraso como no iba a fallar:))
 - [ ] Separar en dos paquetes grandes: Logica de negocio y GUI.
 - [ ] Emprolijar todo el codigo
 - [ ] Hacer informe en un .md
+
+## Informe
+
+### Diseño
+
+
+
+### Responsabilidades de las clases principales
+
+
+
+
+### Patrones de diseño utilizados
+
+
+
+### Diagrama de clases
