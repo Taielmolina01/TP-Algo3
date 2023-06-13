@@ -48,7 +48,40 @@ PD: Que retraso como no iba a fallar:))
 
 ### Responsabilidades de las clases principales
 
+- Actividad
 
+Almacena el ID, nombre, descripcion, fecha de inicio, si es o no una actividad de todo el día y las alarmas de una actividad. Tiene sus getters y setters correspondientes a estos atributos mencionados.
+
+- Tarea
+
+Extiende Actividad, almacena además el estado de una tarea y tiene su getter y setter correspondiente a este.
+
+- Evento
+
+Extiende Actividad, almacena la fecha de fin del evento (el fin de las repeticiones), la duracion del evento y la frecuencia con la que se repite el evento.
+
+- Alarma
+
+Representa una alarma de una actividad, almacena la fecha en la que suena y el efecto que se desea que produzca. Dada una fecha puede decir cuanto tiempo falta para que suene.
+
+- Frecuencia
+
+Representa cada cuanto tiempo se repite un evento, existiendo 4 subclases que la extienden que indican de que tipo es la frecuencia: diaria, semanal, mensual y anual. Dada dos fechas puede indicar todas las repeticiones que hay de un evento.
+
+- Calendario
+
+    - Almacena una colección de actividades. 
+    - Dada dos fechas puede indicar cual es la siguiente alarma existente en ese lapso de tiempo. 
+    - Puede guardar y recuperar su estado.
+    - Proporciona una fachada para los getters y setters de todas las actividades pertenecientes al mismo.
+    
+- VistaActividad
+
+Dada una actividad se encarga de almacenar el color que mostrará la GUI para representarla, y setea la información resumida y la información completa que mostrará la GUI en el momento adecuado.
+
+- AppCalendario
+
+Es la GUI de la clase Calendario. Muestra en pantalla las actividades que hay en el lapso pertinente (mes, semana, día). Cada vez que se quiere crear una actividad nueva, lanza una ventana correspondiente para crear la actividad correspondiente, que a su vez cada ventana puede lanzar otras ventanas para ingresar algunos datos específicos, o para mostrar que hubo un error ingresando alguno.
 
 
 ### Patrones de diseño utilizados
