@@ -6,10 +6,6 @@ Kriger, Lucas. Padrón: 109344
 
 Molina, Taiel. Padrón: 109458
 
-## Notas
-
-nota1: creo que lo de esta completada el error está en que cuando se carga de nuevo la lista (cuando se carga el programa nuevamente) se fija si el getItem() != null y ahi se llama automaticamente al this.i.huboCambioEstadoTarea() ? Algo de ese estilo es el problema
-
 ## TODO
 
 - [X] Agregar lo de la visualizacion semanal (manejarse con enums).
@@ -57,6 +53,23 @@ PD: Que retraso como no iba a fallar:))
 
 ### Patrones de diseño utilizados
 
+- Prototype
+
+Lo utilizan los eventos al momento de devolver las repeticiones del mismo en el método actividadesEntreFechas, en el cual además se hace un prototype de las alarmas
+correspondientes a la actividad original, y se agregan sus clones, con las fechas de activación ajustadas, al evento clon.
+
+- Facade
+
+La clase Calendario es una fachada la cual muestra una interfaz más sencilla para el usuario al momento de crear Eventos y Tareas.
+
+- Visitor
+
+Hay dos visitor utilizados en el tp. El primero se utiliza para obtener las vistas de las actividades (vistaEvento y vistaTarea). El segundo se utiliza para obtener
+la frecuencia de un evento, si es que la tiene.
+
+- Observer
+
+Se utiliza en la GUI para desde stages distintos al stage principal mandar mensajes al Calendario. Se ve en las ventanas de crear nuevas actividades, que reciben una interfaz de guardado para que una vez se valida que los datos ingresados para crear la actividad son válidos, se envía el mensaje para que se cree y se agregue la nueva actividad, además de luego realizar un nuevo guardado del estado actual del calendario.
 
 
 ### Diagrama de clases

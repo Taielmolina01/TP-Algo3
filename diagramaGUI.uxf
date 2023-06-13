@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>310</x>
+      <y>50</y>
+      <w>220</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>AppCalendario
+-
+- calendario: Calendario
+- fechaActual: LocalDateTime</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
