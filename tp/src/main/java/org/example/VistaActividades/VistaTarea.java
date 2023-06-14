@@ -37,6 +37,15 @@ public class VistaTarea extends VistaActividad {
     }
 
     @Override
+    public boolean checkBoxSeleccionado() {
+        return this.tarea.estaCompletada();
+    }
+
+    public void cambiarSeleccionCheckBox(){
+        this.tarea.cambiarEstadoCompletado();
+    };
+
+    @Override
     public String obtenerCodigoColorFondo() {
         return colorActividad.TAREA.obtenerCodigoColor();
     }

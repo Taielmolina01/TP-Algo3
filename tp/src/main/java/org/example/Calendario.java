@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Calendario implements Serializable {
 
@@ -155,9 +156,9 @@ public class Calendario implements Serializable {
         }
         Integer IDMaximo = null;
         Integer posMaxima = null;
-        for (var entry : alarmasActividades.entrySet()) {
-            var clave = entry.getKey();
-            var valor = entry.getValue();
+        for (Map.Entry<Integer, ArrayList<Alarma>> entry : alarmasActividades.entrySet()) {
+            Integer clave = entry.getKey();
+            ArrayList<Alarma> valor = entry.getValue();
             if (IDMaximo == null && valor.size() > 0) {
                 IDMaximo = clave;
                 posMaxima = 0;
@@ -172,7 +173,7 @@ public class Calendario implements Serializable {
                 }
             }
         }
-        if (IDMaximo == null || posMaxima == null || alarmasActividades.get(IDMaximo).get(posMaxima).obtenerFechaActivacion().isBefore(fechaActual)) {
+        if (IDMaximo == null || alarmasActividades.get(IDMaximo).get(posMaxima).obtenerFechaActivacion().isBefore(fechaActual)) {
             return null;
         }
         return new AbstractMap.SimpleEntry<>(IDMaximo, this.obtenerAlarmasActividad(IDMaximo).get(posMaxima));
@@ -182,8 +183,7 @@ public class Calendario implements Serializable {
         ArrayList<Actividad> actividades = this.obtenerActividadesEntreFechas(fechaInicial, fechaFinal);
         HashMap<Integer, ArrayList<Alarma>> alarmas = new HashMap<>();
         for (Actividad a : actividades) {
-            ArrayList<Alarma> alarmasActuales = new ArrayList<>();
-            alarmasActuales.addAll(a.obtenerAlarmas().values());
+            ArrayList<Alarma> alarmasActuales = new ArrayList<>(a.obtenerAlarmas().values());
             alarmas.put(a.obtenerID(), alarmasActuales);
         }
         return alarmas;
@@ -239,8 +239,6 @@ public class Calendario implements Serializable {
             return calendarioNuevo;
         } catch (IOException e) {
             salida.println("El flujo de entrada está vacío.");
-            // por que lanzaria una excepcion aca? esta excepcion se va a dar solo cuando el inputStream
-            // esté vacío, lo cual es algo valido, no tengo nada que leer? bueno te devuelvo un calendario vacio
             return calendarioNuevo;
         } catch (ClassNotFoundException e) {
             salida.println("La clase Calendario no se encuentra en este paquete.");

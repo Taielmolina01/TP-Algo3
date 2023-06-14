@@ -29,11 +29,11 @@ public class VentanaCrearAlarmas {
         loader.setController(this);
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        Stage s = new Stage();
-        s.setTitle("Definir intervalos alarmas");
-        s.setResizable(false);
-        s.setScene(scene);
-        s.show();
+        Stage stage = new Stage();
+        stage.setTitle("Definir intervalos alarmas");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
         this.anchorPane.requestFocus();
     }
 

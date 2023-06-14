@@ -24,7 +24,7 @@ public class Tarea extends Actividad implements Serializable {
     }
 
     public ArrayList<Actividad> actividadesEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
-        if (estaEntreFechas(this.obtenerFechaInicio(), fechaInicio, fechaFinal)) {
+        if (this.estaEntreFechas(this.obtenerFechaInicio(), fechaInicio, fechaFinal)) {
             return new ArrayList<>(Collections.singletonList(this));
         }
         return new ArrayList<>();

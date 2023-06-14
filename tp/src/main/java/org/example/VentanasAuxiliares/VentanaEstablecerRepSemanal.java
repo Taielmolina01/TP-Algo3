@@ -96,13 +96,13 @@ public class VentanaEstablecerRepSemanal implements Initializable {
 
     private void crearMapeo() {
         this.map = new HashMap<>();
-        this.map.put(lunes, DayOfWeek.MONDAY);
-        this.map.put(martes, DayOfWeek.TUESDAY);
-        this.map.put(miercoles, DayOfWeek.WEDNESDAY);
-        this.map.put(jueves, DayOfWeek.THURSDAY);
-        this.map.put(viernes, DayOfWeek.FRIDAY);
-        this.map.put(sabado, DayOfWeek.SATURDAY);
-        this.map.put(domingo, DayOfWeek.SUNDAY);
+        this.map.put(this.lunes, DayOfWeek.MONDAY);
+        this.map.put(this.martes, DayOfWeek.TUESDAY);
+        this.map.put(this.miercoles, DayOfWeek.WEDNESDAY);
+        this.map.put(this.jueves, DayOfWeek.THURSDAY);
+        this.map.put(this.viernes, DayOfWeek.FRIDAY);
+        this.map.put(this.sabado, DayOfWeek.SATURDAY);
+        this.map.put(this.domingo, DayOfWeek.SUNDAY);
     }
 
     private void crearArrayCheckBoxes() {

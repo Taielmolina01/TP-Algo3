@@ -32,12 +32,12 @@ public class VentanaEstablecerRep implements Initializable {
         loader.setController(this);
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        Stage s = new Stage();
-        s.setTitle(titulo);
+        Stage stage = new Stage();
+        stage.setTitle(titulo);
         this.repeticion.setPromptText(promptText);
-        s.setResizable(false);
-        s.setScene(scene);
-        s.show();
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
         this.anchorPane.requestFocus();
     }
 

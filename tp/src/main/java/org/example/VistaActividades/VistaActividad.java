@@ -30,6 +30,10 @@ public abstract class VistaActividad {
 
     public abstract boolean llevaCheckbox();
 
+    public abstract boolean checkBoxSeleccionado();
+
+    public abstract void cambiarSeleccionCheckBox();
+
     protected String setearTextoDiaCompleto() {
         String todoElDia = "";
         if (this.actividad.obtenerTodoElDia()) {

@@ -16,8 +16,8 @@ public class VisitadorActividades implements VisitorActividades {
 
     public ArrayList<VistaActividad> visitarActividades(List<Actividad> actividades) {
         ArrayList<VistaActividad> vistaActividades = new ArrayList<>();
-        for (Actividad a : actividades) {
-            a.visitarActividad(this);
+        for (Actividad actividad : actividades) {
+            actividad.visitarActividad(this);
             vistaActividades.add(this.vistaActual);
         }
         return vistaActividades;

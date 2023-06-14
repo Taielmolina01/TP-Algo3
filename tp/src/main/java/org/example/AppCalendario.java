@@ -276,7 +276,7 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         try {
             this.calendario.guardarEstado(this.manejador);
         } catch (IOException e) {
-            //
+            throw new RuntimeException(e);
         }
     }
 

@@ -27,7 +27,7 @@ public class CeldaListaActividades extends ListCell<VistaActividad> {
                     null, null)));
             if (item.llevaCheckbox()) {
                 CheckBox checkbox = getCheckBox(i);
-                checkbox.setSelected(((Tarea) item.obtenerActividad()).estaCompletada());
+                checkbox.setSelected(item.checkBoxSeleccionado());
                 checkbox.setPrefSize(10, 10);
                 setGraphic(checkbox);
             }
@@ -42,7 +42,7 @@ public class CeldaListaActividades extends ListCell<VistaActividad> {
         if (checkBox == null) {
             checkBox = new CheckBox();
             checkBox.setOnAction(e -> {
-                ((Tarea) getItem().obtenerActividad()).cambiarEstadoCompletado();
+                getItem().cambiarSeleccionCheckBox();
                 getItem().actualizarInfo();
                 this.i.huboCambioEstadoTarea(i);
             });

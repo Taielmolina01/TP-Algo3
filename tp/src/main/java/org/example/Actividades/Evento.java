@@ -110,7 +110,7 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
             return eventos;
         }
         if (frecuencia == null) {
-            if (estaEntreFechas(this.fechaInicio, fechaInicial, fechaFinal)) {
+            if (this.estaEntreFechas(this.fechaInicio, fechaInicial, fechaFinal)) {
                 eventos.add(this);
                 return eventos;
             }
@@ -123,7 +123,7 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
             }
         }
         HashMap<Integer, Duration> duraciones = this.calcularDuracionesRespectoAAlarmas();
-        while (estaEntreFechas(dia, fechaInicial, this.fechaFinalRepeticion) && estaEntreFechas(dia, fechaInicial, fechaFinal)) {
+        while (estaEntreFechas(dia, fechaInicial, this.fechaFinalRepeticion) && this.estaEntreFechas(dia, fechaInicial, fechaFinal)) {
             Evento clonEvento = (Evento) this.clonar();
             clonEvento.modificarFechaInicio(dia);
             clonEvento.alarmas = clonEvento.clonarAlarmas();
@@ -151,7 +151,7 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
     private ArrayList<LocalDateTime> obtenerFechasRepeticiones(LocalDateTime fechaFinal) {
         LocalDateTime dia = this.obtenerFechaInicio();
         ArrayList<LocalDateTime> repeticiones = new ArrayList<>();
-        while (estaEntreFechas(dia, this.obtenerFechaInicio(), fechaFinal)) {
+        while (this.estaEntreFechas(dia, this.obtenerFechaInicio(), fechaFinal)) {
             repeticiones.add(dia);
             dia = this.frecuencia.obtenerProximaFecha(dia);
         }
@@ -161,7 +161,7 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
     private boolean esFechaRepeticion(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
         ArrayList<LocalDateTime> fechas = this.obtenerFechasRepeticiones(fechaFinal);
         for (var fecha : fechas) {
-            if (fecha.isEqual(fechaInicial)) {
+            if (this.estaEntreFechas(fechaInicial, fecha, fecha.plus(this.duracion))) {
                 return true;
             }
         }
@@ -193,12 +193,11 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
     }
 
     public boolean hayEvento(LocalDateTime diaAAnalizar) {
-        ArrayList<Actividad> eventos = actividadesEntreFechas(this.obtenerFechaInicio(), diaAAnalizar);
+        ArrayList<Actividad> eventos = this.actividadesEntreFechas(this.obtenerFechaInicio(), diaAAnalizar);
         LocalDateTime ultimoDiaInicio = eventos.get(eventos.size() - 1).obtenerFechaInicio();
         LocalDateTime ultimoDiaFin = ultimoDiaInicio.plus(this.duracion);
         return estaEntreFechas(diaAAnalizar, ultimoDiaInicio, ultimoDiaFin);
     }
-
 
     // Pasar esto a void
     @Override

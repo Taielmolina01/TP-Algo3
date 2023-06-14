@@ -25,11 +25,11 @@ public class VentanaMostrarNotificacionAlarma {
         loader.setController(this);
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        Stage s = new Stage();
-        s.setTitle("ALARMA");
-        s.setResizable(false);
-        s.setScene(scene);
-        s.show();
+        Stage stage = new Stage();
+        stage.setTitle("ALARMA");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
         textoNotificacion.setText("Alarma de la actividad " + nombreActividad);
     }
 

@@ -42,6 +42,13 @@ public class VistaEvento extends VistaActividad {
     }
 
     @Override
+    public boolean checkBoxSeleccionado() {
+        return false;
+    }
+
+    public void cambiarSeleccionCheckBox(){};
+
+    @Override
     public String obtenerCodigoColorFondo() {
         return colorActividad.EVENTO.obtenerCodigoColor();
     }

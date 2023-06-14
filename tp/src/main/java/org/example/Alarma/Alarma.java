@@ -20,8 +20,8 @@ public class Alarma implements Serializable, alarmaClonable {
     }
 
     public static int compararAlarmas(Alarma alarma1, Alarma alarma2) {
-        var fechaActivacion1 = alarma1.obtenerFechaActivacion();
-        var fechaActivacion2 = alarma2.obtenerFechaActivacion();
+        LocalDateTime fechaActivacion1 = alarma1.obtenerFechaActivacion();
+        LocalDateTime fechaActivacion2 = alarma2.obtenerFechaActivacion();
         if (fechaActivacion1.isEqual(fechaActivacion2)) {
             return 0;
         } else if (fechaActivacion2.isBefore(fechaActivacion1)) {
