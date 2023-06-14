@@ -26,4 +26,6 @@ public abstract class Frecuencia implements Serializable {
 
     public abstract void obtenerTipoFrecuencia(VisitorFrecuencia visitante);
 
+    public abstract LocalDateTime definirFechaInicio(LocalDateTime fechaInicial);
+
 }

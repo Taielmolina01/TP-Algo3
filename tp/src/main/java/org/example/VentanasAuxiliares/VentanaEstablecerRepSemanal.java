@@ -11,9 +11,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.example.Formateador;
 
 import java.net.URL;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -41,7 +45,12 @@ public class VentanaEstablecerRepSemanal implements Initializable {
     private TextField semanas;
     @FXML
     private Text mensaje;
+    @FXML
+    private CheckBox repsInfinitas;
+    @FXML
+    private TextField textFechaFinal;
     private Integer repeticiones;
+    private LocalDateTime fechaFinal;
     private HashMap<CheckBox, DayOfWeek> map;
     private CheckBox[] checkBoxes;
 
@@ -63,18 +72,38 @@ public class VentanaEstablecerRepSemanal implements Initializable {
         String repeticion = this.semanas.getText();
         try {
             this.repeticiones = Integer.parseInt(repeticion);
-            this.mensaje.setText("✓ Repeticion agregada");
+            if (this.repsInfinitas.isSelected()) {
+                if (this.obtenerDiasSemana().size() != 0) {
+                    this.fechaFinal = LocalDateTime.MAX;
+                    this.mensaje.setText("✓ Repeticion agregada");
+                } else {
+                  this.mensaje.setText("✕ Seleccione algún día");
+                }
+                return;
+            }
+            this.fechaFinal = LocalDateTime.parse(this.textFechaFinal.getText(), Formateador.formatterConHoras);
         } catch (NumberFormatException e1) {
             this.mensaje.setText("✕ No se ha ingresado un número");
+            return;
+        } catch (DateTimeParseException e2) {
+            this.mensaje.setText("✕ No se ha ingresado una fecha final válida");
+            return;
         }
         if (this.obtenerDiasSemana().size() == 0) {
             this.mensaje.setText("✕ Seleccione algún día");
+            return;
         }
+        this.mensaje.setText("✓ Repeticion agregada");
+        this.textFechaFinal.clear();
         this.semanas.clear();
     }
 
     public Integer obtenerRepeticiones() {
         return this.repeticiones;
+    }
+
+    public LocalDateTime obtenerFechaFinal() {
+        return this.fechaFinal;
     }
 
     public TreeSet<DayOfWeek> obtenerDiasSemana() {

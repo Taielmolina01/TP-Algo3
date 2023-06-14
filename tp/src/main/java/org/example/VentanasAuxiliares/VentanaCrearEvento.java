@@ -18,11 +18,13 @@ import org.example.InterfazGuardarActividadNueva;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.TreeSet;
 
 public class VentanaCrearEvento implements Initializable {
 
@@ -38,8 +40,6 @@ public class VentanaCrearEvento implements Initializable {
     @FXML
     private TextField fechaInicioText;
     @FXML
-    private TextField fechaFinalText;
-    @FXML
     private TextField duracionEventoText;
     @FXML
     private ComboBox<String> alarmas;
@@ -49,6 +49,9 @@ public class VentanaCrearEvento implements Initializable {
     private CheckBox diaCompleto;
     @FXML
     private AnchorPane anchorPane;
+    private LocalDateTime fechaFinal;
+    private Integer repeticiones;
+    private Frecuencia frecuencia;
     private VentanaCrearAlarmas ventanaAlarma;
     private VentanaEstablecerRep ventanaEstablecerRep;
     private VentanaEstablecerRepSemanal ventanaEstablecerRepSemanal;
@@ -75,7 +78,6 @@ public class VentanaCrearEvento implements Initializable {
         String nombre = this.nombreEventoText.getText();
         String descripcion = this.descripcionEventoText.getText();
         LocalDateTime fechaInicio;
-        LocalDateTime fechaFinal;
         Duration duracionEvento = Formateador.formatearDuracion(this.duracionEventoText.getText());
         if (this.datosInicialesNoSonValidos(nombre, duracionEvento)) {
             VentanaLanzarError.lanzarVentanaError();
@@ -94,28 +96,69 @@ public class VentanaCrearEvento implements Initializable {
                 }
                 return;
             }
-            fechaFinal = LocalDateTime.parse(this.fechaFinalText.getText(), Formateador.formatterConHoras);
         } catch (DateTimeParseException e4) {
             VentanaLanzarError.lanzarVentanaError();
             return;
         }
         ArrayList<Duration> alarmas = this.obtenerAlarmas();
-        Frecuencia frecuencia = switch (this.repeticion.getValue()) {
-            case "Diaria" -> new FrecuenciaDiaria(this.ventanaEstablecerRep.obtenerRepeticiones());
-            case "Semanal" ->
-                    new FrecuenciaSemanal(this.ventanaEstablecerRepSemanal.obtenerDiasSemana(), this.ventanaEstablecerRepSemanal.obtenerRepeticiones());
-            case "Mensual" -> new FrecuenciaMensual(this.ventanaEstablecerRep.obtenerRepeticiones());
-            default -> new FrecuenciaAnual(this.ventanaEstablecerRep.obtenerRepeticiones());
-        };
+        if (!sonValidosDatosFrecuencia()) {
+            VentanaLanzarError.lanzarVentanaError();
+            return;
+        }
         try {
+            System.out.println("Aca1");
             this.i.guardarEventoConRepeticion(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(),
-                    fechaFinal, frecuencia, alarmas);
+                    this.fechaFinal, this.frecuencia, alarmas);
         } catch (IOException e) {
             //
         }
-
         Stage stage = (Stage) this.anchorPane.getScene().getWindow();
         stage.close();
+    }
+
+    private boolean sonValidosDatosFrecuencia() {
+        switch (this.repeticion.getValue()) {
+            case "Diaria" -> {
+                this.establecerFechaFinalYRepsNoSemanal();
+                if (this.repsYFechaFinalSonInvalidos()) {
+                    return false;
+                }
+                this.frecuencia = new FrecuenciaDiaria(this.repeticiones);
+            }
+            case "Semanal" -> {
+                TreeSet<DayOfWeek> dias = this.ventanaEstablecerRepSemanal.obtenerDiasSemana();
+                this.fechaFinal = this.ventanaEstablecerRepSemanal.obtenerFechaFinal();
+                this.repeticiones = this.ventanaEstablecerRepSemanal.obtenerRepeticiones();
+                if (dias == null || dias.size() == 0 || this.repsYFechaFinalSonInvalidos()) {
+                    return false;
+                }
+                this.frecuencia = new FrecuenciaSemanal(dias, repeticiones);
+            }
+            case "Mensual" -> {
+                this.establecerFechaFinalYRepsNoSemanal();
+                if (this.repsYFechaFinalSonInvalidos()) {
+                    return false;
+                }
+                this.frecuencia = new FrecuenciaMensual(repeticiones);
+            }
+            default -> {
+                this.establecerFechaFinalYRepsNoSemanal();
+                if (this.repsYFechaFinalSonInvalidos()) {
+                    return false;
+                }
+                this.frecuencia = new FrecuenciaAnual(this.repeticiones);
+            }
+        }
+        return true;
+    }
+
+    private void establecerFechaFinalYRepsNoSemanal() {
+        this.fechaFinal = this.ventanaEstablecerRep.obtenerFechaFinal();
+        this.repeticiones = this.ventanaEstablecerRep.obtenerRepeticiones();
+    }
+
+    private boolean repsYFechaFinalSonInvalidos() {
+        return this.repeticiones == null || this.fechaFinal == null;
     }
 
     @Override
@@ -123,12 +166,11 @@ public class VentanaCrearEvento implements Initializable {
         this.alarmas.getItems().addAll(this.valoresPosibles);
         this.repeticion.getItems().addAll(this.valoresPosiblesRepeticion);
         this.botonCrear.setOnAction(this::ingresarDatosEvento);
-        this.repeticion.setOnAction(this::establecerRepeticionDiaria);
+        this.repeticion.setOnAction(this::establecerRepeticion);
         this.alarmas.setOnAction(this::crearAlarmas);
     }
 
-    @FXML
-    public void establecerRepeticionDiaria(ActionEvent event) {
+    public void establecerRepeticion(ActionEvent event) {
         switch (this.repeticion.getValue()) {
             case "Sin repetición" -> {
                 //
@@ -180,7 +222,6 @@ public class VentanaCrearEvento implements Initializable {
                 || this.repeticion.getValue().equals(this.valoresPosiblesRepeticion[0]);
     }
 
-    @FXML
     public void crearAlarmas(ActionEvent event) {
         if (this.alarmas.getValue().equals(this.valoresPosibles[0])) {
             try {

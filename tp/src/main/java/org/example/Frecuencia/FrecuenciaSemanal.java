@@ -30,7 +30,12 @@ public class FrecuenciaSemanal extends Frecuencia implements Serializable {
         }
 
         int saltarSemanas = fechaDia == this.diasSemana.last() ? 1 : 0;
-        return fechaInicial.with(TemporalAdjusters.nextOrSame(proximoDia)).plusWeeks((this.obtenerValorRepeticion() - 1) * saltarSemanas);
+        LocalDateTime sigFecha = fechaInicial.with(TemporalAdjusters.nextOrSame(proximoDia));
+        if (sigFecha.equals(fechaInicial)) {
+            return fechaInicial.with(TemporalAdjusters.nextOrSame(proximoDia)).plusWeeks((this.obtenerValorRepeticion()) * saltarSemanas);
+        } else {
+            return fechaInicial.with(TemporalAdjusters.nextOrSame(proximoDia)).plusWeeks((this.obtenerValorRepeticion() - 1) * saltarSemanas);
+        }
     }
 
     public SortedSet<DayOfWeek> obtenerDiasSemana() {
@@ -44,5 +49,15 @@ public class FrecuenciaSemanal extends Frecuencia implements Serializable {
     @Override
     public void obtenerTipoFrecuencia(VisitorFrecuencia v) {
         v.obtenerTipoFrecuencia(this);
+    }
+
+    @Override
+    public LocalDateTime definirFechaInicio(LocalDateTime fechaInicial) {
+        for (DayOfWeek d : this.diasSemana) {
+            if (d.equals(fechaInicial.getDayOfWeek())) {
+                return fechaInicial;
+            }
+        }
+        return this.obtenerProximaFecha(fechaInicial);
     }
 }

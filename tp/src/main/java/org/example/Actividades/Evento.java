@@ -36,6 +36,7 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
         this.definirDuracion(duracion);
         this.fechaFinalRepeticion = fechaFinalRepeticion;
         this.frecuencia = frecuencia;
+        this.fechaInicio = this.frecuencia.definirFechaInicio(this.fechaInicio);
     }
 
     // Constructor si se repite el evento dada las veces que se va a repetir el evento.
@@ -45,6 +46,7 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
         this.definirDuracion(duracion);
         this.frecuencia = frecuencia;
         this.ocurrencias = ocurrencias;
+        this.fechaInicio = this.frecuencia.definirFechaInicio(this.fechaInicio);
         this.calcularFechaFinDefinitivo();
     }
 

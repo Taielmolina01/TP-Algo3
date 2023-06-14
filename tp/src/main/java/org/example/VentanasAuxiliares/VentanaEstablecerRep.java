@@ -7,12 +7,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.example.Formateador;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 
 public class VentanaEstablecerRep implements Initializable {
@@ -25,6 +29,12 @@ public class VentanaEstablecerRep implements Initializable {
     private Text mensaje;
     @FXML
     private AnchorPane anchorPane;
+    @FXML
+    private TextField textFechaFinal;
+    @FXML
+    private CheckBox repsInfinitas;
+
+    private LocalDateTime fechaFinal;
     private Integer repeticiones;
 
     public void start(String titulo, String promptText) throws Exception {
@@ -43,23 +53,35 @@ public class VentanaEstablecerRep implements Initializable {
 
     @FXML
     public void clickOk(ActionEvent event) {
-        String repeticion = this.repeticion.getText();
         try {
-            this.repeticiones = Integer.parseInt(repeticion);
-            this.mensaje.setText("✓ Repeticion agregada");
-            this.repeticion.clear();
-        } catch (NumberFormatException e1) {
+            this.repeticiones = Integer.parseInt(this.repeticion.getText());
+            if (this.repsInfinitas.isSelected()) {
+                this.fechaFinal = LocalDateTime.MAX;
+                this.mensaje.setText("✓ Repeticion agregada");
+                return;
+            }
+            this.fechaFinal = LocalDateTime.parse(this.textFechaFinal.getText(), Formateador.formatterConHoras);
+        } catch (NumberFormatException e) {
             this.mensaje.setText("✕ No se ha ingresado un número");
+            return;
+        } catch (DateTimeParseException e2) {
+            this.mensaje.setText("✕ No se ha ingresado una fecha final válida");
+            return;
         }
+        this.mensaje.setText("✓ Repeticion agregada");
     }
 
     public Integer obtenerRepeticiones() {
         return this.repeticiones;
     }
 
+    public LocalDateTime obtenerFechaFinal() {
+        return this.fechaFinal;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.botonOk.setOnAction(this::clickOk);
     }
+
 }

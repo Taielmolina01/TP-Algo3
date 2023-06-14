@@ -28,7 +28,7 @@ PD: Que retraso como no iba a fallar:))
 - [X] Cambiar lo del Visitor, ver clase diego 29/5 (en Slack tambien) (completado tiene que estar como box para seleccionar/deseleccionar).
 - [X] Cambiar retorno de los visitadores a tipo void.
 - [X] Arreglar lo del exception por no deseleccionar la celda antes de cambiar de rango.
-- [ ] Arreglar lo del combobox del + Crear. (no tener que elegir la opcion nula para que se vuelva a elegir)
+- [X] Arreglar lo del combobox del + Crear. (no tener que elegir la opcion nula para que se vuelva a elegir) (NO hay solucion creo)
 - [X] Asociar el checkbox de cada celda de una tarea a la tarea, para que cuando esté seleccionada el checkbox la tarea esté completada, si no no.
 - [X] Cuando cargo todo deberían aparecer ya seleccionadas aquellas tareas que ya estén completadas.
 - [X] Agregar disparado de alarmas. (la verga esa de timetasker no sirve, tengo que usar otra cosa)

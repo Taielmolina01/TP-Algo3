@@ -4,6 +4,8 @@ import org.example.Actividades.Evento;
 import org.example.Formateador;
 import org.example.Visitadores.VisitadorEventosFrecuencia;
 
+import java.time.LocalDateTime;
+
 public class VistaEvento extends VistaActividad {
 
     Evento evento;
@@ -27,8 +29,12 @@ public class VistaEvento extends VistaActividad {
         } else {
             this.infoCompleta += " Duración: " + Formateador.formatearDuracion(this.evento.obtenerDuracion()) + "hs" + "\n\n";
         }
-        this.infoCompleta += this.obtenerStringAlarmas() + "\n\n"
-                + "Fecha final: " + this.evento.obtenerFechaFinalDefinitivo().format(Formateador.formatterConHoras) + "hs" + ".\n\n";
+        this.infoCompleta += this.obtenerStringAlarmas() + "\n\n";
+        if (this.evento.obtenerFechaFinalDefinitivo().equals(LocalDateTime.MAX)) {
+            this.infoCompleta += "Se repite infinitamente el evento.\n\n";
+        } else {
+            this.infoCompleta += "Fecha final: " + this.evento.obtenerFechaFinalDefinitivo().format(Formateador.formatterConHoras) + "hs" + ".\n\n";
+        }
         var v = new VisitadorEventosFrecuencia();
         this.evento.visitarFrecuencia(v);
         if (this.evento.obtenerFrecuencia() != null) {

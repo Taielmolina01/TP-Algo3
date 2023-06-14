@@ -20,4 +20,9 @@ public class FrecuenciaAnual extends Frecuencia implements Serializable {
     public void obtenerTipoFrecuencia(VisitorFrecuencia v) {
         v.obtenerTipoFrecuencia(this);
     }
+
+    @Override
+    public LocalDateTime definirFechaInicio(LocalDateTime fechaInicial) {
+        return fechaInicial;
+    }
 }
