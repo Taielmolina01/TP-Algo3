@@ -1,5 +1,5 @@
 package org.example;
 
-public interface interfazCambioEstado {
+public interface InterfazCambioEstado {
     void huboCambioEstadoTarea(int indice);
 }

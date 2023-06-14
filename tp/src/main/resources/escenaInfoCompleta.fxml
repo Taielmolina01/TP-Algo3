@@ -3,8 +3,8 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="285.0" prefWidth="378.0" styleClass="fondos" stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="233.0" prefWidth="378.0" styleClass="fondos" stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextArea fx:id="infoCompleta" editable="false" layoutX="-1.0" prefHeight="284.0" prefWidth="380.0" styleClass="fondos" stylesheets="@lightMode.css" />
+      <TextArea fx:id="infoCompleta" editable="false" layoutX="-1.0" prefHeight="232.0" prefWidth="380.0" styleClass="fondos" stylesheets="@lightMode.css" />
    </children>
 </AnchorPane>

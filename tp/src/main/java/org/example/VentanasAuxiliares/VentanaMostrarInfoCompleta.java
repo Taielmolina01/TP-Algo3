@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
-public class infoCompletaVentana {
+public class VentanaMostrarInfoCompleta {
 
     @FXML
     private TextArea infoCompleta;

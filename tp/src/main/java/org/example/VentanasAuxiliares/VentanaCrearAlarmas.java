@@ -5,21 +5,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.example.formateador;
+import org.example.Formateador;
 
 import java.time.Duration;
 import java.util.ArrayList;
 
 
-public class intervaloAlarmaVentana {
+public class VentanaCrearAlarmas {
 
     private final ArrayList<Duration> duracionAlarmas = new ArrayList<>();
     @FXML
     private TextField intervalo;
     @FXML
     private Text mensaje;
+    @FXML
+    private AnchorPane anchorPane;
 
     public void start() throws Exception {
         var loader = new FXMLLoader(getClass().getResource("/escenaIntervalo.fxml"));
@@ -31,19 +34,20 @@ public class intervaloAlarmaVentana {
         s.setResizable(false);
         s.setScene(scene);
         s.show();
+        this.anchorPane.requestFocus();
     }
 
     @FXML
     public void clickOk() {
         String intervalo = this.intervalo.getText();
-        Duration intervaloFormateado = formateador.formatearDuracion(intervalo);
+        Duration intervaloFormateado = Formateador.formatearDuracion(intervalo);
         if (intervaloFormateado != null) {
             this.mensaje.setText("✓ Alarma agregada");
             this.duracionAlarmas.add(intervaloFormateado);
         } else {
             this.mensaje.setText("✕ No se ha ingresado un intervalo válido");
         }
-        this.intervalo.setText("");
+        this.intervalo.clear();
     }
 
     public ArrayList<Duration> obtenerDuraciones() {

@@ -12,9 +12,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.example.Formateador;
 import org.example.Frecuencia.*;
-import org.example.formateador;
-import org.example.interfazGuardarActividadNueva;
+import org.example.InterfazGuardarActividadNueva;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,11 +24,11 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class eventoVentana implements Initializable {
+public class VentanaCrearEvento implements Initializable {
 
     private final String[] valoresPosiblesRepeticion = new String[]{"Sin repetición", "Diaria", "Semanal", "Mensual", "Anual"};
     private final String[] valoresPosibles = new String[]{"Sí", "No"};
-    private final interfazGuardarActividadNueva i;
+    private final InterfazGuardarActividadNueva i;
     @FXML
     private Button botonCrear;
     @FXML
@@ -48,12 +48,12 @@ public class eventoVentana implements Initializable {
     @FXML
     private CheckBox diaCompleto;
     @FXML
-    private AnchorPane scenePane;
-    private intervaloAlarmaVentana ventanaAlarma;
-    private org.example.VentanasAuxiliares.repeticionVentana repeticionVentana;
-    private org.example.VentanasAuxiliares.repeticionSemanalVentana repeticionSemanalVentana;
+    private AnchorPane anchorPane;
+    private VentanaCrearAlarmas ventanaAlarma;
+    private VentanaEstablecerRep ventanaEstablecerRep;
+    private VentanaEstablecerRepSemanal ventanaEstablecerRepSemanal;
 
-    public eventoVentana(interfazGuardarActividadNueva i) {
+    public VentanaCrearEvento(InterfazGuardarActividadNueva i) {
         this.i = i;
     }
 
@@ -67,6 +67,7 @@ public class eventoVentana implements Initializable {
         s.setResizable(false);
         s.setScene(scene);
         s.show();
+        this.anchorPane.requestFocus();
     }
 
     @FXML
@@ -75,16 +76,16 @@ public class eventoVentana implements Initializable {
         String descripcion = this.descripcionEventoText.getText();
         LocalDateTime fechaInicio;
         LocalDateTime fechaFinal;
-        Duration duracionEvento = formateador.formatearDuracion(this.duracionEventoText.getText());
+        Duration duracionEvento = Formateador.formatearDuracion(this.duracionEventoText.getText());
         if (this.datosInicialesNoSonValidos(nombre, duracionEvento)) {
-            errorVentana.lanzarVentanaError();
+            VentanaLanzarError.lanzarVentanaError();
             return;
         }
         try {
-            fechaInicio = LocalDateTime.parse(this.fechaInicioText.getText(), formateador.formatterConHoras);
+            fechaInicio = LocalDateTime.parse(this.fechaInicioText.getText(), Formateador.formatterConHoras);
             if (this.noHayRepeticion()) {
                 ArrayList<Duration> alarmas = this.obtenerAlarmas();
-                Stage stage = (Stage) scenePane.getScene().getWindow();
+                Stage stage = (Stage) this.anchorPane.getScene().getWindow();
                 stage.close();
                 try {
                     this.i.guardarEventoSinRepeticion(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(), alarmas);
@@ -93,18 +94,18 @@ public class eventoVentana implements Initializable {
                 }
                 return;
             }
-            fechaFinal = LocalDateTime.parse(this.fechaFinalText.getText(), formateador.formatterConHoras);
+            fechaFinal = LocalDateTime.parse(this.fechaFinalText.getText(), Formateador.formatterConHoras);
         } catch (DateTimeParseException e4) {
-            errorVentana.lanzarVentanaError();
+            VentanaLanzarError.lanzarVentanaError();
             return;
         }
         ArrayList<Duration> alarmas = this.obtenerAlarmas();
         Frecuencia frecuencia = switch (this.repeticion.getValue()) {
-            case "Diaria" -> new FrecuenciaDiaria(this.repeticionVentana.obtenerRepeticiones());
+            case "Diaria" -> new FrecuenciaDiaria(this.ventanaEstablecerRep.obtenerRepeticiones());
             case "Semanal" ->
-                    new FrecuenciaSemanal(this.repeticionSemanalVentana.obtenerDiasSemana(), this.repeticionSemanalVentana.obtenerRepeticiones());
-            case "Mensual" -> new FrecuenciaMensual(this.repeticionVentana.obtenerRepeticiones());
-            default -> new FrecuenciaAnual(this.repeticionVentana.obtenerRepeticiones());
+                    new FrecuenciaSemanal(this.ventanaEstablecerRepSemanal.obtenerDiasSemana(), this.ventanaEstablecerRepSemanal.obtenerRepeticiones());
+            case "Mensual" -> new FrecuenciaMensual(this.ventanaEstablecerRep.obtenerRepeticiones());
+            default -> new FrecuenciaAnual(this.ventanaEstablecerRep.obtenerRepeticiones());
         };
         try {
             this.i.guardarEventoConRepeticion(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(),
@@ -113,7 +114,7 @@ public class eventoVentana implements Initializable {
             //
         }
 
-        Stage stage = (Stage) scenePane.getScene().getWindow();
+        Stage stage = (Stage) this.anchorPane.getScene().getWindow();
         stage.close();
     }
 
@@ -134,37 +135,37 @@ public class eventoVentana implements Initializable {
             }
             case "Diaria" -> {
                 try {
-                    this.repeticionVentana = new repeticionVentana();
-                    this.repeticionVentana.start("Definir frecuencia diaria",
+                    this.ventanaEstablecerRep = new VentanaEstablecerRep();
+                    this.ventanaEstablecerRep.start("Definir frecuencia diaria",
                             "Ingrese cada cuántos días se repite");
                 } catch (Exception e) {
-                    errorVentana.lanzarVentanaError();
+                    VentanaLanzarError.lanzarVentanaError();
                 }
             }
             case "Semanal" -> {
                 try {
-                    this.repeticionSemanalVentana = new repeticionSemanalVentana();
-                    this.repeticionSemanalVentana.start();
+                    this.ventanaEstablecerRepSemanal = new VentanaEstablecerRepSemanal();
+                    this.ventanaEstablecerRepSemanal.start();
                 } catch (Exception e) {
-                    errorVentana.lanzarVentanaError();
+                    VentanaLanzarError.lanzarVentanaError();
                 }
             }
             case "Mensual" -> {
                 try {
-                    this.repeticionVentana = new repeticionVentana();
-                    this.repeticionVentana.start("Definir frecuencia mensual",
+                    this.ventanaEstablecerRep = new VentanaEstablecerRep();
+                    this.ventanaEstablecerRep.start("Definir frecuencia mensual",
                             "Ingrese cada cuántos meses se repite");
                 } catch (Exception e) {
-                    errorVentana.lanzarVentanaError();
+                    VentanaLanzarError.lanzarVentanaError();
                 }
             }
             default -> {
                 try {
-                    this.repeticionVentana = new repeticionVentana();
-                    this.repeticionVentana.start("Definir frecuencia anual",
+                    this.ventanaEstablecerRep = new VentanaEstablecerRep();
+                    this.ventanaEstablecerRep.start("Definir frecuencia anual",
                             "Ingrese cada cuántos años se repite");
                 } catch (Exception e) {
-                    errorVentana.lanzarVentanaError();
+                    VentanaLanzarError.lanzarVentanaError();
                 }
             }
         }
@@ -175,7 +176,7 @@ public class eventoVentana implements Initializable {
     }
 
     private boolean noHayRepeticion() {
-        return (this.repeticionVentana == null && this.repeticionSemanalVentana == null)
+        return (this.ventanaEstablecerRep == null && this.ventanaEstablecerRepSemanal == null)
                 || this.repeticion.getValue().equals(this.valoresPosiblesRepeticion[0]);
     }
 
@@ -183,10 +184,10 @@ public class eventoVentana implements Initializable {
     public void crearAlarmas(ActionEvent event) {
         if (this.alarmas.getValue().equals(this.valoresPosibles[0])) {
             try {
-                this.ventanaAlarma = new intervaloAlarmaVentana();
+                this.ventanaAlarma = new VentanaCrearAlarmas();
                 this.ventanaAlarma.start();
             } catch (Exception e) {
-                errorVentana.lanzarVentanaError();
+                VentanaLanzarError.lanzarVentanaError();
             }
         }
     }

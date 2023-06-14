@@ -1,14 +1,15 @@
 package org.example.VistaActividades;
 
+import javafx.scene.control.CheckBox;
 import org.example.Actividades.Tarea;
 
-import java.util.ArrayList;
 
-public class vistaTarea extends vistaActividad {
+public class VistaTarea extends VistaActividad {
 
     Tarea tarea;
+    CheckBox checkbox;
 
-    public vistaTarea(Tarea t) {
+    public VistaTarea(Tarea t) {
         super(t);
         this.tarea = t;
         this.setInfoResumida();
@@ -21,7 +22,7 @@ public class vistaTarea extends vistaActividad {
         if (!this.actividad.obtenerDescripcion().equals("")) {
             this.infoCompleta += "Descripción: " + this.actividad.obtenerDescripcion() + ".\n\n";
         }
-        this.infoCompleta += "Fecha: " + this.obtenerStringFechaInicio()  + "." + todoElDia + "\n\n"
+        this.infoCompleta += "Fecha: " + this.obtenerStringFechaInicio() + "." + todoElDia + "\n\n"
                 + this.obtenerStringAlarmas() + "\n\n";
         if (this.tarea.estaCompletada()) {
             this.infoCompleta += "La tarea está completada.";
@@ -31,7 +32,13 @@ public class vistaTarea extends vistaActividad {
     }
 
     @Override
+    public boolean llevaCheckbox() {
+        return true;
+    }
+
+    @Override
     public String obtenerCodigoColorFondo() {
         return colorActividad.TAREA.obtenerCodigoColor();
     }
+
 }

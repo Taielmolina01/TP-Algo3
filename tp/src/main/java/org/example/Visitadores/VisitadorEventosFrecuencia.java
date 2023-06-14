@@ -5,7 +5,7 @@ import org.example.Frecuencia.*;
 import java.time.DayOfWeek;
 import java.util.HashMap;
 
-public class visitadorEventosFrecuencia implements visitorFrecuencia {
+public class VisitadorEventosFrecuencia implements VisitorFrecuencia {
 
     private String frecuenciaMensaje;
     private HashMap<String, String> dias;

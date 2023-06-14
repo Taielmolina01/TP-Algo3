@@ -7,14 +7,14 @@ import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class notificacionVentana {
+public class VentanaMostrarNotificacionAlarma {
 
     @FXML
     private Text textoNotificacion;
 
     public static void lanzarVentanaNotificacion(String nombreActividad) {
         try {
-            new notificacionVentana().start(nombreActividad);
+            new VentanaMostrarNotificacionAlarma().start(nombreActividad);
         } catch (Exception e5) {
             //
         }

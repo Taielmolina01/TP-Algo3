@@ -22,7 +22,7 @@
       <Text layoutX="156.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="V" />
       <Text layoutX="186.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="S" />
       <Text layoutX="215.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D" />
-      <TextField fx:id="semanas" layoutX="7.0" layoutY="101.0" prefHeight="26.0" prefWidth="257.0" promptText="Ingrese cada cuántas semanas se repite" />
+      <TextField fx:id="semanas" layoutX="7.0" layoutY="101.0" prefHeight="26.0" prefWidth="257.0" promptText="Ingrese cada cuántas semanas se repite" alignment="CENTER"/>
       <Button fx:id="botonOk" layoutX="116.0" layoutY="135.0" mnemonicParsing="false" styleClass="botones" stylesheets="@lightMode.css" text="OK" />
       <Text fx:id="mensaje" layoutX="29.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="212.0" />
    </children>

@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="327.0" prefWidth="330.0" styleClass="fondos" stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="327.0" prefWidth="330.0" styleClass="fondos" stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <TextField fx:id="nombreEventoText" layoutX="30.0" layoutY="20.0" prefHeight="25.0" prefWidth="240.0" promptText="Nombre" stylesheets="@lightMode.css" />
         <TextField fx:id="descripcionEventoText" layoutX="30.0" layoutY="60.0" prefHeight="25.0" prefWidth="240.0" promptText="Descripción" stylesheets="@lightMode.css" />

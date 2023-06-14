@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public interface interfazGuardarActividadNueva {
+public interface InterfazGuardarActividadNueva {
 
     void guardarEventoSinRepeticion(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
                                     ArrayList<Duration> duracionesAlarmas) throws IOException;

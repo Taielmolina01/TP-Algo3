@@ -1,14 +1,14 @@
 package org.example.VistaActividades;
 
 import org.example.Actividades.Evento;
-import org.example.Visitadores.visitadorEventosFrecuencia;
-import org.example.formateador;
+import org.example.Formateador;
+import org.example.Visitadores.VisitadorEventosFrecuencia;
 
-public class vistaEvento extends vistaActividad {
+public class VistaEvento extends VistaActividad {
 
     Evento evento;
 
-    public vistaEvento(Evento e) {
+    public VistaEvento(Evento e) {
         super(e);
         this.evento = e;
         this.setInfoResumida();
@@ -25,15 +25,20 @@ public class vistaEvento extends vistaActividad {
         if (this.actividad.obtenerTodoElDia()) {
             this.infoCompleta += todoElDia + "\n\n";
         } else {
-            this.infoCompleta += " Duración: " + formateador.formatearDuracion(this.evento.obtenerDuracion()) + "hs" + "\n\n";
+            this.infoCompleta += " Duración: " + Formateador.formatearDuracion(this.evento.obtenerDuracion()) + "hs" + "\n\n";
         }
         this.infoCompleta += this.obtenerStringAlarmas() + "\n\n"
-                + "Fecha final: " + this.evento.obtenerFechaFinalDefinitivo().format(formateador.formatterConHoras) + "hs" + ".\n\n";
-        var v = new visitadorEventosFrecuencia();
+                + "Fecha final: " + this.evento.obtenerFechaFinalDefinitivo().format(Formateador.formatterConHoras) + "hs" + ".\n\n";
+        var v = new VisitadorEventosFrecuencia();
         this.evento.visitarFrecuencia(v);
         if (this.evento.obtenerFrecuencia() != null) {
             this.infoCompleta += v.obtenerMensajeFrecuencia();
         }
+    }
+
+    @Override
+    public boolean llevaCheckbox() {
+        return false;
     }
 
     @Override

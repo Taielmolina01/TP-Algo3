@@ -5,7 +5,7 @@ import org.example.Frecuencia.FrecuenciaDiaria;
 import org.example.Frecuencia.FrecuenciaMensual;
 import org.example.Frecuencia.FrecuenciaSemanal;
 
-public interface visitorFrecuencia {
+public interface VisitorFrecuencia {
 
     void obtenerTipoFrecuencia(FrecuenciaDiaria frecuencia);
 

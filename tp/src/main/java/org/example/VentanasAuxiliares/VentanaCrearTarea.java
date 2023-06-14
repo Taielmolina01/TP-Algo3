@@ -12,8 +12,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.example.formateador;
-import org.example.interfazGuardarActividadNueva;
+import org.example.Formateador;
+import org.example.InterfazGuardarActividadNueva;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,10 +23,10 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class tareaVentana implements Initializable {
+public class VentanaCrearTarea implements Initializable {
 
     private final String[] valoresPosibles = new String[]{"Sí", "No"};
-    private final interfazGuardarActividadNueva i;
+    private final InterfazGuardarActividadNueva i;
     @FXML
     private Button botonCrear;
     @FXML
@@ -40,11 +40,12 @@ public class tareaVentana implements Initializable {
     @FXML
     private CheckBox diaCompleto;
     @FXML
-    private AnchorPane scenePane;
-    private intervaloAlarmaVentana ventanaAlarma;
+    private AnchorPane anchorPane;
+    private VentanaCrearAlarmas ventanaAlarma;
     private ArrayList<Duration> duraciones;
+    private VentanaLanzarError ventanaError;
 
-    public tareaVentana(interfazGuardarActividadNueva i) {
+    public VentanaCrearTarea(InterfazGuardarActividadNueva i) {
         this.i = i;
     }
 
@@ -53,11 +54,12 @@ public class tareaVentana implements Initializable {
         loader.setController(this);
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        Stage s = new Stage();
-        s.setTitle("Creando tarea");
-        s.setResizable(false);
-        s.setScene(scene);
-        s.show();
+        Stage stage = new Stage();
+        stage.setTitle("Creando tarea");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+        this.anchorPane.requestFocus();
     }
 
     @FXML
@@ -66,13 +68,13 @@ public class tareaVentana implements Initializable {
         String descripcion = this.descripcionTarea.getText();
         LocalDateTime fechaInicio;
         if (nombre.equals("")) {
-            errorVentana.lanzarVentanaError();
+            VentanaLanzarError.lanzarVentanaError();
             return;
         }
         try {
-            fechaInicio = LocalDateTime.parse(this.fechaInicio.getText(), formateador.formatterConHoras);
+            fechaInicio = LocalDateTime.parse(this.fechaInicio.getText(), Formateador.formatterConHoras);
         } catch (DateTimeParseException e4) {
-            errorVentana.lanzarVentanaError();
+            VentanaLanzarError.lanzarVentanaError();
             return;
         }
         try {
@@ -80,7 +82,7 @@ public class tareaVentana implements Initializable {
         } catch (IOException e) {
             //
         }
-        Stage stage = (Stage) scenePane.getScene().getWindow();
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
         stage.close();
     }
 
@@ -95,10 +97,10 @@ public class tareaVentana implements Initializable {
     public void crearAlarmas(ActionEvent event) {
         if (this.alarmas.getValue().equals(valoresPosibles[0])) {
             try {
-                this.ventanaAlarma = new intervaloAlarmaVentana();
+                this.ventanaAlarma = new VentanaCrearAlarmas();
                 this.ventanaAlarma.start();
             } catch (Exception e) {
-                errorVentana.lanzarVentanaError();
+                VentanaLanzarError.lanzarVentanaError();
             }
         }
     }

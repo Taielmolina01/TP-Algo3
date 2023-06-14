@@ -3,7 +3,7 @@ package org.example.Visitadores;
 import org.example.Actividades.Evento;
 import org.example.Actividades.Tarea;
 
-public interface visitorActividades {
+public interface VisitorActividades {
 
     void visitarActividad(Evento e);
 

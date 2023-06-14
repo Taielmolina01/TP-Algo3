@@ -38,7 +38,7 @@
                         <Insets left="10.0" top="20.0" />
                     </HBox.margin>
                 </Button>
-                <ChoiceBox fx:id="rangoTiempo" prefHeight="28.0" prefWidth="115.0" styleClass="cajas" stylesheets="@lightMode.css" value="Mes">
+                <ChoiceBox fx:id="rangoDeTiempo" prefHeight="28.0" prefWidth="115.0" styleClass="cajas" stylesheets="@lightMode.css" value="Mes">
                     <HBox.margin>
                         <Insets left="30.0" top="20.0" />
                     </HBox.margin>

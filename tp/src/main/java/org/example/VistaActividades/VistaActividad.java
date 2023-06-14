@@ -2,17 +2,17 @@ package org.example.VistaActividades;
 
 import org.example.Actividades.Actividad;
 import org.example.Alarma.Alarma;
-import org.example.formateador;
+import org.example.Formateador;
 
 import java.util.HashMap;
 
-public abstract class vistaActividad {
+public abstract class VistaActividad {
 
     Actividad actividad;
     String infoResumida;
     String infoCompleta;
 
-    public vistaActividad(Actividad a) {
+    public VistaActividad(Actividad a) {
         this.actividad = a;
     }
 
@@ -27,6 +27,8 @@ public abstract class vistaActividad {
     }
 
     public abstract void setInfoCompleta();
+
+    public abstract boolean llevaCheckbox();
 
     protected String setearTextoDiaCompleto() {
         String todoElDia = "";
@@ -46,6 +48,33 @@ public abstract class vistaActividad {
         return this.infoCompleta;
     }
 
+    public String obtenerStringAlarmas() {
+        HashMap<Integer, Alarma> alarmas = this.actividad.obtenerAlarmas();
+        String stringAlarmas = "";
+        if (alarmas.size() == 0) {
+            stringAlarmas += "Esta actividad no tiene alarmas configuradas.";
+        } else {
+            stringAlarmas += "Fechas alarmas: ";
+            for (Alarma alarma : alarmas.values()) {
+                stringAlarmas += alarma.obtenerFechaActivacion().format(Formateador.formatterConHoras) + ", ";
+            }
+        }
+        return stringAlarmas;
+    }
+
+    public String obtenerStringFechaInicio() {
+        if (this.actividad.obtenerTodoElDia()) {
+            return this.actividad.obtenerFechaInicio().format(Formateador.formatterSinHoras);
+        } else {
+            return this.actividad.obtenerFechaInicio().format(Formateador.formatterConHoras) + "hs";
+        }
+    }
+
+    protected void actualizarInfo() {
+        this.setInfoCompleta();
+        this.setInfoResumida();
+    }
+
     public enum colorActividad {
 
         EVENTO("#85C1E9"),
@@ -61,33 +90,6 @@ public abstract class vistaActividad {
         public String obtenerCodigoColor() {
             return this.claveColor;
         }
-    }
-
-    public String obtenerStringAlarmas() {
-        HashMap<Integer, Alarma> alarmas = this.actividad.obtenerAlarmas();
-        String stringAlarmas = "";
-        if (alarmas.size() == 0) {
-            stringAlarmas += "Esta actividad no tiene alarmas configuradas.";
-        } else {
-            stringAlarmas += "Fechas alarmas: ";
-            for (Alarma alarma : alarmas.values()) {
-                stringAlarmas += alarma.obtenerFechaActivacion().format(formateador.formatterConHoras) + ", ";
-            }
-        }
-        return stringAlarmas;
-    }
-
-    public String obtenerStringFechaInicio() {
-        if (this.actividad.obtenerTodoElDia()) {
-            return this.actividad.obtenerFechaInicio().format(formateador.formatterSinHoras);
-        } else {
-            return this.actividad.obtenerFechaInicio().format(formateador.formatterConHoras) + "hs";
-        }
-    }
-
-    protected void actualizarInfo() {
-        this.setInfoCompleta();
-        this.setInfoResumida();
     }
 }
 

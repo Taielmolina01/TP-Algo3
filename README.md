@@ -44,7 +44,9 @@ PD: Que retraso como no iba a fallar:))
 
 ### Diseño
 
+Para el modelado del tp lo primero que buscamos es agrupar aquellos elementos que comparten cosas en común en clases madres abstractas, y luego en las clases hijas que sí son instanciables, ser más específico acerca de las características (métodos y atributos) del objeto. Esto se ve reflejado en las clases de Actividad y Frecuencia. Luego con la clase Calendario quisimos simplificar los comandos, ocultando ciertos manejos para hacer más amena la interación del usuario.
 
+A nivel GUI la idea fue hacerla bastante similar a lo que es Google Calendar, con las obvias limitaciones que impone el tiempo y dandole un toque personal y uniforme a todas las ventanas que pertenecen a la misma. 
 
 ### Responsabilidades de las clases principales
 
@@ -111,3 +113,11 @@ Se utiliza en la GUI para desde stages distintos al stage principal mandar mensa
 Diagrama UML de la lógica:
 
 ![Diagrama UML de la logica](diagramLogica.png)
+
+Diagrama UML de la GUI:
+
+![Diagrama UML de la GUI](diagramGUI.png)
+
+Diagrama de secuencia:
+
+

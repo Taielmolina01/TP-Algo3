@@ -3,7 +3,7 @@ package org.example;
 import java.time.Duration;
 import java.time.format.DateTimeFormatter;
 
-public class formateador {
+public class Formateador {
 
     public static DateTimeFormatter formatterConHoras = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     public static DateTimeFormatter formatterSinHoras = DateTimeFormatter.ofPattern("dd/MM/yyyy");

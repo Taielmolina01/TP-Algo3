@@ -1,7 +1,7 @@
 package org.example.Actividades;
 
 import org.example.Alarma.Alarma;
-import org.example.Visitadores.visitadorActividades;
+import org.example.Visitadores.VisitadorActividades;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -115,5 +115,5 @@ public abstract class Actividad implements Serializable {
 
     public abstract ArrayList<Actividad> actividadesEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
-    public abstract void visitarActividad(visitadorActividades v);
+    public abstract void visitarActividad(VisitadorActividades v);
 }

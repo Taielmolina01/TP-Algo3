@@ -6,27 +6,27 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import org.example.Actividades.Tarea;
-import org.example.interfazCambioEstado;
+import org.example.InterfazCambioEstado;
 
-public class manejadorCeldasListView extends ListCell<vistaActividad> {
+public class CeldaListaActividades extends ListCell<VistaActividad> {
 
+    private final InterfazCambioEstado i;
     private CheckBox checkBox;
-    private final interfazCambioEstado i;
 
-    public manejadorCeldasListView(interfazCambioEstado i) {
+    public CeldaListaActividades(InterfazCambioEstado i) {
         this.i = i;
     }
 
     @Override
-    protected void updateItem(vistaActividad item, boolean empty) {
+    protected void updateItem(VistaActividad item, boolean empty) {
         super.updateItem(item, empty);
         if (item != null && !empty) {
             setText(item.obtenerInfoResumida());
             int i = getIndex();
             setBackground(new Background(new BackgroundFill(Color.web(item.obtenerCodigoColorFondo()),
                     null, null)));
-            if (item.obtenerCodigoColorFondo().equals(vistaActividad.colorActividad.TAREA.obtenerCodigoColor())) {
-                var checkbox = getCheckBox(i);
+            if (item.llevaCheckbox()) {
+                CheckBox checkbox = getCheckBox(i);
                 checkbox.setSelected(((Tarea) item.obtenerActividad()).estaCompletada());
                 checkbox.setPrefSize(10, 10);
                 setGraphic(checkbox);

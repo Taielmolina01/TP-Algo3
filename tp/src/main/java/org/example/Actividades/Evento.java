@@ -2,8 +2,8 @@ package org.example.Actividades;
 
 import org.example.Alarma.Alarma;
 import org.example.Frecuencia.Frecuencia;
-import org.example.Visitadores.visitadorActividades;
-import org.example.Visitadores.visitadorEventosFrecuencia;
+import org.example.Visitadores.VisitadorActividades;
+import org.example.Visitadores.VisitadorEventosFrecuencia;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -202,11 +202,11 @@ public class Evento extends Actividad implements Serializable, eventoClonable {
 
     // Pasar esto a void
     @Override
-    public void visitarActividad(visitadorActividades v) {
+    public void visitarActividad(VisitadorActividades v) {
         v.visitarActividad(this);
     }
 
-    public void visitarFrecuencia(visitadorEventosFrecuencia v) {
+    public void visitarFrecuencia(VisitadorEventosFrecuencia v) {
         if (this.frecuencia != null) {
             this.frecuencia.obtenerTipoFrecuencia(v);
         }

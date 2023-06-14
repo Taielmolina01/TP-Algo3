@@ -1,6 +1,6 @@
 package org.example.Frecuencia;
 
-import org.example.Visitadores.visitorFrecuencia;
+import org.example.Visitadores.VisitorFrecuencia;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ public class FrecuenciaAnual extends Frecuencia implements Serializable {
     }
 
     @Override
-    public void obtenerTipoFrecuencia(visitorFrecuencia v) {
+    public void obtenerTipoFrecuencia(VisitorFrecuencia v) {
         v.obtenerTipoFrecuencia(this);
     }
 }

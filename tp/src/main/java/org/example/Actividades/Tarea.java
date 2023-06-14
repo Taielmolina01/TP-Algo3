@@ -1,6 +1,6 @@
 package org.example.Actividades;
 
-import org.example.Visitadores.visitadorActividades;
+import org.example.Visitadores.VisitadorActividades;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -31,7 +31,7 @@ public class Tarea extends Actividad implements Serializable {
     }
 
     @Override
-    public void visitarActividad(visitadorActividades v) {
+    public void visitarActividad(VisitadorActividades v) {
         v.visitarActividad(this);
     }
 }

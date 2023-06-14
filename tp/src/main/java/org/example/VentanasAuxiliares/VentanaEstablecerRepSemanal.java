@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
 
-public class repeticionSemanalVentana implements Initializable {
+public class VentanaEstablecerRepSemanal implements Initializable {
 
     @FXML
     private Button botonOk;
@@ -41,7 +41,6 @@ public class repeticionSemanalVentana implements Initializable {
     private TextField semanas;
     @FXML
     private Text mensaje;
-
     private Integer repeticiones;
     private HashMap<CheckBox, DayOfWeek> map;
     private CheckBox[] checkBoxes;
@@ -71,7 +70,7 @@ public class repeticionSemanalVentana implements Initializable {
         if (this.obtenerDiasSemana().size() == 0) {
             this.mensaje.setText("✕ Seleccione algún día");
         }
-
+        this.semanas.clear();
     }
 
     public Integer obtenerRepeticiones() {
@@ -84,7 +83,6 @@ public class repeticionSemanalVentana implements Initializable {
             if (c.isSelected()) {
                 diasSeleccionados.add(this.map.get(c));
             }
-
         }
         return new TreeSet<>(diasSeleccionados);
     }

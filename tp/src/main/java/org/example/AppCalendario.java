@@ -2,6 +2,7 @@ package org.example;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,13 +21,13 @@ import javafx.stage.Stage;
 import org.example.Actividades.Actividad;
 import org.example.Alarma.Alarma;
 import org.example.Frecuencia.Frecuencia;
-import org.example.VentanasAuxiliares.eventoVentana;
-import org.example.VentanasAuxiliares.infoCompletaVentana;
-import org.example.VentanasAuxiliares.notificacionVentana;
-import org.example.VentanasAuxiliares.tareaVentana;
-import org.example.Visitadores.visitadorActividades;
-import org.example.VistaActividades.manejadorCeldasListView;
-import org.example.VistaActividades.vistaActividad;
+import org.example.VentanasAuxiliares.VentanaCrearEvento;
+import org.example.VentanasAuxiliares.VentanaCrearTarea;
+import org.example.VentanasAuxiliares.VentanaMostrarInfoCompleta;
+import org.example.VentanasAuxiliares.VentanaMostrarNotificacionAlarma;
+import org.example.Visitadores.VisitadorActividades;
+import org.example.VistaActividades.CeldaListaActividades;
+import org.example.VistaActividades.VistaActividad;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,24 +37,24 @@ import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
-public class AppCalendario extends Application implements interfazGuardarActividadNueva, Initializable, interfazCambioEstado {
+public class AppCalendario extends Application implements InterfazGuardarActividadNueva, Initializable, InterfazCambioEstado {
     private final String[] valoresCrear = new String[]{"", "Evento", "Tarea"};
     protected ManejadorGuardado manejador;
     protected Calendario calendario;
-    private visitadorActividades visitador;
+    private VisitadorActividades visitador;
     @FXML
     private Text lapsoTiempoActual;
     @FXML
-    private ChoiceBox<String> rangoTiempo;
+    private ChoiceBox<String> rangoDeTiempo;
     @FXML
     private ComboBox<String> cajaCrear;
     @FXML
-    private ListView<vistaActividad> listViewActividades; // cambiar a listview de vistaActividad xd
+    private ListView<VistaActividad> listViewActividades;
     private LocalDateTime fechaActual;
     private LocalDateTime inicioSemana;
     private LocalDateTime finSemana;
     private HashMap<String, String> meses;
-    private ObservableList<vistaActividad> vistaActividadesActuales;
+    private ObservableList<VistaActividad> vistaActividadesActuales;
     private String textoDiario;
     private String textoSemanal;
     private String textoMensual;
@@ -67,82 +68,7 @@ public class AppCalendario extends Application implements interfazGuardarActivid
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
-    }
-
-    @FXML
-    public void clickEnBotonIzquierda() {
-        switch (this.rangoTiempo.getValue()) {
-            case "Dia" -> this.fechaActual = this.fechaActual.minusDays(1);
-            case "Semana" -> this.fechaActual = this.fechaActual.minusWeeks(1);
-            default -> this.fechaActual = this.fechaActual.minusMonths(1);
-        }
-        this.actualizarTextoYLista();
-    }
-
-    @FXML
-    public void clickEnBotonDerecha() {
-        switch (this.rangoTiempo.getValue()) {
-            case "Dia" -> this.fechaActual = this.fechaActual.plusDays(1);
-            case "Semana" -> this.fechaActual = this.fechaActual.plusWeeks(1);
-            default -> this.fechaActual = this.fechaActual.plusMonths(1);
-        }
-        this.actualizarTextoYLista();
-    }
-
-    private void actualizarTextoYLista() {
-        this.establecerInicioYFinSemana();
-        this.establecerText();
-        String texto;
-        switch (this.rangoTiempo.getValue()) {
-            case "Dia" -> texto = this.textoDiario;
-            case "Semana" -> texto = this.textoSemanal;
-            default -> texto = this.textoMensual;
-        }
-        this.lapsoTiempoActual.setText(texto);
-        this.actualizarListaActividades();
-    }
-
-    private void actualizarListaActividades() {
-        LocalDateTime fechaInicio;
-        LocalDateTime fechaLimite;
-        switch (this.rangoTiempo.getValue()) {
-            case "Dia" -> {
-                fechaInicio = this.fechaActual.with(LocalTime.MIN);
-                fechaLimite = this.fechaActual.with(LocalTime.MAX);
-                this.crearLista(fechaInicio, fechaLimite);
-            }
-            case "Semana" -> this.crearLista(this.inicioSemana, this.finSemana);
-            default -> {
-                fechaInicio = this.fechaActual.with(TemporalAdjusters.firstDayOfMonth()).with(LocalTime.MIN);
-                fechaLimite = this.fechaActual.with(TemporalAdjusters.lastDayOfMonth()).with(LocalTime.MAX);
-                this.crearLista(fechaInicio, fechaLimite);
-            }
-        }
-    }
-
-    private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) { // esta funcion de mierda es la que funciona mal
-        this.listViewActividades.getSelectionModel().clearSelection();
-        this.listViewActividades.getItems().clear();
-        ArrayList<Actividad> actividadesActuales = this.calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin);
-        actividadesActuales.sort(Comparator.comparing(Actividad::obtenerFechaInicio).thenComparing(Actividad::obtenerNombre));
-        this.vistaActividadesActuales = FXCollections.observableArrayList(this.visitador.visitarActividades(actividadesActuales));
-        this.listViewActividades.getItems().addAll(this.vistaActividadesActuales);
-    }
-
-    private void establecerMeses() {
-        this.meses = new HashMap<>();
-        this.meses.put("JANUARY", "Enero");
-        this.meses.put("FEBRUARY", "Febrero");
-        this.meses.put("MARCH", "Marzo");
-        this.meses.put("APRIL", "Abril");
-        this.meses.put("MAY", "Mayo");
-        this.meses.put("JUNE", "Junio");
-        this.meses.put("JULY", "Julio");
-        this.meses.put("AUGUST", "Agosto");
-        this.meses.put("SEPTEMBER", "Septiembre");
-        this.meses.put("OCTOBER", "Octubre");
-        this.meses.put("NOVEMBER", "Noviembre");
-        this.meses.put("DECEMBER", "Diciembre");
+        stage.setOnHidden(e -> Platform.exit());
     }
 
     @Override
@@ -157,19 +83,17 @@ public class AppCalendario extends Application implements interfazGuardarActivid
         this.establecerMeses();
         this.establecerInicioYFinSemana();
         this.establecerText();
-        this.rangoTiempo.getItems().addAll("Dia", "Semana", "Mes");
+        this.rangoDeTiempo.getItems().addAll("Dia", "Semana", "Mes");
         this.cajaCrear.getItems().addAll(this.valoresCrear);
         this.lapsoTiempoActual.setText(this.textoMensual);
-        this.rangoTiempo.setOnAction(this::actualizarRango);
+        this.rangoDeTiempo.setOnAction(this::actualizarInfoRangoDeTiempo);
         this.cajaCrear.setOnAction(this::crearVentanaActividad);
-        this.listViewActividades.getSelectionModel().selectedItemProperty().addListener(this::cambioSeleccion);
-        this.visitador = new visitadorActividades();
+        this.listViewActividades.getSelectionModel().selectedItemProperty().addListener(this::mostrarInfoCeldaSeleccionada);
+        this.visitador = new VisitadorActividades();
         this.vistaActividadesActuales = FXCollections.observableArrayList();
-        this.listViewActividades.setCellFactory(listViewActividades -> new manejadorCeldasListView(this));
+        this.listViewActividades.setCellFactory(listViewActividades -> new CeldaListaActividades(this));
         this.actualizarListaActividades();
         AnimationTimer timer = new AnimationTimer() {
-            AbstractMap.SimpleEntry<Integer, Alarma> parActividadAlarma;
-
             @Override
             public void handle(long l) {
                 LocalDateTime horaActual = LocalDateTime.now();
@@ -177,11 +101,116 @@ public class AppCalendario extends Application implements interfazGuardarActivid
                         (horaActual, horaActual.plusDays(3));
                 if (parActividadAlarma != null && parActividadAlarma.getValue().
                         cuantoFaltaParaDisparar(horaActual).compareTo(Duration.ofMillis(10)) < 0) {
-                    notificacionVentana.lanzarVentanaNotificacion(calendario.obtenerNombre(parActividadAlarma.getKey()));
+                    VentanaMostrarNotificacionAlarma.lanzarVentanaNotificacion(calendario.obtenerNombre(parActividadAlarma.getKey()));
                 }
             }
         };
         timer.start();
+    }
+
+    // Interacción con la GUI
+
+
+    @FXML
+    public void clickEnBotonIzquierda() {
+        switch (this.rangoDeTiempo.getValue()) {
+            case "Dia" -> this.fechaActual = this.fechaActual.minusDays(1);
+            case "Semana" -> this.fechaActual = this.fechaActual.minusWeeks(1);
+            default -> this.fechaActual = this.fechaActual.minusMonths(1);
+        }
+        this.actualizarTextoYLista();
+    }
+
+    @FXML
+    public void clickEnBotonDerecha() {
+        switch (this.rangoDeTiempo.getValue()) {
+            case "Dia" -> this.fechaActual = this.fechaActual.plusDays(1);
+            case "Semana" -> this.fechaActual = this.fechaActual.plusWeeks(1);
+            default -> this.fechaActual = this.fechaActual.plusMonths(1);
+        }
+        this.actualizarTextoYLista();
+    }
+
+    private void crearVentanaActividad(ActionEvent event) {
+        String tipoElemento = this.cajaCrear.getValue();
+        if (tipoElemento.equals(this.valoresCrear[1])) {
+            try {
+                new VentanaCrearEvento(this).start();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } else if (tipoElemento.equals(this.valoresCrear[2])) {
+            try {
+                new VentanaCrearTarea(this).start();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void mostrarInfoCeldaSeleccionada(Observable Observable) {
+        int indice = this.listViewActividades.getSelectionModel().getSelectedIndex();
+        String infoCompletaSeleccionado = this.vistaActividadesActuales.get(indice).obtenerInfoCompleta();
+        try {
+            VentanaMostrarInfoCompleta v = new VentanaMostrarInfoCompleta();
+            v.start(infoCompletaSeleccionado);
+        } catch (Exception e) {
+            //
+        }
+    }
+
+    private void actualizarInfoRangoDeTiempo(ActionEvent event) {
+        this.actualizarTextoYLista();
+    }
+
+    // Actualización de datos de la GUI
+
+    private void establecerInicioYFinSemana() {
+        int diaSemanaActual = this.fechaActual.getDayOfWeek().getValue();
+        int aRestar = diaSemanaActual - 1;
+        int aSumar = 7 - diaSemanaActual;
+        this.inicioSemana = this.fechaActual.minusDays(aRestar).with(LocalTime.MIN);
+        this.finSemana = this.fechaActual.plusDays(aSumar).with(LocalTime.MAX);
+    }
+
+    private void actualizarTextoYLista() {
+        this.establecerInicioYFinSemana();
+        this.establecerText();
+        String texto;
+        switch (this.rangoDeTiempo.getValue()) {
+            case "Dia" -> texto = this.textoDiario;
+            case "Semana" -> texto = this.textoSemanal;
+            default -> texto = this.textoMensual;
+        }
+        this.lapsoTiempoActual.setText(texto);
+        this.actualizarListaActividades();
+    }
+
+    private void actualizarListaActividades() {
+        LocalDateTime fechaInicio;
+        LocalDateTime fechaLimite;
+        switch (this.rangoDeTiempo.getValue()) {
+            case "Dia" -> {
+                fechaInicio = this.fechaActual.with(LocalTime.MIN);
+                fechaLimite = this.fechaActual.with(LocalTime.MAX);
+                this.crearLista(fechaInicio, fechaLimite);
+            }
+            case "Semana" -> this.crearLista(this.inicioSemana, this.finSemana);
+            default -> {
+                fechaInicio = this.fechaActual.with(TemporalAdjusters.firstDayOfMonth()).with(LocalTime.MIN);
+                fechaLimite = this.fechaActual.with(TemporalAdjusters.lastDayOfMonth()).with(LocalTime.MAX);
+                this.crearLista(fechaInicio, fechaLimite);
+            }
+        }
+    }
+
+    private void crearLista(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+        this.listViewActividades.getSelectionModel().clearSelection();
+        this.listViewActividades.getItems().clear();
+        ArrayList<Actividad> actividadesActuales = this.calendario.obtenerActividadesEntreFechas(fechaInicio, fechaFin);
+        actividadesActuales.sort(Comparator.comparing(Actividad::obtenerFechaInicio).thenComparing(Actividad::obtenerNombre));
+        this.vistaActividadesActuales = FXCollections.observableArrayList(this.visitador.visitarActividades(actividadesActuales));
+        this.listViewActividades.getItems().addAll(this.vistaActividadesActuales);
     }
 
     private void establecerText() {
@@ -220,54 +249,33 @@ public class AppCalendario extends Application implements interfazGuardarActivid
 
     private String establecerTextoSemanalDistintosMeses() {
         return this.inicioSemana.getDayOfMonth() + " " + this.meses.get(this.inicioSemana.getMonth().toString()).toLowerCase() + " - " +
-                + this.finSemana.getDayOfMonth() + " " +
+                +this.finSemana.getDayOfMonth() + " " +
                 this.meses.get(this.finSemana.getMonth().toString()).toLowerCase() + " " + this.finSemana.getYear();
     }
 
-    private void actualizarRango(ActionEvent event) {
-        this.actualizarTextoYLista();
+    private void establecerMeses() {
+        this.meses = new HashMap<>();
+        this.meses.put("JANUARY", "Enero");
+        this.meses.put("FEBRUARY", "Febrero");
+        this.meses.put("MARCH", "Marzo");
+        this.meses.put("APRIL", "Abril");
+        this.meses.put("MAY", "Mayo");
+        this.meses.put("JUNE", "Junio");
+        this.meses.put("JULY", "Julio");
+        this.meses.put("AUGUST", "Agosto");
+        this.meses.put("SEPTEMBER", "Septiembre");
+        this.meses.put("OCTOBER", "Octubre");
+        this.meses.put("NOVEMBER", "Noviembre");
+        this.meses.put("DECEMBER", "Diciembre");
     }
 
-    private void crearVentanaActividad(ActionEvent event) {
-        String tipoElemento = this.cajaCrear.getValue();
-        if (tipoElemento.equals(this.valoresCrear[1])) {
-            try {
-                new eventoVentana(this).start();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        } else if (tipoElemento.equals(this.valoresCrear[2])) {
-            try {
-                new tareaVentana(this).start();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
+    // Manejo del guardado de nuevas actividades y nuevos estados de las ya existentes.
+
 
     public void guardarEstadoActual() {
         try {
             this.calendario.guardarEstado(this.manejador);
         } catch (IOException e) {
-            //
-        }
-    }
-
-    private void establecerInicioYFinSemana() {
-        int diaSemanaActual = this.fechaActual.getDayOfWeek().getValue();
-        int aRestar = diaSemanaActual - 1;
-        int aSumar = 7 - diaSemanaActual;
-        this.inicioSemana = this.fechaActual.minusDays(aRestar).with(LocalTime.MIN);
-        this.finSemana = this.fechaActual.plusDays(aSumar).with(LocalTime.MAX);
-    }
-
-    private void cambioSeleccion(Observable Observable) {
-        int indice = this.listViewActividades.getSelectionModel().getSelectedIndex();
-        String infoCompletaSeleccionado = this.vistaActividadesActuales.get(indice).obtenerInfoCompleta();
-        try {
-            infoCompletaVentana v = new infoCompletaVentana();
-            v.start(infoCompletaSeleccionado);
-        } catch (Exception e) {
             //
         }
     }

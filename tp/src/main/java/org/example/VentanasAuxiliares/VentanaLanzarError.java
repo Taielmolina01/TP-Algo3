@@ -5,10 +5,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class errorVentana {
+public class VentanaLanzarError {
+
     public static void lanzarVentanaError() {
         try {
-            new errorVentana().start();
+            new VentanaLanzarError().start();
         } catch (Exception e5) {
             //
         }
@@ -19,10 +20,11 @@ public class errorVentana {
         loader.setController(this);
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        Stage s = new Stage();
-        s.setTitle("Error");
-        s.setResizable(false);
-        s.setScene(scene);
-        s.show();
+        Stage stage = new Stage();
+        stage.setTitle("Error");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
     }
+
 }
