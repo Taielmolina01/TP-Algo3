@@ -54,7 +54,7 @@ public class VentanaEstablecerRepSemanal implements Initializable {
     private TextField textFechaFinal;
     private Integer repeticiones;
     private LocalDateTime fechaFinal;
-    private HashMap<CheckBox, DayOfWeek> map;
+    private HashMap<CheckBox, DayOfWeek> mapDias;
     private CheckBox[] checkBoxes;
     private ModoApp.modo modoActual;
 
@@ -116,7 +116,7 @@ public class VentanaEstablecerRepSemanal implements Initializable {
         ArrayList<DayOfWeek> diasSeleccionados = new ArrayList<>();
         for (CheckBox c : this.checkBoxes) {
             if (c.isSelected()) {
-                diasSeleccionados.add(this.map.get(c));
+                diasSeleccionados.add(this.mapDias.get(c));
             }
         }
         return new TreeSet<>(diasSeleccionados);
@@ -130,14 +130,14 @@ public class VentanaEstablecerRepSemanal implements Initializable {
     }
 
     private void crearMapeo() {
-        this.map = new HashMap<>();
-        this.map.put(this.lunes, DayOfWeek.MONDAY);
-        this.map.put(this.martes, DayOfWeek.TUESDAY);
-        this.map.put(this.miercoles, DayOfWeek.WEDNESDAY);
-        this.map.put(this.jueves, DayOfWeek.THURSDAY);
-        this.map.put(this.viernes, DayOfWeek.FRIDAY);
-        this.map.put(this.sabado, DayOfWeek.SATURDAY);
-        this.map.put(this.domingo, DayOfWeek.SUNDAY);
+        this.mapDias = new HashMap<>();
+        this.mapDias.put(this.lunes, DayOfWeek.MONDAY);
+        this.mapDias.put(this.martes, DayOfWeek.TUESDAY);
+        this.mapDias.put(this.miercoles, DayOfWeek.WEDNESDAY);
+        this.mapDias.put(this.jueves, DayOfWeek.THURSDAY);
+        this.mapDias.put(this.viernes, DayOfWeek.FRIDAY);
+        this.mapDias.put(this.sabado, DayOfWeek.SATURDAY);
+        this.mapDias.put(this.domingo, DayOfWeek.SUNDAY);
     }
 
     private void crearArrayCheckBoxes() {

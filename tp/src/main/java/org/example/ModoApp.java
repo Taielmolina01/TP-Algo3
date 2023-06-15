@@ -10,9 +10,9 @@ public class ModoApp {
 
     public enum modo {
 
-        CLARO("lightMode.css", "mode.png"),
+        CLARO("lightMode.css", "modeLogo.png"),
 
-        OSCURO("darkMode.css", "mode.png");
+        OSCURO("darkMode.css", "modeLogo.png");
 
         private final String rutaArchivo;
         private final String rutaImagen;

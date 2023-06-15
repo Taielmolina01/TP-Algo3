@@ -42,7 +42,8 @@ import java.util.*;
 
 public class AppCalendario extends Application implements InterfazGuardarActividadNueva, Initializable, InterfazCambioEstado {
     private final String[] valoresCrear = new String[]{"", "Evento", "Tarea"};
-    protected ManejadorGuardadoCalendario manejador;
+    protected ManejadorGuardadoCalendario manejadorCalendario;
+    private ManejadorGuardadoModo manejadorModo;
     protected Calendario calendario;
     private VisitadorActividades visitador;
     @FXML
@@ -82,9 +83,10 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.fechaActual = LocalDateTime.now();
-        this.manejador = new ManejadorGuardadoCalendario(System.out);
+        this.manejadorCalendario = new ManejadorGuardadoCalendario(System.out);
+        this.manejadorModo = new ManejadorGuardadoModo();
         try {
-            this.calendario = new Calendario().recuperarEstado(this.manejador);
+            this.calendario = new Calendario().recuperarEstado(this.manejadorCalendario);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -96,7 +98,7 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         this.lapsoTiempoActual.setText(this.textoMensual);
         this.rangoDeTiempo.setOnAction(this::actualizarInfoRangoDeTiempo);
         try {
-            this.modoActual = new ManejadorGuardadoModo().recuperarModo();
+            this.modoActual = this.manejadorModo.recuperarModo();
             ModoApp.setModo(this.modoActual, this.parent);
             this.setImagen();
         } catch (Exception e) {
@@ -108,7 +110,7 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
                 ModoApp.setModo(this.modoActual, this.parent);
                 this.setImagen();
                 try {
-                    new ManejadorGuardadoModo().guardarModo(this.modoActual);
+                    this.manejadorModo.guardarModo(this.modoActual);
                 } catch (IOException e2) {
                     throw new RuntimeException(e2);
                 }
@@ -117,7 +119,7 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
                 ModoApp.setModo(this.modoActual, this.parent);
                 this.setImagen();
                 try {
-                    new ManejadorGuardadoModo().guardarModo(this.modoActual);
+                    this.manejadorModo.guardarModo(this.modoActual);
                 } catch (IOException e3) {
                     throw new RuntimeException(e3);
                 }
@@ -137,7 +139,7 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
                         (horaActual, horaActual.plusDays(3));
                 if (parActividadAlarma != null && parActividadAlarma.getValue().
                         cuantoFaltaParaDisparar(horaActual).compareTo(Duration.ofMillis(10)) < 0) {
-                    VentanaMostrarNotificacionAlarma.lanzarVentanaNotificacion(calendario.obtenerNombre(parActividadAlarma.getKey()));
+                    VentanaMostrarNotificacionAlarma.lanzarVentanaNotificacion(calendario.obtenerNombre(parActividadAlarma.getKey()), modoActual);
                 }
             }
         };
@@ -310,7 +312,7 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
 
     public void guardarEstadoActual() {
         try {
-            this.calendario.guardarEstado(this.manejador);
+            this.calendario.guardarEstado(this.manejadorCalendario);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

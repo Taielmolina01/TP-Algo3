@@ -84,7 +84,7 @@ public class VentanaCrearEvento implements Initializable {
         LocalDateTime fechaInicio;
         Duration duracionEvento = Formateador.formatearDuracion(this.duracionEventoText.getText());
         if (this.datosInicialesNoSonValidos(nombre, duracionEvento)) {
-            VentanaLanzarError.lanzarVentanaError(this.modoActual);
+            VentanaLanzarError.lanzarVentana(this.modoActual);
             return;
         }
         try {
@@ -101,16 +101,15 @@ public class VentanaCrearEvento implements Initializable {
                 return;
             }
         } catch (DateTimeParseException e4) {
-            VentanaLanzarError.lanzarVentanaError(this.modoActual);
+            VentanaLanzarError.lanzarVentana(this.modoActual);
             return;
         }
         ArrayList<Duration> alarmas = this.obtenerAlarmas();
         if (!sonValidosDatosFrecuencia()) {
-            VentanaLanzarError.lanzarVentanaError(this.modoActual);
+            VentanaLanzarError.lanzarVentana(this.modoActual);
             return;
         }
         try {
-            System.out.println("Aca1");
             this.i.guardarEventoConRepeticion(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(),
                     this.fechaFinal, this.frecuencia, alarmas);
         } catch (IOException e) {
@@ -185,7 +184,7 @@ public class VentanaCrearEvento implements Initializable {
                     this.ventanaEstablecerRep.start("Definir frecuencia diaria",
                             "Ingrese cada cuántos días se repite", this.modoActual);
                 } catch (Exception e) {
-                    VentanaLanzarError.lanzarVentanaError(this.modoActual);
+                    VentanaLanzarError.lanzarVentana(this.modoActual);
                 }
             }
             case "Semanal" -> {
@@ -193,7 +192,7 @@ public class VentanaCrearEvento implements Initializable {
                     this.ventanaEstablecerRepSemanal = new VentanaEstablecerRepSemanal();
                     this.ventanaEstablecerRepSemanal.start(this.modoActual);
                 } catch (Exception e) {
-                    VentanaLanzarError.lanzarVentanaError(this.modoActual);
+                    VentanaLanzarError.lanzarVentana(this.modoActual);
                 }
             }
             case "Mensual" -> {
@@ -202,7 +201,7 @@ public class VentanaCrearEvento implements Initializable {
                     this.ventanaEstablecerRep.start("Definir frecuencia mensual",
                             "Ingrese cada cuántos meses se repite", this.modoActual);
                 } catch (Exception e) {
-                    VentanaLanzarError.lanzarVentanaError(this.modoActual);
+                    VentanaLanzarError.lanzarVentana(this.modoActual);
                 }
             }
             default -> {
@@ -211,7 +210,7 @@ public class VentanaCrearEvento implements Initializable {
                     this.ventanaEstablecerRep.start("Definir frecuencia anual",
                             "Ingrese cada cuántos años se repite", this.modoActual);
                 } catch (Exception e) {
-                    VentanaLanzarError.lanzarVentanaError(this.modoActual);
+                    VentanaLanzarError.lanzarVentana(this.modoActual);
                 }
             }
         }
@@ -232,7 +231,7 @@ public class VentanaCrearEvento implements Initializable {
                 this.ventanaAlarma = new VentanaCrearAlarmas();
                 this.ventanaAlarma.start(this.modoActual);
             } catch (Exception e) {
-                VentanaLanzarError.lanzarVentanaError(this.modoActual);
+                VentanaLanzarError.lanzarVentana(this.modoActual);
             }
         }
     }

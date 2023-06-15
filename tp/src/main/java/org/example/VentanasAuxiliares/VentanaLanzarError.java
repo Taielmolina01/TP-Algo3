@@ -14,7 +14,7 @@ public class VentanaLanzarError {
     private AnchorPane parent;
     private ModoApp.modo modoActual;
 
-    public static void lanzarVentanaError(ModoApp.modo modoActual) {
+    public static void lanzarVentana(ModoApp.modo modoActual) {
         try {
             new VentanaLanzarError().start(modoActual);
         } catch (Exception e5) {

@@ -72,13 +72,13 @@ public class VentanaCrearTarea implements Initializable {
         String descripcion = this.descripcionTarea.getText();
         LocalDateTime fechaInicio;
         if (nombre.equals("")) {
-            VentanaLanzarError.lanzarVentanaError(this.modoActual);
+            VentanaLanzarError.lanzarVentana(this.modoActual);
             return;
         }
         try {
             fechaInicio = LocalDateTime.parse(this.fechaInicio.getText(), Formateador.formatterConHoras);
         } catch (DateTimeParseException e4) {
-            VentanaLanzarError.lanzarVentanaError(this.modoActual);
+            VentanaLanzarError.lanzarVentana(this.modoActual);
             return;
         }
         try {
@@ -104,7 +104,7 @@ public class VentanaCrearTarea implements Initializable {
                 this.ventanaAlarma = new VentanaCrearAlarmas();
                 this.ventanaAlarma.start(this.modoActual);
             } catch (Exception e) {
-                VentanaLanzarError.lanzarVentanaError(this.modoActual);
+                VentanaLanzarError.lanzarVentana(this.modoActual);
             }
         }
     }

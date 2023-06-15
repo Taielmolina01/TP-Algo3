@@ -34,13 +34,13 @@ public abstract class Actividad implements Serializable {
 
     public Alarma agregarAlarma(Alarma.Efecto efecto, LocalDateTime fechaActivacion) {
         Alarma alarma = new Alarma(efecto, fechaActivacion);
-        this.alarmas.put(indiceAlarmas++, alarma);
+        this.alarmas.put(this.indiceAlarmas++, alarma);
         return alarma;
     }
 
     public Alarma agregarAlarma(Alarma.Efecto efecto, Duration intervaloTiempo) {
         Alarma alarma = new Alarma(efecto, this.obtenerFechaInicio(), intervaloTiempo);
-        this.alarmas.put(indiceAlarmas++, alarma);
+        this.alarmas.put(this.indiceAlarmas++, alarma);
         return alarma;
     }
 

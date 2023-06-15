@@ -38,14 +38,14 @@ public class CeldaListaActividades extends ListCell<VistaActividad> {
     }
 
     private CheckBox getCheckBox(int i) {
-        if (checkBox == null) {
-            checkBox = new CheckBox();
-            checkBox.setOnAction(e -> {
+        if (this.checkBox == null) {
+            this.checkBox = new CheckBox();
+            this.checkBox.setOnAction(e -> {
                 getItem().cambiarSeleccionCheckBox();
                 getItem().actualizarInfo();
                 this.i.huboCambioEstadoTarea(i);
             });
         }
-        return checkBox;
+        return this.checkBox;
     }
 }
