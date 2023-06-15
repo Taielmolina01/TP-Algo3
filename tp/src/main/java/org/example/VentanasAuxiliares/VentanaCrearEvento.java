@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import org.example.Formateador;
 import org.example.Frecuencia.*;
 import org.example.InterfazGuardarActividadNueva;
+import org.example.ModoApp;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,19 +49,20 @@ public class VentanaCrearEvento implements Initializable {
     @FXML
     private CheckBox diaCompleto;
     @FXML
-    private AnchorPane anchorPane;
+    private AnchorPane parent;
     private LocalDateTime fechaFinal;
     private Integer repeticiones;
     private Frecuencia frecuencia;
     private VentanaCrearAlarmas ventanaAlarma;
     private VentanaEstablecerRep ventanaEstablecerRep;
     private VentanaEstablecerRepSemanal ventanaEstablecerRepSemanal;
+    private ModoApp.modo modoActual;
 
     public VentanaCrearEvento(InterfazGuardarActividadNueva i) {
         this.i = i;
     }
 
-    public void start() throws Exception {
+    public void start(ModoApp.modo modoActual) throws Exception {
         var loader = new FXMLLoader(getClass().getResource("/escenaCrearEvento.fxml"));
         loader.setController(this);
         Parent root = loader.load();
@@ -70,7 +72,9 @@ public class VentanaCrearEvento implements Initializable {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
-        this.anchorPane.requestFocus();
+        this.parent.requestFocus();
+        this.modoActual = modoActual;
+        ModoApp.setModo(this.modoActual, this.parent);
     }
 
     @FXML
@@ -80,14 +84,14 @@ public class VentanaCrearEvento implements Initializable {
         LocalDateTime fechaInicio;
         Duration duracionEvento = Formateador.formatearDuracion(this.duracionEventoText.getText());
         if (this.datosInicialesNoSonValidos(nombre, duracionEvento)) {
-            VentanaLanzarError.lanzarVentanaError();
+            VentanaLanzarError.lanzarVentanaError(this.modoActual);
             return;
         }
         try {
             fechaInicio = LocalDateTime.parse(this.fechaInicioText.getText(), Formateador.formatterConHoras);
             if (this.noHayRepeticion()) {
                 ArrayList<Duration> alarmas = this.obtenerAlarmas();
-                Stage stage = (Stage) this.anchorPane.getScene().getWindow();
+                Stage stage = (Stage) this.parent.getScene().getWindow();
                 stage.close();
                 try {
                     this.i.guardarEventoSinRepeticion(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(), alarmas);
@@ -97,12 +101,12 @@ public class VentanaCrearEvento implements Initializable {
                 return;
             }
         } catch (DateTimeParseException e4) {
-            VentanaLanzarError.lanzarVentanaError();
+            VentanaLanzarError.lanzarVentanaError(this.modoActual);
             return;
         }
         ArrayList<Duration> alarmas = this.obtenerAlarmas();
         if (!sonValidosDatosFrecuencia()) {
-            VentanaLanzarError.lanzarVentanaError();
+            VentanaLanzarError.lanzarVentanaError(this.modoActual);
             return;
         }
         try {
@@ -112,7 +116,7 @@ public class VentanaCrearEvento implements Initializable {
         } catch (IOException e) {
             //
         }
-        Stage stage = (Stage) this.anchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.parent.getScene().getWindow();
         stage.close();
     }
 
@@ -179,35 +183,35 @@ public class VentanaCrearEvento implements Initializable {
                 try {
                     this.ventanaEstablecerRep = new VentanaEstablecerRep();
                     this.ventanaEstablecerRep.start("Definir frecuencia diaria",
-                            "Ingrese cada cuántos días se repite");
+                            "Ingrese cada cuántos días se repite", this.modoActual);
                 } catch (Exception e) {
-                    VentanaLanzarError.lanzarVentanaError();
+                    VentanaLanzarError.lanzarVentanaError(this.modoActual);
                 }
             }
             case "Semanal" -> {
                 try {
                     this.ventanaEstablecerRepSemanal = new VentanaEstablecerRepSemanal();
-                    this.ventanaEstablecerRepSemanal.start();
+                    this.ventanaEstablecerRepSemanal.start(this.modoActual);
                 } catch (Exception e) {
-                    VentanaLanzarError.lanzarVentanaError();
+                    VentanaLanzarError.lanzarVentanaError(this.modoActual);
                 }
             }
             case "Mensual" -> {
                 try {
                     this.ventanaEstablecerRep = new VentanaEstablecerRep();
                     this.ventanaEstablecerRep.start("Definir frecuencia mensual",
-                            "Ingrese cada cuántos meses se repite");
+                            "Ingrese cada cuántos meses se repite", this.modoActual);
                 } catch (Exception e) {
-                    VentanaLanzarError.lanzarVentanaError();
+                    VentanaLanzarError.lanzarVentanaError(this.modoActual);
                 }
             }
             default -> {
                 try {
                     this.ventanaEstablecerRep = new VentanaEstablecerRep();
                     this.ventanaEstablecerRep.start("Definir frecuencia anual",
-                            "Ingrese cada cuántos años se repite");
+                            "Ingrese cada cuántos años se repite", this.modoActual);
                 } catch (Exception e) {
-                    VentanaLanzarError.lanzarVentanaError();
+                    VentanaLanzarError.lanzarVentanaError(this.modoActual);
                 }
             }
         }
@@ -226,9 +230,9 @@ public class VentanaCrearEvento implements Initializable {
         if (this.alarmas.getValue().equals(this.valoresPosibles[0])) {
             try {
                 this.ventanaAlarma = new VentanaCrearAlarmas();
-                this.ventanaAlarma.start();
+                this.ventanaAlarma.start(this.modoActual);
             } catch (Exception e) {
-                VentanaLanzarError.lanzarVentanaError();
+                VentanaLanzarError.lanzarVentanaError(this.modoActual);
             }
         }
     }

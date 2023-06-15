@@ -6,13 +6,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="344.0" style=": 50;" styleClass="fondos" stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="344.0" styleClass="fondos" stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <TextField fx:id="nombreTarea" layoutX="52.0" layoutY="21.0" prefHeight="25.0" prefWidth="240.0" promptText="Nombre" stylesheets="@lightMode.css" />
-        <TextField fx:id="descripcionTarea" layoutX="52.0" layoutY="60.0" prefHeight="25.0" prefWidth="240.0" promptText="Descripción" stylesheets="@lightMode.css" />
-        <TextField fx:id="fechaInicio" layoutX="52.0" layoutY="102.0" prefHeight="25.0" prefWidth="240.0" promptText="FechaInicio (dd/MM/yyyy HH:mm:ss)" stylesheets="@lightMode.css" />
-        <Button fx:id="botonCrear" layoutX="146.0" layoutY="208.0" mnemonicParsing="false" styleClass="botones" stylesheets="@lightMode.css" text="Crear" />
-        <ComboBox fx:id="alarmas" layoutX="91.0" layoutY="170.0" prefHeight="26.0" prefWidth="162.0" promptText="Alarmas" styleClass="cajas" stylesheets="@lightMode.css" />
-        <CheckBox fx:id="diaCompleto" layoutX="111.0" layoutY="140.0" mnemonicParsing="false" stylesheets="@lightMode.css" text="Dia completo" />
+        <TextField fx:id="nombreTarea" layoutX="52.0" layoutY="21.0" prefHeight="25.0" prefWidth="240.0" promptText="Nombre" />
+        <TextField fx:id="descripcionTarea" layoutX="52.0" layoutY="60.0" prefHeight="25.0" prefWidth="240.0" promptText="Descripción" />
+        <TextField fx:id="fechaInicio" layoutX="52.0" layoutY="102.0" prefHeight="25.0" prefWidth="240.0" promptText="FechaInicio (dd/MM/yyyy HH:mm:ss)" />
+        <Button fx:id="botonCrear" layoutX="146.0" layoutY="208.0" mnemonicParsing="false" styleClass="botones" text="Crear" />
+        <ComboBox fx:id="alarmas" layoutX="91.0" layoutY="170.0" prefHeight="26.0" prefWidth="162.0" promptText="Alarmas" styleClass="cajas" />
+        <CheckBox fx:id="diaCompleto" layoutX="111.0" layoutY="140.0" mnemonicParsing="false" text="Dia completo" />
     </children>
 </AnchorPane>

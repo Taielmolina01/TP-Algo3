@@ -6,12 +6,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="133.0" prefWidth="421.0" styleClass="fondos" stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="133.0" prefWidth="421.0" styleClass="fondos" stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <TextField fx:id="repeticion" layoutX="77.0" layoutY="32.0" prefHeight="28.0" prefWidth="268.0" promptText="Ingrese cada cuantos dias se repite" stylesheets="@lightMode.css" />
-        <Button fx:id="botonOk" layoutX="191.0" layoutY="96.0" mnemonicParsing="false" styleClass="botones" stylesheets="@lightMode.css" text="OK" />
-        <Text fx:id="mensaje" layoutX="25.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="364.0" />
-      <TextField fx:id="textFechaFinal" layoutX="8.0" layoutY="64.0" prefHeight="28.0" prefWidth="237.0" promptText="FechaFinal (dd/MM/yyyy HH:mm:ss)" stylesheets="@lightMode.css" />
+        <TextField fx:id="repeticion" layoutX="77.0" layoutY="32.0" prefHeight="28.0" prefWidth="268.0" promptText="Ingrese cada cuantos dias se repite" />
+        <Button fx:id="botonOk" layoutX="191.0" layoutY="96.0" mnemonicParsing="false" styleClass="botones" text="OK" />
+        <Text fx:id="mensaje" layoutX="25.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="fuentes" textAlignment="CENTER" wrappingWidth="364.0" />
+      <TextField fx:id="textFechaFinal" layoutX="8.0" layoutY="64.0" prefHeight="28.0" prefWidth="237.0" promptText="FechaFinal (dd/MM/yyyy HH:mm:ss)" />
       <CheckBox fx:id="repsInfinitas" layoutX="251.0" layoutY="49.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="160.0" text="Repeticiones infinitas" />
     </children>
 </AnchorPane>

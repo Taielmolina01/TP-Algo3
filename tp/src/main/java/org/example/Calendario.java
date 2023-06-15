@@ -198,15 +198,15 @@ public class Calendario implements Serializable {
     }
 
 
-    public void guardarEstado(ManejadorGuardado manejador) throws IOException {
+    public void guardarEstado(ManejadorGuardadoCalendario manejador) throws IOException {
         manejador.guardarEstado(this);
     }
 
-    public Calendario recuperarEstado(ManejadorGuardado manejador) throws IOException, ClassNotFoundException {
+    public Calendario recuperarEstado(ManejadorGuardadoCalendario manejador) throws IOException, ClassNotFoundException {
         return manejador.recuperarEstado();
     }
 
-    public void borrarEstadoGuardado(ManejadorGuardado manejador) {
+    public void borrarEstadoGuardado(ManejadorGuardadoCalendario manejador) {
         manejador.borrarEstadoGuardado();
     }
 
@@ -227,7 +227,6 @@ public class Calendario implements Serializable {
                     //
                 }
             }
-
         }
     }
 

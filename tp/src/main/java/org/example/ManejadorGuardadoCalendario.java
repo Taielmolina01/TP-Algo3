@@ -5,11 +5,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public class ManejadorGuardado {
+public class ManejadorGuardadoCalendario {
     private final PrintStream salida;
     private final String rutaArchivoGuardado = "MiCalendario.txt";
 
-    public ManejadorGuardado(PrintStream salida) {
+    public ManejadorGuardadoCalendario(PrintStream salida) {
         this.salida = salida;
         this.crearArchivoGuardado();
     }

@@ -9,13 +9,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.Formateador;
+import org.example.ModoApp;
 
 import java.net.URL;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ import java.util.ResourceBundle;
 import java.util.TreeSet;
 
 public class VentanaEstablecerRepSemanal implements Initializable {
+    @FXML
+    private AnchorPane parent;
 
     @FXML
     private Button botonOk;
@@ -53,9 +56,10 @@ public class VentanaEstablecerRepSemanal implements Initializable {
     private LocalDateTime fechaFinal;
     private HashMap<CheckBox, DayOfWeek> map;
     private CheckBox[] checkBoxes;
+    private ModoApp.modo modoActual;
 
 
-    public void start() throws Exception {
+    public void start(ModoApp.modo modoActual) throws Exception {
         var loader = new FXMLLoader(getClass().getResource("/escenaRepeticionSemanal.fxml"));
         loader.setController(this);
         Parent root = loader.load();
@@ -65,6 +69,8 @@ public class VentanaEstablecerRepSemanal implements Initializable {
         s.setResizable(false);
         s.setScene(scene);
         s.show();
+        this.modoActual = modoActual;
+        ModoApp.setModo(this.modoActual, this.parent);
     }
 
     @FXML
@@ -77,7 +83,7 @@ public class VentanaEstablecerRepSemanal implements Initializable {
                     this.fechaFinal = LocalDateTime.MAX;
                     this.mensaje.setText("✓ Repeticion agregada");
                 } else {
-                  this.mensaje.setText("✕ Seleccione algún día");
+                    this.mensaje.setText("✕ Seleccione algún día");
                 }
                 return;
             }

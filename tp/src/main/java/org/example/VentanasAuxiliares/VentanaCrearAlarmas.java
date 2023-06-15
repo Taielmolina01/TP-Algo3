@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.Formateador;
+import org.example.ModoApp;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -22,9 +23,10 @@ public class VentanaCrearAlarmas {
     @FXML
     private Text mensaje;
     @FXML
-    private AnchorPane anchorPane;
+    private AnchorPane parent;
+    private ModoApp.modo modoActual;
 
-    public void start() throws Exception {
+    public void start(ModoApp.modo modoActual) throws Exception {
         var loader = new FXMLLoader(getClass().getResource("/escenaIntervalo.fxml"));
         loader.setController(this);
         Parent root = loader.load();
@@ -34,7 +36,9 @@ public class VentanaCrearAlarmas {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
-        this.anchorPane.requestFocus();
+        this.parent.requestFocus();
+        this.modoActual = modoActual;
+        ModoApp.setModo(this.modoActual, this.parent);
     }
 
     @FXML

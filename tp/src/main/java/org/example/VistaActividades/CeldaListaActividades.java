@@ -5,7 +5,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
-import org.example.Actividades.Tarea;
 import org.example.InterfazCambioEstado;
 
 public class CeldaListaActividades extends ListCell<VistaActividad> {

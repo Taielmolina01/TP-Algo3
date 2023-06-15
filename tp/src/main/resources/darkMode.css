@@ -1,12 +1,12 @@
 .root {
-    -color-fondo: #EAEDED;;
-    -color-fondo-hover: #D5DBDB;
-    -color-opcion-hover: #E9967A;
-    -color-flechas: #D6EAF8;
-    -color-flechas-hover: #AED6F1;
-    -color-bordes: #BFC9CA;
-    -color-opcion-focused: #FA8072;
-    -color-fuente: BLACK;
+    -color-fondo: #17202A;
+    -color-fondo-hover: #273746;
+    -color-opcion-hover: #2C3E50;
+    -color-flechas: #5D6D7E;
+    -color-flechas-hover: #85929E;
+    -color-bordes: #5D6D7E;
+    -color-opcion-focused: #5D6D7E;
+    -color-fuente: WHITE;
     -color-fuente-prompt: #909497;
 }
 

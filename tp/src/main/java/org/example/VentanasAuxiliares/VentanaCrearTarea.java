@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.Formateador;
 import org.example.InterfazGuardarActividadNueva;
+import org.example.ModoApp;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,16 +41,17 @@ public class VentanaCrearTarea implements Initializable {
     @FXML
     private CheckBox diaCompleto;
     @FXML
-    private AnchorPane anchorPane;
+    private AnchorPane parent;
     private VentanaCrearAlarmas ventanaAlarma;
     private ArrayList<Duration> duraciones;
     private VentanaLanzarError ventanaError;
+    private ModoApp.modo modoActual;
 
     public VentanaCrearTarea(InterfazGuardarActividadNueva i) {
         this.i = i;
     }
 
-    public void start() throws Exception {
+    public void start(ModoApp.modo modoActual) throws Exception {
         var loader = new FXMLLoader(getClass().getResource("/escenaCrearTarea.fxml"));
         loader.setController(this);
         Parent root = loader.load();
@@ -59,7 +61,9 @@ public class VentanaCrearTarea implements Initializable {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
-        this.anchorPane.requestFocus();
+        this.modoActual = modoActual;
+        this.parent.requestFocus();
+        ModoApp.setModo(this.modoActual, this.parent);
     }
 
     @FXML
@@ -68,13 +72,13 @@ public class VentanaCrearTarea implements Initializable {
         String descripcion = this.descripcionTarea.getText();
         LocalDateTime fechaInicio;
         if (nombre.equals("")) {
-            VentanaLanzarError.lanzarVentanaError();
+            VentanaLanzarError.lanzarVentanaError(this.modoActual);
             return;
         }
         try {
             fechaInicio = LocalDateTime.parse(this.fechaInicio.getText(), Formateador.formatterConHoras);
         } catch (DateTimeParseException e4) {
-            VentanaLanzarError.lanzarVentanaError();
+            VentanaLanzarError.lanzarVentanaError(this.modoActual);
             return;
         }
         try {
@@ -82,7 +86,7 @@ public class VentanaCrearTarea implements Initializable {
         } catch (IOException e) {
             //
         }
-        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.parent.getScene().getWindow();
         stage.close();
     }
 
@@ -98,9 +102,9 @@ public class VentanaCrearTarea implements Initializable {
         if (this.alarmas.getValue().equals(valoresPosibles[0])) {
             try {
                 this.ventanaAlarma = new VentanaCrearAlarmas();
-                this.ventanaAlarma.start();
+                this.ventanaAlarma.start(this.modoActual);
             } catch (Exception e) {
-                VentanaLanzarError.lanzarVentanaError();
+                VentanaLanzarError.lanzarVentanaError(this.modoActual);
             }
         }
     }

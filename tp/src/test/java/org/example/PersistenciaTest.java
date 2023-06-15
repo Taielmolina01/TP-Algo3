@@ -18,7 +18,7 @@ public class PersistenciaTest {
     public void testArchivoRecuperadoNoExiste() {
         Calendario calendario = new Calendario();
         PrintStreamMock salida = new PrintStreamMock(System.out);
-        ManejadorGuardado manejador = new ManejadorGuardado(salida);
+        ManejadorGuardadoCalendario manejador = new ManejadorGuardadoCalendario(salida);
         manejador.borrarEstadoGuardado();
         new File("MiCalendario.txt").delete();
         assertThrows(FileNotFoundException.class, () -> calendario.recuperarEstado(manejador));
@@ -41,7 +41,7 @@ public class PersistenciaTest {
     public void testGuardarYRecuperarCalendarioVacio() {
         Calendario calendario1 = new Calendario();
         PrintStreamMock salida = new PrintStreamMock(System.out);
-        ManejadorGuardado manejador = new ManejadorGuardado(salida);
+        ManejadorGuardadoCalendario manejador = new ManejadorGuardadoCalendario(salida);
         try {
             calendario1.guardarEstado(manejador);
             Calendario calendario2 = (new Calendario()).recuperarEstado(manejador);
@@ -57,7 +57,7 @@ public class PersistenciaTest {
         Calendario calendario1 = crearCalendarioDosEventos();
 
         PrintStreamMock salida = new PrintStreamMock(System.out);
-        ManejadorGuardado manejador = new ManejadorGuardado(salida);
+        ManejadorGuardadoCalendario manejador = new ManejadorGuardadoCalendario(salida);
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         try {
             calendario1.serializar(salida, bytes);

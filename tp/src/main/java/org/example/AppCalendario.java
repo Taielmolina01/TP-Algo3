@@ -12,10 +12,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.Actividades.Actividad;
@@ -39,9 +42,11 @@ import java.util.*;
 
 public class AppCalendario extends Application implements InterfazGuardarActividadNueva, Initializable, InterfazCambioEstado {
     private final String[] valoresCrear = new String[]{"", "Evento", "Tarea"};
-    protected ManejadorGuardado manejador;
+    protected ManejadorGuardadoCalendario manejador;
     protected Calendario calendario;
     private VisitadorActividades visitador;
+    @FXML
+    private AnchorPane parent;
     @FXML
     private Text lapsoTiempoActual;
     @FXML
@@ -50,6 +55,8 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
     private ComboBox<String> cajaCrear;
     @FXML
     private ListView<VistaActividad> listViewActividades;
+    @FXML
+    private Button botonModo;
     private LocalDateTime fechaActual;
     private LocalDateTime inicioSemana;
     private LocalDateTime finSemana;
@@ -58,6 +65,7 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
     private String textoDiario;
     private String textoSemanal;
     private String textoMensual;
+    private ModoApp.modo modoActual;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -74,7 +82,7 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.fechaActual = LocalDateTime.now();
-        this.manejador = new ManejadorGuardado(System.out);
+        this.manejador = new ManejadorGuardadoCalendario(System.out);
         try {
             this.calendario = new Calendario().recuperarEstado(this.manejador);
         } catch (Exception e) {
@@ -87,6 +95,34 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         this.cajaCrear.getItems().addAll(this.valoresCrear);
         this.lapsoTiempoActual.setText(this.textoMensual);
         this.rangoDeTiempo.setOnAction(this::actualizarInfoRangoDeTiempo);
+        try {
+            this.modoActual = new ManejadorGuardadoModo().recuperarModo();
+            ModoApp.setModo(this.modoActual, this.parent);
+            this.setImagen();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        this.botonModo.setOnAction(e -> {
+            if (this.modoActual.ordinal() == 0) {
+                this.modoActual = ModoApp.modo.OSCURO;
+                ModoApp.setModo(this.modoActual, this.parent);
+                this.setImagen();
+                try {
+                    new ManejadorGuardadoModo().guardarModo(this.modoActual);
+                } catch (IOException e2) {
+                    throw new RuntimeException(e2);
+                }
+            } else {
+                this.modoActual = ModoApp.modo.CLARO;
+                ModoApp.setModo(this.modoActual, this.parent);
+                this.setImagen();
+                try {
+                    new ManejadorGuardadoModo().guardarModo(this.modoActual);
+                } catch (IOException e3) {
+                    throw new RuntimeException(e3);
+                }
+            }
+        });
         this.cajaCrear.setOnAction(this::crearVentanaActividad);
         this.listViewActividades.getSelectionModel().selectedItemProperty().addListener(this::mostrarInfoCeldaSeleccionada);
         this.visitador = new VisitadorActividades();
@@ -135,13 +171,13 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         String tipoElemento = this.cajaCrear.getValue();
         if (tipoElemento.equals(this.valoresCrear[1])) {
             try {
-                new VentanaCrearEvento(this).start();
+                new VentanaCrearEvento(this).start(this.modoActual);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         } else if (tipoElemento.equals(this.valoresCrear[2])) {
             try {
-                new VentanaCrearTarea(this).start();
+                new VentanaCrearTarea(this).start(this.modoActual);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -319,4 +355,15 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
     public void huboCambioEstadoTarea(int i) {
         this.guardarEstadoActual();
     }
+
+    // Modo claro/oscuro
+
+    private void setImagen() {
+        Image image = new Image(this.modoActual.obtenerRutaImagen());
+        ImageView view = new ImageView(image);
+        view.setPreserveRatio(true);
+        view.setFitHeight(20);
+        this.botonModo.setGraphic(view);
+    }
+
 }

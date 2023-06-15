@@ -1,13 +1,12 @@
 package org.example;
 
 import org.example.Actividades.Evento;
-import org.example.Frecuencia.*;
-import org.w3c.dom.ls.LSOutput;
+import org.example.Frecuencia.Frecuencia;
+import org.example.Frecuencia.FrecuenciaSemanal;
 
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAdjusters;
 import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.TreeSet;

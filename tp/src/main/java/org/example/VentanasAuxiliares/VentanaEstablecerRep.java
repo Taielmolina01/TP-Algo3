@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.Formateador;
+import org.example.ModoApp;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -28,7 +29,7 @@ public class VentanaEstablecerRep implements Initializable {
     @FXML
     private Text mensaje;
     @FXML
-    private AnchorPane anchorPane;
+    private AnchorPane parent;
     @FXML
     private TextField textFechaFinal;
     @FXML
@@ -36,8 +37,9 @@ public class VentanaEstablecerRep implements Initializable {
 
     private LocalDateTime fechaFinal;
     private Integer repeticiones;
+    private ModoApp.modo modoActual;
 
-    public void start(String titulo, String promptText) throws Exception {
+    public void start(String titulo, String promptText, ModoApp.modo modoActual) throws Exception {
         var loader = new FXMLLoader(getClass().getResource("/escenaRepeticion.fxml"));
         loader.setController(this);
         Parent root = loader.load();
@@ -48,7 +50,9 @@ public class VentanaEstablecerRep implements Initializable {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
-        this.anchorPane.requestFocus();
+        this.modoActual = modoActual;
+        this.parent.requestFocus();
+        ModoApp.setModo(this.modoActual, this.parent);
     }
 
     @FXML
