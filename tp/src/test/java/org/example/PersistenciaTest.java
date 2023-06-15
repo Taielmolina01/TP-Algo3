@@ -103,7 +103,7 @@ public class PersistenciaTest {
                     calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas, fechaLimite).obtenerFechaActivacion());
             assertEquals(calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas, fechaLimite).obtenerFechaActivacion(),
                     calendario2.obtenerSiguienteAlarma(fechaAnteriorAAlarmas, fechaLimite).obtenerFechaActivacion());
-            assertEquals(Alarma.Efecto.EMAIL, calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas,fechaLimite).dispararAlarma());
+            assertEquals(Alarma.Efecto.EMAIL, calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas, fechaLimite).dispararAlarma());
             assertEquals(calendario1.obtenerSiguienteAlarma(fechaAnteriorAAlarmas, fechaAnteriorAAlarmas.plusWeeks(2)).dispararAlarma(),
                     calendario2.obtenerSiguienteAlarma(fechaAnteriorAAlarmas, fechaAnteriorAAlarmas.plusWeeks(2)).dispararAlarma());
 

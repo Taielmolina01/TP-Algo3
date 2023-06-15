@@ -2,9 +2,11 @@
 
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
-
-<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="78.0" prefWidth="291.0" styleClass="fondos" stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Text fx:id="textoNotificacion" layoutX="33.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="fuentes" text="Text" textAlignment="CENTER" wrappingWidth="225.13000106811523" />
-   </children>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="78.0" prefWidth="291.0" styleClass="fondos"
+            stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/19">
+    <children>
+        <Text fx:id="textoNotificacion" layoutX="33.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              styleClass="fuentes" text="Text" textAlignment="CENTER" wrappingWidth="225.13000106811523"/>
+    </children>
 </AnchorPane>

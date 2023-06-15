@@ -34,8 +34,8 @@ PD: Que retraso como no iba a fallar:))
 - [X] Agregar disparado de alarmas. (la verga esa de timetasker no sirve, tengo que usar otra cosa)
 - [X] Hacer un archivo css con todo (agregar hover de los textfield)
 - [X] Agregar las otras frecuencias, haria un combobox que tenga por default marcado sin repeticion y que despues si se elije otra distinta entre las opciones de {repeticionDiaria, repeticionSemanal, repeticionMensual, repeticionAnual}. Todas lanzarian la misma ventana que la que ya esta, menos la de la repeticion semanal que tendria que hacer DayWeekPicker o algo así (por ahora lo mejor que se me ocurre es utilizar 7 checkbox que tengan arriba/abajo las letras L/M/M/J/V/S/D (o en ingles)), y dsp los checkbox reviso si estan seleccionados o no e utilizo los ordinal de DayOfWeek.
-- [ ] Hacer archivo css con modo oscuro
-- [ ] Agregar logica para switchear los modos.
+- [X] Hacer archivo css con modo oscuro
+- [X] Agregar logica para switchear los modos.
 - [ ] Separar en dos paquetes grandes: Logica de negocio y GUI.
 - [ ] Emprolijar todo el codigo
 - [ ] Hacer informe en un .md
