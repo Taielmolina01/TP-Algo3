@@ -120,4 +120,5 @@ Diagrama UML de la GUI:
 
 Diagrama de secuencia:
 
+![Diagrama de secuencia de la GUI](diagramSecuencia.png)
 

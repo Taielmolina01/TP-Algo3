@@ -189,7 +189,7 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         String infoCompletaSeleccionado = this.vistaActividadesActuales.get(indice).obtenerInfoCompleta();
         try {
             VentanaMostrarInfoCompleta v = new VentanaMostrarInfoCompleta();
-            v.start(infoCompletaSeleccionado);
+            v.start(infoCompletaSeleccionado, this.modoActual);
         } catch (Exception e) {
             //
         }
