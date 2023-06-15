@@ -1,8 +1,12 @@
 package org.example.Frecuencia;
 
+
+import org.example.Visitadores.VisitorFrecuencia;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public abstract class Frecuencia {
+public abstract class Frecuencia implements Serializable {
 
     private int valorRepeticion;
 
@@ -19,5 +23,9 @@ public abstract class Frecuencia {
     }
 
     public abstract LocalDateTime obtenerProximaFecha(LocalDateTime fechaInicial);
+
+    public abstract void obtenerTipoFrecuencia(VisitorFrecuencia visitante);
+
+    public abstract LocalDateTime definirFechaInicio(LocalDateTime fechaInicial);
 
 }

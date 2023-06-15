@@ -56,7 +56,7 @@ public class AlarmaTest {
     }
 
     @Test
-    public  void testCuantoFaltaDespuesDeFechaAlarma() {
+    public void testCuantoFaltaDespuesDeFechaAlarma() {
         var fechaAbsoluta = LocalDateTime.of(2020, 1, 10, 0, 0, 0, 0);
         var fechaDespues = LocalDateTime.of(2020, 1, 15, 0, 0, 0, 0);
 
@@ -100,9 +100,9 @@ public class AlarmaTest {
         if (alarma.cuantoFaltaParaDisparar(fechaAntes).isPositive()) {
             assertTrue(true);
         } else if (alarma.cuantoFaltaParaDisparar(fechaAntes).isZero()) {
-            assertTrue(false);
+            fail();
         } else if (alarma.cuantoFaltaParaDisparar(fechaAntes).isNegative()) {
-            assertTrue(false);
+            fail();
         }
     }
 
@@ -113,11 +113,11 @@ public class AlarmaTest {
         var alarma = new Alarma(Alarma.Efecto.NOTIFICACION, fechaAbsoluta);
 
         if (alarma.cuantoFaltaParaDisparar(fechaAbsoluta).isPositive()) {
-            assertTrue(false);
+            fail();
         } else if (alarma.cuantoFaltaParaDisparar(fechaAbsoluta).isZero()) {
             assertEquals(Alarma.Efecto.NOTIFICACION, alarma.dispararAlarma());
         } else if (alarma.cuantoFaltaParaDisparar(fechaAbsoluta).isNegative()) {
-            assertTrue(false);
+            fail();
         }
     }
 
@@ -129,9 +129,9 @@ public class AlarmaTest {
         var alarma = new Alarma(Alarma.Efecto.NOTIFICACION, fechaAbsoluta);
 
         if (alarma.cuantoFaltaParaDisparar(fechaDespues).isPositive()) {
-            assertTrue(false);
+            fail();
         } else if (alarma.cuantoFaltaParaDisparar(fechaDespues).isZero()) {
-            assertTrue(false);
+            fail();
         } else if (alarma.cuantoFaltaParaDisparar(fechaDespues).isNegative()) {
             assertTrue(true);
         }

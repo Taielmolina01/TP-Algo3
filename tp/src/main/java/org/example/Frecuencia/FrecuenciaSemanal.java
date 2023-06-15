@@ -1,11 +1,14 @@
 package org.example.Frecuencia;
 
+import org.example.Visitadores.VisitorFrecuencia;
+
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.SortedSet;
 
-public class FrecuenciaSemanal extends Frecuencia {
+public class FrecuenciaSemanal extends Frecuencia implements Serializable {
 
     private SortedSet<DayOfWeek> diasSemana;
 
@@ -19,7 +22,7 @@ public class FrecuenciaSemanal extends Frecuencia {
         DayOfWeek fechaDia = fechaInicial.getDayOfWeek();
         DayOfWeek proximoDia = this.diasSemana.first();
 
-        for (DayOfWeek dia: DayOfWeek.values()) {
+        for (DayOfWeek dia : DayOfWeek.values()) {
             if (this.diasSemana.contains(dia) && dia.getValue() > fechaDia.getValue()) {
                 proximoDia = dia;
                 break;
@@ -27,7 +30,12 @@ public class FrecuenciaSemanal extends Frecuencia {
         }
 
         int saltarSemanas = fechaDia == this.diasSemana.last() ? 1 : 0;
-        return fechaInicial.with(TemporalAdjusters.nextOrSame(proximoDia)).plusWeeks((this.obtenerValorRepeticion() - 1) * saltarSemanas);
+        LocalDateTime sigFecha = fechaInicial.with(TemporalAdjusters.nextOrSame(proximoDia));
+        if (sigFecha.equals(fechaInicial)) {
+            return fechaInicial.with(TemporalAdjusters.nextOrSame(proximoDia)).plusWeeks((this.obtenerValorRepeticion()) * saltarSemanas);
+        } else {
+            return fechaInicial.with(TemporalAdjusters.nextOrSame(proximoDia)).plusWeeks((this.obtenerValorRepeticion() - 1) * saltarSemanas);
+        }
     }
 
     public SortedSet<DayOfWeek> obtenerDiasSemana() {
@@ -38,4 +46,18 @@ public class FrecuenciaSemanal extends Frecuencia {
         this.diasSemana = diasSemana;
     }
 
+    @Override
+    public void obtenerTipoFrecuencia(VisitorFrecuencia v) {
+        v.obtenerTipoFrecuencia(this);
+    }
+
+    @Override
+    public LocalDateTime definirFechaInicio(LocalDateTime fechaInicial) {
+        for (DayOfWeek d : this.diasSemana) {
+            if (d.equals(fechaInicial.getDayOfWeek())) {
+                return fechaInicial;
+            }
+        }
+        return this.obtenerProximaFecha(fechaInicial);
+    }
 }

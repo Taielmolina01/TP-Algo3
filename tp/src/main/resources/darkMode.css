@@ -1,0 +1,147 @@
+.root {
+    -color-fondo: #17202A;
+    -color-fondo-hover: #273746;
+    -color-opcion-hover: #2C3E50;
+    -color-flechas: #5D6D7E;
+    -color-flechas-hover: #85929E;
+    -color-bordes: #5D6D7E;
+    -color-opcion-focused: #5D6D7E;
+    -color-fuente: WHITE;
+    -color-fuente-prompt: #909497;
+}
+
+.fondos {
+    -fx-background-color: -color-fondo;
+}
+
+.cajas {
+    -fx-background-color: -color-fondo;
+    -fx-border-color: -color-bordes;
+    -fx-border-radius: 30;
+    -fx-background-radius: 30;
+}
+
+.cajas:hover {
+    -fx-background-color: -color-fondo-hover;
+    -fx-border-color: -color-bordes;
+    -fx-border-radius: 30;
+    -fx-background-radius: 30;
+}
+
+.cajas .context-menu {
+    -fx-background-color: -color-fondo;
+    -fx-border-color: -color-bordes;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+}
+
+.combo-box-base .text {
+    -fx-fill: -color-fuente;
+}
+
+.text {
+    -fx-fill: -color-fuente;
+}
+
+.choice-box .label {
+    -fx-text-fill: -color-fuente;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: -color-opcion-hover;
+    -fx-background-radius: 15;
+}
+
+.combo-box .list-cell {
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+}
+
+.combo-box .list-view {
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-background-color: -color-fondo;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: -color-fondo;
+    -fx-text-fill: -color-fuente;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: -color-opcion-hover;
+    -fx-background-radius: 15;
+}
+
+.combo-box-popup .list-view .list-cell:focused {
+    -fx-background-color: -color-opcion-focused;
+    -fx-background-radius: 15;
+}
+
+.check-box .box {
+    -fx-background-color: -color-fondo;
+    -fx-border-color: -color-bordes;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.check-box .box:hover {
+    -fx-background-color: -color-fondo-hover;
+    -fx-border-color: -color-bordes;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.flechas {
+    -fx-background-color: -color-flechas;
+}
+
+.flechas:hover {
+    -fx-background-color: -color-flechas-hover;
+}
+
+.text-field {
+    -fx-background-color: -color-fondo;
+    -fx-prompt-text-fill: -color-fuente-prompt;
+    -fx-text-fill: -color-fuente;
+}
+
+.text-input {
+    -fx-control-inner-background: -color-fondo;
+}
+
+.text-field:hover {
+    -fx-background-color: -color-fondo-hover;
+}
+
+.botones {
+    -fx-background-color: -color-fondo;
+    -fx-border-color: -color-bordes;
+    -fx-border-radius: 30;
+    -fx-background-radius: 30;
+    -fx-text-fill: -color-fuente;
+}
+
+.botones:hover {
+     -fx-background-color: -color-fondo-hover;
+     -fx-border-color: -color-bordes;
+     -fx-border-radius: 30;
+     -fx-background-radius: 30;
+}
+
+.list-view .list-cell {
+    -fx-text-fill: -color-fuente;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: -color-fuente;
+}
+
+
+.list-view .list-cell:hover {
+    -fx-text-fill: -color-fondo-hover;
+}
+
+.fuentes {
+    -fx-fill: -color-fuente;
+}
