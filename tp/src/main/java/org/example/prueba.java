@@ -15,6 +15,6 @@ public class prueba {
     }
 
     public static void aMethod() {
-        System.out.println("A" + 1/0);
+        System.out.println("A" + 1 / 0);
     }
 }

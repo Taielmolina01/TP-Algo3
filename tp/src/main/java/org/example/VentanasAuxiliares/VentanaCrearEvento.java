@@ -163,26 +163,6 @@ public class VentanaCrearEvento implements Initializable {
         return this.repeticiones == null || this.fechaFinal == null;
     }
 
-    public enum opcionesRepeticion {
-        SINREPETICION("Sin repetición"),
-        DIARIA("Diaria"),
-        SEMANAL("Semanal"),
-        MENSUAL("Mensual"),
-        ANUAL("Anual");
-
-        private final String opcion;
-
-        opcionesRepeticion(String opcion){
-            this.opcion = opcion;
-        }
-
-        @Override
-        public String toString() {
-            return this.opcion;
-        }
-    }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.alarmas.getItems().addAll(this.valoresPosibles);
@@ -260,5 +240,24 @@ public class VentanaCrearEvento implements Initializable {
             return this.ventanaAlarma.obtenerDuraciones();
         }
         return null;
+    }
+
+    public enum opcionesRepeticion {
+        SINREPETICION("Sin repetición"),
+        DIARIA("Diaria"),
+        SEMANAL("Semanal"),
+        MENSUAL("Mensual"),
+        ANUAL("Anual");
+
+        private final String opcion;
+
+        opcionesRepeticion(String opcion) {
+            this.opcion = opcion;
+        }
+
+        @Override
+        public String toString() {
+            return this.opcion;
+        }
     }
 }

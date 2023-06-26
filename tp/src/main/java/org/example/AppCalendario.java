@@ -39,13 +39,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
-import java.util.function.Function;
 
 public class AppCalendario extends Application implements InterfazGuardarActividadNueva, Initializable, InterfazCambioEstado {
     private final String[] valoresCrear = new String[]{"", "Evento", "Tarea"};
     protected ManejadorGuardadoCalendario manejadorCalendario;
-    private ManejadorGuardadoModo manejadorModo;
     protected Calendario calendario;
+    private ManejadorGuardadoModo manejadorModo;
     private VisitadorActividades visitador;
     @FXML
     private AnchorPane parent;
@@ -79,40 +78,6 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         stage.setScene(scene);
         stage.show();
         stage.setOnHidden(e -> Platform.exit());
-    }
-
-    public enum opcionesRango {
-        DIA("Dia"),
-        SEMANA("Semana"),
-        MES("Mes");
-
-        private final String opcionRango;
-
-        opcionesRango(String opcion) {
-            this.opcionRango = opcion;
-        }
-
-        @Override
-        public String toString() {
-            return this.opcionRango;
-        }
-    }
-
-    public enum opcionesCrear {
-        NADA(""),
-        EVENTO("Evento"),
-        TAREA("Tarea");
-
-        private final String opcion;
-
-        opcionesCrear(String opcion){
-            this.opcion = opcion;
-        }
-
-        @Override
-        public String toString() {
-            return this.opcion;
-        }
     }
 
     @Override
@@ -170,9 +135,6 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         timer.start();
     }
 
-    // Interacción con la GUI
-
-
     @FXML
     public void clickEnBotonIzquierda() {
         switch (this.rangoDeTiempo.getValue()) {
@@ -192,6 +154,8 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         }
         this.actualizarTextoYLista();
     }
+
+    // Interacción con la GUI
 
     private void crearVentanaActividad(ActionEvent event) {
         opcionesCrear tipoElemento = this.cajaCrear.getValue();
@@ -225,8 +189,6 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         this.actualizarTextoYLista();
     }
 
-    // Actualización de datos de la GUI
-
     private void establecerInicioYFinSemana() {
         int diaSemanaActual = this.fechaActual.getDayOfWeek().getValue();
         int aRestar = diaSemanaActual - 1;
@@ -247,6 +209,8 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         this.lapsoTiempoActual.setText(texto);
         this.actualizarListaActividades();
     }
+
+    // Actualización de datos de la GUI
 
     private void actualizarListaActividades() {
         LocalDateTime fechaInicio;
@@ -331,9 +295,6 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         this.meses.put("DECEMBER", "Diciembre");
     }
 
-    // Manejo del guardado de nuevas actividades y nuevos estados de las ya existentes.
-
-
     public void guardarEstadoActual() {
         try {
             this.calendario.guardarEstado(this.manejadorCalendario);
@@ -348,6 +309,8 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         int ID = this.calendario.crearEvento(nombre, descripcion, fechaInicio, duracion, diaCompleto);
         this.guardarNuevaActividad(ID, duracionesAlarmas);
     }
+
+    // Manejo del guardado de nuevas actividades y nuevos estados de las ya existentes.
 
     @Override
     public void guardarEventoConRepeticion(String nombre, String descripcion, LocalDateTime fechaInicio, Duration duracion, boolean diaCompleto,
@@ -382,8 +345,6 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         this.guardarEstadoActual();
     }
 
-    // Modo claro/oscuro
-
     private void setImagen() {
         Image image = new Image(this.modoActual.obtenerRutaImagen());
         ImageView view = new ImageView(image);
@@ -399,6 +360,42 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
             this.manejadorModo.guardarModo(this.modoActual);
         } catch (IOException e2) {
             throw new RuntimeException(e2);
+        }
+    }
+
+    // Modo claro/oscuro
+
+    public enum opcionesRango {
+        DIA("Dia"),
+        SEMANA("Semana"),
+        MES("Mes");
+
+        private final String opcionRango;
+
+        opcionesRango(String opcion) {
+            this.opcionRango = opcion;
+        }
+
+        @Override
+        public String toString() {
+            return this.opcionRango;
+        }
+    }
+
+    public enum opcionesCrear {
+        NADA(""),
+        EVENTO("Evento"),
+        TAREA("Tarea");
+
+        private final String opcion;
+
+        opcionesCrear(String opcion) {
+            this.opcion = opcion;
+        }
+
+        @Override
+        public String toString() {
+            return this.opcion;
         }
     }
 
