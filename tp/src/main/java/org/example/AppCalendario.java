@@ -68,6 +68,19 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
     private String textoSemanal;
     private String textoMensual;
     private ModoApp.modo modoActual;
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/escenaCalendario.fxml"));
+        Scene scene = new Scene(root);
+        stage.setTitle("Calendario Molina-Kriger");
+        stage.getIcons().add(new Image(AppCalendario.class.getClassLoader().getResource("logo.png").toExternalForm()));
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+        stage.setOnHidden(e -> Platform.exit());
+    }
+
     public enum opcionesRango {
         DIA("Dia"),
         SEMANA("Semana"),
@@ -100,18 +113,6 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         public String toString() {
             return this.opcion;
         }
-    }
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/escenaCalendario.fxml"));
-        Scene scene = new Scene(root);
-        stage.setTitle("Calendario Molina-Kriger");
-        stage.getIcons().add(new Image(AppCalendario.class.getClassLoader().getResource("logo.png").toExternalForm()));
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
-        stage.setOnHidden(e -> Platform.exit());
     }
 
     @Override

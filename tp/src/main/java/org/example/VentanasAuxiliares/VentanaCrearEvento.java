@@ -29,7 +29,6 @@ import java.util.TreeSet;
 
 public class VentanaCrearEvento implements Initializable {
 
-    private final String[] valoresPosiblesRepeticion = new String[]{"Sin repetición", "Diaria", "Semanal", "Mensual", "Anual"};
     private final String[] valoresPosibles = new String[]{"Sí", "No"};
     private final InterfazGuardarActividadNueva i;
     @FXML
@@ -45,7 +44,7 @@ public class VentanaCrearEvento implements Initializable {
     @FXML
     private ComboBox<String> alarmas;
     @FXML
-    private ComboBox<String> repeticion;
+    private ComboBox<opcionesRepeticion> repeticion;
     @FXML
     private CheckBox diaCompleto;
     @FXML
@@ -121,14 +120,14 @@ public class VentanaCrearEvento implements Initializable {
 
     private boolean sonValidosDatosFrecuencia() {
         switch (this.repeticion.getValue()) {
-            case "Diaria" -> {
+            case DIARIA -> {
                 this.establecerFechaFinalYRepsNoSemanal();
                 if (this.repsYFechaFinalSonInvalidos()) {
                     return false;
                 }
                 this.frecuencia = new FrecuenciaDiaria(this.repeticiones);
             }
-            case "Semanal" -> {
+            case SEMANAL -> {
                 TreeSet<DayOfWeek> dias = this.ventanaEstablecerRepSemanal.obtenerDiasSemana();
                 this.fechaFinal = this.ventanaEstablecerRepSemanal.obtenerFechaFinal();
                 this.repeticiones = this.ventanaEstablecerRepSemanal.obtenerRepeticiones();
@@ -137,7 +136,7 @@ public class VentanaCrearEvento implements Initializable {
                 }
                 this.frecuencia = new FrecuenciaSemanal(dias, repeticiones);
             }
-            case "Mensual" -> {
+            case MENSUAL -> {
                 this.establecerFechaFinalYRepsNoSemanal();
                 if (this.repsYFechaFinalSonInvalidos()) {
                     return false;
@@ -164,10 +163,30 @@ public class VentanaCrearEvento implements Initializable {
         return this.repeticiones == null || this.fechaFinal == null;
     }
 
+    public enum opcionesRepeticion {
+        SINREPETICION("Sin repetición"),
+        DIARIA("Diaria"),
+        SEMANAL("Semanal"),
+        MENSUAL("Mensual"),
+        ANUAL("Anual");
+
+        private final String opcion;
+
+        opcionesRepeticion(String opcion){
+            this.opcion = opcion;
+        }
+
+        @Override
+        public String toString() {
+            return this.opcion;
+        }
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.alarmas.getItems().addAll(this.valoresPosibles);
-        this.repeticion.getItems().addAll(this.valoresPosiblesRepeticion);
+        this.repeticion.getItems().addAll(opcionesRepeticion.values());
         this.botonCrear.setOnAction(this::ingresarDatosEvento);
         this.repeticion.setOnAction(this::establecerRepeticion);
         this.alarmas.setOnAction(this::crearAlarmas);
@@ -175,10 +194,10 @@ public class VentanaCrearEvento implements Initializable {
 
     public void establecerRepeticion(ActionEvent event) {
         switch (this.repeticion.getValue()) {
-            case "Sin repetición" -> {
+            case SINREPETICION -> {
                 //
             }
-            case "Diaria" -> {
+            case DIARIA -> {
                 try {
                     this.ventanaEstablecerRep = new VentanaEstablecerRep();
                     this.ventanaEstablecerRep.start("Definir frecuencia diaria",
@@ -187,7 +206,7 @@ public class VentanaCrearEvento implements Initializable {
                     VentanaLanzarError.lanzarVentana(this.modoActual);
                 }
             }
-            case "Semanal" -> {
+            case SEMANAL -> {
                 try {
                     this.ventanaEstablecerRepSemanal = new VentanaEstablecerRepSemanal();
                     this.ventanaEstablecerRepSemanal.start(this.modoActual);
@@ -195,7 +214,7 @@ public class VentanaCrearEvento implements Initializable {
                     VentanaLanzarError.lanzarVentana(this.modoActual);
                 }
             }
-            case "Mensual" -> {
+            case MENSUAL -> {
                 try {
                     this.ventanaEstablecerRep = new VentanaEstablecerRep();
                     this.ventanaEstablecerRep.start("Definir frecuencia mensual",
@@ -222,7 +241,7 @@ public class VentanaCrearEvento implements Initializable {
 
     private boolean noHayRepeticion() {
         return (this.ventanaEstablecerRep == null && this.ventanaEstablecerRepSemanal == null)
-                || this.repeticion.getValue().equals(this.valoresPosiblesRepeticion[0]);
+                || this.repeticion.getValue().equals(opcionesRepeticion.SINREPETICION);
     }
 
     public void crearAlarmas(ActionEvent event) {
