@@ -38,7 +38,7 @@ public class VentanaCrearAlarmas {
         stage.show();
         this.parent.requestFocus();
         this.modoActual = modoActual;
-        ModoApp.setModo(this.modoActual, this.parent);
+        ModoApp.setStyleSheet(this.modoActual, this.parent);
     }
 
     @FXML

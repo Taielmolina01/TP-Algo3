@@ -216,17 +216,13 @@ public class Calendario implements Serializable {
             o = new ObjectOutputStream(os);
             o.writeObject(this);
             o.flush();
+            o.close();
         } catch (IOException e) {
             salida.println("El flujo de salida no existe.");
-            throw new IOException("El flujo de salida no existe");
-        } finally {
             if (o != null) {
-                try {
-                    o.close();
-                } catch (IOException e) {
-                    //
-                }
+                o.close();
             }
+            throw new IOException("El flujo de salida no existe");
         }
     }
 

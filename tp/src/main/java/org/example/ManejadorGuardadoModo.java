@@ -5,7 +5,7 @@ import java.io.*;
 public class ManejadorGuardadoModo {
     private String rutaArchivoGuardado = "modoActual.txt";
 
-    public ManejadorGuardadoModo() {
+    public ManejadorGuardadoModo() throws IOException {
         this.crearArchivoGuardado();
     }
 
@@ -20,11 +20,7 @@ public class ManejadorGuardadoModo {
             throw new IOException("El flujo de salida no existe");
         } finally {
             if (o != null) {
-                try {
-                    o.close();
-                } catch (IOException e) {
-                    //
-                }
+                o.close();
             }
         }
     }
@@ -42,14 +38,14 @@ public class ManejadorGuardadoModo {
     }
 
 
-    private void crearArchivoGuardado() {
+    private void crearArchivoGuardado() throws IOException {
         try {
             File file = new File(this.rutaArchivoGuardado);
             if (file.createNewFile()) {
                 guardarModo(ModoApp.modo.CLARO);
             }
         } catch (IOException e) {
-            //
+            throw new IOException("No se ha podido crear el archivo de guardado del modo");
         }
     }
 

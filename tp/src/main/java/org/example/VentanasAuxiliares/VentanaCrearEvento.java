@@ -74,7 +74,7 @@ public class VentanaCrearEvento implements Initializable {
         stage.show();
         this.parent.requestFocus();
         this.modoActual = modoActual;
-        ModoApp.setModo(this.modoActual, this.parent);
+        ModoApp.setStyleSheet(this.modoActual, this.parent);
     }
 
     @FXML
@@ -96,7 +96,7 @@ public class VentanaCrearEvento implements Initializable {
                 try {
                     this.i.guardarEventoSinRepeticion(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(), alarmas);
                 } catch (IOException e) {
-                    //
+                    throw new RuntimeException("No se ha podido guardar el evento");
                 }
                 return;
             }
@@ -113,7 +113,7 @@ public class VentanaCrearEvento implements Initializable {
             this.i.guardarEventoConRepeticion(nombre, descripcion, fechaInicio, duracionEvento, this.diaCompleto.isSelected(),
                     this.fechaFinal, this.frecuencia, alarmas);
         } catch (IOException e) {
-            //
+            throw new RuntimeException("No se ha podido guardar el evento");
         }
         Stage stage = (Stage) this.parent.getScene().getWindow();
         stage.close();

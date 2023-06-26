@@ -18,7 +18,7 @@ public class VentanaLanzarError {
         try {
             new VentanaLanzarError().start(modoActual);
         } catch (Exception e5) {
-            //
+            throw new RuntimeException("No se ha podido lanzar la ventana de error");
         }
     }
 
@@ -33,7 +33,7 @@ public class VentanaLanzarError {
         stage.setScene(scene);
         stage.show();
         this.modoActual = modoActual;
-        ModoApp.setModo(this.modoActual, this.parent);
+        ModoApp.setStyleSheet(this.modoActual, this.parent);
     }
 
 }

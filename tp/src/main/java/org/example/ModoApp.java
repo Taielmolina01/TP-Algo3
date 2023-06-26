@@ -4,7 +4,7 @@ import javafx.scene.Parent;
 
 public class ModoApp {
 
-    public static void setModo(modo modoActual, Parent parent) {
+    public static void setStyleSheet(modo modoActual, Parent parent) {
         parent.getStylesheets().setAll(modoActual.obtenerRutaArchivo());
     }
 

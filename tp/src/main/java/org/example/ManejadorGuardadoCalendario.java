@@ -46,7 +46,7 @@ public class ManejadorGuardadoCalendario {
         try {
             new File(this.rutaArchivoGuardado).createNewFile();
         } catch (IOException e) {
-            //
+            throw new RuntimeException(e);
         }
     }
 }

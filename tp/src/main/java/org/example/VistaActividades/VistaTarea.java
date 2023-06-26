@@ -45,8 +45,6 @@ public class VistaTarea extends VistaActividad {
         this.tarea.cambiarEstadoCompletado();
     }
 
-    ;
-
     @Override
     public String obtenerCodigoColorFondo() {
         return colorActividad.TAREA.obtenerCodigoColor();

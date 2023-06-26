@@ -83,7 +83,7 @@ public abstract class VistaActividad {
 
         EVENTO("#85C1E9"),
 
-        TAREA("#58D68D");
+        TAREA("#27AE60");
 
         private final String claveColor;
 

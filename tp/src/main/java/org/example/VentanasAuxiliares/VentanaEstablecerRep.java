@@ -52,7 +52,7 @@ public class VentanaEstablecerRep implements Initializable {
         stage.show();
         this.modoActual = modoActual;
         this.parent.requestFocus();
-        ModoApp.setModo(this.modoActual, this.parent);
+        ModoApp.setStyleSheet(this.modoActual, this.parent);
     }
 
     @FXML

@@ -29,6 +29,6 @@ public class VentanaMostrarInfoCompleta {
         stage.show();
         this.infoCompleta.setText(info);
         this.modoActual = modoActual;
-        ModoApp.setModo(this.modoActual, this.parent);
+        ModoApp.setStyleSheet(this.modoActual, this.parent);
     }
 }

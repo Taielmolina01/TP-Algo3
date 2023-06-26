@@ -70,7 +70,7 @@ public class VentanaEstablecerRepSemanal implements Initializable {
         s.setScene(scene);
         s.show();
         this.modoActual = modoActual;
-        ModoApp.setModo(this.modoActual, this.parent);
+        ModoApp.setStyleSheet(this.modoActual, this.parent);
     }
 
     @FXML

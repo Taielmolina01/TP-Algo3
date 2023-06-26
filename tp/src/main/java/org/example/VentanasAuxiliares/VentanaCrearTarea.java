@@ -63,7 +63,7 @@ public class VentanaCrearTarea implements Initializable {
         stage.show();
         this.modoActual = modoActual;
         this.parent.requestFocus();
-        ModoApp.setModo(this.modoActual, this.parent);
+        ModoApp.setStyleSheet(this.modoActual, this.parent);
     }
 
     @FXML
@@ -84,7 +84,7 @@ public class VentanaCrearTarea implements Initializable {
         try {
             this.i.guardarTarea(nombre, descripcion, fechaInicio, this.diaCompleto.isSelected(), this.obtenerAlarmas());
         } catch (IOException e) {
-            //
+            throw new RuntimeException("No se ha podido guardar la tarea");
         }
         Stage stage = (Stage) this.parent.getScene().getWindow();
         stage.close();

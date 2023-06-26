@@ -39,6 +39,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
+import java.util.function.Function;
 
 public class AppCalendario extends Application implements InterfazGuardarActividadNueva, Initializable, InterfazCambioEstado {
     private final String[] valoresCrear = new String[]{"", "Evento", "Tarea"};
@@ -51,9 +52,9 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
     @FXML
     private Text lapsoTiempoActual;
     @FXML
-    private ChoiceBox<String> rangoDeTiempo;
+    private ChoiceBox<opcionesRango> rangoDeTiempo;
     @FXML
-    private ComboBox<String> cajaCrear;
+    private ComboBox<opcionesCrear> cajaCrear;
     @FXML
     private ListView<VistaActividad> listViewActividades;
     @FXML
@@ -67,6 +68,39 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
     private String textoSemanal;
     private String textoMensual;
     private ModoApp.modo modoActual;
+    public enum opcionesRango {
+        DIA("Dia"),
+        SEMANA("Semana"),
+        MES("Mes");
+
+        private final String opcionRango;
+
+        opcionesRango(String opcion) {
+            this.opcionRango = opcion;
+        }
+
+        @Override
+        public String toString() {
+            return this.opcionRango;
+        }
+    }
+
+    public enum opcionesCrear {
+        NADA(""),
+        EVENTO("Evento"),
+        TAREA("Tarea");
+
+        private final String opcion;
+
+        opcionesCrear(String opcion){
+            this.opcion = opcion;
+        }
+
+        @Override
+        public String toString() {
+            return this.opcion;
+        }
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -84,22 +118,23 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.fechaActual = LocalDateTime.now();
         this.manejadorCalendario = new ManejadorGuardadoCalendario(System.out);
-        this.manejadorModo = new ManejadorGuardadoModo();
         try {
             this.calendario = new Calendario().recuperarEstado(this.manejadorCalendario);
+            this.manejadorModo = new ManejadorGuardadoModo();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         this.establecerMeses();
         this.establecerInicioYFinSemana();
         this.establecerText();
-        this.rangoDeTiempo.getItems().addAll("Dia", "Semana", "Mes");
-        this.cajaCrear.getItems().addAll(this.valoresCrear);
+        this.rangoDeTiempo.getItems().addAll(opcionesRango.values());
+        this.rangoDeTiempo.setValue(opcionesRango.MES);
+        this.cajaCrear.getItems().addAll(opcionesCrear.values());
         this.lapsoTiempoActual.setText(this.textoMensual);
         this.rangoDeTiempo.setOnAction(this::actualizarInfoRangoDeTiempo);
         try {
             this.modoActual = this.manejadorModo.recuperarModo();
-            ModoApp.setModo(this.modoActual, this.parent);
+            ModoApp.setStyleSheet(this.modoActual, this.parent);
             this.setImagen();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -107,22 +142,10 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         this.botonModo.setOnAction(e -> {
             if (this.modoActual.ordinal() == 0) {
                 this.modoActual = ModoApp.modo.OSCURO;
-                ModoApp.setModo(this.modoActual, this.parent);
-                this.setImagen();
-                try {
-                    this.manejadorModo.guardarModo(this.modoActual);
-                } catch (IOException e2) {
-                    throw new RuntimeException(e2);
-                }
+                this.setModoApp();
             } else {
                 this.modoActual = ModoApp.modo.CLARO;
-                ModoApp.setModo(this.modoActual, this.parent);
-                this.setImagen();
-                try {
-                    this.manejadorModo.guardarModo(this.modoActual);
-                } catch (IOException e3) {
-                    throw new RuntimeException(e3);
-                }
+                this.setModoApp();
             }
         });
         this.cajaCrear.setOnAction(this::crearVentanaActividad);
@@ -152,8 +175,8 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
     @FXML
     public void clickEnBotonIzquierda() {
         switch (this.rangoDeTiempo.getValue()) {
-            case "Dia" -> this.fechaActual = this.fechaActual.minusDays(1);
-            case "Semana" -> this.fechaActual = this.fechaActual.minusWeeks(1);
+            case DIA -> this.fechaActual = this.fechaActual.minusDays(1);
+            case SEMANA -> this.fechaActual = this.fechaActual.minusWeeks(1);
             default -> this.fechaActual = this.fechaActual.minusMonths(1);
         }
         this.actualizarTextoYLista();
@@ -162,22 +185,22 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
     @FXML
     public void clickEnBotonDerecha() {
         switch (this.rangoDeTiempo.getValue()) {
-            case "Dia" -> this.fechaActual = this.fechaActual.plusDays(1);
-            case "Semana" -> this.fechaActual = this.fechaActual.plusWeeks(1);
+            case DIA -> this.fechaActual = this.fechaActual.plusDays(1);
+            case SEMANA -> this.fechaActual = this.fechaActual.plusWeeks(1);
             default -> this.fechaActual = this.fechaActual.plusMonths(1);
         }
         this.actualizarTextoYLista();
     }
 
     private void crearVentanaActividad(ActionEvent event) {
-        String tipoElemento = this.cajaCrear.getValue();
-        if (tipoElemento.equals(this.valoresCrear[1])) {
+        opcionesCrear tipoElemento = this.cajaCrear.getValue();
+        if (tipoElemento.equals(opcionesCrear.EVENTO)) {
             try {
                 new VentanaCrearEvento(this).start(this.modoActual);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        } else if (tipoElemento.equals(this.valoresCrear[2])) {
+        } else if (tipoElemento.equals(opcionesCrear.TAREA)) {
             try {
                 new VentanaCrearTarea(this).start(this.modoActual);
             } catch (Exception e) {
@@ -193,7 +216,7 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
             VentanaMostrarInfoCompleta v = new VentanaMostrarInfoCompleta();
             v.start(infoCompletaSeleccionado, this.modoActual);
         } catch (Exception e) {
-            //
+            throw new RuntimeException(e);
         }
     }
 
@@ -216,8 +239,8 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         this.establecerText();
         String texto;
         switch (this.rangoDeTiempo.getValue()) {
-            case "Dia" -> texto = this.textoDiario;
-            case "Semana" -> texto = this.textoSemanal;
+            case DIA -> texto = this.textoDiario;
+            case SEMANA -> texto = this.textoSemanal;
             default -> texto = this.textoMensual;
         }
         this.lapsoTiempoActual.setText(texto);
@@ -228,12 +251,12 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         LocalDateTime fechaInicio;
         LocalDateTime fechaLimite;
         switch (this.rangoDeTiempo.getValue()) {
-            case "Dia" -> {
+            case DIA -> {
                 fechaInicio = this.fechaActual.with(LocalTime.MIN);
                 fechaLimite = this.fechaActual.with(LocalTime.MAX);
                 this.crearLista(fechaInicio, fechaLimite);
             }
-            case "Semana" -> this.crearLista(this.inicioSemana, this.finSemana);
+            case SEMANA -> this.crearLista(this.inicioSemana, this.finSemana);
             default -> {
                 fechaInicio = this.fechaActual.with(TemporalAdjusters.firstDayOfMonth()).with(LocalTime.MIN);
                 fechaLimite = this.fechaActual.with(TemporalAdjusters.lastDayOfMonth()).with(LocalTime.MAX);
@@ -366,6 +389,16 @@ public class AppCalendario extends Application implements InterfazGuardarActivid
         view.setPreserveRatio(true);
         view.setFitHeight(20);
         this.botonModo.setGraphic(view);
+    }
+
+    private void setModoApp() {
+        ModoApp.setStyleSheet(this.modoActual, this.parent);
+        this.setImagen();
+        try {
+            this.manejadorModo.guardarModo(this.modoActual);
+        } catch (IOException e2) {
+            throw new RuntimeException(e2);
+        }
     }
 
 }

@@ -20,7 +20,7 @@ public class VentanaMostrarNotificacionAlarma {
         try {
             new VentanaMostrarNotificacionAlarma().start(nombreActividad, modoActual);
         } catch (Exception e5) {
-            //
+            throw new RuntimeException("No se ha podido lanzar la notificación de la alarma");
         }
     }
 
@@ -35,7 +35,7 @@ public class VentanaMostrarNotificacionAlarma {
         stage.setScene(scene);
         stage.show();
         this.modoActual = modoActual;
-        ModoApp.setModo(this.modoActual, this.parent);
+        ModoApp.setStyleSheet(this.modoActual, this.parent);
         this.textoNotificacion.setText("Alarma de la actividad " + nombreActividad);
     }
 
