@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="513.0" prefWidth="703.0" styleClass="fondos"
+            stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/19"
+            fx:controller="org.example.AppCalendario">
+    <children>
+        <HBox layoutX="-3.0" prefHeight="100.0" prefWidth="702.0">
+            <children>
+                <ComboBox fx:id="cajaCrear" prefHeight="28.0" prefWidth="57.0" promptText="+" styleClass="cajas">
+                    <HBox.margin>
+                        <Insets left="70.0" top="20.0"/>
+                    </HBox.margin>
+                </ComboBox>
+                <Button fx:id="botonIzquierda" mnemonicParsing="false" onAction="#clickEnBotonIzquierda"
+                        styleClass="flechas" text="&lt;">
+                    <HBox.margin>
+                        <Insets left="70.0" top="20.0"/>
+                    </HBox.margin>
+                </Button>
+                <Text fx:id="lapsoTiempoActual" strokeLineCap="BUTT" strokeType="OUTSIDE" strokeWidth="0.0"
+                      styleClass="fuentes" textAlignment="CENTER" wrappingWidth="214.9800033569336">
+                    <HBox.margin>
+                        <Insets left="10.0" top="25.0"/>
+                    </HBox.margin>
+                    <font>
+                        <Font size="15.0"/>
+                    </font>
+                </Text>
+                <Button fx:id="botonDerecha" mnemonicParsing="false" onAction="#clickEnBotonDerecha"
+                        styleClass="flechas" text="&gt;">
+                    <HBox.margin>
+                        <Insets left="10.0" top="20.0"/>
+                    </HBox.margin>
+                </Button>
+                <ChoiceBox fx:id="rangoDeTiempo" prefHeight="28.0" prefWidth="115.0" styleClass="cajas">
+                    <HBox.margin>
+                        <Insets left="30.0" top="20.0"/>
+                    </HBox.margin>
+                </ChoiceBox>
+                <Button fx:id="botonModo" alignment="CENTER" mnemonicParsing="false" styleClass="botones">
+                    <HBox.margin>
+                        <Insets left="20.0" top="20.0"/>
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+        <Text layoutX="14.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text"
+              text="Eventos y tareas próximos"/>
+        <ListView fx:id="listViewActividades" layoutY="117.0" prefHeight="396.0" prefWidth="702.0" styleClass="fondos"/>
+        <Circle fx:id="circuloEvento" fill="#85c1e9" layoutX="208.0" layoutY="102.0" radius="7.0" stroke="#85c1e9"
+                strokeType="INSIDE"/>
+        <Circle fx:id="circuloTarea" fill="#27AE60" layoutX="298.0" layoutY="102.0" radius="7.0" stroke="#27AE60"
+                strokeType="INSIDE"/>
+        <Text layoutX="221.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Eventos"
+              textAlignment="CENTER"/>
+        <Text layoutX="312.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Tareas"/>
+    </children>
+</AnchorPane>

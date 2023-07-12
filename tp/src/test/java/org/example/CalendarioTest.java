@@ -5,12 +5,14 @@ import org.junit.Test;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class CalendarioTest {
 
     @Test
-    public void alarmasEnEventoyTarea() {
+    public void testAlarmasEnEventoyTarea() {
         Calendario nuevoCalendario = new Calendario();
         LocalDateTime fechaActual = LocalDateTime.of(2023, 4, 29, 0, 0, 0);
 
@@ -29,22 +31,26 @@ public class CalendarioTest {
         nuevoCalendario.agregarAlarma(0, Alarma.Efecto.EMAIL, Duration.ofMinutes(30));
         nuevoCalendario.agregarAlarma(0, Alarma.Efecto.EMAIL, Duration.ofHours(2));
 
-        assertEquals(LocalDateTime.of(2023, 4, 29, 22, 0, 0), nuevoCalendario.obtenerSiguienteAlarma(fechaActual).obtenerFechaActivacion());
-        assertEquals(Alarma.Efecto.EMAIL, nuevoCalendario.obtenerSiguienteAlarma(fechaActual).dispararAlarma());
+
+        assertEquals(LocalDateTime.of(2023, 4, 29, 22, 0, 0),
+                nuevoCalendario.obtenerSiguienteAlarma(fechaActual, fechaActual.plusWeeks(2)).obtenerFechaActivacion());
+        assertEquals(Alarma.Efecto.EMAIL, nuevoCalendario.obtenerSiguienteAlarma(fechaActual, fechaActual.plusWeeks(2)).dispararAlarma());
 
         nuevoCalendario.agregarAlarma(1, Alarma.Efecto.SONIDO, Duration.ofHours(3));
 
-        assertEquals(LocalDateTime.of(2023, 4, 29, 21, 0, 0), nuevoCalendario.obtenerSiguienteAlarma(fechaActual).obtenerFechaActivacion());
+        assertEquals(LocalDateTime.of(2023, 4, 29, 21, 0, 0),
+                nuevoCalendario.obtenerSiguienteAlarma(fechaActual, fechaActual.plusWeeks(2)).obtenerFechaActivacion());
 
         nuevoCalendario.eliminarAlarma(1, 0);
 
-        assertEquals(LocalDateTime.of(2023, 4, 29, 22, 0, 0), nuevoCalendario.obtenerSiguienteAlarma(fechaActual).obtenerFechaActivacion());
+        assertEquals(LocalDateTime.of(2023, 4, 29, 22, 0, 0),
+                nuevoCalendario.obtenerSiguienteAlarma(fechaActual, fechaActual.plusWeeks(2)).obtenerFechaActivacion());
 
         nuevoCalendario.modificarEfectoAlarma(0, 1, Alarma.Efecto.NOTIFICACION);
-        assertEquals(Alarma.Efecto.NOTIFICACION, nuevoCalendario.obtenerSiguienteAlarma(fechaActual).dispararAlarma());
+        assertEquals(Alarma.Efecto.NOTIFICACION, nuevoCalendario.obtenerSiguienteAlarma(fechaActual, fechaActual.plusWeeks(2)).dispararAlarma());
 
         LocalDateTime fechaActualNueva = LocalDateTime.of(2023, 5, 1, 0, 0, 0);
-        assertNull(nuevoCalendario.obtenerSiguienteAlarma(fechaActualNueva));
+        assertNull(nuevoCalendario.obtenerSiguienteAlarma(fechaActualNueva, fechaActual.plusWeeks(2)));
     }
 
     @Test

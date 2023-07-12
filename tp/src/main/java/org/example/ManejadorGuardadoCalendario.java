@@ -5,34 +5,32 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public class ManejadorGuardado {
-
-    protected final PrintStream salida;
+public class ManejadorGuardadoCalendario {
+    private final PrintStream salida;
     private final String rutaArchivoGuardado = "MiCalendario.txt";
-    private final File archivoGuardado = new File(rutaArchivoGuardado);
 
-
-    public ManejadorGuardado(PrintStream salida) {
+    public ManejadorGuardadoCalendario(PrintStream salida) {
         this.salida = salida;
         this.crearArchivoGuardado();
     }
 
-    protected void guardarEstado(Calendario calendario) {
+    protected void guardarEstado(Calendario calendario) throws IOException {
         try {
             FileOutputStream archivoDestino = new FileOutputStream(this.rutaArchivoGuardado);
             calendario.serializar(this.salida, archivoDestino);
         } catch (FileNotFoundException e) {
             this.salida.println("El archivo de guardado no existe.");
+            throw new FileNotFoundException("El archivo de guardado no existe.");
         }
     }
 
-    protected Calendario recuperarEstado() {
+    protected Calendario recuperarEstado() throws IOException, ClassNotFoundException {
         try {
             FileInputStream archivo = new FileInputStream(this.rutaArchivoGuardado);
             return (new Calendario()).deserializar(this.salida, archivo);
-        } catch (FileNotFoundException e ) {
+        } catch (FileNotFoundException e) {
             this.salida.println("El archivo de recuperado no existe.");
-            return null;
+            throw new FileNotFoundException("El archivo de recuperado no existe.");
         }
     }
 
@@ -46,9 +44,9 @@ public class ManejadorGuardado {
 
     private void crearArchivoGuardado() {
         try {
-            this.archivoGuardado.createNewFile();
+            new File(this.rutaArchivoGuardado).createNewFile();
         } catch (IOException e) {
-            //
+            throw new RuntimeException(e);
         }
     }
 }

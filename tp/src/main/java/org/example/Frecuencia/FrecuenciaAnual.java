@@ -1,8 +1,11 @@
 package org.example.Frecuencia;
 
+import org.example.Visitadores.VisitorFrecuencia;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class FrecuenciaAnual extends Frecuencia {
+public class FrecuenciaAnual extends Frecuencia implements Serializable {
 
     public FrecuenciaAnual(int frecuenciaAnual) {
         super(frecuenciaAnual);
@@ -13,4 +16,13 @@ public class FrecuenciaAnual extends Frecuencia {
         return fechaInicial.plusYears(this.obtenerValorRepeticion());
     }
 
+    @Override
+    public void obtenerTipoFrecuencia(VisitorFrecuencia v) {
+        v.obtenerTipoFrecuencia(this);
+    }
+
+    @Override
+    public LocalDateTime definirFechaInicio(LocalDateTime fechaInicial) {
+        return fechaInicial;
+    }
 }

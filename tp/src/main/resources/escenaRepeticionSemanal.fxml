@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="248.0" prefWidth="270.0" styleClass="fondos"
+            stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/19">
+    <children>
+        <CheckBox fx:id="lunes" layoutX="30.0" layoutY="70.0" mnemonicParsing="false" prefHeight="20.0"
+                  prefWidth="20.0"/>
+        <CheckBox fx:id="martes" layoutX="60.0" layoutY="70.0" mnemonicParsing="false" prefHeight="20.0"
+                  prefWidth="20.0"/>
+        <CheckBox fx:id="miercoles" layoutX="90.0" layoutY="70.0" mnemonicParsing="false" prefHeight="20.0"
+                  prefWidth="20.0"/>
+        <CheckBox fx:id="jueves" layoutX="120.0" layoutY="70.0" mnemonicParsing="false" prefHeight="20.0"
+                  prefWidth="20.0"/>
+        <CheckBox fx:id="viernes" layoutX="150.0" layoutY="70.0" mnemonicParsing="false" prefHeight="20.0"
+                  prefWidth="20.0"/>
+        <CheckBox fx:id="sabado" layoutX="180.0" layoutY="70.0" mnemonicParsing="false" prefHeight="20.0"
+                  prefWidth="20.0"/>
+        <CheckBox fx:id="domingo" layoutX="210.0" layoutY="70.0" mnemonicParsing="false" prefHeight="20.0"
+                  prefWidth="20.0"/>
+        <Text layoutX="37.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="fuentes" text="L"/>
+        <Text layoutX="64.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="fuentes" text="M"/>
+        <Text layoutX="94.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="fuentes" text="M"/>
+        <Text layoutX="128.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="fuentes" text="J"/>
+        <Text layoutX="156.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="fuentes" text="V"/>
+        <Text layoutX="186.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="fuentes" text="S"/>
+        <Text layoutX="215.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="fuentes" text="D"/>
+        <TextField fx:id="semanas" layoutX="7.0" layoutY="101.0" prefHeight="26.0" prefWidth="257.0"
+                   promptText="Ingrese cada cuántas semanas se repite"/>
+        <Button fx:id="botonOk" layoutX="121.0" layoutY="206.0" mnemonicParsing="false" styleClass="botones" text="OK"/>
+        <Text fx:id="mensaje" layoutX="29.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="fuentes"
+              textAlignment="CENTER" wrappingWidth="212.0"/>
+        <CheckBox fx:id="repsInfinitas" layoutX="57.0" layoutY="180.0" mnemonicParsing="false"
+                  text="Repeticiones infinitas"/>
+        <TextField fx:id="textFechaFinal" layoutX="7.0" layoutY="145.0" prefHeight="26.0" prefWidth="257.0"
+                   promptText="FechaFinal (dd/MM/yyyy HH:mm:ss)"/>
+    </children>
+</AnchorPane>
