@@ -1,5 +1,13 @@
 # TP-Algo3
 
+This project is a practical work of the whole subject of Algorithms and Programming III of the University of Buenos Aires. The subject is about Object-Oriented programming in almost whole the time. The idea of the work is to make a calendary similar to Google Calendar.
+
+I never work in these after approves it because I see more useful what I can do in the middle of being learning the paradigm and studying this and more subjects during the class period.
+
+I leave below the inform I made in a .MD format too.
+
+---
+
 Integrantes
   
 Kriger, Lucas. Padrón: 109344
