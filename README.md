@@ -2,7 +2,7 @@
 
 This project is a practical work of the whole subject of Algorithms and Programming III, course Corsi-Essaya, of the University of Buenos Aires. The subject is about Object-Oriented Programming in almost whole the time. The idea of the work is to make a calendar similar to Google Calendar.
 
-I never work in this after approves it because I see more useful watch what I can do in the middle of being learning the paradigm and studying this and more subjects.
+I never work in this after approves it because I see more useful watch what I can do in the middle of being learning the paradigm (and fighting a little with CSS too) and studying this and more subjects.
 
 I leave below the report I made in a .MD format too.
 
